@@ -9,7 +9,8 @@ const GRADLE_APK_PATH = path.join(RELEASE_DIR, 'app-release.apk');
 const IS_EMULATOR_BUILD = process.argv.includes('--emulator');
 // ARM-only APK падает на x86_64-эмуляторе: SoLoader ищет библиотеки под первую ABI устройства
 const ARCHITECTURES = IS_EMULATOR_BUILD ? 'x86_64' : 'arm64-v8a,armeabi-v7a';
-const APK_PATH = path.join(RELEASE_DIR, IS_EMULATOR_BUILD ? 'sobes-emulator.apk' : 'sobes.apk');
+const DIST_DIR = path.join(PROJECT_ROOT, 'dist');
+const APK_PATH = path.join(DIST_DIR, IS_EMULATOR_BUILD ? 'sobes-emulator.apk' : 'sobes.apk');
 const DEFAULT_JAVA_HOME = 'C:\\Program Files\\Android\\Android Studio\\jbr';
 const DEFAULT_ANDROID_HOME = path.join(process.env.LOCALAPPDATA ?? '', 'Android', 'Sdk');
 
@@ -48,7 +49,8 @@ if (!fs.existsSync(localProperties)) {
 
 run(`.\\gradlew.bat assembleRelease -PreactNativeArchitectures=${ARCHITECTURES}`, ANDROID_DIR, env);
 
-fs.renameSync(GRADLE_APK_PATH, APK_PATH);
+fs.mkdirSync(DIST_DIR, { recursive: true });
+fs.copyFileSync(GRADLE_APK_PATH, APK_PATH);
 
 const sizeMb = (fs.statSync(APK_PATH).size / 1024 / 1024).toFixed(1);
 console.log(`\n[build-apk] Готово: ${APK_PATH} (${sizeMb} МБ)`);

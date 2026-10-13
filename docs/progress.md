@@ -82,6 +82,13 @@
 - Release APK: `npm run build:apk` → `android/app/build/outputs/apk/release/sobes.apk` (43,8 МБ, arm64-v8a + armeabi-v7a, подписан debug-ключом). Копия — `dist/sobes.apk` (в `.gitignore`).
 - ARM-only APK на x86_64-эмуляторе падает (`SoLoaderDSONotFoundError: libreactnative.so` — SoLoader ищет `lib/x86_64`); на ARM-телефонах библиотеки на месте. Для эмулятора — `npm run build:apk -- --emulator`. Release-бандл проверен x86_64-сборкой: онбординг, практика, разбор, автопроигрывание схемы — без падений.
 
+## Иконка (13.10.2026)
+
+- Концепция: белое облачко диалога с фиолетовым `</>` и жёлтой искрой (цвет JS) на фирменном фиолетовом градиенте `#8466FF → #4527D9`.
+- Исходники — `assets/icon-src/*.svg` (1024×1024): `icon.svg` (полноцветная), `adaptive-foreground.svg` (знак в безопасной зоне, масштаб 0.8), `adaptive-background.svg` (градиент), `adaptive-monochrome.svg` (белый силуэт с вырезанным `</>` для тематических иконок Android 13+).
+- PNG отрисованы через playwright-core + системный Chrome (`page.screenshot({ omitBackground: true })`); новых пакетов не ставили. Подключены в `app.config.ts` (`icon`, `android.adaptiveIcon`), после изменения — `npx expo prebuild --platform android --no-install`.
+- Сплэш не делали: нужен пакет `expo-splash-screen` (спросить разрешение).
+
 ## Фаза 5 — релиз (следующая)
 
 - Иконка и сплэш (SVG → PNG, фон сплэша в обеих темах — уберёт серый экран при загрузке).

@@ -7,6 +7,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   scheme: 'sobes',
   version: '1.0.0',
   orientation: 'portrait',
+  icon: './assets/icon.png',
   userInterfaceStyle: 'automatic',
   newArchEnabled: true,
   ios: {
@@ -16,6 +17,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     package: 'com.sobes.app',
     versionCode: 1,
+    adaptiveIcon: {
+      foregroundImage: './assets/adaptive-icon.png',
+      backgroundImage: './assets/adaptive-background.png',
+      monochromeImage: './assets/adaptive-monochrome.png',
+      backgroundColor: '#5B3BE8',
+    },
     edgeToEdgeEnabled: true,
     predictiveBackGestureEnabled: false,
   },
