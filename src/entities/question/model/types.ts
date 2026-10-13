@@ -29,7 +29,10 @@ export type DiagramId =
   | 'closure-counters'
   | 'react-render-commit'
   | 'critical-rendering-path'
-  | 'http-revalidation';
+  | 'http-revalidation'
+  | 'binary-search'
+  | 'bfs-queue'
+  | 'recursion-stack';
 
 export type DiagramText = string | LocalizedText;
 

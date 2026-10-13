@@ -1,5 +1,7 @@
 import { AI_QUESTIONS } from './ai';
 import { AI_QUESTIONS_2 } from './ai-2';
+import { ALGORITHMS_QUESTIONS } from './algorithms';
+import { ALGORITHMS_QUESTIONS_2 } from './algorithms-2';
 import { CSS_QUESTIONS } from './css';
 import { CSS_QUESTIONS_2 } from './css-2';
 import { CSS_QUESTIONS_3 } from './css-3';
@@ -43,6 +45,8 @@ export const QUESTIONS: Question[] = [
   ...CSS_QUESTIONS_3,
   ...AI_QUESTIONS,
   ...AI_QUESTIONS_2,
+  ...ALGORITHMS_QUESTIONS,
+  ...ALGORITHMS_QUESTIONS_2,
 ];
 
 export const QUESTIONS_BY_ID: Readonly<Record<string, Question>> = Object.fromEntries(

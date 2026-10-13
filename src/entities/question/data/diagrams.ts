@@ -433,6 +433,185 @@ const HTTP_REVALIDATION: Diagram = {
   ),
 };
 
+const binarySearchLanes = (range: number[], middle: number | null, result: string | null): DiagramLane[] => [
+  {
+    id: 'range',
+    title: { ru: 'Диапазон поиска', en: 'Search range' },
+    tone: 'accent',
+    items: range.map((value) => code(`range-${value}`, String(value))),
+  },
+  {
+    id: 'middle',
+    title: { ru: 'Середина', en: 'Middle' },
+    tone: 'warning',
+    items: middle === null ? [] : [code(`middle-${middle}`, String(middle))],
+  },
+  {
+    id: 'result',
+    title: { ru: 'Результат', en: 'Result' },
+    tone: 'success',
+    items: result === null ? [] : [code('result', result)],
+  },
+];
+
+const BINARY_SEARCH: Diagram = {
+  id: 'binary-search',
+  layout: 'columns',
+  steps: [
+    {
+      caption: {
+        ru: 'Ищем 23 в отсортированном массиве. Сначала диапазон — весь массив.',
+        en: 'We’re looking for 23 in a sorted array. At first the range is the whole array.',
+      },
+      lanes: binarySearchLanes([3, 8, 12, 17, 23, 31, 42], null, null),
+    },
+    {
+      caption: {
+        ru: 'Середина — 17. 23 больше, значит левую половину вместе с серединой можно отбросить.',
+        en: 'The middle is 17. 23 is larger, so the left half and the middle can be discarded.',
+      },
+      lanes: binarySearchLanes([3, 8, 12, 17, 23, 31, 42], 17, null),
+    },
+    {
+      caption: {
+        ru: 'Остались 23, 31, 42 — середина 31. 23 меньше, отбрасываем правую часть.',
+        en: '23, 31, 42 remain — the middle is 31. 23 is smaller, so drop the right part.',
+      },
+      lanes: binarySearchLanes([23, 31, 42], 31, null),
+    },
+    {
+      caption: {
+        ru: 'Осталось одно число — нашли за 3 сравнения. Каждый шаг делит диапазон пополам, отсюда O(log n).',
+        en: 'One number is left — found in 3 comparisons. Each step halves the range, hence O(log n).',
+      },
+      lanes: binarySearchLanes([23], 23, 'index = 4'),
+    },
+  ],
+};
+
+const bfsLanes = (queue: string[], visited: string[]): DiagramLane[] => [
+  {
+    id: 'queue',
+    title: { ru: 'Очередь', en: 'Queue' },
+    tone: 'accent',
+    items: queue.map((node) => code(`queue-${node}`, node)),
+  },
+  {
+    id: 'visited',
+    title: { ru: 'Порядок обхода', en: 'Visit order' },
+    tone: 'neutral',
+    items: visited.map((node) => code(`visited-${node}`, node)),
+  },
+];
+
+const BFS_QUEUE: Diagram = {
+  id: 'bfs-queue',
+  layout: 'columns',
+  steps: [
+    {
+      caption: {
+        ru: 'Дерево: у A дети B и C, у B — D и E, у C — F. Кладём корень A в очередь.',
+        en: 'The tree: A has children B and C, B has D and E, C has F. Put the root A into the queue.',
+      },
+      lanes: bfsLanes(['A'], []),
+    },
+    {
+      caption: {
+        ru: 'Достаём A из начала очереди, посещаем и кладём в конец его детей B и C.',
+        en: 'Take A from the front of the queue, visit it, and add its children B and C to the back.',
+      },
+      lanes: bfsLanes(['B', 'C'], ['A']),
+    },
+    {
+      caption: {
+        ru: 'Достаём B, добавляем его детей D и E.',
+        en: 'Take B and add its children D and E.',
+      },
+      lanes: bfsLanes(['C', 'D', 'E'], ['A', 'B']),
+    },
+    {
+      caption: {
+        ru: 'Достаём C, добавляем F.',
+        en: 'Take C and add F.',
+      },
+      lanes: bfsLanes(['D', 'E', 'F'], ['A', 'B', 'C']),
+    },
+    {
+      caption: {
+        ru: 'У D, E и F детей нет — посещаем их по очереди. BFS идёт по уровням: A, затем B C, затем D E F.',
+        en: 'D, E and F have no children — visit them in order. BFS goes level by level: A, then B C, then D E F.',
+      },
+      lanes: bfsLanes([], ['A', 'B', 'C', 'D', 'E', 'F']),
+    },
+  ],
+};
+
+const RECURSION_CALLS = ['factorial(1)', 'factorial(2)', 'factorial(3)'];
+
+const recursionLanes = (stackDepth: number, returned: string[]): DiagramLane[] => [
+  {
+    id: 'stack',
+    title: { ru: 'Стек вызовов', en: 'Call stack' },
+    tone: 'accent',
+    items: RECURSION_CALLS.slice(RECURSION_CALLS.length - stackDepth).map((call) => code(`call-${call}`, call)),
+  },
+  {
+    id: 'returned',
+    title: { ru: 'Вернули', en: 'Returned' },
+    tone: 'success',
+    items: returned.map((value) => code(`returned-${value}`, value)),
+  },
+];
+
+const RECURSION_STACK: Diagram = {
+  id: 'recursion-stack',
+  layout: 'columns',
+  steps: [
+    {
+      caption: {
+        ru: 'Вызываем `factorial(3)` — вызов попадает в стек.',
+        en: 'We call `factorial(3)` — the call goes onto the stack.',
+      },
+      lanes: recursionLanes(1, []),
+    },
+    {
+      caption: {
+        ru: '`factorial(3)` ждёт результат `factorial(2)`: новый вызов кладётся сверху.',
+        en: '`factorial(3)` waits for `factorial(2)`: the new call is pushed on top.',
+      },
+      lanes: recursionLanes(2, []),
+    },
+    {
+      caption: {
+        ru: '`factorial(1)` — базовый случай, новых вызовов не будет.',
+        en: '`factorial(1)` is the base case — no more calls.',
+      },
+      lanes: recursionLanes(3, []),
+    },
+    {
+      caption: {
+        ru: '`factorial(1)` возвращает 1 и снимается со стека.',
+        en: '`factorial(1)` returns 1 and is popped off the stack.',
+      },
+      lanes: recursionLanes(2, ['1']),
+    },
+    {
+      caption: {
+        ru: '`factorial(2)` возвращает 2 · 1 = 2.',
+        en: '`factorial(2)` returns 2 · 1 = 2.',
+      },
+      lanes: recursionLanes(1, ['1', '2']),
+    },
+    {
+      caption: {
+        ru: '`factorial(3)` возвращает 3 · 2 = 6. Глубина стека росла вместе с n — отсюда O(n) памяти и `RangeError` при очень большой глубине.',
+        en: '`factorial(3)` returns 3 · 2 = 6. Stack depth grew with n — hence O(n) memory and a `RangeError` at very large depths.',
+      },
+      lanes: recursionLanes(0, ['1', '2', '6']),
+    },
+  ],
+};
+
 export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'event-loop-basic': EVENT_LOOP_BASIC,
   'event-loop-async': EVENT_LOOP_ASYNC,
@@ -441,4 +620,7 @@ export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'react-render-commit': REACT_RENDER_COMMIT,
   'critical-rendering-path': CRITICAL_RENDERING_PATH,
   'http-revalidation': HTTP_REVALIDATION,
+  'binary-search': BINARY_SEARCH,
+  'bfs-queue': BFS_QUEUE,
+  'recursion-stack': RECURSION_STACK,
 };

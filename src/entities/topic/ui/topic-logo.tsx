@@ -16,9 +16,35 @@ const LOGO_COLORS = {
   cssPurple: '#663399',
   aiEmerald: '#059669',
   aiMint: '#A7F3D0',
+  algoPink: '#DB2777',
+  algoBlush: '#FBCFE8',
   black: '#000000',
   white: '#FFFFFF',
 } as const;
+
+const ALGO_BARS = [
+  { x: 11, height: 10 },
+  { x: 23, height: 18 },
+  { x: 35, height: 27 },
+  { x: 47, height: 36 },
+];
+
+const AlgoMark = ({ size }: { size: number }): JSX.Element => (
+  <Svg width={size} height={size} viewBox="0 0 64 64">
+    <Rect width={64} height={64} rx={12} fill={LOGO_COLORS.algoPink} />
+    {ALGO_BARS.map((bar, index) => (
+      <Rect
+        key={bar.x}
+        x={bar.x}
+        y={50 - bar.height}
+        width={8}
+        height={bar.height}
+        rx={2}
+        fill={index === ALGO_BARS.length - 1 ? LOGO_COLORS.white : LOGO_COLORS.algoBlush}
+      />
+    ))}
+  </Svg>
+);
 
 const AiMark = ({ size }: { size: number }): JSX.Element => (
   <Svg width={size} height={size} viewBox="0 0 64 64">
@@ -92,6 +118,9 @@ export const TopicLogo = ({ topic, size = 40 }: TopicLogoProps): JSX.Element => 
   }
   if (topic === 'ai') {
     return <AiMark size={size} />;
+  }
+  if (topic === 'algorithms') {
+    return <AlgoMark size={size} />;
   }
   return <AllMark size={size} />;
 };

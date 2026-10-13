@@ -76,6 +76,16 @@ export const TAGS = {
   'ai-security': { topic: 'ai', title: { ru: 'Безопасность ИИ', en: 'AI security' } },
   'ai-frontend': { topic: 'ai', title: { ru: 'ИИ во фронтенде', en: 'AI in the frontend' } },
   'ai-tools': { topic: 'ai', title: { ru: 'ИИ-ассистенты в работе', en: 'AI assistants at work' } },
+
+  'big-o': { topic: 'algorithms', title: { ru: 'Сложность (Big-O)', en: 'Complexity (Big-O)' } },
+  'data-structures': { topic: 'algorithms', title: { ru: 'Структуры данных', en: 'Data structures' } },
+  searching: { topic: 'algorithms', title: { ru: 'Поиск', en: 'Searching' } },
+  sorting: { topic: 'algorithms', title: { ru: 'Сортировки', en: 'Sorting' } },
+  recursion: { topic: 'algorithms', title: { ru: 'Рекурсия', en: 'Recursion' } },
+  'two-pointers': { topic: 'algorithms', title: { ru: 'Два указателя и окно', en: 'Two pointers & window' } },
+  hashing: { topic: 'algorithms', title: { ru: 'Хэш-таблицы', en: 'Hash maps' } },
+  'trees-graphs': { topic: 'algorithms', title: { ru: 'Деревья и графы', en: 'Trees & graphs' } },
+  'dynamic-programming': { topic: 'algorithms', title: { ru: 'Динамическое программирование', en: 'Dynamic programming' } },
 } satisfies Record<string, TagMeta>;
 
 export type TagId = keyof typeof TAGS;

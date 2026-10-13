@@ -62,6 +62,16 @@ export const TOPICS: Record<TopicId, Topic> = {
       en: 'LLMs, prompting, RAG, agents, safety and AI in the frontend',
     },
   },
+  algorithms: {
+    id: 'algorithms',
+    accent: 'algorithms',
+    shortTitle: 'Algo',
+    title: { ru: 'Алгоритмы', en: 'Algorithms' },
+    description: {
+      ru: 'Big-O, структуры данных, поиск и сортировки, рекурсия, классические задачи',
+      en: 'Big-O, data structures, searching and sorting, recursion, classic problems',
+    },
+  },
 };
 
 export const getSelectionAccent = (selection: TopicSelection): AccentName =>

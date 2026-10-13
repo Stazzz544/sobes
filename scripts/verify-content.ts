@@ -14,7 +14,7 @@ import type { OptionContent, Question, QuestionVerification } from '../src/entit
 type CssComputedVerification = Extract<QuestionVerification, { kind: 'css-computed' }>;
 
 const LOCALES = ['ru', 'en'] as const;
-const ID_PREFIX = { javascript: 'js', typescript: 'ts', react: 'react', web: 'web', css: 'css', ai: 'ai' } as const;
+const ID_PREFIX = { javascript: 'js', typescript: 'ts', react: 'react', web: 'web', css: 'css', ai: 'ai', algorithms: 'algo' } as const;
 const CHROME_CANDIDATES = [
   process.env.CHROME_PATH,
   'C:/Program Files/Google/Chrome/Application/chrome.exe',
