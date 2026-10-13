@@ -11,7 +11,7 @@ import { ACCENT_COLORS, BASE_COLORS } from '../src/shared/theme/colors';
 import type { OptionContent, Question } from '../src/entities/question/model/types';
 
 const LOCALES = ['ru', 'en'] as const;
-const ID_PREFIX = { javascript: 'js', typescript: 'ts', react: 'react', web: 'web' } as const;
+const ID_PREFIX = { javascript: 'js', typescript: 'ts', react: 'react', web: 'web', ai: 'ai' } as const;
 const FORBIDDEN_OPTION_PATTERNS = [/все (перечисленн|вышеперечисленн)/i, /all of the above/i, /none of the above/i];
 const VIRTUAL_FILE = 'question.ts';
 

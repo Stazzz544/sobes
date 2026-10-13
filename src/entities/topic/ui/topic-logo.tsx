@@ -1,5 +1,5 @@
 import { JSX } from 'react';
-import Svg, { Circle, Ellipse, G, Rect, Text as SvgText } from 'react-native-svg';
+import Svg, { Circle, Ellipse, G, Path, Rect, Text as SvgText } from 'react-native-svg';
 import type { TopicSelection } from '../model/types';
 
 type TopicLogoProps = {
@@ -13,9 +13,25 @@ const LOGO_COLORS = {
   reactCyan: '#61DAFB',
   reactDark: '#20232A',
   html: '#E34F26',
+  aiEmerald: '#059669',
+  aiMint: '#A7F3D0',
   black: '#000000',
   white: '#FFFFFF',
 } as const;
+
+const AiMark = ({ size }: { size: number }): JSX.Element => (
+  <Svg width={size} height={size} viewBox="0 0 64 64">
+    <Rect width={64} height={64} rx={12} fill={LOGO_COLORS.aiEmerald} />
+    <Path
+      d="M28 13 C29.6 26 32 28.4 45 30 C32 31.6 29.6 34 28 47 C26.4 34 24 31.6 11 30 C24 28.4 26.4 26 28 13 Z"
+      fill={LOGO_COLORS.white}
+    />
+    <Path
+      d="M47 8 C47.7 13.4 48.6 14.3 54 15 C48.6 15.7 47.7 16.6 47 22 C46.3 16.6 45.4 15.7 40 15 C45.4 14.3 46.3 13.4 47 8 Z"
+      fill={LOGO_COLORS.aiMint}
+    />
+  </Svg>
+);
 
 const LetterMark = ({ size, background, foreground, label }: { size: number; background: string; foreground: string; label: string }): JSX.Element => (
   <Svg width={size} height={size} viewBox="0 0 64 64">
@@ -69,6 +85,9 @@ export const TopicLogo = ({ topic, size = 40 }: TopicLogoProps): JSX.Element => 
   }
   if (topic === 'web') {
     return <WebMark size={size} />;
+  }
+  if (topic === 'ai') {
+    return <AiMark size={size} />;
   }
   return <AllMark size={size} />;
 };

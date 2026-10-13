@@ -42,6 +42,16 @@ export const TOPICS: Record<TopicId, Topic> = {
       en: 'HTTP, browser, security, CSS, performance, deployment',
     },
   },
+  ai: {
+    id: 'ai',
+    accent: 'ai',
+    shortTitle: 'AI',
+    title: { ru: 'ИИ и LLM', en: 'AI & LLMs' },
+    description: {
+      ru: 'LLM, промпты, RAG, агенты, безопасность и ИИ во фронтенде',
+      en: 'LLMs, prompting, RAG, agents, safety and AI in the frontend',
+    },
+  },
 };
 
 export const getSelectionAccent = (selection: TopicSelection): AccentName =>

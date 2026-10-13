@@ -22,6 +22,11 @@ export const en: Dictionary = {
     allShort: 'All',
     allDescription: 'Questions from every topic, shuffled',
   },
+  topicMenu: {
+    open: 'Choose a topic',
+    close: 'Close topic picker',
+    title: 'What are we practicing?',
+  },
   onboarding: {
     welcomeTitle: 'Hi! This is Sobes',
     welcomeText:

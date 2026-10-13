@@ -54,4 +54,5 @@ Android-тренажёр для подготовки к собеседовани
 - Кириллицу вводить через буфер хоста, `adb shell input text` её не умеет.
 - Release APK: `npm run build:apk` → `dist/sobes.apk` (arm64-v8a + armeabi-v7a). На x86_64-эмуляторе ARM-only APK падает (`libreactnative.so` не найден) — для эмулятора `npm run build:apk -- --emulator` → `dist/sobes-emulator.apk` (только x86_64). Gradle при каждой сборке чистит `outputs/apk/release`, поэтому готовые APK лежат в `dist/`.
 - Фоновые задачи Bash живут 30 мин по умолчанию — эмулятор и Metro запускать с `timeout: 7200000`, эмулятор — с `-no-snapshot-load`. Если эмулятор сразу закрывается — удалить `~/.android/avd/Pixel_9_Pro_XL.avd/multiinstance.lock`.
+- `npx expo run:android` без `JAVA_HOME` падает (код 9009) — задать `JAVA_HOME="C:\Program Files\Android\Android Studio\jbr"`. `INSTALL_FAILED_INSUFFICIENT_STORAGE` на эмуляторе — `adb shell pm trim-caches 99G`.
 - Никаких бэктиков внутри `node -e "…"` под bash: они выполняются как команды. Такие правки — только через Edit.

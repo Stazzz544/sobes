@@ -89,6 +89,20 @@
 - PNG отрисованы через playwright-core + системный Chrome (`page.screenshot({ omitBackground: true })`); новых пакетов не ставили. Подключены в `app.config.ts` (`icon`, `android.adaptiveIcon`), после изменения — `npx expo prebuild --platform android --no-install`.
 - Сплэш не делали: нужен пакет `expo-splash-screen` (спросить разрешение).
 
+## Тема «ИИ и LLM» (13.10.2026)
+
+- Шестая тема `ai`: изумрудная палитра (light `#047857`/шапка `#059669`, dark `#34D399`), логотип — искры, теги `llm-basics`, `prompting`, `rag`, `agents`, `ai-security`, `ai-frontend`, `ai-tools`.
+- 32 вопроса RU+EN (`data/ai.ts`, `data/ai-2.ts`; 14/13/5 по сложности): LLM и токены, контекст, галлюцинации, temperature, промпты, structured output, RAG и эмбеддинги, function calling, агенты, MCP, ключи API, prompt injection, XSS из ответа модели, стриминг, UX ИИ-функций, 429, работа с ИИ-ассистентами.
+- Источники — Claude Docs, Google ML, Hugging Face, OWASP GenAI, MDN, AWS, MCP; все 276 ссылок банка живые.
+- `TopicSwitcher` сам докручивается до выбранной темы (с 6 темами выбранный чип уходил за край).
+- Проверено на эмуляторе: онбординг → ИИ, главная light/dark, вопрос.
+
+## Выбор темы из шапки (13.10.2026)
+
+- Бургер в шапке вкладки «Тренировка» опускает шторку из-под шапки с карточками тем (`features/select-topic`: `topicMenuModel`, `TopicMenuButton`, `TopicMenuSheet`). Карточки — общий `TopicCardList` из `entities/topic`, его же использует онбординг.
+- Выбор темы закрывает шторку; ещё закрывают крестик, тап по затемнению, «Назад» и уход с вкладки. При открытии список прокручивается к выбранной теме.
+- Проверено на эмуляторе 360 dp: dark (AI → React), light (React → JS, чёрный бургер на жёлтой шапке), «Назад», тап по фону.
+
 ## Фаза 5 — релиз (следующая)
 
 - Иконка и сплэш (SVG → PNG, фон сплэша в обеих темах — уберёт серый экран при загрузке).

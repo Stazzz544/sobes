@@ -20,6 +20,11 @@ export const ru = {
     allShort: 'Все',
     allDescription: 'Вопросы по всем темам вперемешку',
   },
+  topicMenu: {
+    open: 'Выбрать тему',
+    close: 'Закрыть выбор темы',
+    title: 'Что тренируем?',
+  },
   onboarding: {
     welcomeTitle: 'Привет! Это Sobes',
     welcomeText:

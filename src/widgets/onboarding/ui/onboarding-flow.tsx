@@ -2,7 +2,7 @@ import { JSX } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useUnit } from 'effector-react';
 import { settingsModel } from '@app/entities/settings';
-import { TopicCard, TopicLogo, TOPIC_SELECTIONS, topicModel } from '@app/entities/topic';
+import { TopicCardList, TopicLogo, topicModel } from '@app/entities/topic';
 import { LOCALES, LOCALE_NAMES, useI18n } from '@app/shared/i18n';
 import { AppText, Button, Screen, SegmentedControl } from '@app/shared/ui';
 import type { Locale } from '@app/shared/i18n';
@@ -38,16 +38,7 @@ export const OnboardingFlow = (): JSX.Element => {
 
       <View style={styles.section}>
         <AppText variant="title">{t('onboarding.topicTitle')}</AppText>
-        <View accessibilityRole="radiogroup" style={styles.cards}>
-          {TOPIC_SELECTIONS.map((selection) => (
-            <TopicCard
-              key={selection}
-              topic={selection}
-              isSelected={selection === topic}
-              onPress={() => onTopicSelect(selection)}
-            />
-          ))}
-        </View>
+        <TopicCardList value={topic} onChange={onTopicSelect} />
         <AppText variant="caption" tone="muted">
           {t('onboarding.topicHint')}
         </AppText>
@@ -64,9 +55,6 @@ const styles = StyleSheet.create({
     paddingTop: 8,
   },
   section: {
-    gap: 10,
-  },
-  cards: {
     gap: 10,
   },
 });

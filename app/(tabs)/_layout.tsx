@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useUnit } from 'effector-react';
 import { progressModel } from '@app/entities/progress';
 import { QUESTIONS_BY_ID } from '@app/entities/question';
+import { TopicMenuButton } from '@app/features/select-topic';
 import { useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
 
@@ -30,6 +31,7 @@ export default function TabsLayout(): JSX.Element {
         name="index"
         options={{
           title: 'Sobes',
+          headerLeft: () => <TopicMenuButton />,
           tabBarLabel: t('tabs.train'),
           tabBarIcon: ({ color, size }) => <Ionicons name="school-outline" size={size} color={color} />,
         }}

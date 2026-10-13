@@ -57,6 +57,14 @@ export const TAGS = {
   tooling: { topic: 'web', title: { ru: 'Сборка', en: 'Tooling' } },
   deploy: { topic: 'web', title: { ru: 'Деплой', en: 'Deployment' } },
   git: { topic: 'web', title: { ru: 'Git', en: 'Git' } },
+
+  'llm-basics': { topic: 'ai', title: { ru: 'Основы LLM', en: 'LLM basics' } },
+  prompting: { topic: 'ai', title: { ru: 'Промпты', en: 'Prompting' } },
+  rag: { topic: 'ai', title: { ru: 'RAG и эмбеддинги', en: 'RAG & embeddings' } },
+  agents: { topic: 'ai', title: { ru: 'Агенты и инструменты', en: 'Agents & tools' } },
+  'ai-security': { topic: 'ai', title: { ru: 'Безопасность ИИ', en: 'AI security' } },
+  'ai-frontend': { topic: 'ai', title: { ru: 'ИИ во фронтенде', en: 'AI in the frontend' } },
+  'ai-tools': { topic: 'ai', title: { ru: 'ИИ-ассистенты в работе', en: 'AI assistants at work' } },
 } satisfies Record<string, TagMeta>;
 
 export type TagId = keyof typeof TAGS;

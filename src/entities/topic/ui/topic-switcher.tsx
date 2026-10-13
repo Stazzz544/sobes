@@ -1,4 +1,4 @@
-import { JSX } from 'react';
+import { JSX, useEffect, useRef } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text } from 'react-native';
 import { MIN_TOUCH_SIZE, TOPIC_SELECTIONS } from '@app/shared/config';
 import { useI18n } from '@app/shared/i18n';
@@ -12,12 +12,28 @@ type TopicSwitcherProps = {
   onChange: (topic: TopicSelection) => void;
 };
 
+const SCROLL_INSET = 16;
+
 export const TopicSwitcher = ({ value, onChange }: TopicSwitcherProps): JSX.Element => {
   const { colors } = useTheme();
   const { t } = useI18n();
+  const scrollRef = useRef<ScrollView>(null);
+  const chipOffsets = useRef<Partial<Record<TopicSelection, number>>>({});
+
+  const scrollToChip = (topic: TopicSelection, animated: boolean): void => {
+    const offset = chipOffsets.current[topic];
+    if (offset !== undefined) {
+      scrollRef.current?.scrollTo({ x: Math.max(offset - SCROLL_INSET, 0), animated });
+    }
+  };
+
+  useEffect(() => {
+    scrollToChip(value, true);
+  }, [value]);
 
   return (
     <ScrollView
+      ref={scrollRef}
       horizontal
       showsHorizontalScrollIndicator={false}
       style={styles.scroll}
@@ -31,6 +47,12 @@ export const TopicSwitcher = ({ value, onChange }: TopicSwitcherProps): JSX.Elem
           <Pressable
             key={topic}
             onPress={() => onChange(topic)}
+            onLayout={(event) => {
+              chipOffsets.current[topic] = event.nativeEvent.layout.x;
+              if (isSelected) {
+                scrollToChip(topic, false);
+              }
+            }}
             accessibilityRole="radio"
             accessibilityState={{ selected: isSelected }}
             accessibilityLabel={label}
