@@ -2,6 +2,7 @@ import type { Dictionary } from './dictionary';
 
 export const en: Dictionary = {
   common: {
+    appName: 'Sobes',
     start: 'Start',
     next: 'Next',
     back: 'Back',
@@ -26,6 +27,7 @@ export const en: Dictionary = {
     open: 'Choose a topic',
     close: 'Close topic picker',
     title: 'What are we practicing?',
+    current: 'Current topic: {topic}',
   },
   onboarding: {
     welcomeTitle: 'Hi! This is Sobes',

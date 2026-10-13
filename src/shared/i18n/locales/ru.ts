@@ -1,5 +1,6 @@
 export const ru = {
   common: {
+    appName: 'Sobes',
     start: 'Начать',
     next: 'Далее',
     back: 'Назад',
@@ -24,6 +25,7 @@ export const ru = {
     open: 'Выбрать тему',
     close: 'Закрыть выбор темы',
     title: 'Что тренируем?',
+    current: 'Текущая тема: {topic}',
   },
   onboarding: {
     welcomeTitle: 'Привет! Это Sobes',

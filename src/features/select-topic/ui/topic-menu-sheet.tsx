@@ -1,10 +1,11 @@
 import { JSX, ReactNode, useCallback, useEffect, useRef } from 'react';
-import { BackHandler, Pressable, ScrollView, StyleSheet, View } from 'react-native';
-import Animated, { FadeIn, FadeOut, SlideInUp, SlideOutUp } from 'react-native-reanimated';
+import { BackHandler, ScrollView, StyleSheet, View } from 'react-native';
+import Animated, { SlideInUp, SlideOutUp } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useFocusEffect } from 'expo-router';
 import { useUnit } from 'effector-react';
 import { TopicCardList, topicModel } from '@app/entities/topic';
-import { CARD_BORDER_RADIUS, SCREEN_PADDING } from '@app/shared/config';
+import { SCREEN_PADDING } from '@app/shared/config';
 import { useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
 import { AppText } from '@app/shared/ui';
@@ -17,6 +18,7 @@ type TopicMenuSheetProps = {
 export const TopicMenuSheet = ({ children }: TopicMenuSheetProps): JSX.Element => {
   const { colors } = useTheme();
   const { t } = useI18n();
+  const insets = useSafeAreaInsets();
   const { isOpen, topic, onClose, onPick } = useUnit({
     isOpen: topicMenuModel.$isMenuOpen,
     topic: topicModel.$currentTopic,
@@ -45,36 +47,26 @@ export const TopicMenuSheet = ({ children }: TopicMenuSheetProps): JSX.Element =
       </View>
       <View style={styles.layer}>
         {isOpen ? (
-          <>
-            <Animated.View
-              entering={FadeIn.duration(200)}
-              exiting={FadeOut.duration(200)}
-              style={[StyleSheet.absoluteFill, { backgroundColor: colors.overlay }]}
+          <Animated.View
+            entering={SlideInUp.duration(260)}
+            exiting={SlideOutUp.duration(200)}
+            style={[styles.sheet, { backgroundColor: colors.bgPrimary }]}
+          >
+            <AppText variant="label" tone="muted" style={styles.title}>
+              {t('topicMenu.title')}
+            </AppText>
+            <ScrollView
+              ref={scrollRef}
+              style={styles.root}
+              contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + SCREEN_PADDING * 2 }]}
             >
-              <Pressable
-                style={styles.root}
-                onPress={() => onClose()}
-                accessibilityRole="button"
-                accessibilityLabel={t('common.close')}
+              <TopicCardList
+                value={topic}
+                onChange={onPick}
+                onSelectedLayout={(offsetY) => scrollRef.current?.scrollTo({ y: offsetY, animated: false })}
               />
-            </Animated.View>
-            <Animated.View
-              entering={SlideInUp.duration(260)}
-              exiting={SlideOutUp.duration(200)}
-              style={[styles.sheet, { backgroundColor: colors.bgPrimary }]}
-            >
-              <AppText variant="label" tone="muted" style={styles.title}>
-                {t('topicMenu.title')}
-              </AppText>
-              <ScrollView ref={scrollRef} style={styles.scroll} contentContainerStyle={styles.content}>
-                <TopicCardList
-                  value={topic}
-                  onChange={onPick}
-                  onSelectedLayout={(offsetY) => scrollRef.current?.scrollTo({ y: offsetY, animated: false })}
-                />
-              </ScrollView>
-            </Animated.View>
-          </>
+            </ScrollView>
+          </Animated.View>
         ) : null}
       </View>
     </View>
@@ -91,26 +83,14 @@ const styles = StyleSheet.create({
     pointerEvents: 'box-none',
   },
   sheet: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    maxHeight: '85%',
-    borderBottomLeftRadius: CARD_BORDER_RADIUS + 8,
-    borderBottomRightRadius: CARD_BORDER_RADIUS + 8,
-    overflow: 'hidden',
+    ...StyleSheet.absoluteFillObject,
   },
   title: {
     paddingHorizontal: SCREEN_PADDING,
     paddingTop: SCREEN_PADDING,
     paddingBottom: 12,
   },
-  scroll: {
-    flexGrow: 0,
-    flexShrink: 1,
-  },
   content: {
     paddingHorizontal: SCREEN_PADDING,
-    paddingBottom: SCREEN_PADDING + 4,
   },
 });
