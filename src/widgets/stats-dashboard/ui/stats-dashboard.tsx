@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { useUnit } from 'effector-react';
 import { progressModel } from '@app/entities/progress';
 import { QUESTIONS, QUESTIONS_BY_ID, TAGS } from '@app/entities/question';
-import { TOPICS, TopicLogo, TopicSwitcher, topicModel } from '@app/entities/topic';
+import { TOPICS, TopicLogo, topicModel } from '@app/entities/topic';
 import { useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
 import { AppText, Button, Card, EmptyState, ProgressBar, Screen } from '@app/shared/ui';
@@ -37,11 +37,10 @@ const Tile = ({ label, value }: TileProps): JSX.Element => (
 export const StatsDashboard = ({ onPracticeTag }: StatsDashboardProps): JSX.Element => {
   const { colors } = useTheme();
   const { t, text } = useI18n();
-  const { log, stats, topic, onTopicSelect } = useUnit({
+  const { log, stats, topic } = useUnit({
     log: progressModel.$answerLog,
     stats: progressModel.$questionStats,
     topic: topicModel.$currentTopic,
-    onTopicSelect: topicModel.topicSelected,
   });
   const overview = useMemo(
     () =>
@@ -51,7 +50,6 @@ export const StatsDashboard = ({ onPracticeTag }: StatsDashboardProps): JSX.Elem
 
   return (
     <Screen>
-      <TopicSwitcher value={topic} onChange={onTopicSelect} />
       {overview.answered === 0 ? (
         <EmptyState icon="stats-chart-outline" title={t('stats.emptyTitle')} text={t('stats.emptyText')} />
       ) : (

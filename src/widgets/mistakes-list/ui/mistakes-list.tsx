@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useUnit } from 'effector-react';
 import { progressModel } from '@app/entities/progress';
 import { QUESTIONS_BY_ID, TAGS } from '@app/entities/question';
-import { TopicLogo, TopicSwitcher, topicModel } from '@app/entities/topic';
+import { TopicLogo, topicModel } from '@app/entities/topic';
 import { CARD_BORDER_RADIUS, MIN_TOUCH_SIZE } from '@app/shared/config';
 import { useI18n } from '@app/shared/i18n';
 import { toPlainText } from '@app/shared/lib';
@@ -21,11 +21,10 @@ type MistakesListProps = {
 export const MistakesList = ({ onOpenQuestion, onReview }: MistakesListProps): JSX.Element => {
   const { colors } = useTheme();
   const { t, text } = useI18n();
-  const { mistakeIds, stats, topic, onTopicSelect } = useUnit({
+  const { mistakeIds, stats, topic } = useUnit({
     mistakeIds: progressModel.$mistakeIds,
     stats: progressModel.$questionStats,
     topic: topicModel.$currentTopic,
-    onTopicSelect: topicModel.topicSelected,
   });
   const questions = mistakeIds
     .map((questionId) => QUESTIONS_BY_ID[questionId])
@@ -34,7 +33,6 @@ export const MistakesList = ({ onOpenQuestion, onReview }: MistakesListProps): J
 
   return (
     <Screen>
-      <TopicSwitcher value={topic} onChange={onTopicSelect} />
       {questions.length === 0 ? (
         <EmptyState icon="checkmark-done-outline" title={t('mistakes.emptyTitle')} text={t('mistakes.emptyText')} />
       ) : (
