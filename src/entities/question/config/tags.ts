@@ -1,0 +1,62 @@
+import type { TopicId } from '@app/shared/config';
+import type { LocalizedText } from '@app/shared/i18n';
+
+type TagMeta = {
+  topic: TopicId;
+  title: LocalizedText;
+};
+
+export const TAGS = {
+  'types-coercion': { topic: 'javascript', title: { ru: 'Типы и приведение', en: 'Types & coercion' } },
+  scope: { topic: 'javascript', title: { ru: 'Области видимости', en: 'Scope' } },
+  closures: { topic: 'javascript', title: { ru: 'Замыкания', en: 'Closures' } },
+  this: { topic: 'javascript', title: { ru: 'this', en: 'this' } },
+  prototypes: { topic: 'javascript', title: { ru: 'Прототипы и классы', en: 'Prototypes & classes' } },
+  'event-loop': { topic: 'javascript', title: { ru: 'Event loop', en: 'Event loop' } },
+  promises: { topic: 'javascript', title: { ru: 'Промисы и async', en: 'Promises & async' } },
+  objects: { topic: 'javascript', title: { ru: 'Объекты и ссылки', en: 'Objects & references' } },
+  equality: { topic: 'javascript', title: { ru: 'Сравнения', en: 'Equality' } },
+  modules: { topic: 'javascript', title: { ru: 'Модули', en: 'Modules' } },
+  iterators: { topic: 'javascript', title: { ru: 'Итераторы и генераторы', en: 'Iterators & generators' } },
+  collections: { topic: 'javascript', title: { ru: 'Map, Set, Weak*', en: 'Map, Set, Weak*' } },
+  arrays: { topic: 'javascript', title: { ru: 'Массивы', en: 'Arrays' } },
+
+  'any-unknown-never': { topic: 'typescript', title: { ru: 'any, unknown, never', en: 'any, unknown, never' } },
+  narrowing: { topic: 'typescript', title: { ru: 'Сужение типов', en: 'Narrowing' } },
+  generics: { topic: 'typescript', title: { ru: 'Дженерики', en: 'Generics' } },
+  'utility-types': { topic: 'typescript', title: { ru: 'Utility types', en: 'Utility types' } },
+  'conditional-types': { topic: 'typescript', title: { ru: 'Условные типы', en: 'Conditional types' } },
+  'mapped-types': { topic: 'typescript', title: { ru: 'Mapped types', en: 'Mapped types' } },
+  'keyof-typeof': { topic: 'typescript', title: { ru: 'keyof и typeof', en: 'keyof & typeof' } },
+  satisfies: { topic: 'typescript', title: { ru: 'satisfies и as', en: 'satisfies & as' } },
+  enums: { topic: 'typescript', title: { ru: 'Enum и литералы', en: 'Enums & literals' } },
+  'structural-typing': { topic: 'typescript', title: { ru: 'Структурная типизация', en: 'Structural typing' } },
+
+  rendering: { topic: 'react', title: { ru: 'Рендер и reconciliation', en: 'Rendering & reconciliation' } },
+  keys: { topic: 'react', title: { ru: 'Ключи', en: 'Keys' } },
+  'hooks-rules': { topic: 'react', title: { ru: 'Правила хуков', en: 'Rules of hooks' } },
+  state: { topic: 'react', title: { ru: 'Состояние', en: 'State' } },
+  effects: { topic: 'react', title: { ru: 'Эффекты', en: 'Effects' } },
+  memoization: { topic: 'react', title: { ru: 'Мемоизация', en: 'Memoization' } },
+  context: { topic: 'react', title: { ru: 'Context', en: 'Context' } },
+  refs: { topic: 'react', title: { ru: 'Refs', en: 'Refs' } },
+  forms: { topic: 'react', title: { ru: 'Формы', en: 'Forms' } },
+  'react-19': { topic: 'react', title: { ru: 'React 19', en: 'React 19' } },
+  suspense: { topic: 'react', title: { ru: 'Suspense и lazy', en: 'Suspense & lazy' } },
+  'server-components': { topic: 'react', title: { ru: 'Серверные компоненты', en: 'Server components' } },
+
+  http: { topic: 'web', title: { ru: 'HTTP', en: 'HTTP' } },
+  caching: { topic: 'web', title: { ru: 'Кэширование', en: 'Caching' } },
+  'browser-rendering': { topic: 'web', title: { ru: 'Рендеринг в браузере', en: 'Browser rendering' } },
+  security: { topic: 'web', title: { ru: 'Безопасность', en: 'Security' } },
+  networking: { topic: 'web', title: { ru: 'Сеть', en: 'Networking' } },
+  performance: { topic: 'web', title: { ru: 'Производительность', en: 'Performance' } },
+  css: { topic: 'web', title: { ru: 'CSS', en: 'CSS' } },
+  'html-a11y': { topic: 'web', title: { ru: 'HTML и доступность', en: 'HTML & accessibility' } },
+  storage: { topic: 'web', title: { ru: 'Хранилища', en: 'Storage' } },
+  tooling: { topic: 'web', title: { ru: 'Сборка', en: 'Tooling' } },
+  deploy: { topic: 'web', title: { ru: 'Деплой', en: 'Deployment' } },
+  git: { topic: 'web', title: { ru: 'Git', en: 'Git' } },
+} satisfies Record<string, TagMeta>;
+
+export type TagId = keyof typeof TAGS;

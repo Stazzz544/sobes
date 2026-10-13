@@ -1,0 +1,380 @@
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
+import ts from 'typescript';
+import { TAGS } from '../src/entities/question/config/tags';
+import { QUESTIONS } from '../src/entities/question/data';
+import { DIAGRAMS } from '../src/entities/question/data/diagrams';
+import { OPTION_IDS } from '../src/entities/question/model/types';
+import { ACCENT_COLORS, BASE_COLORS } from '../src/shared/theme/colors';
+import type { OptionContent, Question } from '../src/entities/question/model/types';
+
+const LOCALES = ['ru', 'en'] as const;
+const ID_PREFIX = { javascript: 'js', typescript: 'ts', react: 'react', web: 'web' } as const;
+const FORBIDDEN_OPTION_PATTERNS = [/все (перечисленн|вышеперечисленн)/i, /all of the above/i, /none of the above/i];
+const VIRTUAL_FILE = 'question.ts';
+
+const errors: string[] = [];
+const warnings: string[] = [];
+
+const fail = (question: Question | null, message: string): void => {
+  errors.push(question ? `${question.id}: ${message}` : message);
+};
+
+const normalize = (value: string): string => value.replace(/\s+/g, ' ').trim();
+
+const normalizeType = (value: string): string => {
+  const parts: string[] = [];
+  let depth = 0;
+  let current = '';
+  for (const char of normalize(value)) {
+    if ('<({['.includes(char)) {
+      depth += 1;
+    }
+    if ('>)}]'.includes(char)) {
+      depth -= 1;
+    }
+    if (char === '|' && depth === 0) {
+      parts.push(current.trim());
+      current = '';
+      continue;
+    }
+    current += char;
+  }
+  parts.push(current.trim());
+  return parts.sort().join(' | ');
+};
+
+const optionKey = (option: OptionContent, locale: (typeof LOCALES)[number]): string =>
+  'code' in option ? normalize(option.code) : normalize(option.text[locale]).toLowerCase();
+
+const getCorrectOption = (question: Question): OptionContent => question.options[OPTION_IDS.indexOf(question.answer)];
+
+const checkStructure = (question: Question, seenIds: Set<string>): void => {
+  if (seenIds.has(question.id)) {
+    fail(question, 'повторяющийся id');
+  }
+  seenIds.add(question.id);
+  if (!new RegExp(`^${ID_PREFIX[question.topic]}-[a-z0-9-]+-\\d{3}$`).test(question.id)) {
+    fail(question, `id не соответствует шаблону ${ID_PREFIX[question.topic]}-<тема>-NNN`);
+  }
+  if (question.tags.length === 0) {
+    fail(question, 'нет тегов');
+  }
+  for (const tag of question.tags) {
+    if (TAGS[tag].topic !== question.topic) {
+      fail(question, `тег ${tag} относится к теме ${TAGS[tag].topic}`);
+    }
+  }
+  for (const locale of LOCALES) {
+    if (!question.prompt[locale].trim()) {
+      fail(question, `пустая формулировка (${locale})`);
+    }
+    const keys = question.options.map((option) => optionKey(option, locale));
+    if (new Set(keys).size !== keys.length) {
+      fail(question, `повторяющиеся варианты (${locale})`);
+    }
+    for (const option of question.options) {
+      const text = 'code' in option ? option.code : option.text[locale];
+      if (!text.trim()) {
+        fail(question, `пустой вариант (${locale})`);
+      }
+      if ('code' in option && /[а-яё]/i.test(option.code)) {
+        fail(question, `кириллица в варианте-коде «${option.code}» — нужен text { ru, en }`);
+      }
+      if (FORBIDDEN_OPTION_PATTERNS.some((pattern) => pattern.test(text))) {
+        fail(question, `запрещённый вариант «${text}»`);
+      }
+    }
+    for (const block of question.explanation) {
+      if (block.type === 'text' && !block.text[locale].trim()) {
+        fail(question, `пустой блок пояснения (${locale})`);
+      }
+      if (block.type === 'code' && block.caption && !block.caption[locale].trim()) {
+        fail(question, `пустая подпись к коду (${locale})`);
+      }
+    }
+  }
+  if (!OPTION_IDS.includes(question.answer)) {
+    fail(question, `некорректный answer ${question.answer}`);
+  }
+  if (!question.explanation.some((block) => block.type === 'text')) {
+    fail(question, 'в пояснении нет текста');
+  }
+  if (question.sources.length === 0) {
+    fail(question, 'нет источников');
+  }
+  for (const source of question.sources) {
+    if (!source.url.startsWith('https://')) {
+      fail(question, `источник не https: ${source.url}`);
+    }
+  }
+};
+
+const checkJsOutput = (question: Question, workDir: string, transpile = false): void => {
+  if (!question.code) {
+    fail(question, 'js-output без кода');
+    return;
+  }
+  const file = path.join(workDir, `${question.id}.js`);
+  const source = transpile
+    ? ts.transpileModule(question.code.source, {
+        compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
+      }).outputText
+    : question.code.source;
+  writeFileSync(file, source);
+  const result = spawnSync(process.execPath, [file], { encoding: 'utf8', timeout: 5000 });
+  if (result.status !== 0) {
+    fail(question, `код упал: ${result.stderr.trim().split('\n')[0] ?? ''}`);
+    return;
+  }
+  const actual = normalize(result.stdout);
+  const correct = getCorrectOption(question);
+  if (!('code' in correct) || normalize(correct.code) !== actual) {
+    fail(question, `фактический вывод «${actual}» не совпадает с верным вариантом`);
+  }
+  question.options.forEach((option, index) => {
+    if (OPTION_IDS[index] !== question.answer && 'code' in option && normalize(option.code) === actual) {
+      fail(question, `вариант ${OPTION_IDS[index]} тоже совпадает с выводом`);
+    }
+  });
+};
+
+const COMPILER_OPTIONS: ts.CompilerOptions = {
+  strict: true,
+  noEmit: true,
+  target: ts.ScriptTarget.ES2022,
+  module: ts.ModuleKind.ESNext,
+  moduleResolution: ts.ModuleResolutionKind.Bundler,
+  lib: ['lib.es2022.d.ts', 'lib.dom.d.ts'],
+  types: [],
+  skipLibCheck: true,
+};
+
+const compile = (source: string): { program: ts.Program; diagnostics: readonly ts.Diagnostic[] } => {
+  const host = ts.createCompilerHost(COMPILER_OPTIONS);
+  const originalGetSourceFile = host.getSourceFile;
+  host.getSourceFile = (fileName, languageVersion, ...rest) =>
+    fileName === VIRTUAL_FILE
+      ? ts.createSourceFile(fileName, source, languageVersion, true)
+      : originalGetSourceFile.call(host, fileName, languageVersion, ...rest);
+  const originalFileExists = host.fileExists;
+  host.fileExists = (fileName) => fileName === VIRTUAL_FILE || originalFileExists.call(host, fileName);
+  const program = ts.createProgram([VIRTUAL_FILE], COMPILER_OPTIONS, host);
+  return { program, diagnostics: ts.getPreEmitDiagnostics(program) };
+};
+
+const formatDiagnostic = (diagnostic: ts.Diagnostic): string =>
+  `TS${diagnostic.code}: ${ts.flattenDiagnosticMessageText(diagnostic.messageText, ' ')}`;
+
+const findDeclaration = (node: ts.Node, name: string): ts.Identifier | null => {
+  if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === name) {
+    return node.name;
+  }
+  return ts.forEachChild(node, (child) => findDeclaration(child, name) ?? undefined) ?? null;
+};
+
+const checkTsType = (question: Question, symbol: string): void => {
+  if (!question.code) {
+    fail(question, 'ts-type без кода');
+    return;
+  }
+  const { program, diagnostics } = compile(question.code.source);
+  if (diagnostics.length > 0) {
+    fail(question, `код не компилируется: ${diagnostics.map(formatDiagnostic).join('; ')}`);
+    return;
+  }
+  const sourceFile = program.getSourceFile(VIRTUAL_FILE);
+  const identifier = sourceFile ? findDeclaration(sourceFile, symbol) : null;
+  if (!identifier) {
+    fail(question, `не найдена переменная ${symbol}`);
+    return;
+  }
+  const checker = program.getTypeChecker();
+  const actual = normalizeType(checker.typeToString(checker.getTypeAtLocation(identifier)));
+  const correct = getCorrectOption(question);
+  if (!('code' in correct) || normalizeType(correct.code) !== actual) {
+    fail(question, `фактический тип «${actual}» не совпадает с верным вариантом`);
+  }
+  question.options.forEach((option, index) => {
+    if (OPTION_IDS[index] !== question.answer && 'code' in option && normalizeType(option.code) === actual) {
+      fail(question, `вариант ${OPTION_IDS[index]} тоже совпадает с типом`);
+    }
+  });
+};
+
+const checkTsError = (question: Question, code: number): void => {
+  const { diagnostics } = compile(question.code?.source ?? '');
+  const codes = diagnostics.map((diagnostic) => diagnostic.code);
+  if (codes.length === 0 || codes.some((actual) => actual !== code)) {
+    fail(question, `ожидалась только ошибка TS${code}, получено: ${diagnostics.map(formatDiagnostic).join('; ') || 'ошибок нет'}`);
+  }
+};
+
+const checkTsSource = (question: Question, extra: string): void => {
+  const source = [question.code?.source ?? '', extra].join('\n');
+  const { diagnostics } = compile(source);
+  if (diagnostics.length > 0) {
+    fail(question, `ts-check: ${diagnostics.map(formatDiagnostic).join('; ')}`);
+  }
+};
+
+const hexToLuminance = (hex: string): number => {
+  const channels = (hex.replace('#', '').match(/../g) ?? []).map((pair) => {
+    const value = parseInt(pair, 16) / 255;
+    return value <= 0.03928 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+  });
+  const [red = 0, green = 0, blue = 0] = channels;
+  return 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+};
+
+const contrast = (first: string, second: string): number => {
+  const [light, dark] = [hexToLuminance(first), hexToLuminance(second)].sort((a, b) => b - a);
+  return ((light ?? 0) + 0.05) / ((dark ?? 0) + 0.05);
+};
+
+const checkContrast = (): void => {
+  for (const scheme of ['light', 'dark'] as const) {
+    const base = BASE_COLORS[scheme];
+    const textPairs: [string, string, string][] = [
+      ['textPrimary/bgPrimary', base.textPrimary, base.bgPrimary],
+      ['textSecondary/bgCard', base.textSecondary, base.bgCard],
+      ['textMuted/bgSecondary', base.textMuted, base.bgSecondary],
+      ['success/bgPrimary', base.success, base.bgPrimary],
+      ['danger/bgPrimary', base.danger, base.bgPrimary],
+      ['danger/dangerSoft', base.danger, base.dangerSoft],
+      ['success/successSoft', base.success, base.successSoft],
+    ];
+    for (const [accentName, accentSchemes] of Object.entries(ACCENT_COLORS)) {
+      const accent = accentSchemes[scheme];
+      textPairs.push(
+        [`${accentName}.onAccent/accent`, accent.onAccent, accent.accent],
+        [`${accentName}.accentText/bgPrimary`, accent.accentText, base.bgPrimary],
+        [`${accentName}.accentText/accentSoft`, accent.accentText, accent.accentSoft],
+      );
+      if (contrast(accent.headerText, accent.headerBg) < 3) {
+        errors.push(`контраст ${scheme} ${accentName}.headerText/headerBg < 3`);
+      }
+    }
+    for (const [name, foreground, background] of textPairs) {
+      const ratio = contrast(foreground, background);
+      if (ratio < 4.5) {
+        errors.push(`контраст ${scheme} ${name} = ${ratio.toFixed(2)} < 4.5`);
+      }
+    }
+  }
+};
+
+const checkLinks = async (): Promise<void> => {
+  const urls = [...new Set(QUESTIONS.flatMap((question) => question.sources.map((source) => source.url)))];
+  const queue = [...urls];
+  const worker = async (): Promise<void> => {
+    for (let url = queue.shift(); url; url = queue.shift()) {
+      try {
+        const response = await fetch(url, {
+          redirect: 'follow',
+          signal: AbortSignal.timeout(20000),
+          headers: { 'User-Agent': 'Mozilla/5.0 (sobes-content-check)' },
+        });
+        if (!response.ok) {
+          errors.push(`ссылка ${url} → ${response.status}`);
+        }
+      } catch (error) {
+        errors.push(`ссылка ${url} → ${error instanceof Error ? error.message : String(error)}`);
+      }
+    }
+  };
+  await Promise.all(Array.from({ length: 6 }, worker));
+  console.log(`Проверено ссылок: ${urls.length}`);
+};
+
+const checkDiagrams = (): void => {
+  const used = new Set(
+    QUESTIONS.flatMap((question) =>
+      question.explanation.flatMap((block) => (block.type === 'diagram' ? [block.diagram] : [])),
+    ),
+  );
+  for (const diagram of Object.values(DIAGRAMS)) {
+    if (diagram.steps.length < 2) {
+      errors.push(`схема ${diagram.id}: меньше двух шагов`);
+    }
+    if (!used.has(diagram.id)) {
+      warnings.push(`схема ${diagram.id} не используется ни в одном вопросе`);
+    }
+    diagram.steps.forEach((step, index) => {
+      for (const locale of LOCALES) {
+        if (!step.caption[locale].trim()) {
+          errors.push(`схема ${diagram.id}, шаг ${index + 1}: пустая подпись (${locale})`);
+        }
+      }
+      const itemIds = step.lanes.flatMap((lane) => lane.items.map((item) => item.id));
+      if (new Set(itemIds).size !== itemIds.length) {
+        errors.push(`схема ${diagram.id}, шаг ${index + 1}: повторяющиеся id элементов`);
+      }
+    });
+  }
+};
+
+const printDistribution = (): void => {
+  const rows = Object.keys(ID_PREFIX).map((topic) => {
+    const list = QUESTIONS.filter((question) => question.topic === topic);
+    return {
+      topic,
+      total: list.length,
+      junior: list.filter((question) => question.difficulty === 1).length,
+      middle: list.filter((question) => question.difficulty === 2).length,
+      senior: list.filter((question) => question.difficulty === 3).length,
+      popular: list.filter((question) => question.popular).length,
+      verified: list.filter((question) => question.verify).length,
+    };
+  });
+  console.table(rows);
+  for (const row of rows) {
+    if (row.total >= 20 && row.senior < row.total * 0.15) {
+      warnings.push(`${row.topic}: мало сложных вопросов (${row.senior}/${row.total})`);
+    }
+  }
+};
+
+const main = async (): Promise<void> => {
+  const workDir = mkdtempSync(path.join(tmpdir(), 'sobes-verify-'));
+  const seenIds = new Set<string>();
+  try {
+    for (const question of QUESTIONS) {
+      checkStructure(question, seenIds);
+      if (question.verify?.kind === 'js-output') {
+        checkJsOutput(question, workDir);
+      }
+      if (question.verify?.kind === 'ts-type') {
+        checkTsType(question, question.verify.symbol);
+      }
+      if (question.verify?.kind === 'ts-check') {
+        checkTsSource(question, question.verify.source);
+      }
+      if (question.verify?.kind === 'ts-error') {
+        checkTsError(question, question.verify.code);
+      }
+      if (question.verify?.kind === 'ts-output') {
+        checkJsOutput(question, workDir, true);
+      }
+    }
+  } finally {
+    rmSync(workDir, { recursive: true, force: true });
+  }
+  checkContrast();
+  checkDiagrams();
+  printDistribution();
+  if (process.argv.includes('--links')) {
+    await checkLinks();
+  }
+  warnings.forEach((warning) => console.warn(`⚠ ${warning}`));
+  if (errors.length > 0) {
+    errors.forEach((error) => console.error(`✖ ${error}`));
+    console.error(`\nОшибок: ${errors.length}`);
+    process.exit(1);
+  }
+  console.log(`\n✔ Вопросов: ${QUESTIONS.length}, ошибок нет`);
+};
+
+main();

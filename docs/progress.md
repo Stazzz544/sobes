@@ -1,0 +1,84 @@
+# Sobes — прогресс по фазам
+
+План: `C:\Users\basileus\.claude\plans\polymorphic-napping-iverson.md`.
+
+## Фаза 1 — каркас (13.10.2026)
+
+Сделано:
+- Проект на стеке OhMyGuide: Expo 54, RN 0.81.5, expo-router 6, Effector 23, AsyncStorage, Reanimated 4. Дополнительно: react-native-svg, expo-haptics, expo-clipboard, expo-localization, tsx (dev). i18next не используем — свой типизированный словарь.
+- `src/shared`: config (STORAGE_KEYS `sobes_*`, размеры), storage, тема (базовые light/dark + акценты brand/javascript/typescript/react/web, контраст проверен), i18n (`useI18n`: `t`, `plural`, `text`), UI-кит (AppText, Button, Card, ProgressBar, SegmentedControl, Screen, EmptyState).
+- `entities/topic` (конфиг тем, `$currentTopic` с персистом, SVG-логотипы, TopicCard, TopicSwitcher), `entities/settings` (язык/тема/длина сессии/вибро/ИИ-провайдер/онбординг, персист), `entities/question` (пока только `QuizMode`).
+- Виджеты: onboarding, mode-picker, settings-panel.
+- Навигация: онбординг за гардом `Stack.Protected`, табы Тренировка/Ошибки/Статистика/Настройки, заглушка `quiz`.
+
+Проверено на эмуляторе Pixel_9_Pro_XL (debug-сборка `npx expo run:android --no-bundler` ~7 мин + `npx expo start`):
+- онбординг (язык с устройства, переключение RU/EN, выбор темы) → табы; состояние переживает перезапуск;
+- палитры TS (light), JS (light и dark): шапка, статус-бар, таб-бар, акценты; 360 dp (`wm density 597`) без обрезаний;
+- `npm run type-check` зелёный.
+
+Заметки на потом:
+- Горизонтальному `ScrollView` внутри `Screen` нужен `flexGrow: 0`, иначе он растягивается по высоте.
+- Пока грузится JS-бандл, виден нативный фон (светло-серый) с белыми иконками статус-бара — поправить сплэшем/фоном в фазе 5.
+- Подписи в `SegmentedControl` короткие: на 360 dp влезает ~8 символов на сегмент из трёх.
+
+## Фаза 2 — механика (13.10.2026)
+
+Сделано:
+- `entities/question`: тип `Question` (5 вариантов кортежем, `answer`, блоки разбора, источники, `verify`), словарь тегов `TAGS` (по ~12 на тему), **20 настоящих вопросов** (по 5 на тему, RU+EN) в `data/<topic>.ts`, UI: `QuestionView`, `OptionButton` (тряска при ошибке, пульс при верном), `ExplanationView`.
+- `entities/progress`: `$questionStats`, `$answerLog` (≤3000), `$mistakeIds`, правило «2 верных подряд — закреплено» (`applyAnswer`), событие `mistakeResolved`, персист.
+- `widgets/quiz-session`: `createQuizSessionModel` (очередь под режим, seeded-перемешивание вариантов, фазы answering/revealed/finished/empty, таймер собеседования 60 с/вопрос через patronum `interval`, вибро, тост «Закреплено»), экран с нижней панелью, автопрокрутка к разбору, итог с оценкой уровня.
+- Виджеты: `question-review`, `mistakes-list` (бейдж на табе), `stats-dashboard` (плитки, слабые места → тренировка по тегу, активность 14 дней SVG, темы, сложность), `settings-panel` (+ длина тренировки, вибро, сброс, версия).
+- Фичи: `ask-ai` (Perplexity → ChatGPT → Алиса → DeepSeek + «Другое приложение» через Share + копирование; промпт всегда в буфере), `report-question` (mailto, если задан `FEEDBACK_EMAIL`, иначе Share), `reset-progress`.
+- `shared/ui`: `CodeBlock` (свой токенайзер JS/TS/JSX/CSS/HTML, копирование), `FormattedText` (`code`, **bold**), `Pill`, `Button size="compact"`.
+- `scripts/verify-content.ts`: структура, `js-output` (запуск в Node), `ts-type` и `ts-check` (TS compiler API), контраст палитр, `--links`. Негативный тест: ломаешь вопрос — скрипт падает.
+
+Проверено:
+- `npm run type-check`, `npm run verify:content -- --links` (37 ссылок живые) — зелёные.
+- Эмулятор 360 dp: онбординг → практика JS (неверно / «Не знаю» / разбор / подсветка вариантов), шторка ИИ, итог, ошибки (2 прохода «Работы над ошибками» → раздел пуст), статистика, собеседование React в dark с таймером и оценкой уровня, просмотр вопроса, пустой режим («Сложные» React).
+- ИИ живьём: Perplexity `?q=` — без входа, сразу отвечает; ChatGPT `?q=` — без входа, вопрос в поле ввода; Алиса — без входа, `?text=` не работает (буфер); DeepSeek — нужен вход (буфер).
+
+Не проверено: появление тоста «Закреплено» глазами (логика проверена — вопросы ушли из ошибок); светлая палитра Web и TS-сессия; ссылка `mailto` (почта не задана).
+
+Решения / открытые вопросы:
+- `FEEDBACK_EMAIL` и `SUPPORT_LINKS` в `src/shared/config/links.ts` пустые — нужны от пользователя. Экран «Поддержать» не сделан, пока нет ссылок.
+- Вопрос выходит из ошибок после 2 верных подряд в любом режиме, не только в «Работе над ошибками».
+
+Гочи окружения:
+- Фоновые задачи Bash живут 30 мин по умолчанию — эмулятор и Metro запускать с `timeout: 7200000`.
+- Эмулятор, запущенный с `-no-snapshot-save`, поднимается из старого снимка без установленного приложения; надёжнее `-no-snapshot-load`. Если эмулятор сразу закрывается — удалить устаревший `~/.android/avd/Pixel_9_Pro_XL.avd/multiinstance.lock`.
+- `uiautomator dump` медленный (~10 с) и может съедать касания; при сбое `adb` старый `/sdcard/ui.xml` остаётся — удалять перед дампом. Варианты ниже экрана не видны в дампе — сначала прокрутка.
+- Первое касание сразу после запуска приложения иногда теряется.
+- В `node -e` под bash шаблонные строки с бэктиками ломаются — такие правки через Edit.
+
+## Фаза 3 — контент (13.10.2026)
+
+Сделано:
+- **164 вопроса RU+EN**: JS 42 (12/20/10), TS 40 (13/15/12), React 40 (9/21/10), Web 42 (9/26/7) — junior/middle/senior. Файлы `data/<topic>.ts` + `<topic>-2..4.ts`.
+- Машинно проверено 73: JS 34 (`js-output`, запуск в Node), TS 39 (`ts-type`/`ts-check`/`ts-error`/`ts-output` через компилятор). React и Web — концептуальные, утверждения сверены с react.dev / MDN / RFC / OWASP / web.dev; все 240 ссылок живые (`--links`).
+- Отдельно руками: live binding ESM (два `.mjs`), Node 25 strip-only падает на `enum` (`ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX`).
+- `verify-content`: новые виды `ts-error`, `ts-output`; запрет кириллицы в вариантах-коде; регистр в коде значим; `npm run verify:content` теперь сначала гоняет type-check (tsx типы не проверяет — так пропустились 12 `caption` внутри `code`, исправлено).
+- Тег `arrays` для JS. `docs/content-guidelines.md` — правила составления и проверки вопросов.
+- `CodeBlock`: подпись рендерится через `FormattedText` (бэктики/жирный).
+
+Проверено на эмуляторе: новые вопросы открываются (deep link при запущенном приложении), подписи к коду, блоки `ts`/`http`.
+
+Известная проблема: холодный старт сразу по deep link `sobes://question/<id>` даёт пустой экран (обычный запуск и deep link в запущенное приложение работают). Пока deep links не используются; разобраться до уведомлений «вопрос дня».
+
+## Фаза 4 — схемы и полировка (13.10.2026)
+
+Сделано:
+- Пошаговые анимированные схемы: блок `{ type: 'diagram', diagram: DiagramId }` в пояснении, данные — `data/diagrams.ts`, плеер — `entities/question/ui/diagram-player.tsx` (Назад / ▶ автопроигрывание 2,6 с / Далее, «Шаг N из M»). Два вида: `columns` (стек, очереди, консоль — элементы появляются/исчезают/сдвигаются через Reanimated layout-анимации) и `chain` (узлы сверху вниз, активный подсвечен).
+- 7 схем: event-loop-basic, event-loop-async, prototype-chain, closure-counters, react-render-commit, critical-rendering-path, http-revalidation — подключены к 12 вопросам. `verify-content` проверяет схемы (≥2 шагов, подписи RU/EN, уникальные id, каждая используется).
+- `shared/ui/IconButton` (48 dp).
+- a11y: таймер собеседования озвучивает значение; в итоге сессии результат вопроса озвучивается текстом; карточки режимов озвучивают описание; сегменты 48 dp; зона нажатия копирования кода 48 dp.
+
+Проверено на эмуляторе (360 dp): схема event loop в dark (React), цепочка прототипов в light (JS), вопрос в TS light и Web dark. По контрасту исправлены: дорожка «Консоль» и круглые кнопки плеера в dark.
+
+Не проверено глазами: TS dark, Web light, React light внутри вопроса (контраст проверен скриптом). Тосты и TalkBack вживую не прогонялись.
+
+## Фаза 5 — релиз (следующая)
+
+- Иконка и сплэш (SVG → PNG, фон сплэша в обеих темах — уберёт серый экран при загрузке).
+- Release-keystore вне git + config-плагин подписи.
+- `npm run build:apk`, установка на эмулятор.
+- Нужно от пользователя: `FEEDBACK_EMAIL`, ссылки донатов; разрешение на коммит.
