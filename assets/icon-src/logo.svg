@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <style>@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@800&amp;display=block');</style>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#18202C"/><stop offset="1" stop-color="#0A0D12"/></linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.55" r="0.5"><stop offset="0" stop-color="#7EE787" stop-opacity="0.12"/><stop offset="1" stop-color="#7EE787" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#FFFFFF" stroke-opacity="0.045" stroke-width="2"/></pattern></defs>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
+  <rect width="1024" height="1024" fill="url(#glow)"/>
+  <rect width="1024" height="1024" fill="url(#grid)"/>
+  <g transform="translate(512 512) scale(1.08) translate(-512 -512)">
+    <text x="244" y="458" font-family="JetBrains Mono" font-weight="800" font-size="76" fill="#7EE787" style="font-variant-ligatures: none; font-feature-settings: 'calt' 0, 'liga' 0">&lt;&gt;IT&lt;/&gt;</text>
+    <text x="240" y="610" font-family="JetBrains Mono" font-weight="800" font-size="152" fill="#E6EDF3" textLength="452" lengthAdjust="spacingAndGlyphs">Sobes</text>
+    <rect x="704" y="500" width="80" height="116" fill="#7EE787"/>
+  </g>
+</svg>
