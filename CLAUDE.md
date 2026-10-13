@@ -52,4 +52,6 @@ Android-тренажёр для подготовки к собеседовани
 - В Git Bash для путей `/sdcard/…` нужен `MSYS_NO_PATHCONV=1`.
 - Навигация по UI — `uiautomator dump` + tap по bounds, скриншоты — только для визуала.
 - Кириллицу вводить через буфер хоста, `adb shell input text` её не умеет.
-- Release APK: `npm run build:apk` (arm64-v8a + armeabi-v7a, `android/app/build/outputs/apk/release/sobes.apk`).
+- Release APK: `npm run build:apk` (arm64-v8a + armeabi-v7a, `android/app/build/outputs/apk/release/sobes.apk`). На x86_64-эмуляторе ARM-only APK падает (`libreactnative.so` не найден) — для эмулятора `npm run build:apk -- --emulator` (только x86_64, `sobes-emulator.apk`).
+- Фоновые задачи Bash живут 30 мин по умолчанию — эмулятор и Metro запускать с `timeout: 7200000`, эмулятор — с `-no-snapshot-load`. Если эмулятор сразу закрывается — удалить `~/.android/avd/Pixel_9_Pro_XL.avd/multiinstance.lock`.
+- Никаких бэктиков внутри `node -e "…"` под bash: они выполняются как команды. Такие правки — только через Edit.

@@ -76,6 +76,12 @@
 
 Не проверено глазами: TS dark, Web light, React light внутри вопроса (контраст проверен скриптом). Тосты и TalkBack вживую не прогонялись.
 
+## Сборка для запуска (13.10.2026)
+
+- Код на GitHub: https://github.com/Stazzz544/sobes (ветка `main`; репозиторий публичный — пользователь создал его пустым).
+- Release APK: `npm run build:apk` → `android/app/build/outputs/apk/release/sobes.apk` (43,8 МБ, arm64-v8a + armeabi-v7a, подписан debug-ключом). Копия — `dist/sobes.apk` (в `.gitignore`).
+- ARM-only APK на x86_64-эмуляторе падает (`SoLoaderDSONotFoundError: libreactnative.so` — SoLoader ищет `lib/x86_64`); на ARM-телефонах библиотеки на месте. Для эмулятора — `npm run build:apk -- --emulator`. Release-бандл проверен x86_64-сборкой: онбординг, практика, разбор, автопроигрывание схемы — без падений.
+
 ## Фаза 5 — релиз (следующая)
 
 - Иконка и сплэш (SVG → PNG, фон сплэша в обеих темах — уберёт серый экран при загрузке).
