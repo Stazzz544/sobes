@@ -1,5 +1,8 @@
 import { AI_QUESTIONS } from './ai';
 import { AI_QUESTIONS_2 } from './ai-2';
+import { CSS_QUESTIONS } from './css';
+import { CSS_QUESTIONS_2 } from './css-2';
+import { CSS_QUESTIONS_3 } from './css-3';
 import { JAVASCRIPT_QUESTIONS } from './javascript';
 import { JAVASCRIPT_QUESTIONS_2 } from './javascript-2';
 import { JAVASCRIPT_QUESTIONS_3 } from './javascript-3';
@@ -35,6 +38,9 @@ export const QUESTIONS: Question[] = [
   ...WEB_QUESTIONS_2,
   ...WEB_QUESTIONS_3,
   ...WEB_QUESTIONS_4,
+  ...CSS_QUESTIONS,
+  ...CSS_QUESTIONS_2,
+  ...CSS_QUESTIONS_3,
   ...AI_QUESTIONS,
   ...AI_QUESTIONS_2,
 ];

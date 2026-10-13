@@ -42,6 +42,16 @@ export const TOPICS: Record<TopicId, Topic> = {
       en: 'HTTP, browser, security, CSS, performance, deployment',
     },
   },
+  css: {
+    id: 'css',
+    accent: 'css',
+    shortTitle: 'CSS',
+    title: { ru: 'CSS', en: 'CSS' },
+    description: {
+      ru: 'Каскад и специфичность, блочная модель, Flexbox, Grid, позиционирование, современный CSS',
+      en: 'Cascade and specificity, box model, Flexbox, Grid, positioning, modern CSS',
+    },
+  },
   ai: {
     id: 'ai',
     accent: 'ai',

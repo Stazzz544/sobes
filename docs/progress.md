@@ -103,6 +103,13 @@
 - Выбор темы закрывает шторку; ещё закрывают крестик, тап по затемнению, «Назад» и уход с вкладки. При открытии список прокручивается к выбранной теме.
 - Проверено на эмуляторе 360 dp: dark (AI → React), light (React → JS, чёрный бургер на жёлтой шапке), «Назад», тап по фону.
 
+## Тема «CSS» (13.10.2026)
+
+- Тема `css` после `web`: палитра rebeccapurple (light `#663399` — акцент и шапка, dark `#B48EE8`/шапка `#24153A`), логотип — белое «CSS» на `#663399` (`LetterMark`), префикс id `css`. Теги: `cascade`, `selectors`, `box-model`, `flexbox`, `css-grid`, `positioning`, `css-units`, `responsive`, `animations`, `modern-css` (тег `css` по-прежнему у темы Web, её 8 CSS-вопросов не трогали и не дублировали).
+- 44 вопроса RU+EN (`data/css.ts`, `css-2.ts`, `css-3.ts`; 12/22/10 по сложности): специфичность, `:is`/`:where`, наследование и `unset`, `@layer` (в т.ч. перевёрнутый порядок для `!important`), комбинаторы, `:nth-child`, `:has`, `::before` без `content`, outline, строчные элементы, `padding` в %, щель под `img`, `flow-root`, `flex-grow`/`flex-shrink`/`flex: 1`/`min-width: 0`, `fr` и `gap`, `auto-fill`/`auto-fit`, `1 / -1`, `minmax(auto, 1fr)`, содержащий блок для absolute/fixed (`transform`), `isolation`, `em`/`rem`, % высоты, `clamp`, `dvh`, порядок медиазапросов, meta viewport, переменные и invalid at computed-value time, `@container`, нативная вложенность, `content-visibility`, `height: auto` в transition, `animation-fill-mode`, `@property`. Верные ответы распределены 8/9/9/9/9.
+- Новый вид проверки `css-computed`: вопросы рендерятся в headless Chrome (`--dump-dom`, все вопросы одной страницей в iframe-ах), сравнивается `getComputedStyle`/`getBoundingClientRect`. Машинно проверено 35 из 44; негативный тест (подмена ответа) ловится. Все 383 ссылки банка живые.
+- Проверено на эмуляторе 360 dp: шторка тем с карточкой CSS, главная и вопрос в dark и light, верный и неверный ответ.
+
 ## Фаза 5 — релиз (следующая)
 
 - Иконка и сплэш (SVG → PNG, фон сплэша в обеих темах — уберёт серый экран при загрузке).

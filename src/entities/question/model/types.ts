@@ -70,12 +70,27 @@ export type QuestionSource = {
   url: string;
 };
 
+export type CssProbe = {
+  selector: string;
+  property: string;
+  expected: string;
+};
+
 export type QuestionVerification =
   | { kind: 'js-output' }
   | { kind: 'ts-type'; symbol: string }
   | { kind: 'ts-check'; source: string }
   | { kind: 'ts-error'; code: number }
-  | { kind: 'ts-output' };
+  | { kind: 'ts-output' }
+  | {
+      kind: 'css-computed';
+      selector: string;
+      property: string;
+      expected?: string;
+      also?: CssProbe[];
+      html?: string;
+      viewportWidth?: number;
+    };
 
 export type Question = {
   id: string;

@@ -58,6 +58,17 @@ export const TAGS = {
   deploy: { topic: 'web', title: { ru: 'Деплой', en: 'Deployment' } },
   git: { topic: 'web', title: { ru: 'Git', en: 'Git' } },
 
+  cascade: { topic: 'css', title: { ru: 'Каскад и специфичность', en: 'Cascade & specificity' } },
+  selectors: { topic: 'css', title: { ru: 'Селекторы', en: 'Selectors' } },
+  'box-model': { topic: 'css', title: { ru: 'Блочная модель', en: 'Box model' } },
+  flexbox: { topic: 'css', title: { ru: 'Flexbox', en: 'Flexbox' } },
+  'css-grid': { topic: 'css', title: { ru: 'Grid', en: 'Grid' } },
+  positioning: { topic: 'css', title: { ru: 'Позиционирование и слои', en: 'Positioning & stacking' } },
+  'css-units': { topic: 'css', title: { ru: 'Единицы и значения', en: 'Units & values' } },
+  responsive: { topic: 'css', title: { ru: 'Адаптивность', en: 'Responsive design' } },
+  animations: { topic: 'css', title: { ru: 'Анимации и переходы', en: 'Animations & transitions' } },
+  'modern-css': { topic: 'css', title: { ru: 'Современный CSS', en: 'Modern CSS' } },
+
   'llm-basics': { topic: 'ai', title: { ru: 'Основы LLM', en: 'LLM basics' } },
   prompting: { topic: 'ai', title: { ru: 'Промпты', en: 'Prompting' } },
   rag: { topic: 'ai', title: { ru: 'RAG и эмбеддинги', en: 'RAG & embeddings' } },

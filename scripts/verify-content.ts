@@ -1,17 +1,28 @@
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import ts from 'typescript';
 import { TAGS } from '../src/entities/question/config/tags';
 import { QUESTIONS } from '../src/entities/question/data';
 import { DIAGRAMS } from '../src/entities/question/data/diagrams';
 import { OPTION_IDS } from '../src/entities/question/model/types';
 import { ACCENT_COLORS, BASE_COLORS } from '../src/shared/theme/colors';
-import type { OptionContent, Question } from '../src/entities/question/model/types';
+import type { OptionContent, Question, QuestionVerification } from '../src/entities/question/model/types';
+
+type CssComputedVerification = Extract<QuestionVerification, { kind: 'css-computed' }>;
 
 const LOCALES = ['ru', 'en'] as const;
-const ID_PREFIX = { javascript: 'js', typescript: 'ts', react: 'react', web: 'web', ai: 'ai' } as const;
+const ID_PREFIX = { javascript: 'js', typescript: 'ts', react: 'react', web: 'web', css: 'css', ai: 'ai' } as const;
+const CHROME_CANDIDATES = [
+  process.env.CHROME_PATH,
+  'C:/Program Files/Google/Chrome/Application/chrome.exe',
+  'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
+  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  '/usr/bin/google-chrome',
+  '/usr/bin/chromium',
+];
 const FORBIDDEN_OPTION_PATTERNS = [/все (перечисленн|вышеперечисленн)/i, /all of the above/i, /none of the above/i];
 const VIRTUAL_FILE = 'question.ts';
 
@@ -220,6 +231,99 @@ const checkTsSource = (question: Question, extra: string): void => {
   }
 };
 
+const CSS_PROBE_SCRIPT = `
+addEventListener('load', () => {
+  const results = PROBES.map((probe) => {
+    try {
+      const frame = document.getElementById('frame-' + probe.frame).contentDocument;
+      const [selector, pseudo] = probe.selector.split('::');
+      const element = frame.querySelector(selector);
+      if (!element) {
+        return 'NOT FOUND: ' + selector;
+      }
+      if (probe.property.startsWith('rect.')) {
+        const value = element.getBoundingClientRect()[probe.property.slice(5)];
+        return String(Math.round(value * 100) / 100) + 'px';
+      }
+      return frame.defaultView.getComputedStyle(element, pseudo ? '::' + pseudo : null).getPropertyValue(probe.property).trim();
+    } catch (error) {
+      return 'ERROR: ' + error.message;
+    }
+  });
+  document.getElementById('out').textContent = btoa(unescape(encodeURIComponent(JSON.stringify(results))));
+});`;
+
+type CssCheck = { question: Question; verify: CssComputedVerification };
+
+const escapeAttribute = (value: string): string => value.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+
+const buildCssDocument = ({ question, verify }: CssCheck): string => {
+  const source = question.code?.source ?? '';
+  const markup = question.code?.lang === 'css' ? `<style>${source}</style>` : source;
+  return `<!doctype html><meta charset="utf-8">${markup}${verify.html ?? ''}`;
+};
+
+const checkCssComputed = (checks: CssCheck[], workDir: string): void => {
+  if (checks.length === 0) {
+    return;
+  }
+  const chrome = CHROME_CANDIDATES.find((candidate) => candidate !== undefined && existsSync(candidate));
+  if (!chrome) {
+    warnings.push(`css-computed: не найден Chrome (задайте CHROME_PATH), не проверено вопросов: ${checks.length}`);
+    return;
+  }
+  const frames = checks
+    .map(
+      (check, index) =>
+        `<iframe id="frame-${index}" style="display:block;width:${check.verify.viewportWidth ?? 800}px;height:600px;border:0" srcdoc="${escapeAttribute(buildCssDocument(check))}"></iframe>`,
+    )
+    .join('\n');
+  const probes = JSON.stringify(
+    checks.flatMap(({ verify }, frame) =>
+      [verify, ...(verify.also ?? [])].map(({ selector, property }) => ({ frame, selector, property })),
+    ),
+  );
+  const file = path.join(workDir, 'css-computed.html');
+  writeFileSync(file, `<!doctype html><meta charset="utf-8">${frames}<pre id="out"></pre><script>const PROBES = ${probes};${CSS_PROBE_SCRIPT}</script>`);
+  const result = spawnSync(
+    chrome,
+    ['--headless', '--disable-gpu', '--no-first-run', '--no-default-browser-check', '--virtual-time-budget=10000', '--dump-dom', pathToFileURL(file).href],
+    { encoding: 'utf8', timeout: 60000, maxBuffer: 64 * 1024 * 1024 },
+  );
+  const encoded = /<pre id="out">([^<]+)<\/pre>/.exec(result.stdout ?? '')?.[1];
+  if (!encoded) {
+    errors.push(`css-computed: Chrome не вернул результат (${result.error?.message ?? 'пустой вывод'})`);
+    return;
+  }
+  const values = (JSON.parse(Buffer.from(encoded, 'base64').toString('utf8')) as string[]).map(normalize);
+  let cursor = 0;
+  for (const { question, verify } of checks) {
+    const actual = values[cursor] ?? '';
+    const extraProbes = verify.also ?? [];
+    extraProbes.forEach((probe, probeIndex) => {
+      const value = values[cursor + 1 + probeIndex] ?? '';
+      if (normalize(probe.expected) !== value) {
+        fail(question, `css-computed: ${probe.selector} → ${probe.property} = «${value}», ожидалось «${probe.expected}»`);
+      }
+    });
+    cursor += 1 + extraProbes.length;
+    const correct = getCorrectOption(question);
+    const expected = verify.expected ?? ('code' in correct ? correct.code : undefined);
+    if (expected === undefined) {
+      fail(question, 'css-computed: при текстовом верном варианте нужен expected');
+      continue;
+    }
+    if (normalize(expected) !== actual) {
+      fail(question, `css-computed: ${verify.selector} → ${verify.property} = «${actual}», ожидалось «${expected}»`);
+    }
+    question.options.forEach((option, optionIndex) => {
+      if (OPTION_IDS[optionIndex] !== question.answer && 'code' in option && normalize(option.code) === actual) {
+        fail(question, `вариант ${OPTION_IDS[optionIndex]} тоже совпадает со значением`);
+      }
+    });
+  }
+};
+
 const hexToLuminance = (hex: string): number => {
   const channels = (hex.replace('#', '').match(/../g) ?? []).map((pair) => {
     const value = parseInt(pair, 16) / 255;
@@ -340,6 +444,7 @@ const printDistribution = (): void => {
 const main = async (): Promise<void> => {
   const workDir = mkdtempSync(path.join(tmpdir(), 'sobes-verify-'));
   const seenIds = new Set<string>();
+  const cssChecks: CssCheck[] = [];
   try {
     for (const question of QUESTIONS) {
       checkStructure(question, seenIds);
@@ -358,7 +463,11 @@ const main = async (): Promise<void> => {
       if (question.verify?.kind === 'ts-output') {
         checkJsOutput(question, workDir, true);
       }
+      if (question.verify?.kind === 'css-computed') {
+        cssChecks.push({ question, verify: question.verify });
+      }
     }
+    checkCssComputed(cssChecks, workDir);
   } finally {
     rmSync(workDir, { recursive: true, force: true });
   }

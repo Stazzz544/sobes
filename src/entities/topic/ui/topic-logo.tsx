@@ -13,6 +13,7 @@ const LOGO_COLORS = {
   reactCyan: '#61DAFB',
   reactDark: '#20232A',
   html: '#E34F26',
+  cssPurple: '#663399',
   aiEmerald: '#059669',
   aiMint: '#A7F3D0',
   black: '#000000',
@@ -85,6 +86,9 @@ export const TopicLogo = ({ topic, size = 40 }: TopicLogoProps): JSX.Element => 
   }
   if (topic === 'web') {
     return <WebMark size={size} />;
+  }
+  if (topic === 'css') {
+    return <LetterMark size={size} background={LOGO_COLORS.cssPurple} foreground={LOGO_COLORS.white} label="CSS" />;
   }
   if (topic === 'ai') {
     return <AiMark size={size} />;
