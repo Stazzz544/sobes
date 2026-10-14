@@ -221,4 +221,12 @@
 - 28 страниц react.dev отвечают 200, якоря `#option-2-resetting-state-with-a-key` и `#ref-as-a-prop` есть.
 - На эмуляторе (360 dp) — конспект state.
 
+## R2-2, шаг 5 — конспекты Web и CSS (14.10.2026)
+
+- `lessons/web.ts` (12): http, caching (+ схема http-revalidation), browser-rendering (+ critical-rendering-path), security, networking (CORS), performance (Web Vitals), css (ловушки: box-sizing, схлопывание, скрытие, sticky, z-index), html-a11y, storage, tooling, deploy, git.
+- `lessons/css.ts` (10): cascade, selectors, box-model, flexbox, css-grid, positioning, css-units, responsive, animations, modern-css.
+- Утверждения CSS проверены в headless Chrome на одной странице: победа `#nav a` над `.menu .link`, порядок `@layer`, ширина 250/200 px для content-box/border-box, `padding-top: 50%` = 200 px при ширине 400, `flex: 1` = `1 1 0%`, `flex: none` = `0 0 auto`, `1.5em` → 30 px и padding `1em` → 30 px, `1.5rem` → 24 px.
+- Источники: 35 (Web) + 30 (CSS) URL отвечают 200, якорь `using-aria#rule1` есть. Источники в основном взяты из уже проверенных вопросов тем.
+- Эмулятор: caching (схема ревалидации) и css-units.
+
 Дальше — `docs/roadmap.md`.

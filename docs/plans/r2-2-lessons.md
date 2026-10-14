@@ -52,7 +52,7 @@ export type Lesson = {
 2. ✅ 14.10 — остальные 10 тегов JavaScript (`lessons/javascript-2.ts`): весь JS — 13 конспектов.
 3. ✅ 14.10 — TypeScript (`lessons/typescript.ts`, 10 тегов).
 4. ✅ 14.10 — React (`lessons/react.ts`, 12 тегов).
-5. Web + CSS.
+5. ✅ 14.10 — Web (`lessons/web.ts`, 12 тегов) и CSS (`lessons/css.ts`, 10 тегов).
 6. Алгоритмы + ИИ.
 7. `LESSONS_BY_TAG` → полный `Record`, обновить roadmap/progress.
 
