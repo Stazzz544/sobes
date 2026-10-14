@@ -345,4 +345,10 @@
 - Машинной проверки нет: Jest, Vitest и `expect` не установлены (есть только транзитивный `@jest/fake-timers`), а проверять своё подобие `expect` бессмысленно. Утверждения сверены с документацией Jest, Testing Library, Playwright и статьями Фаулера; несуществующий API в дистракторах не использован (`test.retry` заменён на настоящий `test.describe.configure({ retries })`).
 - Проверено: вопрос с вариантами-кодом на эмуляторе, логотип — рендером SVG в Chrome (шторка на медленном эмуляторе снималась в момент анимации).
 
+## R3-3, шаг 5 — «Браузер и сеть» глубже (14.10.2026, версия 1.9.0)
+
+- `data/web-6.ts`: 12 вопросов в тему «Общие знания» (теперь 56) по темам, которых в банке не было: origin (`output`, `js-output`), какая cookie уходит в межсайтовый `POST` (`SameSite=None; Secure`), когда вызывается `requestAnimationFrame`, жизненный цикл Service Worker (`order`), `Vary: Accept-Encoding`, `308` против `301/302/303/307`, `preconnect`, HSTS, clickjacking и `frame-ancestors`, IndexedDB против `localStorage`, `fetch` не отклоняет 404, `encodeURI` против `encodeURIComponent` (`js-output`).
+- Перед написанием выгрузил все 44 вопроса темы (id, теги, формулировки) — пересечений нет; соседние по смыслу (CSRF, `preload`/`prefetch`, `no-cache`) спрашивают о другом.
+- Новых экранов нет — на эмуляторе не проверял; `verify:content` с `--links` зелёный.
+
 Дальше — `docs/roadmap.md`.

@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.9.0',
+    date: '2026-10-14',
+    changes: [
+      {
+        ru: '12 новых вопросов о браузере и сети: origin, SameSite-cookie, Service Worker, HSTS, редиректы, IndexedDB и другое — всего 400 вопросов.',
+        en: '12 new questions on the browser and network: origins, SameSite cookies, Service Workers, HSTS, redirects, IndexedDB and more — 400 questions in total.',
+      },
+    ],
+  },
+  {
     version: '1.8.0',
     date: '2026-10-14',
     changes: [
