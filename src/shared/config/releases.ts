@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.11.0',
+    date: '2026-10-14',
+    changes: [
+      {
+        ru: '12 новых вопросов о безопасности фронтенда: JWT, хранение токена, санитизация HTML, SRI, postMessage, open redirect, prototype pollution, CSP nonce, CORS с cookie — всего 430 вопросов.',
+        en: '12 new frontend security questions: JWT, token storage, HTML sanitizing, SRI, postMessage, open redirect, prototype pollution, CSP nonce, CORS with cookies — 430 questions in total.',
+      },
+    ],
+  },
+  {
     version: '1.10.0',
     date: '2026-10-14',
     changes: [
