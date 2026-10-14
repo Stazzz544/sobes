@@ -1,5 +1,6 @@
 const { spawnSync } = require('node:child_process');
 const fs = require('node:fs');
+const os = require('node:os');
 const path = require('node:path');
 
 const PROJECT_ROOT = path.resolve(__dirname, '..');
@@ -13,6 +14,8 @@ const DIST_DIR = path.join(PROJECT_ROOT, 'dist');
 const APK_PATH = path.join(DIST_DIR, IS_EMULATOR_BUILD ? 'sobes-emulator.apk' : 'sobes.apk');
 const DEFAULT_JAVA_HOME = 'C:\\Program Files\\Android\\Android Studio\\jbr';
 const DEFAULT_ANDROID_HOME = path.join(process.env.LOCALAPPDATA ?? '', 'Android', 'Sdk');
+const GRADLE_PROPERTIES = path.join(process.env.GRADLE_USER_HOME || path.join(os.homedir(), '.gradle'), 'gradle.properties');
+const RELEASE_KEY_PROPERTY = 'SOBES_RELEASE_STORE_FILE';
 
 const fail = (message) => {
   console.error(`\n[build-apk] ${message}`);
@@ -38,9 +41,8 @@ if (!fs.existsSync(androidHome)) {
 
 const env = { ...process.env, JAVA_HOME: javaHome, ANDROID_HOME: androidHome };
 
-if (!fs.existsSync(ANDROID_DIR)) {
-  run('npx expo prebuild --platform android', PROJECT_ROOT, env);
-}
+// версия, иконки, сплэш и подпись попадают в android/ только через prebuild
+run('npx expo prebuild --platform android --no-install', PROJECT_ROOT, env);
 
 const localProperties = path.join(ANDROID_DIR, 'local.properties');
 if (!fs.existsSync(localProperties)) {
@@ -52,6 +54,15 @@ run(`.\\gradlew.bat assembleRelease -PreactNativeArchitectures=${ARCHITECTURES}`
 fs.mkdirSync(DIST_DIR, { recursive: true });
 fs.copyFileSync(GRADLE_APK_PATH, APK_PATH);
 
+const hasReleaseKey =
+  Boolean(process.env[`ORG_GRADLE_PROJECT_${RELEASE_KEY_PROPERTY}`]) ||
+  (fs.existsSync(GRADLE_PROPERTIES) && fs.readFileSync(GRADLE_PROPERTIES, 'utf8').includes(`${RELEASE_KEY_PROPERTY}=`));
+
 const sizeMb = (fs.statSync(APK_PATH).size / 1024 / 1024).toFixed(1);
 console.log(`\n[build-apk] Готово: ${APK_PATH} (${sizeMb} МБ)`);
+if (!hasReleaseKey) {
+  console.warn(
+    `[build-apk] Release-ключ не задан (${RELEASE_KEY_PROPERTY} в ${GRADLE_PROPERTIES}) — APK подписан debug-ключом, в RuStore его не загружать`,
+  );
+}
 

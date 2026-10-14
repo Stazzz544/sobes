@@ -1,6 +1,6 @@
 # Sobes — правила проекта
 
-Android-тренажёр для подготовки к собеседованию фронтенд-разработчика. Expo SDK 54 (CNG/prebuild, `android/` генерируется и в git не идёт), RN 0.81 New Arch + Hermes, expo-router 6, Effector 23, AsyncStorage, Reanimated 4, react-native-svg. Состояние работы по фазам — `docs/progress.md`.
+Android-тренажёр для подготовки к собеседованию фронтенд-разработчика. Expo SDK 54 (CNG/prebuild, `android/` генерируется и в git не идёт), RN 0.81 New Arch + Hermes, expo-router 6, Effector 23, AsyncStorage, Reanimated 4, react-native-svg. Состояние работы по фазам — `docs/progress.md`; план развития и что делать дальше — `docs/roadmap.md`.
 
 ## Общее
 
@@ -29,7 +29,7 @@ Android-тренажёр для подготовки к собеседовани
 ## Компоненты
 
 - Named export, явный `: JSX.Element`, `type` для пропсов над компонентом.
-- Стили — `StyleSheet.create`, цвета — только из `useTheme().colors`. Hex допустим только в `src/shared/theme/colors.ts` и в SVG-логотипах.
+- Стили — `StyleSheet.create`, цвета — только из `useTheme().colors`. Hex допустим только в `src/shared/theme/colors.ts`, в SVG-логотипах и в `app.config.ts` (фон иконки и сплэша: конфиг Expo не импортирует TS из `src`, значения синхронизировать с `bgPrimary` вручную).
 - Фигурные скобки всегда; без `switch`; без вложенных тернарников; без сокращений имён.
 - Цели касания ≥ 48 dp, `accessibilityRole`/`accessibilityLabel` у интерактивных элементов, состояние не только цветом.
 - Сначала смотри `@app/shared/ui` (`AppText`, `Button`, `Card`, `ProgressBar`, `SegmentedControl`, `Screen`, `EmptyState`).
@@ -43,6 +43,13 @@ Android-тренажёр для подготовки к собеседовани
 - UI-строки — `useI18n().t('key')`, словари `src/shared/i18n/locales/ru.ts` и `en.ts` (`en: Dictionary` — компилятор ловит пропущенные ключи). Хардкод строк в компонентах запрещён.
 - Склонение — `plural('question', n)`.
 - Контент вопросов — `LocalizedText` (`{ ru, en }`), оба языка обязательны.
+
+## Релиз
+
+- Версия — только в `package.json` (`npm version patch|minor --no-git-tag-version`); `versionCode` = major·10000 + minor·100 + patch считает `app.config.ts`. RuStore принимает только растущий `versionCode` — каждая загрузка = новая версия. Перед выпуском — секция в `CHANGELOG.md` (это текст «Что нового» для магазина).
+- Подпись — плагин `plugins/with-release-signing.js`: ключ `C:\Users\basileus\.sobes-keys\sobes-release.jks`, свойства `SOBES_RELEASE_*` в `~/.gradle/gradle.properties`. Без них сборка подписывается debug-ключом с предупреждением — такой APK в RuStore не загружать. Ключи и пароли в git не попадают.
+- Release-подпись ≠ debug: поверх сборки с другим ключом APK не встанет (`INSTALL_FAILED_UPDATE_INCOMPATIBLE`) — сначала удалить приложение (прогресс на устройстве пропадёт).
+- `npm run build:apk` каждый раз делает `expo prebuild` (без `--clean`) — правки `app.config.ts` попадают в сборку сами.
 
 ## Эмулятор
 

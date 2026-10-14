@@ -129,9 +129,17 @@
 - Шторка тем (`TopicMenuSheet`) теперь оборачивает `Tabs` целиком и выезжает на весь экран под шапкой, перекрывая таб-бар; затемнение и закрытие тапом по фону убраны — закрывают крестик, выбор темы и «Назад».
 - Проверено на эмуляторе 360 dp: light (Algo, CSS, Статистика) и dark (Настройки, шторка), «Все темы» в шапке, «Назад» закрывает шторку, переход в тренировку и обратно. На эмуляторе после проверки возвращён `dist/sobes-emulator.apk` — в нём шапки ещё нет.
 
-## Фаза 5 — релиз (следующая)
+## Этап 0 roadmap — подготовка к RuStore (14.10.2026)
 
-- Иконка и сплэш (SVG → PNG, фон сплэша в обеих темах — уберёт серый экран при загрузке).
-- Release-keystore вне git + config-плагин подписи.
-- `npm run build:apk`, установка на эмулятор.
-- Нужно от пользователя: `FEEDBACK_EMAIL`, ссылки донатов; разрешение на коммит.
+- **Подпись (R0-1).** Ключ `C:\Users\basileus\.sobes-keys\sobes-release.jks` (PKCS12, alias `sobes`, RSA 2048, 10 000 дней, `CN=Sobes, C=RU`, SHA-256 `88:91:69:A8:…:32:5A`), пароль случайный — в `~/.gradle/gradle.properties` (`SOBES_RELEASE_*`), копия свойств — `gradle.properties.backup` рядом с ключом. Плагин `plugins/with-release-signing.js` добавляет `signingConfigs.release` и выбирает его, если свойство задано; иначе debug + предупреждение в `build:apk`. Подпись проверена `apksigner verify --print-certs`.
+- **Сплэш (R0-2).** `expo-splash-screen` ~31.0.13: знак-лицо (`adaptive-icon.png`, 200 dp) на `#FFFFFF` / `#121214` (ночь). В `app/_layout.tsx` сплэш держится до загрузки настроек, темы и прогресса, гаснет за 250 мс. Конфиг Expo не импортирует TS из `src` — цвета в `app.config.ts` продублированы (правило в CLAUDE.md). Кадр сплэша скриншотом не поймать — его перекрывает анимация запуска лаунчера; ресурсы (`splashscreen_logo`, `values(-night)/colors.xml`) проверены в `android/`.
+- **Акцент brand (R0-3)** — лайм + графит: шапка `#121417` / лайм `#C8F31D`, кнопки и сегменты лаймовые с графитовым текстом, `accentText` светлой схемы — олива `#4D6200`. Контраст проходит `verify-content`. На эмуляторе: «Все темы» light, настройки dark, онбординг.
+- **Статус-бар на онбординге** был белым на белом (у brand теперь светлые иконки под тёмную шапку) — до онбординга иконки статус-бара берутся по схеме, а не из `headerBarStyle`.
+- **Политика (R0-5).** `site/privacy/index.html` (RU+EN, light/dark, 360 px без горизонтального скролла — проверено в Playwright), деплой — `.github/workflows/pages.yml` (только `site/`), ссылка «Политика конфиденциальности» в настройках → `https://stazzz544.github.io/sobes/privacy/`. Pages ещё не включены, страница пока 404.
+- **Deep link (R0-6).** Холодный старт `sobes://question/js-closures-001` в release-сборке открывает вопрос; «Назад» раньше закрывал приложение — добавлен `unstable_settings.initialRouteName = '(tabs)'`. Прежний пустой экран наблюдался на debug-сборке с Metro; в debug повторно не воспроизводили.
+- **Версия (R0-8).** `version` из `package.json`, `versionCode` = major·10000 + minor·100 + patch (1.0.0 → 10000), `build:apk` всегда делает `expo prebuild`. `CHANGELOG.md` — текст «Что нового» для магазина.
+- `android.blockedPermissions`: убраны READ/WRITE_EXTERNAL_STORAGE и SYSTEM_ALERT_WINDOW (шаблон Expo добавлял их в release-манифест). Остались INTERNET и VIBRATE.
+- Тексты карточки RuStore — `docs/store/rustore.md`.
+- Гоча: release-ключ ≠ debug-ключ старых APK — поверх старой сборки не ставится, сначала удалить приложение (прогресс на устройстве пропадёт).
+
+Дальше — `docs/roadmap.md`.

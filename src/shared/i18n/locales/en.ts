@@ -175,6 +175,7 @@ export const en: Dictionary = {
     version: 'Version {version}',
     aboutText:
       'Questions are checked against MDN, react.dev and the TypeScript docs. Spotted a mistake? Tap “Report a problem” under the question.',
+    privacy: 'Privacy policy',
   },
   plurals: {
     question: ['question', 'questions'],

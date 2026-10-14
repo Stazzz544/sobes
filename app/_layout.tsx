@@ -1,6 +1,7 @@
 import { JSX, useEffect } from 'react';
 import { useColorScheme, View } from 'react-native';
 import { Stack } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useUnit } from 'effector-react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -11,17 +12,25 @@ import { getSelectionAccent, topicModel } from '@app/entities/topic';
 import { useI18n } from '@app/shared/i18n';
 import { BASE_COLORS, ThemeProvider, useTheme } from '@app/shared/theme';
 
+SplashScreen.preventAutoHideAsync();
+SplashScreen.setOptions({ fade: true, duration: 250 });
+
+export const unstable_settings = {
+  initialRouteName: '(tabs)',
+};
+
 type RootNavigationProps = {
   isOnboardingDone: boolean;
 };
 
 const RootNavigation = ({ isOnboardingDone }: RootNavigationProps): JSX.Element => {
-  const { colors } = useTheme();
+  const { colors, isDark } = useTheme();
   const { t } = useI18n();
+  const contentBarStyle = isDark ? 'light' : 'dark';
 
   return (
     <>
-      <StatusBar style={colors.headerBarStyle} />
+      <StatusBar style={isOnboardingDone ? colors.headerBarStyle : contentBarStyle} />
       <Stack
         screenOptions={{
           headerStyle: { backgroundColor: colors.headerBg },
@@ -53,6 +62,7 @@ const AppRoot = (): JSX.Element => {
   });
 
   const systemScheme = useColorScheme();
+  const isReady = isSettingsLoaded && isTopicLoaded && isProgressLoaded;
 
   useEffect(() => {
     settingsModel.settingsLoaded();
@@ -60,7 +70,13 @@ const AppRoot = (): JSX.Element => {
     progressModel.progressLoaded();
   }, []);
 
-  if (!isSettingsLoaded || !isTopicLoaded || !isProgressLoaded) {
+  useEffect(() => {
+    if (isReady) {
+      SplashScreen.hideAsync();
+    }
+  }, [isReady]);
+
+  if (!isReady) {
     return <View style={{ flex: 1, backgroundColor: BASE_COLORS[systemScheme === 'dark' ? 'dark' : 'light'].bgPrimary }} />;
   }
 

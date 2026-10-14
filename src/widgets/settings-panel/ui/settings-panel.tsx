@@ -1,12 +1,13 @@
 import { JSX } from 'react';
-import { StyleSheet, Switch, View } from 'react-native';
+import { Linking, StyleSheet, Switch, View } from 'react-native';
 import Constants from 'expo-constants';
 import { useUnit } from 'effector-react';
 import { settingsModel } from '@app/entities/settings';
 import { ResetProgressButton } from '@app/features/reset-progress';
+import { PRIVACY_POLICY_URL } from '@app/shared/config';
 import { LOCALE_NAMES, useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
-import { AppText, Card, SegmentedControl } from '@app/shared/ui';
+import { AppText, Button, Card, SegmentedControl } from '@app/shared/ui';
 import type { LocalePreference, SessionLength } from '@app/entities/settings';
 import type { ThemePreference } from '@app/shared/theme';
 
@@ -95,6 +96,13 @@ export const SettingsPanel = (): JSX.Element => {
         <AppText variant="caption" tone="secondary">
           {t('settings.aboutText')}
         </AppText>
+        <Button
+          title={t('settings.privacy')}
+          variant="ghost"
+          size="compact"
+          icon="shield-checkmark-outline"
+          onPress={() => Linking.openURL(PRIVACY_POLICY_URL)}
+        />
       </Card>
     </View>
   );
