@@ -1,12 +1,11 @@
-import { JSX, useCallback, useEffect, useState } from 'react';
-import { AppState, StyleSheet, View } from 'react-native';
+import { JSX } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useFocusEffect } from 'expo-router';
 import { useUnit } from 'effector-react';
 import { isDueForReview, progressModel } from '@app/entities/progress';
 import { QUESTIONS } from '@app/entities/question';
 import { useI18n } from '@app/shared/i18n';
-import { addDays, startOfDay } from '@app/shared/lib';
+import { addDays, startOfDay, useNow } from '@app/shared/lib';
 import { useTheme } from '@app/shared/theme';
 import { AppText, Card } from '@app/shared/ui';
 import type { QuestionStat } from '@app/entities/progress';
@@ -19,22 +18,7 @@ export const ReviewTodayCard = ({ onStart }: ReviewTodayCardProps): JSX.Element 
   const { colors } = useTheme();
   const { t, plural, locale } = useI18n();
   const { stats } = useUnit({ stats: progressModel.$questionStats });
-  const [now, setNow] = useState(Date.now);
-
-  useFocusEffect(
-    useCallback(() => {
-      setNow(Date.now());
-    }, []),
-  );
-
-  useEffect(() => {
-    const subscription = AppState.addEventListener('change', (state) => {
-      if (state === 'active') {
-        setNow(Date.now());
-      }
-    });
-    return () => subscription.remove();
-  }, []);
+  const now = useNow();
 
   const scheduled = QUESTIONS.map((question) => stats[question.id]).filter(
     (stat): stat is QuestionStat => stat !== undefined,

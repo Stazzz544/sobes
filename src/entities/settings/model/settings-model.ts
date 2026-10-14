@@ -10,10 +10,13 @@ export type LocalePreference = 'system' | Locale;
 
 export type SessionLength = 10 | 20 | 30;
 
+export type DailyGoal = 5 | 10 | 20;
+
 export type Settings = {
   theme: ThemePreference;
   locale: LocalePreference;
   sessionLength: SessionLength;
+  dailyGoal: DailyGoal;
   haptics: boolean;
   aiProvider: string | null;
   analytics: boolean;
@@ -24,6 +27,7 @@ export const DEFAULT_SETTINGS: Settings = {
   theme: 'system',
   locale: 'system',
   sessionLength: 10,
+  dailyGoal: 10,
   haptics: true,
   aiProvider: null,
   analytics: true,

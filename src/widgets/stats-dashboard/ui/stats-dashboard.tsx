@@ -3,8 +3,10 @@ import { StyleSheet, View } from 'react-native';
 import { useUnit } from 'effector-react';
 import { progressModel } from '@app/entities/progress';
 import { QUESTIONS, QUESTIONS_BY_ID, TAGS } from '@app/entities/question';
+import { settingsModel } from '@app/entities/settings';
 import { TOPICS, TopicLogo, topicModel } from '@app/entities/topic';
 import { useI18n } from '@app/shared/i18n';
+import { useNow } from '@app/shared/lib';
 import { useTheme } from '@app/shared/theme';
 import { AppText, Button, Card, EmptyState, ProgressBar, Screen } from '@app/shared/ui';
 import { aggregateStats } from '../lib/aggregate-stats';
@@ -37,15 +39,26 @@ const Tile = ({ label, value }: TileProps): JSX.Element => (
 export const StatsDashboard = ({ onPracticeTag }: StatsDashboardProps): JSX.Element => {
   const { colors } = useTheme();
   const { t, text } = useI18n();
-  const { log, stats, topic } = useUnit({
+  const { log, stats, topic, settings } = useUnit({
     log: progressModel.$answerLog,
     stats: progressModel.$questionStats,
     topic: topicModel.$currentTopic,
+    settings: settingsModel.$settings,
   });
+  const now = useNow();
+  const dailyGoal = settings.dailyGoal;
   const overview = useMemo(
     () =>
-      aggregateStats({ log, stats, questions: QUESTIONS, questionsById: QUESTIONS_BY_ID, selection: topic, now: Date.now() }),
-    [log, stats, topic],
+      aggregateStats({
+        log,
+        stats,
+        questions: QUESTIONS,
+        questionsById: QUESTIONS_BY_ID,
+        selection: topic,
+        dailyGoal,
+        now,
+      }),
+    [log, stats, topic, dailyGoal, now],
   );
 
   return (

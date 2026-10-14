@@ -5,6 +5,7 @@ import { useUnit } from 'effector-react';
 import { TOPICS, topicModel } from '@app/entities/topic';
 import { useI18n } from '@app/shared/i18n';
 import { AppText, Screen } from '@app/shared/ui';
+import { DailyGoalCard } from '@app/widgets/daily-goal';
 import { ModePicker } from '@app/widgets/mode-picker';
 import { ReviewTodayCard } from '@app/widgets/review-today';
 
@@ -17,6 +18,7 @@ export default function HomeScreen(): JSX.Element {
   return (
     <Screen>
       <ReviewTodayCard onStart={() => router.push({ pathname: '/quiz', params: { mode: 'review', topic: 'all' } })} />
+      <DailyGoalCard />
       <View style={styles.heading}>
         <AppText variant="title">{title}</AppText>
         <AppText tone="secondary">{description}</AppText>

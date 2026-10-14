@@ -8,10 +8,11 @@ import { PRIVACY_POLICY_URL } from '@app/shared/config';
 import { LOCALE_NAMES, useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
 import { AppText, Button, Card, SegmentedControl } from '@app/shared/ui';
-import type { LocalePreference, SessionLength } from '@app/entities/settings';
+import type { DailyGoal, LocalePreference, SessionLength } from '@app/entities/settings';
 import type { ThemePreference } from '@app/shared/theme';
 
 const SESSION_LENGTHS: readonly SessionLength[] = [10, 20, 30];
+const DAILY_GOALS: readonly DailyGoal[] = [5, 10, 20];
 
 type SwitchRowProps = {
   label: string;
@@ -94,6 +95,21 @@ export const SettingsPanel = (): JSX.Element => {
           value={settings.haptics}
           onChange={(value) => onSettingsChange({ haptics: value })}
         />
+      </Card>
+
+      <Card style={styles.card}>
+        <AppText variant="label" tone="muted">
+          {t('settings.dailyGoal')}
+        </AppText>
+        <SegmentedControl<`${DailyGoal}`>
+          options={DAILY_GOALS.map((goal) => ({ value: `${goal}`, label: String(goal) }))}
+          value={`${settings.dailyGoal}`}
+          onChange={(value) => onSettingsChange({ dailyGoal: DAILY_GOALS.find((goal) => `${goal}` === value) ?? 10 })}
+          accessibilityLabel={t('settings.dailyGoal')}
+        />
+        <AppText variant="caption" tone="secondary">
+          {t('settings.dailyGoalHint')}
+        </AppText>
       </Card>
 
       <Card style={styles.card}>

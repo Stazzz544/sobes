@@ -1,3 +1,4 @@
+import { getGoalProgress } from '@app/entities/progress';
 import { TOPIC_IDS } from '@app/shared/config';
 import { addDays, toDayKey } from '@app/shared/lib';
 import type { AnswerRecord, QuestionStats } from '@app/entities/progress';
@@ -51,23 +52,13 @@ type AggregateInput = {
   questions: readonly Question[];
   questionsById: Readonly<Record<string, Question>>;
   selection: TopicSelection;
+  dailyGoal: number;
   now: number;
 };
 
 type ResolvedRecord = AnswerRecord & { question: Question };
 
 const ratio = (part: number, total: number): number | null => (total > 0 ? part / total : null);
-
-const countStreak = (log: AnswerRecord[], now: number): number => {
-  const activeDays = new Set(log.map((record) => toDayKey(record.at)));
-  let cursor = activeDays.has(toDayKey(now)) ? now : addDays(now, -1);
-  let streak = 0;
-  while (activeDays.has(toDayKey(cursor))) {
-    streak += 1;
-    cursor = addDays(cursor, -1);
-  }
-  return streak;
-};
 
 const collectWeakTags = (records: ResolvedRecord[]): TagOverview[] => {
   const byTag = new Map<TagId, { answered: number; correct: number }>();
@@ -92,7 +83,15 @@ const collectWeakTags = (records: ResolvedRecord[]): TagOverview[] => {
     .slice(0, WEAK_TAGS_LIMIT);
 };
 
-export const aggregateStats = ({ log, stats, questions, questionsById, selection, now }: AggregateInput): StatsOverview => {
+export const aggregateStats = ({
+  log,
+  stats,
+  questions,
+  questionsById,
+  selection,
+  dailyGoal,
+  now,
+}: AggregateInput): StatsOverview => {
   const resolved = log
     .map((record) => ({ ...record, question: questionsById[record.questionId] }))
     .filter((record): record is ResolvedRecord => Boolean(record.question));
@@ -132,7 +131,7 @@ export const aggregateStats = ({ log, stats, questions, questionsById, selection
     answered: scoped.length,
     accuracy: ratio(correct, scoped.length),
     dontKnowRate: ratio(dontKnow, scoped.length),
-    streakDays: countStreak(resolved, now),
+    streakDays: getGoalProgress(log, dailyGoal, now).streakDays,
     topics,
     weakTags: collectWeakTags(scoped),
     difficulties,

@@ -146,6 +146,13 @@ export const ru = {
     repeat: 'Повторить',
     errors: 'Ошибок: {count}',
   },
+  dailyGoal: {
+    title: 'Цель на день',
+    remaining: 'Ещё {count} — и цель на сегодня выполнена',
+    done: 'Цель на сегодня выполнена',
+    streak: 'Серия: {days}',
+    progress: 'Сегодня {done} из {goal}',
+  },
   reviewToday: {
     title: 'Повторить сегодня',
     due: '{count} из всех тем',
@@ -177,6 +184,8 @@ export const ru = {
     themeLight: 'Светлое',
     themeDark: 'Тёмное',
     sessionLength: 'Вопросов за тренировку',
+    dailyGoal: 'Цель на день',
+    dailyGoalHint: 'Вопросов в день. Пропуск одного дня в неделю серию не обрывает.',
     haptics: 'Вибрация при ответе',
     progress: 'Прогресс',
     reset: 'Сбросить прогресс',
@@ -192,5 +201,6 @@ export const ru = {
   },
   plurals: {
     question: ['вопрос', 'вопроса', 'вопросов'],
+    day: ['день', 'дня', 'дней'],
   },
 };

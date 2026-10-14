@@ -148,6 +148,13 @@ export const en: Dictionary = {
     repeat: 'Review',
     errors: 'Mistakes: {count}',
   },
+  dailyGoal: {
+    title: 'Daily goal',
+    remaining: '{count} more to hit today’s goal',
+    done: 'Today’s goal is done',
+    streak: 'Streak: {days}',
+    progress: 'Today {done} of {goal}',
+  },
   reviewToday: {
     title: 'Review today',
     due: '{count} from all topics',
@@ -179,6 +186,8 @@ export const en: Dictionary = {
     themeLight: 'Light',
     themeDark: 'Dark',
     sessionLength: 'Questions per session',
+    dailyGoal: 'Daily goal',
+    dailyGoalHint: 'Questions per day. Missing one day a week won’t break your streak.',
     haptics: 'Vibrate on answer',
     progress: 'Progress',
     reset: 'Reset progress',
@@ -194,5 +203,6 @@ export const en: Dictionary = {
   },
   plurals: {
     question: ['question', 'questions'],
+    day: ['day', 'days'],
   },
 };
