@@ -81,6 +81,7 @@ export const TOPIC_PATHS: Record<TopicId, readonly TagId[]> = {
     'trees-graphs',
     'dynamic-programming',
   ],
+  html: ['html-semantics', 'html-parsing', 'html-forms', 'a11y-names', 'a11y-aria', 'a11y-keyboard'],
   git: ['git-basics', 'git-branches', 'git-conflicts', 'git-remote', 'git-undo', 'git-rebase'],
   hr: ['self-presentation', 'star', 'tough-questions', 'motivation', 'questions-to-employer', 'hiring-process'],
 };

@@ -17,10 +17,10 @@ import { DIRECTION_IDS, TOPIC_IDS } from '../src/shared/config/topics';
 import { ACCENT_COLORS, BASE_COLORS } from '../src/shared/theme/colors';
 import type { ChoiceQuestion, OptionContent, Question, QuestionVerification } from '../src/entities/question/model/types';
 
-type CssComputedVerification = Extract<QuestionVerification, { kind: 'css-computed' }>;
+type CssComputedVerification = Extract<QuestionVerification, { kind: 'css-computed' | 'dom-probe' }>;
 
 const LOCALES = ['ru', 'en'] as const;
-const ID_PREFIX = { javascript: 'js', typescript: 'ts', react: 'react', web: 'web', css: 'css', ai: 'ai', algorithms: 'algo', hr: 'hr', git: 'git' } as const;
+const ID_PREFIX = { javascript: 'js', typescript: 'ts', react: 'react', web: 'web', css: 'css', ai: 'ai', algorithms: 'algo', hr: 'hr', git: 'git', html: 'html' } as const;
 const CHROME_CANDIDATES = [
   process.env.CHROME_PATH,
   'C:/Program Files/Google/Chrome/Application/chrome.exe',
@@ -365,6 +365,15 @@ addEventListener('load', () => {
       if (!element) {
         return 'NOT FOUND: ' + selector;
       }
+      if (probe.property === 'aom.role') {
+        return element.computedRole;
+      }
+      if (probe.property === 'aom.name') {
+        return element.computedName;
+      }
+      if (probe.property.startsWith('js:')) {
+        return String(new frame.defaultView.Function('el', 'document', 'return (' + probe.property.slice(3) + ')')(element, frame));
+      }
       if (probe.property.startsWith('rect.')) {
         const value = element.getBoundingClientRect()[probe.property.slice(5)];
         return String(Math.round(value * 100) / 100) + 'px';
@@ -414,7 +423,7 @@ const checkCssComputed = (checks: CssCheck[], workDir: string): void => {
   const sandboxFlags = IS_CI ? ['--no-sandbox'] : [];
   const result = spawnSync(
     chrome,
-    [...sandboxFlags, '--headless', '--disable-gpu', '--no-first-run', '--no-default-browser-check', '--virtual-time-budget=10000', '--dump-dom', pathToFileURL(file).href],
+    [...sandboxFlags, '--headless', '--disable-gpu', '--no-first-run', '--no-default-browser-check', '--virtual-time-budget=10000', '--enable-blink-features=ComputedAccessibilityInfo', '--dump-dom', pathToFileURL(file).href],
     { encoding: 'utf8', timeout: 60000, maxBuffer: 64 * 1024 * 1024 },
   );
   const encoded = /<pre id="out">([^<]+)<\/pre>/.exec(result.stdout ?? '')?.[1];
@@ -435,7 +444,7 @@ const checkCssComputed = (checks: CssCheck[], workDir: string): void => {
     });
     cursor += 1 + extraProbes.length;
     if (verify.expected === undefined) {
-      checkAgainstAnswer(question, actual, `css ${verify.selector} → ${verify.property}`);
+      checkAgainstAnswer(question, actual, `${verify.kind === 'dom-probe' ? 'dom' : 'css'} ${verify.selector} → ${verify.property}`);
       continue;
     }
     if (normalize(verify.expected) !== actual) {
@@ -775,7 +784,7 @@ const main = async (): Promise<void> => {
       if (question.verify?.kind === 'ts-output') {
         checkJsOutput(question, workDir, true);
       }
-      if (question.verify?.kind === 'css-computed') {
+      if (question.verify?.kind === 'css-computed' || question.verify?.kind === 'dom-probe') {
         cssChecks.push({ question, verify: question.verify });
       }
     }

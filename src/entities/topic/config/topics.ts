@@ -62,6 +62,16 @@ export const TOPICS: Record<TopicId, Topic> = {
       en: 'LLMs, prompting, RAG, agents, safety and AI in the frontend',
     },
   },
+  html: {
+    id: 'html',
+    accent: 'html',
+    shortTitle: 'HTML',
+    title: { ru: 'HTML и доступность', en: 'HTML & accessibility' },
+    description: {
+      ru: 'Семантика, формы, разбор HTML, доступное имя, ARIA, клавиатура и фокус',
+      en: 'Semantics, forms, HTML parsing, accessible names, ARIA, keyboard and focus',
+    },
+  },
   git: {
     id: 'git',
     accent: 'git',

@@ -330,4 +330,12 @@
 - Выяснено при прототипе: `git merge -q` всё равно печатает строки `CONFLICT` в stdout — в вопросах `> /dev/null`; `cherry-pick` без `-q` печатает сводку.
 - Проверено на эмуляторе: карточка темы с логотипом, вопрос с `bash`-кодом и полем ввода.
 
+## R3-3, шаг 3 — тема «HTML и доступность» (14.10.2026, версия 1.7.0)
+
+- Тема `html`: бирюзовый акцент, логотип — знак доступности, теги `html-semantics`, `html-parsing`, `html-forms`, `a11y-names`, `a11y-aria`, `a11y-keyboard`, путь в этом порядке, 6 конспектов. id вопросов — `html-…` и `html-a11y-…` (префикс темы обязателен). Тег `html-a11y` в «Общих знаниях» не трогал.
+- 23 вопроса: разбор HTML (`<p>` с `<div>` внутри → 2 абзаца, неявные `</li>`, `<div />` не закрывается, doctype), формы (`button` по умолчанию `submit`, `disabled` против `readonly` в `FormData`, `checkValidity`, `label`), доступное имя (`aria-label` против содержимого и `title`, `aria-labelledby` важнее `aria-label`, имя из обёртки `label`, иконка-ссылка без имени, `placeholder`), семантика (`nav` → `navigation`, `section` без имени → `generic`, уровни заголовков, `strong`/`b`), ARIA (`role="button"` без фокуса, первое правило ARIA, `aria-hidden` и `inert`), клавиатура (порядок с положительным `tabindex`, `tabindex="-1"`, `:focus-visible`).
+- Новый `verify` — `dom-probe` поверх механизма `css-computed`: Chrome запускается с `--enable-blink-features=ComputedAccessibilityInfo`, проба `aom.role`/`aom.name` читает `computedRole`/`computedName`, `js:` выполняет выражение с `el` и `document`. 13 вопросов проверяются так; мутация (2 порчи) — ловится.
+- Наблюдение: у `<img alt="">` Chrome отдаёт `computedRole` = `image`, хотя по спецификации это `presentation` — такой вопрос машинной проверкой не покрывать.
+- Проверено на эмуляторе: логотип и карточка темы в шторке, вопрос с HTML-кодом.
+
 Дальше — `docs/roadmap.md`.

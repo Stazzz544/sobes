@@ -2,7 +2,7 @@ export type ColorScheme = 'light' | 'dark';
 
 export type ThemePreference = 'system' | ColorScheme;
 
-export type AccentName = 'brand' | 'javascript' | 'typescript' | 'react' | 'web' | 'css' | 'ai' | 'algorithms' | 'git' | 'hr';
+export type AccentName = 'brand' | 'javascript' | 'typescript' | 'react' | 'web' | 'css' | 'ai' | 'algorithms' | 'html' | 'git' | 'hr';
 
 export type BaseColors = {
   textPrimary: string;
@@ -233,6 +233,26 @@ export const ACCENT_COLORS: Record<AccentName, Record<ColorScheme, AccentColors>
       accentText: '#6EE7B7',
       headerBg: '#0B2A20',
       headerText: '#6EE7B7',
+      headerBarStyle: 'light',
+    },
+  },
+  html: {
+    light: {
+      accent: '#0F766E',
+      onAccent: '#FFFFFF',
+      accentSoft: '#E1F5F2',
+      accentText: '#0F766E',
+      headerBg: '#0F766E',
+      headerText: '#FFFFFF',
+      headerBarStyle: 'light',
+    },
+    dark: {
+      accent: '#2DD4BF',
+      onAccent: '#032A26',
+      accentSoft: '#0D2B28',
+      accentText: '#5EEAD4',
+      headerBg: '#062A26',
+      headerText: '#5EEAD4',
       headerBarStyle: 'light',
     },
   },

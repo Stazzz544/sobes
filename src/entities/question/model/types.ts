@@ -79,6 +79,15 @@ export type CssProbe = {
   expected: string;
 };
 
+type BrowserProbe = {
+  selector: string;
+  property: string;
+  expected?: string;
+  also?: CssProbe[];
+  html?: string;
+  viewportWidth?: number;
+};
+
 export type QuestionVerification =
   | { kind: 'js-output' }
   | { kind: 'ts-type'; symbol: string }
@@ -86,15 +95,8 @@ export type QuestionVerification =
   | { kind: 'ts-error'; code: number }
   | { kind: 'ts-output' }
   | { kind: 'shell-output' }
-  | {
-      kind: 'css-computed';
-      selector: string;
-      property: string;
-      expected?: string;
-      also?: CssProbe[];
-      html?: string;
-      viewportWidth?: number;
-    };
+  | ({ kind: 'css-computed' } & BrowserProbe)
+  | ({ kind: 'dom-probe' } & BrowserProbe);
 
 type QuestionBase = {
   id: string;
@@ -118,7 +120,7 @@ export type ChoiceQuestion = QuestionBase & {
 export type OrderQuestion = QuestionBase & {
   kind: 'order';
   items: OptionContent[];
-  verify?: Extract<QuestionVerification, { kind: 'js-output' | 'shell-output' }>;
+  verify?: Extract<QuestionVerification, { kind: 'js-output' | 'shell-output' | 'dom-probe' }>;
 };
 
 export type BugLineQuestion = QuestionBase & {
@@ -132,7 +134,7 @@ export type OutputQuestion = QuestionBase & {
   kind: 'output';
   code: CodeSnippet;
   answers: string[];
-  verify?: Extract<QuestionVerification, { kind: 'js-output' | 'ts-output' | 'shell-output' | 'css-computed' }>;
+  verify?: Extract<QuestionVerification, { kind: 'js-output' | 'ts-output' | 'shell-output' | 'css-computed' | 'dom-probe' }>;
 };
 
 export type Question = ChoiceQuestion | OrderQuestion | BugLineQuestion | OutputQuestion;

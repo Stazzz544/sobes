@@ -20,6 +20,7 @@ const LOGO_COLORS = {
   algoBlush: '#FBCFE8',
   hrAmber: '#B45309',
   gitRed: '#B91C1C',
+  htmlTeal: '#0F766E',
   hrCream: '#FDE68A',
   black: '#000000',
   white: '#FFFFFF',
@@ -46,6 +47,18 @@ const AlgoMark = ({ size }: { size: number }): JSX.Element => (
         fill={index === ALGO_BARS.length - 1 ? LOGO_COLORS.white : LOGO_COLORS.algoBlush}
       />
     ))}
+  </Svg>
+);
+
+const HtmlMark = ({ size }: { size: number }): JSX.Element => (
+  <Svg width={size} height={size} viewBox="0 0 64 64">
+    <Rect width={64} height={64} rx={12} fill={LOGO_COLORS.htmlTeal} />
+    <Circle cx={32} cy={14} r={5.5} fill={LOGO_COLORS.white} />
+    <G stroke={LOGO_COLORS.white} strokeWidth={4.5} fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <Path d="M15 25 H49" />
+      <Path d="M32 25 V38" />
+      <Path d="M23 52 L32 38 L41 52" />
+    </G>
   </Svg>
 );
 
@@ -145,6 +158,9 @@ export const TopicLogo = ({ topic, size = 40 }: TopicLogoProps): JSX.Element => 
   }
   if (topic === 'algorithms') {
     return <AlgoMark size={size} />;
+  }
+  if (topic === 'html') {
+    return <HtmlMark size={size} />;
   }
   if (topic === 'git') {
     return <GitMark size={size} />;

@@ -8,6 +8,20 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.7.0',
+    date: '2026-10-14',
+    changes: [
+      {
+        ru: 'Новая тема «HTML и доступность»: семантика, формы, как браузер разбирает HTML, доступное имя, ARIA, клавиатура и фокус.',
+        en: 'New topic “HTML & accessibility”: semantics, forms, how browsers parse HTML, accessible names, ARIA, keyboard and focus.',
+      },
+      {
+        ru: '23 вопроса и 6 конспектов; ответы про DOM и доступное имя проверены в Chrome — всего 368 вопросов.',
+        en: '23 questions and 6 lessons; answers about the DOM and accessible names are checked in Chrome — 368 questions in total.',
+      },
+    ],
+  },
+  {
     version: '1.6.0',
     date: '2026-10-14',
     changes: [
