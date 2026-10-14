@@ -1,5 +1,6 @@
 export { QUIZ_MODES, OPTION_IDS } from './model/types';
 export { TAGS } from './config/tags';
+export { TOPIC_PATHS } from './config/paths';
 export { QUESTIONS, QUESTIONS_BY_ID } from './data';
 export { LESSON_GROUPS, LESSONS_BY_TAG } from './lessons';
 export { OPTION_LETTERS, getOption, getOptionText } from './lib/options';

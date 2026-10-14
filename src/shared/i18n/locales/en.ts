@@ -163,6 +163,16 @@ export const en: Dictionary = {
     practice: 'Practice · {count}',
     notFound: 'Lesson not found',
   },
+  path: {
+    title: 'Learning path',
+    progress: '{done} of {total} done',
+    next: 'Next: {tag}',
+    complete: 'Path complete — well done!',
+    hint: 'Read the lesson, then practice. A topic is done when all its questions are answered and 80% of them correctly.',
+    unitDone: 'Done · {count}',
+    unitStarted: 'Answered {answered} of {total} · correct {correct}',
+    recommended: 'Next',
+  },
   reviewToday: {
     title: 'Review today',
     due: '{count} from all topics',

@@ -8,6 +8,7 @@ import { TAGS } from '../src/entities/question/config/tags';
 import { QUESTIONS } from '../src/entities/question/data';
 import { DIAGRAMS } from '../src/entities/question/data/diagrams';
 import { LESSON_GROUPS } from '../src/entities/question/lessons';
+import { TOPIC_PATHS } from '../src/entities/question/config/paths';
 import { OPTION_IDS } from '../src/entities/question/model/types';
 import { ACCENT_COLORS, BASE_COLORS } from '../src/shared/theme/colors';
 import type { OptionContent, Question, QuestionVerification } from '../src/entities/question/model/types';
@@ -435,6 +436,25 @@ const checkLessons = (): void => {
   }
 };
 
+const checkPaths = (): void => {
+  for (const [topic, path] of Object.entries(TOPIC_PATHS)) {
+    const topicTags = Object.entries(TAGS)
+      .filter(([, meta]) => meta.topic === topic)
+      .map(([tag]) => tag);
+    const missing = topicTags.filter((tag) => !(path as readonly string[]).includes(tag));
+    const foreign = path.filter((tag) => TAGS[tag].topic !== topic);
+    if (missing.length > 0) {
+      errors.push(`путь ${topic}: нет тегов ${missing.join(', ')}`);
+    }
+    if (foreign.length > 0) {
+      errors.push(`путь ${topic}: чужие теги ${foreign.join(', ')}`);
+    }
+    if (new Set(path).size !== path.length) {
+      errors.push(`путь ${topic}: теги повторяются`);
+    }
+  }
+};
+
 const checkLinks = async (): Promise<void> => {
   const urls = [
     ...new Set([...QUESTIONS, ...LESSONS].flatMap((item) => item.sources.map((source) => source.url))),
@@ -541,6 +561,7 @@ const main = async (): Promise<void> => {
   checkContrast();
   checkDiagrams();
   checkLessons();
+  checkPaths();
   printDistribution();
   if (process.argv.includes('--links')) {
     await checkLinks();

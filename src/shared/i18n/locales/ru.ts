@@ -161,6 +161,16 @@ export const ru = {
     practice: 'Потренироваться · {count}',
     notFound: 'Конспект не найден',
   },
+  path: {
+    title: 'Путь по теме',
+    progress: 'Пройдено {done} из {total}',
+    next: 'Дальше: {tag}',
+    complete: 'Путь пройден — так держать!',
+    hint: 'Конспект, затем практика. Тема пройдена, когда отвечены все её вопросы и 80% из них — верно.',
+    unitDone: 'Пройдено · {count}',
+    unitStarted: 'Отвечено {answered} из {total} · верно {correct}',
+    recommended: 'Дальше',
+  },
   reviewToday: {
     title: 'Повторить сегодня',
     due: '{count} из всех тем',
