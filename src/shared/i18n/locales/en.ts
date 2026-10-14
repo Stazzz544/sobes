@@ -46,6 +46,7 @@ export const en: Dictionary = {
       interview: { title: 'Mock interview', description: '15 timed questions, review at the end' },
       mistakes: { title: 'Review mistakes', description: 'Repeat the questions you got wrong' },
       review: { title: 'Daily review', description: 'Questions due for a refresh' },
+      placement: { title: 'Placement test', description: '9 questions from easy to hard' },
     },
   },
   question: {
@@ -79,6 +80,7 @@ export const en: Dictionary = {
       interview: 'There aren’t enough questions for a mock interview on this topic yet.',
       mistakes: 'No mistakes on this topic — keep it up!',
       review: 'Nothing left to review today — come back tomorrow.',
+      placement: 'Not enough questions on this topic for a test yet.',
     },
     summaryTitle: 'Result',
     summaryScore: '{correct} correct out of {total}',
@@ -162,6 +164,13 @@ export const en: Dictionary = {
     keyPoints: 'Key points',
     practice: 'Practice · {count}',
     notFound: 'Lesson not found',
+  },
+  placement: {
+    title: 'Placement test',
+    caption: '9 questions — we’ll suggest where to start the path',
+    startFrom: 'Start the path with “{tag}”',
+    allCorrect: 'All answers correct — take the path in any order',
+    openPath: 'Open the path',
   },
   path: {
     title: 'Learning path',

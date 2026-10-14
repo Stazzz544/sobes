@@ -2,7 +2,7 @@ import { JSX } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
-import { LESSONS_BY_TAG, QUESTIONS_BY_ID, TAGS } from '@app/entities/question';
+import { LESSONS_BY_TAG, QUESTIONS_BY_ID, TAGS, TOPIC_PATHS } from '@app/entities/question';
 import { MIN_TOUCH_SIZE } from '@app/shared/config';
 import { useI18n } from '@app/shared/i18n';
 import { toPlainText } from '@app/shared/lib';
@@ -10,6 +10,7 @@ import { useTheme } from '@app/shared/theme';
 import { AppText, Button, Card, Pill, ProgressBar, Screen } from '@app/shared/ui';
 import type { AnswerResult } from '@app/entities/progress';
 import type { TagId } from '@app/entities/question';
+import type { TopicId } from '@app/shared/config';
 import type { ThemeColors } from '@app/shared/theme';
 import type { IconName } from '@app/shared/ui';
 import type { SessionAnswer, SessionSummary as Summary } from '../model/quiz-session-model';
@@ -18,8 +19,10 @@ type SessionSummaryProps = {
   summary: Summary;
   queue: string[];
   answers: SessionAnswer[];
+  placementTopic: TopicId | null;
   onOpenQuestion: (questionId: string) => void;
   onOpenLesson: (tag: TagId) => void;
+  onOpenPath: (topic: TopicId) => void;
   onRestart: () => void;
   onDone: () => void;
 };
@@ -49,8 +52,10 @@ export const SessionSummary = ({
   summary,
   queue,
   answers,
+  placementTopic,
   onOpenQuestion,
   onOpenLesson,
+  onOpenPath,
   onRestart,
   onDone,
 }: SessionSummaryProps): JSX.Element => {
@@ -61,6 +66,7 @@ export const SessionSummary = ({
     .filter((questionId) => answers.find((answer) => answer.questionId === questionId)?.result !== 'correct')
     .flatMap((questionId) => QUESTIONS_BY_ID[questionId]?.tags ?? []);
   const lessonTags = [...new Set(missedTags)].filter((tag) => LESSONS_BY_TAG[tag]).slice(0, MAX_LESSON_LINKS);
+  const startTag = placementTopic ? (TOPIC_PATHS[placementTopic].find((tag) => missedTags.includes(tag)) ?? null) : null;
 
   return (
     <Screen withBottomInset>
@@ -89,6 +95,14 @@ export const SessionSummary = ({
               <AppText variant="caption" tone="secondary">
                 {t('quiz.levelHint')}
               </AppText>
+            </View>
+          ) : null}
+          {placementTopic ? (
+            <View style={styles.placement}>
+              <AppText variant="bodyStrong">
+                {startTag ? t('placement.startFrom', { tag: text(TAGS[startTag].title) }) : t('placement.allCorrect')}
+              </AppText>
+              <Button title={t('placement.openPath')} icon="map-outline" onPress={() => onOpenPath(placementTopic)} />
             </View>
           ) : null}
         </Card>
@@ -158,6 +172,9 @@ export const SessionSummary = ({
 
 const styles = StyleSheet.create({
   hero: {
+    gap: 10,
+  },
+  placement: {
     gap: 10,
   },
   pills: {

@@ -11,7 +11,7 @@ import { createRandom, shuffle } from '@app/shared/lib';
 import { buildQueue } from '../lib/build-queue';
 import { estimateLevel } from '../lib/estimate-level';
 import type { AnswerResult, QuestionStats } from '@app/entities/progress';
-import type { OptionId, Question } from '@app/entities/question';
+import type { OptionId, Question, QuizMode } from '@app/entities/question';
 import type { AnalyticsEvent } from '@app/shared/analytics';
 import type { SessionParams } from '../lib/build-queue';
 import type { InterviewLevel } from '../lib/estimate-level';
@@ -59,7 +59,9 @@ const getResult = (question: Question, chosen: OptionId | null): AnswerResult =>
   return chosen === question.answer ? 'correct' : 'wrong';
 };
 
-const buildSummary = (answers: SessionAnswer[], queue: string[], isInterview: boolean): SessionSummary => {
+const isExamMode = (mode: QuizMode | undefined): boolean => mode === 'interview' || mode === 'placement';
+
+const buildSummary = (answers: SessionAnswer[], queue: string[], isExam: boolean): SessionSummary => {
   const questions = queue.map((id) => QUESTIONS_BY_ID[id]).filter((question): question is Question => Boolean(question));
   return {
     total: queue.length,
@@ -67,7 +69,7 @@ const buildSummary = (answers: SessionAnswer[], queue: string[], isInterview: bo
     correct: answers.filter((answer) => answer.result === 'correct').length,
     wrong: answers.filter((answer) => answer.result === 'wrong').length,
     dontKnow: answers.filter((answer) => answer.result === 'dontKnow').length,
-    level: isInterview
+    level: isExam
       ? estimateLevel(
           answers.map((answer) => ({
             difficulty: QUESTIONS_BY_ID[answer.questionId]?.difficulty ?? 1,
@@ -83,7 +85,7 @@ const getTagParam = (params: SessionParams): { tag?: string } => (params.tag ? {
 
 const toFinishedEvent = ({ params, queue, answers }: SessionSnapshot): AnalyticsEvent => {
   const mode = params?.mode ?? 'practice';
-  const summary = buildSummary(answers, queue, mode === 'interview');
+  const summary = buildSummary(answers, queue, isExamMode(mode));
   return {
     name: 'quiz_finished',
     params: {
@@ -139,6 +141,7 @@ export const createQuizSessionModel = () => {
   const toastFx = createEffect((message: string) => ToastAndroid.show(message, ToastAndroid.SHORT));
 
   const $isInterview = $params.map((params) => params?.mode === 'interview');
+  const $isExam = $params.map((params) => isExamMode(params?.mode));
   const $isLast = combine($queue, $index, (queue, index) => index >= queue.length - 1);
   const $hapticsEnabled = settingsModel.$settings.map((settings) => settings.haptics);
   const $currentQuestion = combine($queue, $index, (queue, index): Question | null => QUESTIONS_BY_ID[queue[index] ?? ''] ?? null);
@@ -146,7 +149,7 @@ export const createQuizSessionModel = () => {
   const $currentAnswer = combine($answers, $currentQuestion, (answers, question) =>
     question ? (answers.find((answer) => answer.questionId === question.id) ?? null) : null,
   );
-  const $summary = combine($answers, $queue, $isInterview, buildSummary);
+  const $summary = combine($answers, $queue, $isExam, buildSummary);
 
   const timer = interval({ timeout: 1000, start: interviewStarted, stop: timerStopped });
 
@@ -241,22 +244,22 @@ export const createQuizSessionModel = () => {
   });
   sample({
     clock: answerAdded,
-    source: { isEnabled: $hapticsEnabled, isInterview: $isInterview },
-    filter: ({ isEnabled, isInterview }) => isEnabled && !isInterview,
+    source: { isEnabled: $hapticsEnabled, isExam: $isExam },
+    filter: ({ isEnabled, isExam }) => isEnabled && !isExam,
     fn: (_, answer) => answer.result,
     target: resultHapticFx,
   });
   sample({
     clock: answerAdded,
-    source: { isEnabled: $hapticsEnabled, isInterview: $isInterview },
-    filter: ({ isEnabled, isInterview }) => isEnabled && isInterview,
+    source: { isEnabled: $hapticsEnabled, isExam: $isExam },
+    filter: ({ isEnabled, isExam }) => isEnabled && isExam,
     target: selectionHapticFx,
   });
   sample({
     clock: answerAdded,
-    source: { isInterview: $isInterview, isLast: $isLast, index: $index },
-    fn: ({ isInterview, isLast, index }): Transition => {
-      if (!isInterview) {
+    source: { isExam: $isExam, isLast: $isLast, index: $index },
+    fn: ({ isExam, isLast, index }): Transition => {
+      if (!isExam) {
         return { phase: 'revealed', index };
       }
       if (isLast) {
@@ -298,8 +301,8 @@ export const createQuizSessionModel = () => {
 
   sample({
     clock: progressModel.mistakeResolved,
-    source: { isInterview: $isInterview, locale: i18nModel.$locale },
-    filter: ({ isInterview }) => !isInterview,
+    source: { isExam: $isExam, locale: i18nModel.$locale },
+    filter: ({ isExam }) => !isExam,
     fn: ({ locale }) => translate(DICTIONARIES[locale], 'quiz.mistakeResolved'),
     target: toastFx,
   });

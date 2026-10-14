@@ -8,7 +8,7 @@ import { AppText, Screen } from '@app/shared/ui';
 import { DailyGoalCard } from '@app/widgets/daily-goal';
 import { ModePicker } from '@app/widgets/mode-picker';
 import { ReviewTodayCard } from '@app/widgets/review-today';
-import { TopicPathCard } from '@app/widgets/topic-path';
+import { PlacementCard, TopicPathCard } from '@app/widgets/topic-path';
 
 export default function HomeScreen(): JSX.Element {
   const { t, text } = useI18n();
@@ -25,7 +25,13 @@ export default function HomeScreen(): JSX.Element {
         <AppText tone="secondary">{description}</AppText>
       </View>
       {topic === 'all' ? null : (
-        <TopicPathCard topic={topic} onOpen={() => router.push({ pathname: '/path/[topic]', params: { topic } })} />
+        <>
+          <PlacementCard
+            topic={topic}
+            onStart={() => router.push({ pathname: '/quiz', params: { mode: 'placement', topic } })}
+          />
+          <TopicPathCard topic={topic} onOpen={() => router.push({ pathname: '/path/[topic]', params: { topic } })} />
+        </>
       )}
       <AppText variant="label" tone="muted">
         {t('home.modesTitle')}

@@ -20,6 +20,7 @@ export default function QuizScreen(): JSX.Element {
         params={{ mode, topic, tag }}
         onOpenQuestion={(questionId) => router.push({ pathname: '/question/[id]', params: { id: questionId } })}
         onOpenLesson={(tag) => router.push({ pathname: '/lesson/[tag]', params: { tag } })}
+        onOpenPath={(pathTopic) => router.replace({ pathname: '/path/[topic]', params: { topic: pathTopic } })}
         onDone={() => router.back()}
       />
     </>

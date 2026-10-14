@@ -44,6 +44,7 @@ export const ru = {
       interview: { title: 'Собеседование', description: '15 вопросов на время, разбор в конце' },
       mistakes: { title: 'Работа над ошибками', description: 'Повтори вопросы, где ошибся' },
       review: { title: 'Повторение', description: 'Вопросы, которые пора вспомнить' },
+      placement: { title: 'Входной тест', description: '9 вопросов от простых к сложным' },
     },
   },
   question: {
@@ -77,6 +78,7 @@ export const ru = {
       interview: 'Для собеседования по этой теме пока мало вопросов.',
       mistakes: 'Ошибок по этой теме нет — так держать!',
       review: 'На сегодня всё повторено — возвращайся завтра.',
+      placement: 'По этой теме пока мало вопросов для теста.',
     },
     summaryTitle: 'Итог',
     summaryScore: '{correct} верно из {total}',
@@ -160,6 +162,13 @@ export const ru = {
     keyPoints: 'Запомнить',
     practice: 'Потренироваться · {count}',
     notFound: 'Конспект не найден',
+  },
+  placement: {
+    title: 'Входной тест',
+    caption: '9 вопросов — подскажем, с чего начать путь',
+    startFrom: 'Начните путь с темы «{tag}»',
+    allCorrect: 'Все ответы верные — проходите путь в любом порядке',
+    openPath: 'Открыть путь',
   },
   path: {
     title: 'Путь по теме',

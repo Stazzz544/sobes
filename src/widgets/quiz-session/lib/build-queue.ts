@@ -6,6 +6,7 @@ import type { TopicSelection } from '@app/shared/config';
 import type { RandomSource } from '@app/shared/lib';
 
 export const INTERVIEW_LENGTH = 15;
+export const PLACEMENT_LENGTH = 9;
 
 export type SessionParams = {
   mode: QuizMode;
@@ -26,7 +27,7 @@ const prioritize = (questions: Question[], stats: QuestionStats, random: RandomS
     return (firstStat?.lastAnsweredAt ?? 0) - (secondStat?.lastAnsweredAt ?? 0);
   });
 
-const pickInterview = (pool: Question[], random: RandomSource): Question[] => {
+const pickBalanced = (pool: Question[], random: RandomSource, length: number): Question[] => {
   const byDifficulty = [1, 2, 3].map((difficulty) =>
     shuffle(
       pool.filter((question) => question.difficulty === difficulty),
@@ -34,15 +35,15 @@ const pickInterview = (pool: Question[], random: RandomSource): Question[] => {
     ),
   );
   const picked: Question[] = [];
-  while (picked.length < INTERVIEW_LENGTH && byDifficulty.some((group) => group.length > 0)) {
+  while (picked.length < length && byDifficulty.some((group) => group.length > 0)) {
     for (const group of byDifficulty) {
       const next = group.shift();
-      if (next && picked.length < INTERVIEW_LENGTH) {
+      if (next && picked.length < length) {
         picked.push(next);
       }
     }
   }
-  return shuffle(picked, random);
+  return picked;
 };
 
 const filterByMode = (pool: Question[], mode: QuizMode, stats: QuestionStats, now: number): Question[] => {
@@ -85,7 +86,12 @@ export const buildQueue = (
       (params.tag === null || question.tags.includes(params.tag)),
   );
   if (params.mode === 'interview') {
-    return pickInterview(pool, random).map((question) => question.id);
+    return shuffle(pickBalanced(pool, random, INTERVIEW_LENGTH), random).map((question) => question.id);
+  }
+  if (params.mode === 'placement') {
+    return pickBalanced(pool, random, PLACEMENT_LENGTH)
+      .sort((first, second) => first.difficulty - second.difficulty)
+      .map((question) => question.id);
   }
   const filtered = filterByMode(pool, params.mode, stats, now);
   return orderByMode(filtered, params.mode, stats, random)

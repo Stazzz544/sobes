@@ -15,12 +15,14 @@ import { quizSessionModel } from '../model/quiz-session-model';
 import { AnswerFeedback } from './answer-feedback';
 import { SessionSummary } from './session-summary';
 import type { TagId } from '@app/entities/question';
+import type { TopicId } from '@app/shared/config';
 import type { SessionParams } from '../lib/build-queue';
 
 type QuizSessionProps = {
   params: SessionParams;
   onOpenQuestion: (questionId: string) => void;
   onOpenLesson: (tag: TagId) => void;
+  onOpenPath: (topic: TopicId) => void;
   onDone: () => void;
 };
 
@@ -30,7 +32,7 @@ const formatSeconds = (totalSeconds: number): string => {
   return `${minutes}:${seconds}`;
 };
 
-export const QuizSession = ({ params, onOpenQuestion, onOpenLesson, onDone }: QuizSessionProps): JSX.Element => {
+export const QuizSession = ({ params, onOpenQuestion, onOpenLesson, onOpenPath, onDone }: QuizSessionProps): JSX.Element => {
   const { colors } = useTheme();
   const { t } = useI18n();
   const insets = useSafeAreaInsets();
@@ -97,7 +99,9 @@ export const QuizSession = ({ params, onOpenQuestion, onOpenLesson, onDone }: Qu
         summary={model.summary}
         queue={model.queue}
         answers={model.answers}
+        placementTopic={mode === 'placement' && topic !== 'all' ? topic : null}
         onOpenLesson={onOpenLesson}
+        onOpenPath={onOpenPath}
         onOpenQuestion={onOpenQuestion}
         onRestart={() => quizSessionModel.sessionStarted({ mode, topic, tag })}
         onDone={onDone}

@@ -3,9 +3,9 @@ import type { LocalizedText } from '@app/shared/i18n';
 import type { CodeLanguage } from '@app/shared/ui';
 import type { TagId } from '../config/tags';
 
-export type QuizMode = 'practice' | 'popular' | 'hard' | 'interview' | 'mistakes' | 'review';
+export type QuizMode = 'practice' | 'popular' | 'hard' | 'interview' | 'mistakes' | 'review' | 'placement';
 
-export const QUIZ_MODES: readonly QuizMode[] = ['practice', 'popular', 'hard', 'interview', 'mistakes', 'review'];
+export const QUIZ_MODES: readonly QuizMode[] = ['practice', 'popular', 'hard', 'interview', 'mistakes', 'review', 'placement'];
 
 export type OptionId = 'a' | 'b' | 'c' | 'd' | 'e';
 
