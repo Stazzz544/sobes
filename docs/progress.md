@@ -214,4 +214,11 @@
 - 16 страниц TypeScript Handbook отвечают 200, якоря проверены (у «TS для ООП» верный якорь — `#erased-structural-types`).
 - На эмуляторе (360 dp) — конспект mapped-types. Длинные комментарии-результаты в коде уходят за край блока и видны прокруткой по горизонтали — как и в коде вопросов.
 
+## R2-2, шаг 4 — конспекты React (14.10.2026)
+
+- `lessons/react.ts`: rendering (+ схема react-render-commit), keys, hooks-rules, state, effects, memoization, context, refs, forms, react-19, suspense, server-components.
+- Проверка кода: 18 фрагментов извлечены скриптом и проверены `tsc --checkJs` с `@types/react` 19 (сигнатуры `useActionState`, `useOptimistic`, `use`, `<Context value>`, `ref` как проп); оставшиеся ошибки — только от заглушек и выведения пропсов `memo` в JS. Логика (`setCount` ×3 = 2, батчинг, StrictMode) — по react.dev.
+- 28 страниц react.dev отвечают 200, якоря `#option-2-resetting-state-with-a-key` и `#ref-as-a-prop` есть.
+- На эмуляторе (360 dp) — конспект state.
+
 Дальше — `docs/roadmap.md`.
