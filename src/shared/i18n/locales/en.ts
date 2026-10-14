@@ -259,6 +259,7 @@ export const en: Dictionary = {
       'Questions are checked against MDN, react.dev and the TypeScript docs. Spotted a mistake? Tap “Report a problem” under the question.',
     privacy: 'Privacy policy',
     analytics: 'Anonymous usage stats and crash reports',
+    devPro: 'Pro (dev build only)',
     reminder: 'Reminder',
     reminderSwitch: 'Remind me to practice',
     reminderHint: 'Once a day at the chosen time. Skipped if today’s goal is already done.',

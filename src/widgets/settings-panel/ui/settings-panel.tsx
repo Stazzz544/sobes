@@ -3,6 +3,7 @@ import { Linking, Pressable, StyleSheet, Switch, View } from 'react-native';
 import Constants from 'expo-constants';
 import { Ionicons } from '@expo/vector-icons';
 import { useUnit } from 'effector-react';
+import { entitlementModel } from '@app/entities/entitlement';
 import { REMINDER_TIMES, settingsModel } from '@app/entities/settings';
 import { reminderModel } from '@app/features/daily-reminder';
 import { ResetProgressButton } from '@app/features/reset-progress';
@@ -47,11 +48,13 @@ export const SettingsPanel = ({ onOpenReleases }: SettingsPanelProps): JSX.Eleme
   const { colors } = useTheme();
   const { t } = useI18n();
   const version = Constants.expoConfig?.version ?? '—';
-  const { settings, onSettingsChange, onReminderToggle, onReminderTimeChange } = useUnit({
+  const { settings, isPro, onSettingsChange, onReminderToggle, onReminderTimeChange, onDevProToggle } = useUnit({
     settings: settingsModel.$settings,
+    isPro: entitlementModel.$isPro,
     onSettingsChange: settingsModel.settingsChanged,
     onReminderToggle: reminderModel.reminderToggled,
     onReminderTimeChange: reminderModel.reminderTimeChanged,
+    onDevProToggle: entitlementModel.devProToggled,
   });
 
   return (
@@ -173,6 +176,7 @@ export const SettingsPanel = ({ onOpenReleases }: SettingsPanelProps): JSX.Eleme
           value={settings.analytics}
           onChange={(value) => onSettingsChange({ analytics: value })}
         />
+        {__DEV__ ? <SwitchRow label={t('settings.devPro')} value={isPro} onChange={onDevProToggle} /> : null}
         <Button
           title={t('settings.privacy')}
           variant="ghost"
