@@ -12,6 +12,10 @@ export type SessionLength = 10 | 20 | 30;
 
 export type DailyGoal = 5 | 10 | 20;
 
+export const REMINDER_TIMES = ['09:00', '13:00', '19:00', '21:00'] as const;
+
+export type ReminderTime = (typeof REMINDER_TIMES)[number];
+
 export type Settings = {
   theme: ThemePreference;
   locale: LocalePreference;
@@ -20,6 +24,8 @@ export type Settings = {
   haptics: boolean;
   aiProvider: string | null;
   analytics: boolean;
+  reminders: boolean;
+  reminderTime: ReminderTime;
   onboardingDone: boolean;
 };
 
@@ -31,6 +37,8 @@ export const DEFAULT_SETTINGS: Settings = {
   haptics: true,
   aiProvider: null,
   analytics: true,
+  reminders: false,
+  reminderTime: '19:00',
   onboardingDone: false,
 };
 

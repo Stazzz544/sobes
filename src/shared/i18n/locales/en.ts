@@ -259,6 +259,16 @@ export const en: Dictionary = {
       'Questions are checked against MDN, react.dev and the TypeScript docs. Spotted a mistake? Tap “Report a problem” under the question.',
     privacy: 'Privacy policy',
     analytics: 'Anonymous usage stats and crash reports',
+    reminder: 'Reminder',
+    reminderSwitch: 'Remind me to practice',
+    reminderHint: 'Once a day at the chosen time. Skipped if today’s goal is already done.',
+  },
+  reminder: {
+    channel: 'Practice reminders',
+    title: 'Time to practice',
+    bodyReview: '{count} waiting for review. A couple of minutes will lock them in.',
+    bodyGoal: 'Today’s goal is {count}. Start with one.',
+    denied: 'Allow notifications for Sobes in Android settings',
   },
   releases: {
     title: 'What’s new',

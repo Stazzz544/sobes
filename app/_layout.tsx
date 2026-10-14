@@ -9,6 +9,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { progressModel } from '@app/entities/progress';
 import { settingsModel } from '@app/entities/settings';
 import { getSelectionAccent, topicModel } from '@app/entities/topic';
+import { reminderModel } from '@app/features/daily-reminder';
 import { reportErrorFx } from '@app/shared/analytics';
 import { useI18n } from '@app/shared/i18n';
 import { BASE_COLORS, ThemeProvider, useTheme } from '@app/shared/theme';
@@ -74,6 +75,7 @@ const AppRoot = (): JSX.Element => {
     settingsModel.settingsLoaded();
     topicModel.currentTopicLoaded();
     progressModel.progressLoaded();
+    reminderModel.remindersStarted();
   }, []);
 
   useEffect(() => {

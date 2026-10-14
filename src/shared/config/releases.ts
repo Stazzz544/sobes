@@ -8,6 +8,20 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.2.0',
+    date: '2026-10-14',
+    changes: [
+      {
+        ru: 'Напоминание о тренировке раз в день в выбранное время — включается в настройках.',
+        en: 'A daily practice reminder at the time you choose — turn it on in Settings.',
+      },
+      {
+        ru: 'В напоминании — сколько вопросов ждут повторения; если цель на день выполнена, оно не приходит.',
+        en: 'The reminder shows how many questions are due for review and is skipped once today’s goal is done.',
+      },
+    ],
+  },
+  {
     version: '1.1.0',
     date: '2026-10-14',
     changes: [

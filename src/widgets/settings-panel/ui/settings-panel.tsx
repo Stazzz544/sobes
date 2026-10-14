@@ -3,13 +3,14 @@ import { Linking, Pressable, StyleSheet, Switch, View } from 'react-native';
 import Constants from 'expo-constants';
 import { Ionicons } from '@expo/vector-icons';
 import { useUnit } from 'effector-react';
-import { settingsModel } from '@app/entities/settings';
+import { REMINDER_TIMES, settingsModel } from '@app/entities/settings';
+import { reminderModel } from '@app/features/daily-reminder';
 import { ResetProgressButton } from '@app/features/reset-progress';
 import { MIN_TOUCH_SIZE, PRIVACY_POLICY_URL } from '@app/shared/config';
 import { LOCALE_NAMES, useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
 import { AppText, Button, Card, SegmentedControl } from '@app/shared/ui';
-import type { DailyGoal, LocalePreference, SessionLength } from '@app/entities/settings';
+import type { DailyGoal, LocalePreference, ReminderTime, SessionLength } from '@app/entities/settings';
 import type { ThemePreference } from '@app/shared/theme';
 
 const SESSION_LENGTHS: readonly SessionLength[] = [10, 20, 30];
@@ -46,9 +47,11 @@ export const SettingsPanel = ({ onOpenReleases }: SettingsPanelProps): JSX.Eleme
   const { colors } = useTheme();
   const { t } = useI18n();
   const version = Constants.expoConfig?.version ?? '—';
-  const { settings, onSettingsChange } = useUnit({
+  const { settings, onSettingsChange, onReminderToggle, onReminderTimeChange } = useUnit({
     settings: settingsModel.$settings,
     onSettingsChange: settingsModel.settingsChanged,
+    onReminderToggle: reminderModel.reminderToggled,
+    onReminderTimeChange: reminderModel.reminderTimeChanged,
   });
 
   return (
@@ -116,6 +119,24 @@ export const SettingsPanel = ({ onOpenReleases }: SettingsPanelProps): JSX.Eleme
         />
         <AppText variant="caption" tone="secondary">
           {t('settings.dailyGoalHint')}
+        </AppText>
+      </Card>
+
+      <Card style={styles.card}>
+        <AppText variant="label" tone="muted">
+          {t('settings.reminder')}
+        </AppText>
+        <SwitchRow label={t('settings.reminderSwitch')} value={settings.reminders} onChange={onReminderToggle} />
+        {settings.reminders ? (
+          <SegmentedControl<ReminderTime>
+            options={REMINDER_TIMES.map((time) => ({ value: time, label: time }))}
+            value={settings.reminderTime}
+            onChange={onReminderTimeChange}
+            accessibilityLabel={t('settings.reminder')}
+          />
+        ) : null}
+        <AppText variant="caption" tone="secondary">
+          {t('settings.reminderHint')}
         </AppText>
       </Card>
 

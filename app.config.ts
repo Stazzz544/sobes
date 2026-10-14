@@ -48,6 +48,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         dark: { backgroundColor: '#121214' },
       },
     ],
+    ['expo-notifications', { icon: './assets/notification-icon.png', color: '#4D6200' }],
     './plugins/with-release-signing',
   ],
 });
