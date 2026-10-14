@@ -54,6 +54,13 @@ export const en: Dictionary = {
     difficulty2: 'Middle',
     difficulty3: 'Senior',
     popular: 'Common',
+    orderHint: 'Tap in order. Tap again to remove an item',
+    orderYours: 'Your order',
+    orderCorrect: 'Correct order',
+    bugLineHint: 'Tap the line with the bug',
+    bugLineLabel: 'Line {line}',
+    outputPlaceholder: 'Your answer',
+    outputCorrect: 'Correct answer',
   },
   quiz: {
     progress: 'Question {current} of {total}',
@@ -121,6 +128,9 @@ export const en: Dictionary = {
     promptQuestion: 'Question',
     promptOptions: 'Answer options',
     promptCorrect: 'Correct answer',
+    promptCorrectOrder: 'Correct order',
+    promptBugLine: 'Line with the bug',
+    promptCorrectOutput: 'Correct answer',
     promptMine: 'My answer',
     promptDontKnow: 'I didn’t know the answer.',
     promptOutro:
@@ -244,10 +254,15 @@ export const en: Dictionary = {
     resetConfirm: 'Reset',
     about: 'About',
     version: 'Version {version}',
+    whatsNew: 'What’s new',
     aboutText:
       'Questions are checked against MDN, react.dev and the TypeScript docs. Spotted a mistake? Tap “Report a problem” under the question.',
     privacy: 'Privacy policy',
     analytics: 'Anonymous usage stats and crash reports',
+  },
+  releases: {
+    title: 'What’s new',
+    current: 'Current',
   },
   plurals: {
     question: ['question', 'questions'],

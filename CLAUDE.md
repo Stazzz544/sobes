@@ -46,7 +46,8 @@ Android-тренажёр для подготовки к собеседовани
 
 ## Релиз
 
-- Версия — только в `package.json` (`npm version patch|minor --no-git-tag-version`); `versionCode` = major·10000 + minor·100 + patch считает `app.config.ts`. RuStore принимает только растущий `versionCode` — каждая загрузка = новая версия. Перед выпуском — секция в `CHANGELOG.md` (это текст «Что нового» для магазина).
+- Версия — только в `package.json` (`npm version patch|minor --no-git-tag-version`); `versionCode` = major·10000 + minor·100 + patch считает `app.config.ts`. RuStore принимает только растущий `versionCode` — каждая загрузка = новая версия.
+- **Каждая пользовательская фича или фикс — новая версия** (minor / patch) с пунктами в `src/shared/config/releases.ts` (экран «Что нового» в настройках) и в `CHANGELOG.md` (текст для магазина). Порядок — скилл **release-notes**; `verify:content` падает, если версия и заметки разошлись.
 - Подпись — плагин `plugins/with-release-signing.js`: ключ `C:\Users\basileus\.sobes-keys\sobes-release.jks`, свойства `SOBES_RELEASE_*` в `~/.gradle/gradle.properties`. Без них сборка подписывается debug-ключом с предупреждением — такой APK в RuStore не загружать. Ключи и пароли в git не попадают.
 - Release-подпись ≠ debug: поверх сборки с другим ключом APK не встанет (`INSTALL_FAILED_UPDATE_INCOMPATIBLE`) — сначала удалить приложение (прогресс на устройстве пропадёт).
 - `npm run build:apk` каждый раз делает `expo prebuild` (без `--clean`) — правки `app.config.ts` попадают в сборку сами.

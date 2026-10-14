@@ -1,7 +1,7 @@
 export { AppText } from './app-text';
 export { Button } from './button';
 export { Card } from './card';
-export { CodeBlock, tokenize } from './code-block';
+export { CodeBlock, CodeTokens, tokenize } from './code-block';
 export { EmptyState } from './empty-state';
 export { FormattedText } from './formatted-text';
 export { IconButton } from './icon-button';

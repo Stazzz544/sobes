@@ -8,7 +8,11 @@ import { useTheme } from '@app/shared/theme';
 import { FormattedText } from '../formatted-text';
 import { tokenize } from './tokenize';
 import type { ThemeColors } from '@app/shared/theme';
-import type { CodeLanguage, TokenKind } from './tokenize';
+import type { CodeLanguage, Token, TokenKind } from './tokenize';
+
+type CodeTokensProps = {
+  tokens: Token[];
+};
 
 type CodeBlockProps = {
   source: string;
@@ -24,6 +28,20 @@ const TOKEN_COLOR: Record<TokenKind, keyof ThemeColors> = {
   comment: 'codeComment',
   function: 'codeFunction',
   punctuation: 'codePunctuation',
+};
+
+export const CodeTokens = ({ tokens }: CodeTokensProps): JSX.Element => {
+  const { colors } = useTheme();
+
+  return (
+    <>
+      {tokens.map((token, index) => (
+        <Text key={index} style={{ color: colors[TOKEN_COLOR[token.kind]] }}>
+          {token.value}
+        </Text>
+      ))}
+    </>
+  );
 };
 
 export const CodeBlock = ({ source, lang, caption }: CodeBlockProps): JSX.Element => {
@@ -50,11 +68,7 @@ export const CodeBlock = ({ source, lang, caption }: CodeBlockProps): JSX.Elemen
       </View>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scroll}>
         <Text style={[styles.code, { color: colors.codeText }]} selectable>
-          {tokens.map((token, index) => (
-            <Text key={index} style={{ color: colors[TOKEN_COLOR[token.kind]] }}>
-              {token.value}
-            </Text>
-          ))}
+          <CodeTokens tokens={tokens} />
         </Text>
       </ScrollView>
       {caption ? (

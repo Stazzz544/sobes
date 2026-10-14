@@ -22,7 +22,7 @@ export const QuestionView = ({ question }: QuestionViewProps): JSX.Element => {
         ))}
       </View>
       <FormattedText variant="subtitle">{text(question.prompt)}</FormattedText>
-      {question.code ? <CodeBlock source={question.code.source} lang={question.code.lang} /> : null}
+      {question.code && question.kind !== 'bug-line' ? <CodeBlock source={question.code.source} lang={question.code.lang} /> : null}
     </View>
   );
 };

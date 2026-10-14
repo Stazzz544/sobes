@@ -1,10 +1,11 @@
 import { JSX } from 'react';
-import { Linking, StyleSheet, Switch, View } from 'react-native';
+import { Linking, Pressable, StyleSheet, Switch, View } from 'react-native';
 import Constants from 'expo-constants';
+import { Ionicons } from '@expo/vector-icons';
 import { useUnit } from 'effector-react';
 import { settingsModel } from '@app/entities/settings';
 import { ResetProgressButton } from '@app/features/reset-progress';
-import { PRIVACY_POLICY_URL } from '@app/shared/config';
+import { MIN_TOUCH_SIZE, PRIVACY_POLICY_URL } from '@app/shared/config';
 import { LOCALE_NAMES, useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
 import { AppText, Button, Card, SegmentedControl } from '@app/shared/ui';
@@ -13,6 +14,10 @@ import type { ThemePreference } from '@app/shared/theme';
 
 const SESSION_LENGTHS: readonly SessionLength[] = [10, 20, 30];
 const DAILY_GOALS: readonly DailyGoal[] = [5, 10, 20];
+
+type SettingsPanelProps = {
+  onOpenReleases: () => void;
+};
 
 type SwitchRowProps = {
   label: string;
@@ -37,8 +42,10 @@ const SwitchRow = ({ label, value, onChange }: SwitchRowProps): JSX.Element => {
   );
 };
 
-export const SettingsPanel = (): JSX.Element => {
+export const SettingsPanel = ({ onOpenReleases }: SettingsPanelProps): JSX.Element => {
+  const { colors } = useTheme();
   const { t } = useI18n();
+  const version = Constants.expoConfig?.version ?? '—';
   const { settings, onSettingsChange } = useUnit({
     settings: settingsModel.$settings,
     onSettingsChange: settingsModel.settingsChanged,
@@ -123,7 +130,20 @@ export const SettingsPanel = (): JSX.Element => {
         <AppText variant="label" tone="muted">
           {t('settings.about')}
         </AppText>
-        <AppText variant="bodyStrong">{t('settings.version', { version: Constants.expoConfig?.version ?? '—' })}</AppText>
+        <Pressable
+          onPress={onOpenReleases}
+          accessibilityRole="button"
+          accessibilityLabel={`${t('settings.version', { version })}. ${t('settings.whatsNew')}`}
+          style={({ pressed }) => [styles.versionRow, pressed && styles.pressed]}
+        >
+          <AppText variant="bodyStrong" style={styles.versionText}>
+            {t('settings.version', { version })}
+          </AppText>
+          <AppText variant="bodyStrong" tone="accent">
+            {t('settings.whatsNew')}
+          </AppText>
+          <Ionicons name="chevron-forward" size={18} color={colors.accentText} />
+        </Pressable>
         <AppText variant="caption" tone="secondary">
           {t('settings.aboutText')}
         </AppText>
@@ -160,5 +180,17 @@ const styles = StyleSheet.create({
   },
   switchLabel: {
     flex: 1,
+  },
+  versionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    minHeight: MIN_TOUCH_SIZE,
+  },
+  versionText: {
+    flex: 1,
+  },
+  pressed: {
+    opacity: 0.7,
   },
 });

@@ -3,15 +3,16 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useUnit } from 'effector-react';
-import { ExplanationView, OPTION_IDS, OPTION_LETTERS, OptionButton, QuestionView, getOption } from '@app/entities/question';
+import { ExplanationView, OPTION_IDS, QuestionView, isChoiceQuestion, isResponseComplete } from '@app/entities/question';
 import { AskAiButton } from '@app/features/ask-ai';
 import { ReportQuestionButton } from '@app/features/report-question';
 import { SCREEN_PADDING } from '@app/shared/config';
 import { useI18n } from '@app/shared/i18n';
+import { useKeyboardHeight } from '@app/shared/lib';
 import { useTheme } from '@app/shared/theme';
 import { AppText, Button, EmptyState, ProgressBar } from '@app/shared/ui';
-import { getOptionState } from '../lib/option-state';
 import { quizSessionModel } from '../model/quiz-session-model';
+import { AnswerArea } from './answer-area';
 import { AnswerFeedback } from './answer-feedback';
 import { SessionSummary } from './session-summary';
 import type { TagId } from '@app/entities/question';
@@ -36,6 +37,7 @@ export const QuizSession = ({ params, onOpenQuestion, onOpenLesson, onOpenPath, 
   const { colors } = useTheme();
   const { t } = useI18n();
   const insets = useSafeAreaInsets();
+  const keyboardHeight = useKeyboardHeight();
   const scrollRef = useRef<ScrollView>(null);
   const feedbackOffset = useRef(0);
   const model = useUnit({
@@ -44,14 +46,16 @@ export const QuizSession = ({ params, onOpenQuestion, onOpenLesson, onOpenPath, 
     index: quizSessionModel.$index,
     question: quizSessionModel.$currentQuestion,
     currentAnswer: quizSessionModel.$currentAnswer,
-    selected: quizSessionModel.$selectedOption,
+    draft: quizSessionModel.$draft,
     optionOrder: quizSessionModel.$optionOrder,
+    itemOrder: quizSessionModel.$itemOrder,
     answers: quizSessionModel.$answers,
     summary: quizSessionModel.$summary,
     isInterview: quizSessionModel.$isInterview,
     isLast: quizSessionModel.$isLast,
     remainingSeconds: quizSessionModel.$remainingSeconds,
     onSelect: quizSessionModel.optionSelected,
+    onDraftChange: quizSessionModel.draftChanged,
     onConfirm: quizSessionModel.answerConfirmed,
     onDontKnow: quizSessionModel.dontKnowPressed,
     onNext: quizSessionModel.nextPressed,
@@ -68,6 +72,12 @@ export const QuizSession = ({ params, onOpenQuestion, onOpenLesson, onOpenPath, 
   }, [model.index]);
 
   const isRevealed = model.phase === 'revealed';
+
+  useEffect(() => {
+    if (keyboardHeight > 0) {
+      scrollRef.current?.scrollToEnd({ animated: true });
+    }
+  }, [keyboardHeight]);
 
   useEffect(() => {
     if (isRevealed) {
@@ -110,10 +120,10 @@ export const QuizSession = ({ params, onOpenQuestion, onOpenLesson, onOpenPath, 
   }
 
   const question = model.question;
-  const chosen = model.currentAnswer?.chosen ?? null;
+  const submitted = model.currentAnswer?.response ?? null;
 
   return (
-    <View style={[styles.fill, { backgroundColor: colors.bgPrimary }]}>
+    <View style={[styles.fill, { backgroundColor: colors.bgPrimary, paddingBottom: keyboardHeight }]}>
       <View style={[styles.header, { borderBottomColor: colors.border }]}>
         <View style={styles.headerRow}>
           <AppText variant="bodyStrong" tone="secondary">
@@ -132,26 +142,20 @@ export const QuizSession = ({ params, onOpenQuestion, onOpenLesson, onOpenPath, 
         <ProgressBar value={(model.index + (isRevealed ? 1 : 0)) / model.queue.length} height={6} />
       </View>
 
-      <ScrollView ref={scrollRef} contentContainerStyle={styles.content}>
+      <ScrollView ref={scrollRef} keyboardShouldPersistTaps="handled" contentContainerStyle={styles.content}>
         <Animated.View key={question.id} entering={FadeIn.duration(220)} style={styles.questionBlock}>
           <QuestionView question={question} />
-          <View accessibilityRole="radiogroup" style={styles.options}>
-            {model.optionOrder.map((optionId, position) => (
-              <OptionButton
-                key={optionId}
-                letter={OPTION_LETTERS[OPTION_IDS[position] ?? optionId]}
-                option={getOption(question, optionId)}
-                state={getOptionState({
-                  optionId,
-                  isRevealed,
-                  selected: model.selected,
-                  correct: question.answer,
-                  chosen,
-                })}
-                onPress={isRevealed ? undefined : () => model.onSelect(optionId)}
-              />
-            ))}
-          </View>
+          <AnswerArea
+            question={question}
+            draft={model.draft}
+            submitted={submitted}
+            result={model.currentAnswer?.result ?? null}
+            isRevealed={isRevealed}
+            optionOrder={model.optionOrder}
+            itemOrder={model.itemOrder}
+            onSelectOption={model.onSelect}
+            onDraftChange={model.onDraftChange}
+          />
         </Animated.View>
 
         {isRevealed && model.currentAnswer ? (
@@ -163,11 +167,11 @@ export const QuizSession = ({ params, onOpenQuestion, onOpenLesson, onOpenPath, 
           >
             <AnswerFeedback
               result={model.currentAnswer.result}
-              correct={OPTION_IDS[model.optionOrder.indexOf(question.answer)] ?? question.answer}
+              correct={isChoiceQuestion(question) ? (OPTION_IDS[model.optionOrder.indexOf(question.answer)] ?? question.answer) : undefined}
             />
             <Animated.View entering={FadeIn.delay(150).duration(300)} style={styles.reveal}>
               <ExplanationView question={question} onOpenLesson={onOpenLesson} />
-              <AskAiButton question={question} chosen={chosen} />
+              <AskAiButton question={question} response={submitted} />
               <ReportQuestionButton question={question} />
             </Animated.View>
           </View>
@@ -177,7 +181,7 @@ export const QuizSession = ({ params, onOpenQuestion, onOpenLesson, onOpenPath, 
       <View
         style={[
           styles.bottomBar,
-          { backgroundColor: colors.bgPrimary, borderTopColor: colors.border, paddingBottom: insets.bottom + 12 },
+          { backgroundColor: colors.bgPrimary, borderTopColor: colors.border, paddingBottom: (keyboardHeight > 0 ? 0 : insets.bottom) + 12 },
         ]}
       >
         {isRevealed ? (
@@ -193,7 +197,7 @@ export const QuizSession = ({ params, onOpenQuestion, onOpenLesson, onOpenPath, 
             <Button
               title={t('quiz.confirm')}
               icon="checkmark"
-              disabled={model.selected === null}
+              disabled={!isResponseComplete(question, model.draft)}
               onPress={model.onConfirm}
               style={styles.grow}
             />
@@ -229,9 +233,6 @@ const styles = StyleSheet.create({
   },
   questionBlock: {
     gap: 16,
-  },
-  options: {
-    gap: 10,
   },
   reveal: {
     gap: 14,

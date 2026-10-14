@@ -14,7 +14,7 @@ import type { IconName } from '@app/shared/ui';
 
 type AnswerFeedbackProps = {
   result: AnswerResult;
-  correct: OptionId;
+  correct?: OptionId;
 };
 
 type FeedbackLook = {
@@ -49,7 +49,7 @@ export const AnswerFeedback = ({ result, correct }: AnswerFeedbackProps): JSX.El
         <AppText variant="subtitle" style={{ color: look.color }}>
           {t(`quiz.result.${result}`)}
         </AppText>
-        {result === 'correct' ? null : (
+        {result === 'correct' || !correct ? null : (
           <AppText variant="caption" tone="secondary">
             {t('quiz.correctAnswerIs', { letter: OPTION_LETTERS[correct] })}
           </AppText>

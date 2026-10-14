@@ -95,7 +95,7 @@ export type QuestionVerification =
       viewportWidth?: number;
     };
 
-export type Question = {
+type QuestionBase = {
   id: string;
   topic: TopicId;
   tags: TagId[];
@@ -103,12 +103,46 @@ export type Question = {
   popular: boolean;
   prompt: LocalizedText;
   code?: CodeSnippet;
-  options: QuestionOptions;
-  answer: OptionId;
   explanation: ExplanationBlock[];
   sources: QuestionSource[];
+};
+
+export type ChoiceQuestion = QuestionBase & {
+  kind?: 'choice';
+  options: QuestionOptions;
+  answer: OptionId;
   verify?: QuestionVerification;
 };
+
+export type OrderQuestion = QuestionBase & {
+  kind: 'order';
+  items: OptionContent[];
+  verify?: { kind: 'js-output' };
+};
+
+export type BugLineQuestion = QuestionBase & {
+  kind: 'bug-line';
+  code: CodeSnippet;
+  answerLine: number;
+  verify?: { kind: 'ts-error-line' };
+};
+
+export type OutputQuestion = QuestionBase & {
+  kind: 'output';
+  code: CodeSnippet;
+  answers: string[];
+  verify?: Extract<QuestionVerification, { kind: 'js-output' | 'ts-output' | 'css-computed' }>;
+};
+
+export type Question = ChoiceQuestion | OrderQuestion | BugLineQuestion | OutputQuestion;
+
+export type QuestionKind = 'choice' | 'order' | 'bug-line' | 'output';
+
+export type QuestionResponse =
+  | { kind: 'choice'; option: OptionId }
+  | { kind: 'order'; order: number[] }
+  | { kind: 'bug-line'; line: number }
+  | { kind: 'output'; text: string };
 
 export type Lesson = {
   tag: TagId;

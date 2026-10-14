@@ -48,6 +48,7 @@ const RootNavigation = ({ isOnboardingDone }: RootNavigationProps): JSX.Element 
           <Stack.Screen name="question/[id]" options={{ title: t('quiz.explanation') }} />
           <Stack.Screen name="lesson/[tag]" options={{ title: t('lesson.title') }} />
           <Stack.Screen name="path/[topic]" options={{ title: t('path.title') }} />
+          <Stack.Screen name="releases" options={{ title: t('releases.title') }} />
         </Stack.Protected>
         <Stack.Protected guard={!isOnboardingDone}>
           <Stack.Screen name="onboarding" options={{ headerShown: false }} />

@@ -52,6 +52,13 @@ export const ru = {
     difficulty2: 'Middle',
     difficulty3: 'Senior',
     popular: 'Частый',
+    orderHint: 'Нажимайте по порядку. Повторное нажатие убирает элемент',
+    orderYours: 'Ваш порядок',
+    orderCorrect: 'Правильный порядок',
+    bugLineHint: 'Нажмите на строку с ошибкой',
+    bugLineLabel: 'Строка {line}',
+    outputPlaceholder: 'Ваш ответ',
+    outputCorrect: 'Правильный ответ',
   },
   quiz: {
     progress: 'Вопрос {current} из {total}',
@@ -119,6 +126,9 @@ export const ru = {
     promptQuestion: 'Вопрос',
     promptOptions: 'Варианты ответа',
     promptCorrect: 'Правильный ответ',
+    promptCorrectOrder: 'Правильный порядок',
+    promptBugLine: 'Строка с ошибкой',
+    promptCorrectOutput: 'Правильный ответ',
     promptMine: 'Мой ответ',
     promptDontKnow: 'Я не знал ответа.',
     promptOutro:
@@ -242,10 +252,15 @@ export const ru = {
     resetConfirm: 'Сбросить',
     about: 'О приложении',
     version: 'Версия {version}',
+    whatsNew: 'Что нового',
     aboutText:
       'Вопросы сверены с MDN, react.dev и документацией TypeScript. Нашли неточность — нажмите «Сообщить об ошибке» под вопросом.',
     privacy: 'Политика конфиденциальности',
     analytics: 'Анонимная статистика и отчёты о сбоях',
+  },
+  releases: {
+    title: 'Что нового',
+    current: 'Текущая',
   },
   plurals: {
     question: ['вопрос', 'вопроса', 'вопросов'],

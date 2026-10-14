@@ -2,16 +2,57 @@ import { JSX } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useUnit } from 'effector-react';
 import { progressModel } from '@app/entities/progress';
-import { ExplanationView, OPTION_IDS, OPTION_LETTERS, OptionButton, QUESTIONS_BY_ID, QuestionView } from '@app/entities/question';
+import {
+  BugLineAnswer,
+  ExplanationView,
+  OPTION_IDS,
+  OPTION_LETTERS,
+  OptionButton,
+  OrderAnswer,
+  OutputAnswer,
+  QUESTIONS_BY_ID,
+  QuestionView,
+} from '@app/entities/question';
 import { AskAiButton } from '@app/features/ask-ai';
 import { ReportQuestionButton } from '@app/features/report-question';
 import { useI18n } from '@app/shared/i18n';
 import { EmptyState, Pill, Screen } from '@app/shared/ui';
-import type { TagId } from '@app/entities/question';
+import type { Question, TagId } from '@app/entities/question';
 
 type QuestionReviewProps = {
   questionId: string;
   onOpenLesson: (tag: TagId) => void;
+};
+
+type CorrectAnswerProps = {
+  question: Question;
+};
+
+const CorrectAnswer = ({ question }: CorrectAnswerProps): JSX.Element => {
+  if (question.kind === 'order') {
+    return <OrderAnswer question={question} displayOrder={[]} order={[]} isRevealed />;
+  }
+  if (question.kind === 'bug-line') {
+    return <BugLineAnswer question={question} line={null} isRevealed />;
+  }
+  if (question.kind === 'output') {
+    return <OutputAnswer question={question} text="" isRevealed isCorrect={false} />;
+  }
+  return (
+    <View style={styles.options}>
+      {question.options.map((option, index) => {
+        const optionId = OPTION_IDS[index] ?? 'a';
+        return (
+          <OptionButton
+            key={optionId}
+            letter={OPTION_LETTERS[optionId]}
+            option={option}
+            state={optionId === question.answer ? 'correct' : 'idle'}
+          />
+        );
+      })}
+    </View>
+  );
 };
 
 export const QuestionReview = ({ questionId, onOpenLesson }: QuestionReviewProps): JSX.Element => {
@@ -37,19 +78,7 @@ export const QuestionReview = ({ questionId, onOpenLesson }: QuestionReviewProps
         </View>
       ) : null}
       <QuestionView question={question} />
-      <View style={styles.options}>
-        {question.options.map((option, index) => {
-          const optionId = OPTION_IDS[index] ?? 'a';
-          return (
-            <OptionButton
-              key={optionId}
-              letter={OPTION_LETTERS[optionId]}
-              option={option}
-              state={optionId === question.answer ? 'correct' : 'idle'}
-            />
-          );
-        })}
-      </View>
+      <CorrectAnswer question={question} />
       <ExplanationView question={question} onOpenLesson={onOpenLesson} />
       <AskAiButton question={question} />
       <ReportQuestionButton question={question} />

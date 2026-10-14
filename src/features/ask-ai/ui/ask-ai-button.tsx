@@ -12,13 +12,13 @@ import { useTheme } from '@app/shared/theme';
 import { AppText, Button } from '@app/shared/ui';
 import { AI_PROVIDERS } from '../config/providers';
 import { buildAiPrompt } from '../lib/build-prompt';
-import type { OptionId, Question } from '@app/entities/question';
+import type { Question, QuestionResponse } from '@app/entities/question';
 import type { IconName } from '@app/shared/ui';
 import type { AiProvider } from '../config/providers';
 
 type AskAiButtonProps = {
   question: Question;
-  chosen?: OptionId | null;
+  response?: QuestionResponse | null;
 };
 
 type SheetRowProps = {
@@ -56,7 +56,7 @@ const SheetRow = ({ icon, title, subtitle, isHighlighted = false, onPress }: She
   );
 };
 
-export const AskAiButton = ({ question, chosen }: AskAiButtonProps): JSX.Element => {
+export const AskAiButton = ({ question, response }: AskAiButtonProps): JSX.Element => {
   const { colors } = useTheme();
   const { t, text, locale } = useI18n();
   const insets = useSafeAreaInsets();
@@ -67,7 +67,7 @@ export const AskAiButton = ({ question, chosen }: AskAiButtonProps): JSX.Element
     onTrack: trackEventFx,
   });
   const lastProvider = settings.aiProvider;
-  const prompt = buildAiPrompt(question, chosen, locale);
+  const prompt = buildAiPrompt(question, response, locale);
 
   const trackTarget = (target: string): void => {
     onTrack({ name: 'ask_ai_used', params: { question_id: question.id, target } });

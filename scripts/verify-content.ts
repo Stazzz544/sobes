@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -11,8 +11,9 @@ import { GLOSSARY } from '../src/entities/question/glossary/glossary';
 import { LESSON_GROUPS } from '../src/entities/question/lessons';
 import { TOPIC_PATHS } from '../src/entities/question/config/paths';
 import { OPTION_IDS } from '../src/entities/question/model/types';
+import { RELEASES } from '../src/shared/config/releases';
 import { ACCENT_COLORS, BASE_COLORS } from '../src/shared/theme/colors';
-import type { OptionContent, Question, QuestionVerification } from '../src/entities/question/model/types';
+import type { ChoiceQuestion, OptionContent, Question, QuestionVerification } from '../src/entities/question/model/types';
 
 type CssComputedVerification = Extract<QuestionVerification, { kind: 'css-computed' }>;
 
@@ -64,7 +65,89 @@ const normalizeType = (value: string): string => {
 const optionKey = (option: OptionContent, locale: (typeof LOCALES)[number]): string =>
   'code' in option ? normalize(option.code) : normalize(option.text[locale]).toLowerCase();
 
-const getCorrectOption = (question: Question): OptionContent => question.options[OPTION_IDS.indexOf(question.answer)];
+const getCorrectOption = (question: ChoiceQuestion): OptionContent => question.options[OPTION_IDS.indexOf(question.answer)];
+
+const checkContentList = (question: Question, list: readonly OptionContent[], locale: (typeof LOCALES)[number], name: string): void => {
+  const keys = list.map((item) => optionKey(item, locale));
+  if (new Set(keys).size !== keys.length) {
+    fail(question, `повторяющиеся ${name} (${locale})`);
+  }
+  for (const item of list) {
+    const text = 'code' in item ? item.code : item.text[locale];
+    if (!text.trim()) {
+      fail(question, `пустой элемент «${name}» (${locale})`);
+    }
+    if ('code' in item && /[а-яё]/i.test(item.code)) {
+      fail(question, `кириллица в коде «${item.code}» — нужен text { ru, en }`);
+    }
+    if (FORBIDDEN_OPTION_PATTERNS.some((pattern) => pattern.test(text))) {
+      fail(question, `запрещённый вариант «${text}»`);
+    }
+  }
+};
+
+const checkKindStructure = (question: Question): void => {
+  if (question.kind === 'order') {
+    if (question.items.length < 3 || question.items.length > 6) {
+      fail(question, `в order нужно 3–6 элементов, сейчас ${question.items.length}`);
+    }
+    LOCALES.forEach((locale) => checkContentList(question, question.items, locale, 'элементы'));
+    return;
+  }
+  if (question.kind === 'bug-line') {
+    const lineCount = question.code.source.split('\n').length;
+    if (lineCount < 3) {
+      fail(question, 'в bug-line нужно хотя бы 3 строки кода');
+    }
+    if (!Number.isInteger(question.answerLine) || question.answerLine < 1 || question.answerLine > lineCount) {
+      fail(question, `answerLine ${question.answerLine} вне кода (строк: ${lineCount})`);
+    }
+    return;
+  }
+  if (question.kind === 'output') {
+    if (question.answers.length === 0 || question.answers.some((answer) => !answer.trim())) {
+      fail(question, 'в output нужен хотя бы один непустой ответ');
+    }
+    if (/[а-яё]/i.test(question.answers.join(''))) {
+      fail(question, 'кириллица в ответе output — ответ должен быть выводом кода');
+    }
+    return;
+  }
+  LOCALES.forEach((locale) => checkContentList(question, question.options, locale, 'варианты'));
+  if (!OPTION_IDS.includes(question.answer)) {
+    fail(question, `некорректный answer ${question.answer}`);
+  }
+};
+
+const checkAgainstAnswer = (question: Question, actual: string, what: string, toKey: (value: string) => string = normalize): void => {
+  if (question.kind === 'order') {
+    const expected = question.items.map((item) => ('code' in item ? item.code : '')).join(' ');
+    if (toKey(expected) !== actual) {
+      fail(question, `фактический ${what} «${actual}» не совпадает с правильным порядком «${expected}»`);
+    }
+    return;
+  }
+  if (question.kind === 'output') {
+    const expected = question.answers[0] ?? '';
+    if (toKey(expected) !== actual) {
+      fail(question, `фактический ${what} «${actual}» не совпадает с ответом «${expected}»`);
+    }
+    return;
+  }
+  if (question.kind === 'bug-line') {
+    fail(question, `проверка «${what}» не применима к bug-line`);
+    return;
+  }
+  const correct = getCorrectOption(question);
+  if (!('code' in correct) || toKey(correct.code) !== actual) {
+    fail(question, `фактический ${what} «${actual}» не совпадает с верным вариантом`);
+  }
+  question.options.forEach((option, index) => {
+    if (OPTION_IDS[index] !== question.answer && 'code' in option && toKey(option.code) === actual) {
+      fail(question, `вариант ${OPTION_IDS[index]} тоже совпадает (${what})`);
+    }
+  });
+};
 
 const checkStructure = (question: Question, seenIds: Set<string>): void => {
   if (seenIds.has(question.id)) {
@@ -86,22 +169,6 @@ const checkStructure = (question: Question, seenIds: Set<string>): void => {
     if (!question.prompt[locale].trim()) {
       fail(question, `пустая формулировка (${locale})`);
     }
-    const keys = question.options.map((option) => optionKey(option, locale));
-    if (new Set(keys).size !== keys.length) {
-      fail(question, `повторяющиеся варианты (${locale})`);
-    }
-    for (const option of question.options) {
-      const text = 'code' in option ? option.code : option.text[locale];
-      if (!text.trim()) {
-        fail(question, `пустой вариант (${locale})`);
-      }
-      if ('code' in option && /[а-яё]/i.test(option.code)) {
-        fail(question, `кириллица в варианте-коде «${option.code}» — нужен text { ru, en }`);
-      }
-      if (FORBIDDEN_OPTION_PATTERNS.some((pattern) => pattern.test(text))) {
-        fail(question, `запрещённый вариант «${text}»`);
-      }
-    }
     for (const block of question.explanation) {
       if (block.type === 'text' && !block.text[locale].trim()) {
         fail(question, `пустой блок пояснения (${locale})`);
@@ -111,9 +178,7 @@ const checkStructure = (question: Question, seenIds: Set<string>): void => {
       }
     }
   }
-  if (!OPTION_IDS.includes(question.answer)) {
-    fail(question, `некорректный answer ${question.answer}`);
-  }
+  checkKindStructure(question);
   if (!question.explanation.some((block) => block.type === 'text')) {
     fail(question, 'в пояснении нет текста');
   }
@@ -144,16 +209,7 @@ const checkJsOutput = (question: Question, workDir: string, transpile = false): 
     fail(question, `код упал: ${result.stderr.trim().split('\n')[0] ?? ''}`);
     return;
   }
-  const actual = normalize(result.stdout);
-  const correct = getCorrectOption(question);
-  if (!('code' in correct) || normalize(correct.code) !== actual) {
-    fail(question, `фактический вывод «${actual}» не совпадает с верным вариантом`);
-  }
-  question.options.forEach((option, index) => {
-    if (OPTION_IDS[index] !== question.answer && 'code' in option && normalize(option.code) === actual) {
-      fail(question, `вариант ${OPTION_IDS[index]} тоже совпадает с выводом`);
-    }
-  });
+  checkAgainstAnswer(question, normalize(result.stdout), 'вывод');
 };
 
 const COMPILER_OPTIONS: ts.CompilerOptions = {
@@ -207,16 +263,7 @@ const checkTsType = (question: Question, symbol: string): void => {
     return;
   }
   const checker = program.getTypeChecker();
-  const actual = normalizeType(checker.typeToString(checker.getTypeAtLocation(identifier)));
-  const correct = getCorrectOption(question);
-  if (!('code' in correct) || normalizeType(correct.code) !== actual) {
-    fail(question, `фактический тип «${actual}» не совпадает с верным вариантом`);
-  }
-  question.options.forEach((option, index) => {
-    if (OPTION_IDS[index] !== question.answer && 'code' in option && normalizeType(option.code) === actual) {
-      fail(question, `вариант ${OPTION_IDS[index]} тоже совпадает с типом`);
-    }
-  });
+  checkAgainstAnswer(question, normalizeType(checker.typeToString(checker.getTypeAtLocation(identifier))), 'тип', normalizeType);
 };
 
 const checkTsError = (question: Question, code: number): void => {
@@ -224,6 +271,21 @@ const checkTsError = (question: Question, code: number): void => {
   const codes = diagnostics.map((diagnostic) => diagnostic.code);
   if (codes.length === 0 || codes.some((actual) => actual !== code)) {
     fail(question, `ожидалась только ошибка TS${code}, получено: ${diagnostics.map(formatDiagnostic).join('; ') || 'ошибок нет'}`);
+  }
+};
+
+const checkTsErrorLine = (question: Question): void => {
+  if (question.kind !== 'bug-line') {
+    fail(question, 'ts-error-line только для bug-line');
+    return;
+  }
+  const { diagnostics } = compile(question.code.source);
+  const lines = diagnostics.map((diagnostic) =>
+    diagnostic.file && diagnostic.start !== undefined ? diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start).line + 1 : 0,
+  );
+  if (lines.length === 0 || lines.some((line) => line !== question.answerLine)) {
+    const found = diagnostics.map((diagnostic, index) => `строка ${lines[index]}: ${formatDiagnostic(diagnostic)}`).join('; ');
+    fail(question, `ожидались ошибки только на строке ${question.answerLine}, получено: ${found || 'ошибок нет'}`);
   }
 };
 
@@ -314,20 +376,13 @@ const checkCssComputed = (checks: CssCheck[], workDir: string): void => {
       }
     });
     cursor += 1 + extraProbes.length;
-    const correct = getCorrectOption(question);
-    const expected = verify.expected ?? ('code' in correct ? correct.code : undefined);
-    if (expected === undefined) {
-      fail(question, 'css-computed: при текстовом верном варианте нужен expected');
+    if (verify.expected === undefined) {
+      checkAgainstAnswer(question, actual, `css ${verify.selector} → ${verify.property}`);
       continue;
     }
-    if (normalize(expected) !== actual) {
-      fail(question, `css-computed: ${verify.selector} → ${verify.property} = «${actual}», ожидалось «${expected}»`);
+    if (normalize(verify.expected) !== actual) {
+      fail(question, `css-computed: ${verify.selector} → ${verify.property} = «${actual}», ожидалось «${verify.expected}»`);
     }
-    question.options.forEach((option, optionIndex) => {
-      if (OPTION_IDS[optionIndex] !== question.answer && 'code' in option && normalize(option.code) === actual) {
-        fail(question, `вариант ${OPTION_IDS[optionIndex]} тоже совпадает со значением`);
-      }
-    });
   }
 };
 
@@ -548,6 +603,50 @@ const checkDiagrams = (): void => {
   }
 };
 
+const SEMVER_PATTERN = /^(\d+)\.(\d+)\.(\d+)$/;
+
+const compareVersions = (first: string, second: string): number => {
+  const [firstParts, secondParts] = [first, second].map((version) => version.split('.').map(Number));
+  const index = [0, 1, 2].find((part) => firstParts?.[part] !== secondParts?.[part]);
+  return index === undefined ? 0 : (firstParts?.[index] ?? 0) - (secondParts?.[index] ?? 0);
+};
+
+const checkReleases = (): void => {
+  const { version } = JSON.parse(readFileSync('package.json', 'utf8')) as { version: string };
+  if (RELEASES[0]?.version !== version) {
+    errors.push(`версия ${version} из package.json не совпадает с последней в releases.ts (${RELEASES[0]?.version ?? 'нет'}) — см. скилл release-notes`);
+  }
+  if (!readFileSync('CHANGELOG.md', 'utf8').split(/\r?\n/).some((line) => line.trim() === `## ${version}`)) {
+    errors.push(`в CHANGELOG.md нет секции «## ${version}»`);
+  }
+  RELEASES.forEach((release, index) => {
+    const releaseError = (message: string): void => {
+      errors.push(`релиз ${release.version}: ${message}`);
+    };
+    if (!SEMVER_PATTERN.test(release.version)) {
+      releaseError('версия не в формате X.Y.Z');
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(release.date) || Number.isNaN(Date.parse(release.date))) {
+      releaseError(`дата «${release.date}» не в формате YYYY-MM-DD`);
+    }
+    const previous = RELEASES[index + 1];
+    if (previous && compareVersions(release.version, previous.version) <= 0) {
+      releaseError(`должна быть больше следующей в списке ${previous.version} — новые релизы сверху`);
+    }
+    if (previous && release.date < previous.date) {
+      releaseError('дата раньше, чем у предыдущей версии');
+    }
+    if (release.changes.length === 0) {
+      releaseError('нет изменений');
+    }
+    for (const locale of LOCALES) {
+      if (release.changes.some((change) => !change[locale].trim())) {
+        releaseError(`пустой пункт (${locale})`);
+      }
+    }
+  });
+};
+
 const printDistribution = (): void => {
   const rows = Object.keys(ID_PREFIX).map((topic) => {
     const list = QUESTIONS.filter((question) => question.topic === topic);
@@ -559,6 +658,7 @@ const printDistribution = (): void => {
       senior: list.filter((question) => question.difficulty === 3).length,
       popular: list.filter((question) => question.popular).length,
       verified: list.filter((question) => question.verify).length,
+      interactive: list.filter((question) => question.kind !== undefined && question.kind !== 'choice').length,
     };
   });
   console.table(rows);
@@ -588,6 +688,9 @@ const main = async (): Promise<void> => {
       if (question.verify?.kind === 'ts-error') {
         checkTsError(question, question.verify.code);
       }
+      if (question.verify?.kind === 'ts-error-line') {
+        checkTsErrorLine(question);
+      }
       if (question.verify?.kind === 'ts-output') {
         checkJsOutput(question, workDir, true);
       }
@@ -604,6 +707,7 @@ const main = async (): Promise<void> => {
   checkLessons();
   checkPaths();
   checkGlossary();
+  checkReleases();
   printDistribution();
   if (process.argv.includes('--links')) {
     await checkLinks();

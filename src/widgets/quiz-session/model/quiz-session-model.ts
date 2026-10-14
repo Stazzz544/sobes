@@ -3,7 +3,7 @@ import * as Haptics from 'expo-haptics';
 import { ToastAndroid } from 'react-native';
 import { interval } from 'patronum';
 import { progressModel } from '@app/entities/progress';
-import { OPTION_IDS, QUESTIONS, QUESTIONS_BY_ID } from '@app/entities/question';
+import { OPTION_IDS, QUESTIONS, QUESTIONS_BY_ID, describeResponse, isResponseComplete, isResponseCorrect } from '@app/entities/question';
 import { settingsModel } from '@app/entities/settings';
 import { trackEventFx } from '@app/shared/analytics';
 import { DICTIONARIES, i18nModel, translate } from '@app/shared/i18n';
@@ -11,7 +11,7 @@ import { createRandom, shuffle } from '@app/shared/lib';
 import { buildQueue } from '../lib/build-queue';
 import { estimateLevel } from '../lib/estimate-level';
 import type { AnswerResult, QuestionStats } from '@app/entities/progress';
-import type { OptionId, Question, QuizMode } from '@app/entities/question';
+import type { OptionId, Question, QuestionResponse, QuizMode } from '@app/entities/question';
 import type { AnalyticsEvent } from '@app/shared/analytics';
 import type { SessionParams } from '../lib/build-queue';
 import type { InterviewLevel } from '../lib/estimate-level';
@@ -22,7 +22,7 @@ export type SessionPhase = 'idle' | 'answering' | 'revealed' | 'finished' | 'emp
 
 export type SessionAnswer = {
   questionId: string;
-  chosen: OptionId | null;
+  response: QuestionResponse | null;
   result: AnswerResult;
 };
 
@@ -52,11 +52,22 @@ type SessionSnapshot = {
   answers: SessionAnswer[];
 };
 
-const getResult = (question: Question, chosen: OptionId | null): AnswerResult => {
-  if (chosen === null) {
+const getResult = (question: Question, response: QuestionResponse | null): AnswerResult => {
+  if (response === null) {
     return 'dontKnow';
   }
-  return chosen === question.answer ? 'correct' : 'wrong';
+  return isResponseCorrect(question, response) ? 'correct' : 'wrong';
+};
+
+const getItemOrder = (question: Question | null, seed: number): number[] => {
+  if (question?.kind !== 'order') {
+    return [];
+  }
+  const order = shuffle(
+    question.items.map((_, index) => index),
+    createRandom(seed),
+  );
+  return order.every((itemIndex, position) => itemIndex === position) ? order.reverse() : order;
 };
 
 const isExamMode = (mode: QuizMode | undefined): boolean => mode === 'interview' || mode === 'placement';
@@ -107,10 +118,11 @@ export const createQuizSessionModel = () => {
   const sessionStarted = createEvent<SessionParams>();
   const sessionClosed = createEvent();
   const optionSelected = createEvent<OptionId>();
+  const draftChanged = createEvent<QuestionResponse>();
   const answerConfirmed = createEvent();
   const dontKnowPressed = createEvent();
   const nextPressed = createEvent();
-  const answerSubmitted = createEvent<OptionId | null>();
+  const answerSubmitted = createEvent<QuestionResponse | null>();
   const answerAdded = createEvent<SessionAnswer>();
   const transitionPlanned = createEvent<Transition>();
   const timerStopped = createEvent();
@@ -120,7 +132,7 @@ export const createQuizSessionModel = () => {
   const $queue = createStore<string[]>([]);
   const $seed = createStore(0);
   const $index = createStore(0);
-  const $selectedOption = createStore<OptionId | null>(null);
+  const $draft = createStore<QuestionResponse | null>(null);
   const $phase = createStore<SessionPhase>('idle');
   const $answers = createStore<SessionAnswer[]>([]);
   const $remainingSeconds = createStore(0);
@@ -146,6 +158,7 @@ export const createQuizSessionModel = () => {
   const $hapticsEnabled = settingsModel.$settings.map((settings) => settings.haptics);
   const $currentQuestion = combine($queue, $index, (queue, index): Question | null => QUESTIONS_BY_ID[queue[index] ?? ''] ?? null);
   const $optionOrder = combine($seed, $index, (seed, index): OptionId[] => shuffle(OPTION_IDS, createRandom(seed + index * 7919)));
+  const $itemOrder = combine($seed, $index, $currentQuestion, (seed, index, question) => getItemOrder(question, seed + index * 7919));
   const $currentAnswer = combine($answers, $currentQuestion, (answers, question) =>
     question ? (answers.find((answer) => answer.questionId === question.id) ?? null) : null,
   );
@@ -163,7 +176,7 @@ export const createQuizSessionModel = () => {
   sample({ clock: prepareSessionFx.doneData, fn: (session) => session.seed, target: $seed });
   sample({ clock: prepareSessionFx.doneData, fn: (session) => session.queue, target: $queue });
   sample({ clock: prepareSessionFx.doneData, fn: () => 0, target: $index });
-  sample({ clock: prepareSessionFx.doneData, fn: () => null, target: $selectedOption });
+  sample({ clock: prepareSessionFx.doneData, fn: () => null, target: $draft });
   sample({ clock: prepareSessionFx.doneData, fn: (): SessionAnswer[] => [], target: $answers });
   sample({
     clock: prepareSessionFx.doneData,
@@ -190,13 +203,20 @@ export const createQuizSessionModel = () => {
     target: trackEventFx,
   });
 
-  sample({ clock: optionSelected, filter: $phase.map((phase) => phase === 'answering'), target: $selectedOption });
-  sample({ clock: optionSelected, filter: $hapticsEnabled, target: selectionHapticFx });
+  sample({ clock: optionSelected, fn: (option): QuestionResponse => ({ kind: 'choice', option }), target: draftChanged });
+  sample({ clock: draftChanged, filter: $phase.map((phase) => phase === 'answering'), target: $draft });
+  sample({
+    clock: draftChanged,
+    source: $hapticsEnabled,
+    filter: (isEnabled, draft) => isEnabled && draft.kind !== 'output',
+    target: selectionHapticFx,
+  });
 
   sample({
     clock: answerConfirmed,
-    source: $selectedOption,
-    filter: (selected) => selected !== null,
+    source: { question: $currentQuestion, draft: $draft },
+    filter: ({ question, draft }) => question !== null && isResponseComplete(question, draft),
+    fn: ({ draft }) => draft,
     target: answerSubmitted,
   });
   sample({ clock: dontKnowPressed, fn: () => null, target: answerSubmitted });
@@ -205,9 +225,9 @@ export const createQuizSessionModel = () => {
     clock: answerSubmitted,
     source: { question: $currentQuestion, phase: $phase },
     filter: ({ question, phase }) => question !== null && phase === 'answering',
-    fn: ({ question }, chosen): SessionAnswer => {
+    fn: ({ question }, response): SessionAnswer => {
       const current = question as Question;
-      return { questionId: current.id, chosen, result: getResult(current, chosen) };
+      return { questionId: current.id, response, result: getResult(current, response) };
     },
     target: answerAdded,
   });
@@ -236,7 +256,7 @@ export const createQuizSessionModel = () => {
           difficulty: question?.difficulty ?? 0,
           mode: params?.mode ?? 'practice',
           result: answer.result,
-          chosen: answer.chosen ?? 'none',
+          chosen: describeResponse(answer.response),
         },
       };
     },
@@ -280,7 +300,7 @@ export const createQuizSessionModel = () => {
 
   sample({ clock: transitionPlanned, fn: (transition) => transition.index, target: $index });
   sample({ clock: transitionPlanned, fn: (transition) => transition.phase, target: $phase });
-  sample({ clock: transitionPlanned, filter: (transition) => transition.phase === 'answering', fn: () => null, target: $selectedOption });
+  sample({ clock: transitionPlanned, filter: (transition) => transition.phase === 'answering', fn: () => null, target: $draft });
 
   sample({ clock: timer.tick, source: $remainingSeconds, fn: (seconds) => Math.max(seconds - 1, 0), target: $remainingSeconds });
   sample({
@@ -330,11 +350,12 @@ export const createQuizSessionModel = () => {
     $queue,
     $index,
     $phase,
-    $selectedOption,
+    $draft,
     $answers,
     $currentQuestion,
     $currentAnswer,
     $optionOrder,
+    $itemOrder,
     $isInterview,
     $isLast,
     $remainingSeconds,
@@ -342,6 +363,7 @@ export const createQuizSessionModel = () => {
     sessionStarted,
     sessionClosed,
     optionSelected,
+    draftChanged,
     answerConfirmed,
     dontKnowPressed,
     nextPressed,

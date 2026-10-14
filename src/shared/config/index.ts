@@ -3,3 +3,5 @@ export { TOPIC_IDS, TOPIC_SELECTIONS } from './topics';
 export type { TopicId, TopicSelection } from './topics';
 export { FEEDBACK_EMAIL, PRIVACY_POLICY_URL, SUPPORT_LINKS } from './links';
 export type { SupportLink } from './links';
+export { RELEASES } from './releases';
+export type { Release } from './releases';
