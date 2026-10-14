@@ -1,3 +1,4 @@
+import { getReviewState } from './review';
 import type { AnswerResult, QuestionStat } from '../model/types';
 
 export const MISTAKE_RESOLVE_STREAK = 2;
@@ -16,6 +17,8 @@ const EMPTY_STAT: QuestionStat = {
   lastAnsweredAt: 0,
   inMistakes: false,
   mistakeStreak: 0,
+  reviewStep: 0,
+  dueAt: 0,
 };
 
 const getMistakeState = (
@@ -47,6 +50,7 @@ export const applyAnswer = (previous: QuestionStat | undefined, result: AnswerRe
       lastResult: result,
       lastAnsweredAt: at,
       ...mistakeState,
+      ...getReviewState(previous, result, at),
     },
     resolvedMistake: base.inMistakes && !mistakeState.inMistakes,
   };

@@ -16,6 +16,8 @@ export type QuestionStat = {
   lastAnsweredAt: number;
   inMistakes: boolean;
   mistakeStreak: number;
+  reviewStep: number;
+  dueAt: number;
 };
 
 export type QuestionStats = Record<string, QuestionStat>;

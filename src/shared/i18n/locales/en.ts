@@ -45,6 +45,7 @@ export const en: Dictionary = {
       hard: { title: 'Hard', description: 'Middle+ and senior level questions' },
       interview: { title: 'Mock interview', description: '15 timed questions, review at the end' },
       mistakes: { title: 'Review mistakes', description: 'Repeat the questions you got wrong' },
+      review: { title: 'Daily review', description: 'Questions due for a refresh' },
     },
   },
   question: {
@@ -77,6 +78,7 @@ export const en: Dictionary = {
       hard: 'There are no hard questions for this topic yet.',
       interview: 'There aren’t enough questions for a mock interview on this topic yet.',
       mistakes: 'No mistakes on this topic — keep it up!',
+      review: 'Nothing left to review today — come back tomorrow.',
     },
     summaryTitle: 'Result',
     summaryScore: '{correct} correct out of {total}',
@@ -145,6 +147,13 @@ export const en: Dictionary = {
     hint: 'Answer correctly twice in a row and the question is locked in.',
     repeat: 'Review',
     errors: 'Mistakes: {count}',
+  },
+  reviewToday: {
+    title: 'Review today',
+    due: '{count} from all topics',
+    doneTitle: 'All caught up for today',
+    nextTomorrow: 'Next review: tomorrow',
+    nextDate: 'Next review: {date}',
   },
   stats: {
     emptyTitle: 'No stats yet',

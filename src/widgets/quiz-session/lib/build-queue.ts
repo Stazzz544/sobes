@@ -1,3 +1,4 @@
+import { isDueForReview } from '@app/entities/progress';
 import { shuffle } from '@app/shared/lib';
 import type { Question, QuizMode, TagId } from '@app/entities/question';
 import type { QuestionStat, QuestionStats } from '@app/entities/progress';
@@ -44,7 +45,7 @@ const pickInterview = (pool: Question[], random: RandomSource): Question[] => {
   return shuffle(picked, random);
 };
 
-const filterByMode = (pool: Question[], mode: QuizMode, stats: QuestionStats): Question[] => {
+const filterByMode = (pool: Question[], mode: QuizMode, stats: QuestionStats, now: number): Question[] => {
   if (mode === 'popular') {
     return pool.filter((question) => question.popular);
   }
@@ -54,7 +55,20 @@ const filterByMode = (pool: Question[], mode: QuizMode, stats: QuestionStats): Q
   if (mode === 'mistakes') {
     return pool.filter((question) => stats[question.id]?.inMistakes);
   }
+  if (mode === 'review') {
+    return pool.filter((question) => isDueForReview(stats[question.id], now));
+  }
   return pool;
+};
+
+const orderByMode = (questions: Question[], mode: QuizMode, stats: QuestionStats, random: RandomSource): Question[] => {
+  if (mode === 'mistakes') {
+    return shuffle(questions, random);
+  }
+  if (mode === 'review') {
+    return shuffle(questions, random).sort((first, second) => (stats[first.id]?.dueAt ?? 0) - (stats[second.id]?.dueAt ?? 0));
+  }
+  return prioritize(questions, stats, random);
 };
 
 export const buildQueue = (
@@ -63,6 +77,7 @@ export const buildQueue = (
   params: SessionParams,
   sessionLength: number,
   random: RandomSource,
+  now: number,
 ): string[] => {
   const pool = questions.filter(
     (question) =>
@@ -72,7 +87,8 @@ export const buildQueue = (
   if (params.mode === 'interview') {
     return pickInterview(pool, random).map((question) => question.id);
   }
-  const filtered = filterByMode(pool, params.mode, stats);
-  const ordered = params.mode === 'mistakes' ? shuffle(filtered, random) : prioritize(filtered, stats, random);
-  return ordered.slice(0, sessionLength).map((question) => question.id);
+  const filtered = filterByMode(pool, params.mode, stats, now);
+  return orderByMode(filtered, params.mode, stats, random)
+    .slice(0, sessionLength)
+    .map((question) => question.id);
 };

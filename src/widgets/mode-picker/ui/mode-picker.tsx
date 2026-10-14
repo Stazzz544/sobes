@@ -8,11 +8,15 @@ import { AppText, Card } from '@app/shared/ui';
 import type { QuizMode } from '@app/entities/question';
 import type { IconName } from '@app/shared/ui';
 
+type PickerMode = Exclude<QuizMode, 'review'>;
+
 type ModePickerProps = {
-  onSelect: (mode: QuizMode) => void;
+  onSelect: (mode: PickerMode) => void;
 };
 
-const MODE_ICONS: Record<QuizMode, IconName> = {
+const PICKER_MODES = QUIZ_MODES.filter((mode): mode is PickerMode => mode !== 'review');
+
+const MODE_ICONS: Record<PickerMode, IconName> = {
   practice: 'school-outline',
   popular: 'flame-outline',
   hard: 'barbell-outline',
@@ -26,7 +30,7 @@ export const ModePicker = ({ onSelect }: ModePickerProps): JSX.Element => {
 
   return (
     <View style={styles.list}>
-      {QUIZ_MODES.map((mode) => {
+      {PICKER_MODES.map((mode) => {
         const title = t(`home.modes.${mode}.title`);
         return (
           <Card

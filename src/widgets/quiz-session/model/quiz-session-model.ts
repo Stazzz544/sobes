@@ -126,7 +126,7 @@ export const createQuizSessionModel = () => {
   const prepareSessionFx = createEffect(
     ({ params, stats, sessionLength }: { params: SessionParams; stats: QuestionStats; sessionLength: number }): PreparedSession => {
       const seed = Date.now();
-      return { params, seed, queue: buildQueue(QUESTIONS, stats, params, sessionLength, createRandom(seed)) };
+      return { params, seed, queue: buildQueue(QUESTIONS, stats, params, sessionLength, createRandom(seed), seed) };
     },
   );
 

@@ -43,6 +43,7 @@ export const ru = {
       hard: { title: 'Сложные', description: 'Вопросы уровня middle+ и senior' },
       interview: { title: 'Собеседование', description: '15 вопросов на время, разбор в конце' },
       mistakes: { title: 'Работа над ошибками', description: 'Повтори вопросы, где ошибся' },
+      review: { title: 'Повторение', description: 'Вопросы, которые пора вспомнить' },
     },
   },
   question: {
@@ -75,6 +76,7 @@ export const ru = {
       hard: 'Сложных вопросов по этой теме пока нет.',
       interview: 'Для собеседования по этой теме пока мало вопросов.',
       mistakes: 'Ошибок по этой теме нет — так держать!',
+      review: 'На сегодня всё повторено — возвращайся завтра.',
     },
     summaryTitle: 'Итог',
     summaryScore: '{correct} верно из {total}',
@@ -143,6 +145,13 @@ export const ru = {
     hint: 'Ответь верно дважды подряд — и вопрос закрепится.',
     repeat: 'Повторить',
     errors: 'Ошибок: {count}',
+  },
+  reviewToday: {
+    title: 'Повторить сегодня',
+    due: '{count} из всех тем',
+    doneTitle: 'На сегодня всё повторено',
+    nextTomorrow: 'Следующее повторение — завтра',
+    nextDate: 'Следующее повторение — {date}',
   },
   stats: {
     emptyTitle: 'Статистики пока нет',

@@ -10,3 +10,9 @@ export const addDays = (timestamp: number, days: number): number => {
   date.setDate(date.getDate() + days);
   return date.getTime();
 };
+
+export const startOfDay = (timestamp: number): number => {
+  const date = new Date(timestamp);
+  date.setHours(0, 0, 0, 0);
+  return date.getTime();
+};

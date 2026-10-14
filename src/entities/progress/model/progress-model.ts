@@ -3,7 +3,9 @@ import { trackEventFx } from '@app/shared/analytics';
 import { STORAGE_KEYS } from '@app/shared/config';
 import { storage } from '@app/shared/lib';
 import { applyAnswer } from '../lib/apply-answer';
+import { withReviewState } from '../lib/review';
 import type { AnalyticsEvent } from '@app/shared/analytics';
+import type { StoredQuestionStat } from '../lib/review';
 import type { AnswerRecord, QuestionStats } from './types';
 
 const MAX_LOG_LENGTH = 3000;
@@ -31,10 +33,11 @@ const $isLoaded = createStore(false);
 
 const loadProgressFx = createEffect(async (): Promise<LoadedProgress> => {
   const [stats, log] = await Promise.all([
-    storage.get<QuestionStats>(STORAGE_KEYS.QUESTION_STATS),
+    storage.get<Record<string, StoredQuestionStat>>(STORAGE_KEYS.QUESTION_STATS),
     storage.get<AnswerRecord[]>(STORAGE_KEYS.ANSWER_LOG),
   ]);
-  return { stats: stats ?? {}, log: log ?? [] };
+  const migratedStats = Object.fromEntries(Object.entries(stats ?? {}).map(([id, stat]) => [id, withReviewState(stat)]));
+  return { stats: migratedStats, log: log ?? [] };
 });
 
 const saveStatsFx = createEffect(async (stats: QuestionStats) => storage.set(STORAGE_KEYS.QUESTION_STATS, stats));
