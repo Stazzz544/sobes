@@ -62,6 +62,16 @@ export const TOPICS: Record<TopicId, Topic> = {
       en: 'LLMs, prompting, RAG, agents, safety and AI in the frontend',
     },
   },
+  git: {
+    id: 'git',
+    accent: 'git',
+    shortTitle: 'Git',
+    title: { ru: 'Git', en: 'Git' },
+    description: {
+      ru: 'Коммиты и индекс, ветки и merge, rebase, отмена изменений, удалённые репозитории, конфликты',
+      en: 'Commits and the index, branches and merge, rebase, undoing changes, remotes, conflicts',
+    },
+  },
   hr: {
     id: 'hr',
     accent: 'hr',

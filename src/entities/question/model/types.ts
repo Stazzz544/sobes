@@ -85,6 +85,7 @@ export type QuestionVerification =
   | { kind: 'ts-check'; source: string }
   | { kind: 'ts-error'; code: number }
   | { kind: 'ts-output' }
+  | { kind: 'shell-output' }
   | {
       kind: 'css-computed';
       selector: string;
@@ -117,7 +118,7 @@ export type ChoiceQuestion = QuestionBase & {
 export type OrderQuestion = QuestionBase & {
   kind: 'order';
   items: OptionContent[];
-  verify?: { kind: 'js-output' };
+  verify?: Extract<QuestionVerification, { kind: 'js-output' | 'shell-output' }>;
 };
 
 export type BugLineQuestion = QuestionBase & {
@@ -131,7 +132,7 @@ export type OutputQuestion = QuestionBase & {
   kind: 'output';
   code: CodeSnippet;
   answers: string[];
-  verify?: Extract<QuestionVerification, { kind: 'js-output' | 'ts-output' | 'css-computed' }>;
+  verify?: Extract<QuestionVerification, { kind: 'js-output' | 'ts-output' | 'shell-output' | 'css-computed' }>;
 };
 
 export type Question = ChoiceQuestion | OrderQuestion | BugLineQuestion | OutputQuestion;

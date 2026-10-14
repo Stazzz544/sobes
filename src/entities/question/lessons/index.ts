@@ -1,6 +1,7 @@
 import { AI_LESSONS } from './ai';
 import { ALGORITHMS_LESSONS } from './algorithms';
 import { CSS_LESSONS } from './css';
+import { GIT_LESSONS } from './git';
 import { HR_LESSONS } from './hr';
 import { JAVASCRIPT_LESSONS } from './javascript';
 import { JAVASCRIPT_LESSONS_2 } from './javascript-2';
@@ -19,6 +20,7 @@ export const LESSON_GROUPS: Partial<Record<TopicId, readonly Lesson[]>> = {
   css: CSS_LESSONS,
   algorithms: ALGORITHMS_LESSONS,
   ai: AI_LESSONS,
+  git: GIT_LESSONS,
   hr: HR_LESSONS,
 };
 

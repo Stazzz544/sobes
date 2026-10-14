@@ -1,5 +1,5 @@
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -20,7 +20,7 @@ import type { ChoiceQuestion, OptionContent, Question, QuestionVerification } fr
 type CssComputedVerification = Extract<QuestionVerification, { kind: 'css-computed' }>;
 
 const LOCALES = ['ru', 'en'] as const;
-const ID_PREFIX = { javascript: 'js', typescript: 'ts', react: 'react', web: 'web', css: 'css', ai: 'ai', algorithms: 'algo', hr: 'hr' } as const;
+const ID_PREFIX = { javascript: 'js', typescript: 'ts', react: 'react', web: 'web', css: 'css', ai: 'ai', algorithms: 'algo', hr: 'hr', git: 'git' } as const;
 const CHROME_CANDIDATES = [
   process.env.CHROME_PATH,
   'C:/Program Files/Google/Chrome/Application/chrome.exe',
@@ -209,6 +209,62 @@ const checkJsOutput = (question: Question, workDir: string, transpile = false): 
   const result = spawnSync(process.execPath, [file], { encoding: 'utf8', timeout: 5000 });
   if (result.status !== 0) {
     fail(question, `код упал: ${result.stderr.trim().split('\n')[0] ?? ''}`);
+    return;
+  }
+  checkAgainstAnswer(question, normalize(result.stdout), 'вывод');
+};
+
+const BASH_CANDIDATES = [process.env.BASH_PATH, 'C:/Program Files/Git/bin/bash.exe', '/bin/bash', '/usr/bin/bash'];
+const GIT_CONFIG = [
+  '[user]',
+  '\tname = Sobes',
+  '\temail = sobes@example.com',
+  '[init]',
+  '\tdefaultBranch = main',
+  '[core]',
+  '\tautocrlf = false',
+  '[commit]',
+  '\tgpgsign = false',
+  '[advice]',
+  '\tdetachedHead = false',
+  '',
+].join('\n');
+const GIT_DATE = '2026-01-01T00:00:00Z';
+
+const checkShellOutput = (question: Question, workDir: string): void => {
+  const bash = BASH_CANDIDATES.find((candidate) => candidate !== undefined && existsSync(candidate));
+  if (!bash) {
+    (IS_CI ? errors : warnings).push(`${question.id}: shell-output — не найден bash (задайте BASH_PATH)`);
+    return;
+  }
+  if (!question.code) {
+    fail(question, 'shell-output без кода');
+    return;
+  }
+  const questionDir = path.join(workDir, question.id);
+  const home = path.join(questionDir, 'home');
+  const repo = path.join(questionDir, 'repo');
+  mkdirSync(home, { recursive: true });
+  mkdirSync(repo, { recursive: true });
+  writeFileSync(path.join(home, '.gitconfig'), GIT_CONFIG);
+  const script = path.join(questionDir, 'script.sh');
+  writeFileSync(script, `set -e\n${question.code.source}\n`);
+  // чистый HOME и фиксированные даты: без пользовательского gitconfig вывод и хеши одинаковы на любой машине
+  const result = spawnSync(bash, [script], {
+    cwd: repo,
+    encoding: 'utf8',
+    timeout: 20000,
+    env: {
+      ...process.env,
+      HOME: home,
+      GIT_CONFIG_NOSYSTEM: '1',
+      GIT_AUTHOR_DATE: GIT_DATE,
+      GIT_COMMITTER_DATE: GIT_DATE,
+      LC_ALL: 'C',
+    },
+  });
+  if (result.status !== 0) {
+    fail(question, `скрипт упал: ${(result.stderr ?? '').trim().split('\n').slice(-1)[0] ?? ''}`);
     return;
   }
   checkAgainstAnswer(question, normalize(result.stdout), 'вывод');
@@ -712,6 +768,9 @@ const main = async (): Promise<void> => {
       }
       if (question.verify?.kind === 'ts-error-line') {
         checkTsErrorLine(question);
+      }
+      if (question.verify?.kind === 'shell-output') {
+        checkShellOutput(question, workDir);
       }
       if (question.verify?.kind === 'ts-output') {
         checkJsOutput(question, workDir, true);

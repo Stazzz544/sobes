@@ -8,6 +8,7 @@ import { CSS_QUESTIONS } from './css';
 import { CSS_QUESTIONS_2 } from './css-2';
 import { CSS_QUESTIONS_3 } from './css-3';
 import { CSS_QUESTIONS_4 } from './css-4';
+import { GIT_QUESTIONS } from './git';
 import { HR_QUESTIONS } from './hr';
 import { HR_QUESTIONS_2 } from './hr-2';
 import { JAVASCRIPT_QUESTIONS } from './javascript';
@@ -63,6 +64,7 @@ export const QUESTIONS: Question[] = [
   ...ALGORITHMS_QUESTIONS,
   ...ALGORITHMS_QUESTIONS_2,
   ...ALGORITHMS_QUESTIONS_3,
+  ...GIT_QUESTIONS,
   ...HR_QUESTIONS,
   ...HR_QUESTIONS_2,
 ];
