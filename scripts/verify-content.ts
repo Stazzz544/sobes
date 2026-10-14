@@ -25,6 +25,7 @@ const CHROME_CANDIDATES = [
 ];
 const FORBIDDEN_OPTION_PATTERNS = [/все (перечисленн|вышеперечисленн)/i, /all of the above/i, /none of the above/i];
 const VIRTUAL_FILE = 'question.ts';
+const IS_CI = process.env.CI === 'true';
 
 const errors: string[] = [];
 const warnings: string[] = [];
@@ -269,7 +270,8 @@ const checkCssComputed = (checks: CssCheck[], workDir: string): void => {
   }
   const chrome = CHROME_CANDIDATES.find((candidate) => candidate !== undefined && existsSync(candidate));
   if (!chrome) {
-    warnings.push(`css-computed: не найден Chrome (задайте CHROME_PATH), не проверено вопросов: ${checks.length}`);
+    const message = `css-computed: не найден Chrome (задайте CHROME_PATH), не проверено вопросов: ${checks.length}`;
+    (IS_CI ? errors : warnings).push(message);
     return;
   }
   const frames = checks
@@ -285,9 +287,11 @@ const checkCssComputed = (checks: CssCheck[], workDir: string): void => {
   );
   const file = path.join(workDir, 'css-computed.html');
   writeFileSync(file, `<!doctype html><meta charset="utf-8">${frames}<pre id="out"></pre><script>const PROBES = ${probes};${CSS_PROBE_SCRIPT}</script>`);
+  // на ubuntu-раннерах AppArmor запрещает песочнице Chrome user namespaces, а страница — наша локальная
+  const sandboxFlags = IS_CI ? ['--no-sandbox'] : [];
   const result = spawnSync(
     chrome,
-    ['--headless', '--disable-gpu', '--no-first-run', '--no-default-browser-check', '--virtual-time-budget=10000', '--dump-dom', pathToFileURL(file).href],
+    [...sandboxFlags, '--headless', '--disable-gpu', '--no-first-run', '--no-default-browser-check', '--virtual-time-budget=10000', '--dump-dom', pathToFileURL(file).href],
     { encoding: 'utf8', timeout: 60000, maxBuffer: 64 * 1024 * 1024 },
   );
   const encoded = /<pre id="out">([^<]+)<\/pre>/.exec(result.stdout ?? '')?.[1];
