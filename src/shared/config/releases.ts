@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.10.0',
+    date: '2026-10-14',
+    changes: [
+      {
+        ru: 'Новая тема «Стейт-менеджмент»: где хранить состояние, иммутабельность, Redux, сторы и селекторы, серверное состояние, URL.',
+        en: 'New topic “State management”: where state lives, immutability, Redux, stores and selectors, server state, the URL.',
+      },
+      { ru: '18 вопросов и 6 конспектов — всего 418 вопросов.', en: '18 questions and 6 lessons — 418 questions in total.' },
+    ],
+  },
+  {
     version: '1.9.0',
     date: '2026-10-14',
     changes: [

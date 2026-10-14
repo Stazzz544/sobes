@@ -23,6 +23,8 @@ const LOGO_COLORS = {
   htmlTeal: '#0F766E',
   testSky: '#0369A1',
   testIce: '#BAE6FD',
+  stateSlate: '#334155',
+  stateMist: '#CBD5E1',
   hrCream: '#FDE68A',
   black: '#000000',
   white: '#FFFFFF',
@@ -75,6 +77,19 @@ const TestingMark = ({ size }: { size: number }): JSX.Element => (
       <Path d="M31 19 H53" />
       <Path d="M31 41 H53" />
     </G>
+  </Svg>
+);
+
+const StateMark = ({ size }: { size: number }): JSX.Element => (
+  <Svg width={size} height={size} viewBox="0 0 64 64">
+    <Rect width={64} height={64} rx={12} fill={LOGO_COLORS.stateSlate} />
+    <Rect x={22} y={10} width={20} height={14} rx={4} fill={LOGO_COLORS.white} />
+    <G stroke={LOGO_COLORS.stateMist} strokeWidth={3.5} fill="none" strokeLinecap="round">
+      <Path d="M32 24 V32 M14 32 H50 M14 32 V38 M32 32 V38 M50 32 V38" />
+    </G>
+    <Circle cx={14} cy={45} r={6} fill={LOGO_COLORS.stateMist} />
+    <Circle cx={32} cy={45} r={6} fill={LOGO_COLORS.stateMist} />
+    <Circle cx={50} cy={45} r={6} fill={LOGO_COLORS.stateMist} />
   </Svg>
 );
 
@@ -180,6 +195,9 @@ export const TopicLogo = ({ topic, size = 40 }: TopicLogoProps): JSX.Element => 
   }
   if (topic === 'testing') {
     return <TestingMark size={size} />;
+  }
+  if (topic === 'state') {
+    return <StateMark size={size} />;
   }
   if (topic === 'git') {
     return <GitMark size={size} />;

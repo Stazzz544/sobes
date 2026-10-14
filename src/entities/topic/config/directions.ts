@@ -5,7 +5,7 @@ export const DIRECTIONS: Record<DirectionId, Direction> = {
     id: 'frontend',
     title: { ru: 'Фронтенд', en: 'Front-end' },
     role: { ru: 'фронтенд-разработчика', en: 'front-end developer' },
-    topics: ['javascript', 'typescript', 'react', 'web', 'css', 'ai', 'algorithms', 'html', 'testing', 'git', 'hr'],
+    topics: ['javascript', 'typescript', 'react', 'web', 'css', 'ai', 'algorithms', 'html', 'testing', 'state', 'git', 'hr'],
   },
 };
 

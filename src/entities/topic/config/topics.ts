@@ -82,6 +82,16 @@ export const TOPICS: Record<TopicId, Topic> = {
       en: 'The test pyramid, matchers, mocks and timers, Testing Library, E2E, TDD',
     },
   },
+  state: {
+    id: 'state',
+    accent: 'state',
+    shortTitle: 'State',
+    title: { ru: 'Стейт-менеджмент', en: 'State management' },
+    description: {
+      ru: 'Где хранить состояние, иммутабельность, Redux, сторы и селекторы, серверное состояние, URL',
+      en: 'Where state lives, immutability, Redux, stores and selectors, server state, the URL',
+    },
+  },
   git: {
     id: 'git',
     accent: 'git',
