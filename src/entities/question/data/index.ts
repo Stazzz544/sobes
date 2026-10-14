@@ -36,6 +36,7 @@ import { WEB_QUESTIONS_4 } from './web-4';
 import { WEB_QUESTIONS_5 } from './web-5';
 import { WEB_QUESTIONS_6 } from './web-6';
 import { WEB_QUESTIONS_7 } from './web-7';
+import { WEB_QUESTIONS_8 } from './web-8';
 import type { Question } from '../model/types';
 
 export const QUESTIONS: Question[] = [
@@ -61,6 +62,7 @@ export const QUESTIONS: Question[] = [
   ...WEB_QUESTIONS_5,
   ...WEB_QUESTIONS_6,
   ...WEB_QUESTIONS_7,
+  ...WEB_QUESTIONS_8,
   ...CSS_QUESTIONS,
   ...CSS_QUESTIONS_2,
   ...CSS_QUESTIONS_3,

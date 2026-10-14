@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.12.0',
+    date: '2026-10-14',
+    changes: [
+      {
+        ru: '13 новых вопросов о производительности: INP и длинные задачи, ленивая загрузка и LCP, debounce и throttle, виртуализация списков, passive-слушатели, srcset, font-display, Web Worker, мемоизация, Set вместо includes, лабораторные и полевые метрики, useDeferredValue — всего 443 вопроса.',
+        en: '13 new performance questions: INP and long tasks, lazy loading and LCP, debounce and throttle, list virtualization, passive listeners, srcset, font-display, Web Worker, memoization, Set instead of includes, lab vs field metrics, useDeferredValue — 443 questions in total.',
+      },
+    ],
+  },
+  {
     version: '1.11.0',
     date: '2026-10-14',
     changes: [

@@ -137,4 +137,45 @@ function Parent() {
     ],
     sources: [{ title: 'React — Responding to Events', url: `${LEARN}/responding-to-events` }],
   },
+  {
+    id: 'react-deferred-value-001',
+    topic: 'react',
+    tags: ['rendering', 'memoization'],
+    difficulty: 3,
+    popular: false,
+    prompt: {
+      ru: 'Поиск фильтрует большой список `SlowList` (он обёрнут в `memo`), и ввод подтормаживает: каждая буква ждёт перерисовки списка. Как оставить поле отзывчивым средствами React?',
+      en: 'Search filters a large `SlowList` (wrapped in `memo`), and typing lags: each letter waits for the list to re-render. How do you keep the input responsive with React?',
+    },
+    code: {
+      lang: 'jsx',
+      source: `function Search({ items }) {
+  const [query, setQuery] = useState('');
+  return (
+    <>
+      <input value={query} onChange={(event) => setQuery(event.target.value)} />
+      <SlowList items={items} query={query} />
+    </>
+  );
+}`,
+    },
+    options: [
+      { code: 'const memoQuery = useMemo(() => query, [query]);\n<SlowList items={items} query={memoQuery} />' },
+      { code: 'const deferredQuery = useDeferredValue(query);\n<SlowList items={items} query={deferredQuery} />' },
+      { code: 'flushSync(() => setQuery(event.target.value));' },
+      { code: 'useLayoutEffect(() => setQuery(query), [query]);' },
+      { code: '<input defaultValue={query} onBlur={(event) => setQuery(event.target.value)} />' },
+    ],
+    answer: 'b',
+    explanation: [
+      {
+        type: 'text',
+        text: {
+          ru: '`useDeferredValue` разделяет обновление на срочное и фоновое: поле сразу показывает новый `query`, а список перерисовывается со «старым» значением в фоне, и этот рендер React прерывает, если пришла новая буква. Работает, только если `SlowList` обёрнут в `memo`, как здесь, — иначе он перерисуется вместе с родителем. `useMemo` от строки ничего не даёт, `flushSync` делает обновление ещё синхроннее, а поиск по `onBlur` меняет поведение интерфейса.',
+          en: '`useDeferredValue` splits the update into urgent and background: the input shows the new `query` immediately, while the list re-renders with the “old” value in the background, and React interrupts that render when a new letter arrives. It only works if `SlowList` is wrapped in `memo`, as here — otherwise it re-renders with the parent. `useMemo` of a string gives nothing, `flushSync` makes the update even more synchronous, and searching `onBlur` changes the UI behavior.',
+        },
+      },
+    ],
+    sources: [{ title: 'React — useDeferredValue', url: `${REFERENCE}/useDeferredValue` }],
+  },
 ];

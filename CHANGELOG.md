@@ -1,5 +1,9 @@
 # Что нового
 
+## 1.12.0
+
+- 13 новых вопросов о производительности: INP и длинные задачи, ленивая загрузка и LCP, debounce и throttle, виртуализация списков, passive-слушатели, srcset, font-display, Web Worker, мемоизация, Set вместо includes, лабораторные и полевые метрики, useDeferredValue — всего 443 вопроса.
+
 ## 1.11.0
 
 - 12 новых вопросов о безопасности фронтенда: JWT, хранение токена, санитизация HTML, SRI, postMessage, open redirect, prototype pollution, CSP nonce, CORS с cookie — всего 430 вопросов.
