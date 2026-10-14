@@ -155,6 +155,13 @@ export const en: Dictionary = {
     streak: 'Streak: {days}',
     progress: 'Today {done} of {goal}',
   },
+  lesson: {
+    title: 'Lesson',
+    open: 'Lesson: {tag}',
+    keyPoints: 'Key points',
+    practice: 'Practice · {count}',
+    notFound: 'Lesson not found',
+  },
   reviewToday: {
     title: 'Review today',
     due: '{count} from all topics',

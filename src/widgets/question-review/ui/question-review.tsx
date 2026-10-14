@@ -7,12 +7,14 @@ import { AskAiButton } from '@app/features/ask-ai';
 import { ReportQuestionButton } from '@app/features/report-question';
 import { useI18n } from '@app/shared/i18n';
 import { EmptyState, Pill, Screen } from '@app/shared/ui';
+import type { TagId } from '@app/entities/question';
 
 type QuestionReviewProps = {
   questionId: string;
+  onOpenLesson: (tag: TagId) => void;
 };
 
-export const QuestionReview = ({ questionId }: QuestionReviewProps): JSX.Element => {
+export const QuestionReview = ({ questionId, onOpenLesson }: QuestionReviewProps): JSX.Element => {
   const { t } = useI18n();
   const { stats } = useUnit({ stats: progressModel.$questionStats });
   const question = QUESTIONS_BY_ID[questionId];
@@ -48,7 +50,7 @@ export const QuestionReview = ({ questionId }: QuestionReviewProps): JSX.Element
           );
         })}
       </View>
-      <ExplanationView question={question} />
+      <ExplanationView question={question} onOpenLesson={onOpenLesson} />
       <AskAiButton question={question} />
       <ReportQuestionButton question={question} />
     </Screen>

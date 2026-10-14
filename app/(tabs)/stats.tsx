@@ -6,6 +6,7 @@ export default function StatsScreen(): JSX.Element {
   return (
     <StatsDashboard
       onPracticeTag={(topic, tag) => router.push({ pathname: '/quiz', params: { mode: 'practice', topic, tag } })}
+      onOpenLesson={(tag) => router.push({ pathname: '/lesson/[tag]', params: { tag } })}
     />
   );
 }

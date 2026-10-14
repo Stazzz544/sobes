@@ -109,3 +109,11 @@ export type Question = {
   sources: QuestionSource[];
   verify?: QuestionVerification;
 };
+
+export type Lesson = {
+  tag: TagId;
+  summary: LocalizedText;
+  blocks: ExplanationBlock[];
+  keyPoints: LocalizedText[];
+  sources: QuestionSource[];
+};

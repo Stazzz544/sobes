@@ -153,6 +153,13 @@ export const ru = {
     streak: 'Серия: {days}',
     progress: 'Сегодня {done} из {goal}',
   },
+  lesson: {
+    title: 'Конспект',
+    open: 'Конспект: {tag}',
+    keyPoints: 'Запомнить',
+    practice: 'Потренироваться · {count}',
+    notFound: 'Конспект не найден',
+  },
   reviewToday: {
     title: 'Повторить сегодня',
     due: '{count} из всех тем',

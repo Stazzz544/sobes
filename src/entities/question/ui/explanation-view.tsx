@@ -4,25 +4,33 @@ import { Ionicons } from '@expo/vector-icons';
 import { MIN_TOUCH_SIZE } from '@app/shared/config';
 import { useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
-import { AppText, CodeBlock, FormattedText } from '@app/shared/ui';
+import { AppText, Button, CodeBlock, FormattedText } from '@app/shared/ui';
+import { TAGS } from '../config/tags';
 import { DIAGRAMS } from '../data/diagrams';
+import { LESSONS_BY_TAG } from '../lessons';
 import { DiagramPlayer } from './diagram-player';
-import type { Question } from '../model/types';
+import type { TagId } from '../config/tags';
+import type { ExplanationBlock, Question, QuestionSource } from '../model/types';
+
+type ExplanationBlocksProps = {
+  blocks: ExplanationBlock[];
+};
+
+type SourceListProps = {
+  sources: QuestionSource[];
+};
 
 type ExplanationViewProps = {
   question: Question;
+  onOpenLesson?: (tag: TagId) => void;
 };
 
-export const ExplanationView = ({ question }: ExplanationViewProps): JSX.Element => {
-  const { colors } = useTheme();
-  const { t, text } = useI18n();
+export const ExplanationBlocks = ({ blocks }: ExplanationBlocksProps): JSX.Element => {
+  const { text } = useI18n();
 
   return (
-    <View style={styles.container}>
-      <AppText variant="label" tone="muted">
-        {t('quiz.explanation')}
-      </AppText>
-      {question.explanation.map((block, index) => {
+    <>
+      {blocks.map((block, index) => {
         if (block.type === 'diagram') {
           return <DiagramPlayer key={index} diagram={DIAGRAMS[block.diagram]} />;
         }
@@ -38,10 +46,20 @@ export const ExplanationView = ({ question }: ExplanationViewProps): JSX.Element
         }
         return <FormattedText key={index}>{text(block.text)}</FormattedText>;
       })}
+    </>
+  );
+};
+
+export const SourceList = ({ sources }: SourceListProps): JSX.Element => {
+  const { colors } = useTheme();
+  const { t } = useI18n();
+
+  return (
+    <>
       <AppText variant="label" tone="muted" style={styles.sourcesTitle}>
         {t('quiz.sources')}
       </AppText>
-      {question.sources.map((source) => (
+      {sources.map((source) => (
         <Pressable
           key={source.url}
           onPress={() => Linking.openURL(source.url)}
@@ -54,6 +72,31 @@ export const ExplanationView = ({ question }: ExplanationViewProps): JSX.Element
           </AppText>
         </Pressable>
       ))}
+    </>
+  );
+};
+
+export const ExplanationView = ({ question, onOpenLesson }: ExplanationViewProps): JSX.Element => {
+  const { t, text } = useI18n();
+  const lessonTags = onOpenLesson ? question.tags.filter((tag) => LESSONS_BY_TAG[tag]) : [];
+
+  return (
+    <View style={styles.container}>
+      <AppText variant="label" tone="muted">
+        {t('quiz.explanation')}
+      </AppText>
+      <ExplanationBlocks blocks={question.explanation} />
+      {lessonTags.map((tag) => (
+        <Button
+          key={tag}
+          title={t('lesson.open', { tag: text(TAGS[tag].title) })}
+          icon="book-outline"
+          variant="secondary"
+          size="compact"
+          onPress={() => onOpenLesson?.(tag)}
+        />
+      ))}
+      <SourceList sources={question.sources} />
     </View>
   );
 };

@@ -14,11 +14,13 @@ import { getOptionState } from '../lib/option-state';
 import { quizSessionModel } from '../model/quiz-session-model';
 import { AnswerFeedback } from './answer-feedback';
 import { SessionSummary } from './session-summary';
+import type { TagId } from '@app/entities/question';
 import type { SessionParams } from '../lib/build-queue';
 
 type QuizSessionProps = {
   params: SessionParams;
   onOpenQuestion: (questionId: string) => void;
+  onOpenLesson: (tag: TagId) => void;
   onDone: () => void;
 };
 
@@ -28,7 +30,7 @@ const formatSeconds = (totalSeconds: number): string => {
   return `${minutes}:${seconds}`;
 };
 
-export const QuizSession = ({ params, onOpenQuestion, onDone }: QuizSessionProps): JSX.Element => {
+export const QuizSession = ({ params, onOpenQuestion, onOpenLesson, onDone }: QuizSessionProps): JSX.Element => {
   const { colors } = useTheme();
   const { t } = useI18n();
   const insets = useSafeAreaInsets();
@@ -159,7 +161,7 @@ export const QuizSession = ({ params, onOpenQuestion, onDone }: QuizSessionProps
               correct={OPTION_IDS[model.optionOrder.indexOf(question.answer)] ?? question.answer}
             />
             <Animated.View entering={FadeIn.delay(150).duration(300)} style={styles.reveal}>
-              <ExplanationView question={question} />
+              <ExplanationView question={question} onOpenLesson={onOpenLesson} />
               <AskAiButton question={question} chosen={chosen} />
               <ReportQuestionButton question={question} />
             </Animated.View>

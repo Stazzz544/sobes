@@ -7,6 +7,7 @@ import ts from 'typescript';
 import { TAGS } from '../src/entities/question/config/tags';
 import { QUESTIONS } from '../src/entities/question/data';
 import { DIAGRAMS } from '../src/entities/question/data/diagrams';
+import { LESSON_GROUPS } from '../src/entities/question/lessons';
 import { OPTION_IDS } from '../src/entities/question/model/types';
 import { ACCENT_COLORS, BASE_COLORS } from '../src/shared/theme/colors';
 import type { OptionContent, Question, QuestionVerification } from '../src/entities/question/model/types';
@@ -374,8 +375,65 @@ const checkContrast = (): void => {
   }
 };
 
+const LESSONS = Object.values(LESSON_GROUPS).flatMap((lessons) => lessons ?? []);
+
+const checkLessons = (): void => {
+  const seenTags = new Set<string>();
+  for (const [topic, lessons] of Object.entries(LESSON_GROUPS)) {
+    for (const lesson of lessons ?? []) {
+      const lessonError = (message: string): void => {
+        errors.push(`конспект ${lesson.tag}: ${message}`);
+      };
+      if (seenTags.has(lesson.tag)) {
+        lessonError('повторяется');
+      }
+      seenTags.add(lesson.tag);
+      if (TAGS[lesson.tag].topic !== topic) {
+        lessonError(`тег из темы ${TAGS[lesson.tag].topic}, а лежит в ${topic}`);
+      }
+      if (lesson.keyPoints.length < 3 || lesson.keyPoints.length > 5) {
+        lessonError(`в «Запомнить» нужно 3–5 пунктов, сейчас ${lesson.keyPoints.length}`);
+      }
+      if (!lesson.blocks.some((block) => block.type === 'text')) {
+        lessonError('нет текста');
+      }
+      if (lesson.sources.length === 0) {
+        lessonError('нет источников');
+      }
+      for (const source of lesson.sources) {
+        if (!source.url.startsWith('https://')) {
+          lessonError(`источник не https: ${source.url}`);
+        }
+      }
+      for (const locale of LOCALES) {
+        if (!lesson.summary[locale].trim()) {
+          lessonError(`пустое введение (${locale})`);
+        }
+        if (lesson.keyPoints.some((point) => !point[locale].trim())) {
+          lessonError(`пустой пункт «Запомнить» (${locale})`);
+        }
+        for (const block of lesson.blocks) {
+          if (block.type === 'text' && !block.text[locale].trim()) {
+            lessonError(`пустой текстовый блок (${locale})`);
+          }
+          if (block.type === 'code' && block.caption && !block.caption[locale].trim()) {
+            lessonError(`пустая подпись к коду (${locale})`);
+          }
+        }
+      }
+      for (const block of lesson.blocks) {
+        if (block.type === 'code' && /[а-яё]/i.test(block.code.source)) {
+          lessonError('кириллица в коде — комментарии в коде только на английском');
+        }
+      }
+    }
+  }
+};
+
 const checkLinks = async (): Promise<void> => {
-  const urls = [...new Set(QUESTIONS.flatMap((question) => question.sources.map((source) => source.url)))];
+  const urls = [
+    ...new Set([...QUESTIONS, ...LESSONS].flatMap((item) => item.sources.map((source) => source.url))),
+  ];
   const queue = [...urls];
   const worker = async (): Promise<void> => {
     for (let url = queue.shift(); url; url = queue.shift()) {
@@ -477,6 +535,7 @@ const main = async (): Promise<void> => {
   }
   checkContrast();
   checkDiagrams();
+  checkLessons();
   printDistribution();
   if (process.argv.includes('--links')) {
     await checkLinks();
@@ -487,7 +546,7 @@ const main = async (): Promise<void> => {
     console.error(`\nОшибок: ${errors.length}`);
     process.exit(1);
   }
-  console.log(`\n✔ Вопросов: ${QUESTIONS.length}, ошибок нет`);
+  console.log(`\n✔ Вопросов: ${QUESTIONS.length}, конспектов: ${LESSONS.length}, ошибок нет`);
 };
 
 main();

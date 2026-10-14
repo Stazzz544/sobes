@@ -2,13 +2,13 @@ import { JSX, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useUnit } from 'effector-react';
 import { progressModel } from '@app/entities/progress';
-import { QUESTIONS, QUESTIONS_BY_ID, TAGS } from '@app/entities/question';
+import { LESSONS_BY_TAG, QUESTIONS, QUESTIONS_BY_ID, TAGS } from '@app/entities/question';
 import { settingsModel } from '@app/entities/settings';
 import { TOPICS, TopicLogo, topicModel } from '@app/entities/topic';
 import { useI18n } from '@app/shared/i18n';
 import { useNow } from '@app/shared/lib';
 import { useTheme } from '@app/shared/theme';
-import { AppText, Button, Card, EmptyState, ProgressBar, Screen } from '@app/shared/ui';
+import { AppText, Button, Card, EmptyState, IconButton, ProgressBar, Screen } from '@app/shared/ui';
 import { aggregateStats } from '../lib/aggregate-stats';
 import { ActivityChart } from './activity-chart';
 import type { TagId } from '@app/entities/question';
@@ -16,6 +16,7 @@ import type { TopicSelection } from '@app/shared/config';
 
 type StatsDashboardProps = {
   onPracticeTag: (topic: TopicSelection, tag: TagId) => void;
+  onOpenLesson: (tag: TagId) => void;
 };
 
 type TileProps = {
@@ -36,7 +37,7 @@ const Tile = ({ label, value }: TileProps): JSX.Element => (
   </Card>
 );
 
-export const StatsDashboard = ({ onPracticeTag }: StatsDashboardProps): JSX.Element => {
+export const StatsDashboard = ({ onPracticeTag, onOpenLesson }: StatsDashboardProps): JSX.Element => {
   const { colors } = useTheme();
   const { t, text } = useI18n();
   const { log, stats, topic, settings } = useUnit({
@@ -92,6 +93,13 @@ export const StatsDashboard = ({ onPracticeTag }: StatsDashboardProps): JSX.Elem
                     </View>
                     <ProgressBar value={weakTag.accuracy} color={colors.danger} height={6} />
                   </View>
+                  {LESSONS_BY_TAG[weakTag.tag] ? (
+                    <IconButton
+                      icon="book-outline"
+                      accessibilityLabel={t('lesson.open', { tag: text(TAGS[weakTag.tag].title) })}
+                      onPress={() => onOpenLesson(weakTag.tag)}
+                    />
+                  ) : null}
                   <Button
                     title={t('stats.train')}
                     variant="secondary"
