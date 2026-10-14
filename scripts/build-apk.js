@@ -16,6 +16,8 @@ const DEFAULT_JAVA_HOME = 'C:\\Program Files\\Android\\Android Studio\\jbr';
 const DEFAULT_ANDROID_HOME = path.join(process.env.LOCALAPPDATA ?? '', 'Android', 'Sdk');
 const GRADLE_PROPERTIES = path.join(process.env.GRADLE_USER_HOME || path.join(os.homedir(), '.gradle'), 'gradle.properties');
 const RELEASE_KEY_PROPERTY = 'SOBES_RELEASE_STORE_FILE';
+const ANALYTICS_KEY_VARIABLE = 'EXPO_PUBLIC_APPMETRICA_API_KEY';
+const ENV_FILES = ['.env', '.env.local', '.env.production', '.env.production.local'];
 
 const fail = (message) => {
   console.error(`\n[build-apk] ${message}`);
@@ -58,11 +60,22 @@ const hasReleaseKey =
   Boolean(process.env[`ORG_GRADLE_PROJECT_${RELEASE_KEY_PROPERTY}`]) ||
   (fs.existsSync(GRADLE_PROPERTIES) && fs.readFileSync(GRADLE_PROPERTIES, 'utf8').includes(`${RELEASE_KEY_PROPERTY}=`));
 
+const analyticsKeyPattern = new RegExp(`^\\s*${ANALYTICS_KEY_VARIABLE}\\s*=\\s*\\S`, 'm');
+const hasAnalyticsKey =
+  Boolean(process.env[ANALYTICS_KEY_VARIABLE]) ||
+  ENV_FILES.some((file) => {
+    const envPath = path.join(PROJECT_ROOT, file);
+    return fs.existsSync(envPath) && analyticsKeyPattern.test(fs.readFileSync(envPath, 'utf8'));
+  });
+
 const sizeMb = (fs.statSync(APK_PATH).size / 1024 / 1024).toFixed(1);
 console.log(`\n[build-apk] Готово: ${APK_PATH} (${sizeMb} МБ)`);
 if (!hasReleaseKey) {
   console.warn(
     `[build-apk] Release-ключ не задан (${RELEASE_KEY_PROPERTY} в ${GRADLE_PROPERTIES}) — APK подписан debug-ключом, в RuStore его не загружать`,
   );
+}
+if (!hasAnalyticsKey) {
+  console.warn(`[build-apk] ${ANALYTICS_KEY_VARIABLE} не задан (.env.local) — аналитика в этой сборке выключена`);
 }
 

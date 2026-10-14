@@ -9,9 +9,11 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { progressModel } from '@app/entities/progress';
 import { settingsModel } from '@app/entities/settings';
 import { getSelectionAccent, topicModel } from '@app/entities/topic';
+import { activateAnalytics } from '@app/shared/analytics';
 import { useI18n } from '@app/shared/i18n';
 import { BASE_COLORS, ThemeProvider, useTheme } from '@app/shared/theme';
 
+activateAnalytics();
 SplashScreen.preventAutoHideAsync();
 SplashScreen.setOptions({ fade: true, duration: 250 });
 

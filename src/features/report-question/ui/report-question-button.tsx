@@ -1,6 +1,8 @@
 import { JSX } from 'react';
 import { Linking, Share } from 'react-native';
 import Constants from 'expo-constants';
+import { useUnit } from 'effector-react';
+import { trackEventFx } from '@app/shared/analytics';
 import { FEEDBACK_EMAIL } from '@app/shared/config';
 import { useI18n } from '@app/shared/i18n';
 import { Button } from '@app/shared/ui';
@@ -12,8 +14,10 @@ type ReportQuestionButtonProps = {
 
 export const ReportQuestionButton = ({ question }: ReportQuestionButtonProps): JSX.Element => {
   const { t, text } = useI18n();
+  const { onTrack } = useUnit({ onTrack: trackEventFx });
 
   const handlePress = async (): Promise<void> => {
+    onTrack({ name: 'question_reported', params: { question_id: question.id } });
     const subject = t('report.subject', { id: question.id });
     const body = [
       t('report.bodyIntro'),

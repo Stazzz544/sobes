@@ -51,6 +51,11 @@ Android-тренажёр для подготовки к собеседовани
 - Release-подпись ≠ debug: поверх сборки с другим ключом APK не встанет (`INSTALL_FAILED_UPDATE_INCOMPATIBLE`) — сначала удалить приложение (прогресс на устройстве пропадёт).
 - `npm run build:apk` каждый раз делает `expo prebuild` (без `--clean`) — правки `app.config.ts` попадают в сборку сами.
 
+## Аналитика
+
+- AppMetrica, ключ — `EXPO_PUBLIC_APPMETRICA_API_KEY` в `.env.local` (в git не идёт, `build:apk` предупреждает, если его нет). Отправляет только release-сборка с ключом; в debug события пишутся в лог Metro (`[analytics] …`). `EXPO_PUBLIC_APPMETRICA_LOGS=1` включает логи SDK в logcat.
+- Событие — только из каталога `src/shared/analytics/events.ts`, через `trackEventFx` (в модели — `target` у `sample`). Без персональных данных и свободного текста. Новое событие или параметр = правка политики конфиденциальности (`site/privacy/`) до выхода версии.
+
 ## Эмулятор
 
 - Metro — `npx expo start` без `CI=1` (с ним не следит за файлами).

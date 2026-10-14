@@ -142,4 +142,16 @@
 - Тексты карточки RuStore — `docs/store/rustore.md`.
 - Гоча: release-ключ ≠ debug-ключ старых APK — поверх старой сборки не ставится, сначала удалить приложение (прогресс на устройстве пропадёт).
 
+## R1-1 — аналитика AppMetrica (14.10.2026)
+
+- Пакет `@appmetrica/react-native-analytics` 4.2.0 (TurboModule, нативный SDK 8.4.1), config-плагин не нужен — хватает автолинковки.
+- `src/shared/analytics`: каталог событий `events.ts` (типизированный union), `activateAnalytics()` (вызов в `app/_layout.tsx`), `trackEventFx`. Отправка — только release-сборка с ключом `EXPO_PUBLIC_APPMETRICA_API_KEY` (`.env.local`); в debug — `console.log('[analytics] …')`. При активации выключены `locationTracking` и `advIdentifiersTracking`; разрешение `AD_ID`, которое добавляет SDK, вырезано через `blockedPermissions`.
+- Точки событий: `onboarding_completed` — новая модель `widgets/onboarding/model`; `topic_selected` (с `previous`) — `features/select-topic`; `quiz_started` / `question_answered` / `quiz_finished` / `quiz_abandoned` — `quiz-session-model` (`buildSummary` вынесен из `$summary`, им же считается `quiz_finished`); `mistake_resolved` — `progress-model`; `ask_ai_used` (`target` = провайдер / `share` / `copy`) и `question_reported` — в обработчиках кнопок.
+- `chosen` в `question_answered` — канонический id варианта (`a`–`e`), не позиция на экране: варианты перемешиваются, а для R1-4 нужен «любимый» дистрактор.
+- `quiz_abandoned` — выход из тренировки в фазе `answering`/`revealed`; уход с итогового экрана его не шлёт. Выход на последнем вопросе до «Далее» даёт `answered = length`.
+- Проверено на эмуляторе release-сборкой с фиктивным ключом и `EXPO_PUBLIC_APPMETRICA_LOGS=1` (logcat, тег `AppMetrica`): SDK активируется, `location_enabled=false`, `adv_identifiers_tracking=false`; все 9 событий приходят с верными параметрами (смена темы JS→TS→JS, практика до итога, собеседование до итога с `level`, выход из собеседования, «Скопировать» в «Спросить ИИ», жалоба, онбординг после `pm clear`, закрепление ошибки в «Работе над ошибками»). Прогресс на эмуляторе сброшен (`pm clear`).
+- Гоча Effector: `sample` с `source` читает стор в момент своего запуска — объявленный **до** сэмпла, меняющего этот стор от того же `clock`, видит старое значение, объявленный после — уже новое (проверено скриптом). На этом держится `previous` в `topic_selected`.
+- `build:apk` предупреждает, если ключа аналитики нет.
+- Осталось: ключ от пользователя → сборка → события в консоли AppMetrica; затем R1-5 (политика сейчас обещает «нет аналитики» — сборку с ключом без неё не выпускать).
+
 Дальше — `docs/roadmap.md`.

@@ -1,7 +1,9 @@
 import { createEffect, createEvent, createStore, sample } from 'effector';
+import { trackEventFx } from '@app/shared/analytics';
 import { STORAGE_KEYS } from '@app/shared/config';
 import { storage } from '@app/shared/lib';
 import { applyAnswer } from '../lib/apply-answer';
+import type { AnalyticsEvent } from '@app/shared/analytics';
 import type { AnswerRecord, QuestionStats } from './types';
 
 const MAX_LOG_LENGTH = 3000;
@@ -75,6 +77,11 @@ sample({
   filter: (applied) => applied.resolvedMistake,
   fn: (applied) => applied.record.questionId,
   target: mistakeResolved,
+});
+sample({
+  clock: mistakeResolved,
+  fn: (questionId): AnalyticsEvent => ({ name: 'mistake_resolved', params: { question_id: questionId } }),
+  target: trackEventFx,
 });
 
 sample({ clock: progressReset, fn: (): QuestionStats => ({}), target: $questionStats });

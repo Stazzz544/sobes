@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
 import { useUnit } from 'effector-react';
 import { settingsModel } from '@app/entities/settings';
+import { trackEventFx } from '@app/shared/analytics';
 import { CARD_BORDER_RADIUS, MIN_TOUCH_SIZE } from '@app/shared/config';
 import { useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
@@ -60,15 +61,21 @@ export const AskAiButton = ({ question, chosen }: AskAiButtonProps): JSX.Element
   const { t, text, locale } = useI18n();
   const insets = useSafeAreaInsets();
   const [isOpen, setIsOpen] = useState(false);
-  const { settings, onSettingsChange } = useUnit({
+  const { settings, onSettingsChange, onTrack } = useUnit({
     settings: settingsModel.$settings,
     onSettingsChange: settingsModel.settingsChanged,
+    onTrack: trackEventFx,
   });
   const lastProvider = settings.aiProvider;
   const prompt = buildAiPrompt(question, chosen, locale);
 
+  const trackTarget = (target: string): void => {
+    onTrack({ name: 'ask_ai_used', params: { question_id: question.id, target } });
+  };
+
   const handleProvider = async (provider: AiProvider): Promise<void> => {
     setIsOpen(false);
+    trackTarget(provider.id);
     onSettingsChange({ aiProvider: provider.id });
     await Clipboard.setStringAsync(prompt);
     ToastAndroid.show(provider.hasPrefill ? t('askAi.toastPrefilled') : t('askAi.toastCopied'), ToastAndroid.LONG);
@@ -77,11 +84,13 @@ export const AskAiButton = ({ question, chosen }: AskAiButtonProps): JSX.Element
 
   const handleShare = async (): Promise<void> => {
     setIsOpen(false);
+    trackTarget('share');
     await Share.share({ message: prompt });
   };
 
   const handleCopy = async (): Promise<void> => {
     setIsOpen(false);
+    trackTarget('copy');
     await Clipboard.setStringAsync(prompt);
     ToastAndroid.show(t('common.copied'), ToastAndroid.SHORT);
   };
