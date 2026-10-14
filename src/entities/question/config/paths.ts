@@ -84,6 +84,7 @@ export const TOPIC_PATHS: Record<TopicId, readonly TagId[]> = {
   html: ['html-semantics', 'html-parsing', 'html-forms', 'a11y-names', 'a11y-aria', 'a11y-keyboard'],
   testing: ['testing-basics', 'testing-unit', 'testing-mocks', 'testing-components', 'testing-e2e', 'testing-tdd'],
   state: ['state-basics', 'state-immutability', 'state-redux', 'state-stores', 'state-server', 'state-url'],
+  node: ['node-runtime', 'node-modules', 'node-event-loop', 'node-async', 'node-streams', 'node-http'],
   git: ['git-basics', 'git-branches', 'git-conflicts', 'git-remote', 'git-undo', 'git-rebase'],
   hr: ['self-presentation', 'star', 'tough-questions', 'motivation', 'questions-to-employer', 'hiring-process'],
 };

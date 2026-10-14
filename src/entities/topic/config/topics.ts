@@ -92,6 +92,16 @@ export const TOPICS: Record<TopicId, Topic> = {
       en: 'Where state lives, immutability, Redux, stores and selectors, server state, the URL',
     },
   },
+  node: {
+    id: 'node',
+    accent: 'node',
+    shortTitle: 'Node',
+    title: { ru: 'Node.js', en: 'Node.js' },
+    description: {
+      ru: 'Рантайм и потоки, модули и npm, event loop, асинхронность и ошибки, буферы и стримы, HTTP и Express',
+      en: 'Runtime and threads, modules and npm, the event loop, async and errors, buffers and streams, HTTP and Express',
+    },
+  },
   git: {
     id: 'git',
     accent: 'git',

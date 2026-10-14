@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.13.0',
+    date: '2026-10-14',
+    changes: [
+      {
+        ru: 'Новая тема «Node.js»: рантайм и потоки, модули и npm, event loop, асинхронность и ошибки, буферы и потоки, HTTP и Express.',
+        en: 'New topic “Node.js”: runtime and threads, modules and npm, the event loop, async and errors, buffers and streams, HTTP and Express.',
+      },
+      { ru: '23 вопроса и 6 конспектов — всего 466 вопросов.', en: '23 questions and 6 lessons — 466 questions in total.' },
+    ],
+  },
+  {
     version: '1.12.0',
     date: '2026-10-14',
     changes: [

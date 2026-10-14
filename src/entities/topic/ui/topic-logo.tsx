@@ -25,6 +25,7 @@ const LOGO_COLORS = {
   testIce: '#BAE6FD',
   stateSlate: '#334155',
   stateMist: '#CBD5E1',
+  nodeGreen: '#3D7A32',
   hrCream: '#FDE68A',
   black: '#000000',
   white: '#FFFFFF',
@@ -77,6 +78,22 @@ const TestingMark = ({ size }: { size: number }): JSX.Element => (
       <Path d="M31 19 H53" />
       <Path d="M31 41 H53" />
     </G>
+  </Svg>
+);
+
+const NodeMark = ({ size }: { size: number }): JSX.Element => (
+  <Svg width={size} height={size} viewBox="0 0 64 64">
+    <Rect width={64} height={64} rx={12} fill={LOGO_COLORS.nodeGreen} />
+    <Path
+      d="M32 9 L52 20.5 V43.5 L32 55 L12 43.5 V20.5 Z"
+      fill="none"
+      stroke={LOGO_COLORS.white}
+      strokeWidth={3.5}
+      strokeLinejoin="round"
+    />
+    <SvgText x={32} y={39} textAnchor="middle" fontSize={17} fontWeight="bold" fill={LOGO_COLORS.white}>
+      JS
+    </SvgText>
   </Svg>
 );
 
@@ -198,6 +215,9 @@ export const TopicLogo = ({ topic, size = 40 }: TopicLogoProps): JSX.Element => 
   }
   if (topic === 'state') {
     return <StateMark size={size} />;
+  }
+  if (topic === 'node') {
+    return <NodeMark size={size} />;
   }
   if (topic === 'git') {
     return <GitMark size={size} />;

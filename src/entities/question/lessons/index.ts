@@ -4,6 +4,7 @@ import { CSS_LESSONS } from './css';
 import { GIT_LESSONS } from './git';
 import { HR_LESSONS } from './hr';
 import { HTML_LESSONS } from './html';
+import { NODE_LESSONS } from './node';
 import { STATE_LESSONS } from './state';
 import { TESTING_LESSONS } from './testing';
 import { JAVASCRIPT_LESSONS } from './javascript';
@@ -26,6 +27,7 @@ export const LESSON_GROUPS: Partial<Record<TopicId, readonly Lesson[]>> = {
   html: HTML_LESSONS,
   testing: TESTING_LESSONS,
   state: STATE_LESSONS,
+  node: NODE_LESSONS,
   git: GIT_LESSONS,
   hr: HR_LESSONS,
 };

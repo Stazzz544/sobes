@@ -370,4 +370,10 @@
 - В React (`react-5.ts`) — `useDeferredValue` для отзывчивого поиска; `React.lazy` и мемоизация там уже были.
 - Отдельной темой не стала: в «Общих знаниях» уже 12 вопросов о рендеринге, Core Web Vitals и кеше. Интерфейс не менялся — эмулятор не нужен. Формулировка о `passive` по умолчанию сверена с исходником MDN.
 
+## R3-3, шаг 9 — тема «Node.js» (14.10.2026, версия 1.13.0)
+
+- Тема `node`: зелёный акцент (`#3D7A32`, в тёмной — `#7CC46A`), логотип — шестиугольник с «JS», теги `node-runtime`, `node-modules`, `node-event-loop`, `node-async`, `node-streams`, `node-http`, 6 конспектов, путь по теме.
+- 23 вопроса: чего нет в Node, сколько в нём потоков, `process.env` — строки (`js-output`), `exitCode` против `exit()`; `exports` против `module.exports` (`js-output`), кеш `require`, semver `^`, поле `"type"`, `import.meta.dirname`; порядок `nextTick`/промисов/`setImmediate`/таймера в I/O-колбэке (порядок, `js-output`), голодание от `nextTick`, блокировка сервера; error-first и `ENOENT`, `promisify`, необработанный reject, синхронный `EventEmitter` (все три — `js-output`); `createReadStream` и `pipeline`, байты против символов (`js-output`), backpressure; порядок middleware в Express, `express.json()`, забытый `next()`, обработчик ошибок с 4 параметрами.
+- Все ответы `js-output` считаются запуском в Node при каждой проверке; якоря ссылок на документацию Node сверены с HTML страниц. Тема — после «Стейт-менеджмента» в направлении «Фронтенд».
+
 Дальше — `docs/roadmap.md`.
