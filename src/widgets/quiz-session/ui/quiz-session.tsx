@@ -97,6 +97,7 @@ export const QuizSession = ({ params, onOpenQuestion, onOpenLesson, onDone }: Qu
         summary={model.summary}
         queue={model.queue}
         answers={model.answers}
+        onOpenLesson={onOpenLesson}
         onOpenQuestion={onOpenQuestion}
         onRestart={() => quizSessionModel.sessionStarted({ mode, topic, tag })}
         onDone={onDone}

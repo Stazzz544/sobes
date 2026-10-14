@@ -95,6 +95,7 @@ export const en: Dictionary = {
     levelHint: 'A rough estimate: hard questions weigh more than easy ones.',
     reviewTitle: 'Review answers',
     again: 'Try again',
+    lessonsTitle: 'Review the theory',
   },
   diagram: {
     title: 'Step by step',

@@ -428,6 +428,11 @@ const checkLessons = (): void => {
       }
     }
   }
+  for (const tag of Object.keys(TAGS)) {
+    if (!seenTags.has(tag)) {
+      errors.push(`нет конспекта для тега ${tag}`);
+    }
+  }
 };
 
 const checkLinks = async (): Promise<void> => {

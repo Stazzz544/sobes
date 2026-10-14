@@ -93,6 +93,7 @@ export const ru = {
     levelHint: 'Оценка ориентировочная: сложные вопросы весят больше простых.',
     reviewTitle: 'Разбор ответов',
     again: 'Ещё раз',
+    lessonsTitle: 'Повторите теорию',
   },
   diagram: {
     title: 'Пошагово',

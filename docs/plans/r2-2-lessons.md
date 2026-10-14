@@ -53,7 +53,7 @@ export type Lesson = {
 3. ✅ 14.10 — TypeScript (`lessons/typescript.ts`, 10 тегов).
 4. ✅ 14.10 — React (`lessons/react.ts`, 12 тегов).
 5. ✅ 14.10 — Web (`lessons/web.ts`, 12 тегов) и CSS (`lessons/css.ts`, 10 тегов).
-6. Алгоритмы + ИИ.
-7. `LESSONS_BY_TAG` → полный `Record`, обновить roadmap/progress.
+6. ✅ 14.10 — Алгоритмы (`lessons/algorithms.ts`, 9 тегов) и ИИ (`lessons/ai.ts`, 7 тегов).
+7. ✅ 14.10 — вместо полного `Record` проверка в `verify-content`: тег без конспекта — ошибка (компилятору не мешает `Object.fromEntries`).
 
 Каждая сессия: `npm run verify:content` (+ `--links` в конце темы), эмулятор 360 dp light/dark на 1–2 конспектах темы, коммит по команде.

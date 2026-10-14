@@ -2,13 +2,14 @@ import { JSX } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
-import { QUESTIONS_BY_ID, TAGS } from '@app/entities/question';
+import { LESSONS_BY_TAG, QUESTIONS_BY_ID, TAGS } from '@app/entities/question';
 import { MIN_TOUCH_SIZE } from '@app/shared/config';
 import { useI18n } from '@app/shared/i18n';
 import { toPlainText } from '@app/shared/lib';
 import { useTheme } from '@app/shared/theme';
 import { AppText, Button, Card, Pill, ProgressBar, Screen } from '@app/shared/ui';
 import type { AnswerResult } from '@app/entities/progress';
+import type { TagId } from '@app/entities/question';
 import type { ThemeColors } from '@app/shared/theme';
 import type { IconName } from '@app/shared/ui';
 import type { SessionAnswer, SessionSummary as Summary } from '../model/quiz-session-model';
@@ -18,9 +19,12 @@ type SessionSummaryProps = {
   queue: string[];
   answers: SessionAnswer[];
   onOpenQuestion: (questionId: string) => void;
+  onOpenLesson: (tag: TagId) => void;
   onRestart: () => void;
   onDone: () => void;
 };
+
+const MAX_LESSON_LINKS = 3;
 
 const RESULT_LABEL_KEY = {
   correct: 'quiz.summaryCorrect',
@@ -46,12 +50,17 @@ export const SessionSummary = ({
   queue,
   answers,
   onOpenQuestion,
+  onOpenLesson,
   onRestart,
   onDone,
 }: SessionSummaryProps): JSX.Element => {
   const { colors } = useTheme();
   const { t, text, plural } = useI18n();
   const ratio = summary.total > 0 ? summary.correct / summary.total : 0;
+  const missedTags = queue
+    .filter((questionId) => answers.find((answer) => answer.questionId === questionId)?.result !== 'correct')
+    .flatMap((questionId) => QUESTIONS_BY_ID[questionId]?.tags ?? []);
+  const lessonTags = [...new Set(missedTags)].filter((tag) => LESSONS_BY_TAG[tag]).slice(0, MAX_LESSON_LINKS);
 
   return (
     <Screen withBottomInset>
@@ -120,6 +129,24 @@ export const SessionSummary = ({
           );
         })}
       </View>
+
+      {lessonTags.length > 0 ? (
+        <View style={styles.list}>
+          <AppText variant="label" tone="muted">
+            {t('quiz.lessonsTitle')}
+          </AppText>
+          {lessonTags.map((tag) => (
+            <Button
+              key={tag}
+              title={t('lesson.open', { tag: text(TAGS[tag].title) })}
+              icon="book-outline"
+              variant="secondary"
+              size="compact"
+              onPress={() => onOpenLesson(tag)}
+            />
+          ))}
+        </View>
+      ) : null}
 
       <View style={styles.actions}>
         <Button title={t('quiz.again')} icon="refresh" onPress={onRestart} />
