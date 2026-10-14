@@ -97,6 +97,16 @@ const NodeMark = ({ size }: { size: number }): JSX.Element => (
   </Svg>
 );
 
+const NextMark = ({ size }: { size: number }): JSX.Element => (
+  <Svg width={size} height={size} viewBox="0 0 64 64">
+    <Rect width={64} height={64} rx={12} fill={LOGO_COLORS.black} />
+    <Circle cx={32} cy={32} r={21} fill={LOGO_COLORS.white} />
+    <SvgText x={32} y={42} textAnchor="middle" fontSize={28} fontWeight="bold" fill={LOGO_COLORS.black}>
+      N
+    </SvgText>
+  </Svg>
+);
+
 const StateMark = ({ size }: { size: number }): JSX.Element => (
   <Svg width={size} height={size} viewBox="0 0 64 64">
     <Rect width={64} height={64} rx={12} fill={LOGO_COLORS.stateSlate} />
@@ -218,6 +228,9 @@ export const TopicLogo = ({ topic, size = 40 }: TopicLogoProps): JSX.Element => 
   }
   if (topic === 'node') {
     return <NodeMark size={size} />;
+  }
+  if (topic === 'next') {
+    return <NextMark size={size} />;
   }
   if (topic === 'git') {
     return <GitMark size={size} />;

@@ -376,4 +376,10 @@
 - 23 вопроса: чего нет в Node, сколько в нём потоков, `process.env` — строки (`js-output`), `exitCode` против `exit()`; `exports` против `module.exports` (`js-output`), кеш `require`, semver `^`, поле `"type"`, `import.meta.dirname`; порядок `nextTick`/промисов/`setImmediate`/таймера в I/O-колбэке (порядок, `js-output`), голодание от `nextTick`, блокировка сервера; error-first и `ENOENT`, `promisify`, необработанный reject, синхронный `EventEmitter` (все три — `js-output`); `createReadStream` и `pipeline`, байты против символов (`js-output`), backpressure; порядок middleware в Express, `express.json()`, забытый `next()`, обработчик ошибок с 4 параметрами.
 - Все ответы `js-output` считаются запуском в Node при каждой проверке; якоря ссылок на документацию Node сверены с HTML страниц. Тема — после «Стейт-менеджмента» в направлении «Фронтенд».
 
+## R3-3, шаг 10 — тема «Next.js» (14.10.2026, версия 1.14.0)
+
+- Тема `next`: чёрно-белый акцент как у бренда (`#18181B`, в тёмной — `#E4E4E7`), логотип — «N» в круге, теги `next-routing`, `next-components`, `next-rendering`, `next-data`, `next-actions`, `next-optimization`, 6 конспектов, путь.
+- 22 вопроса: `page` открывает адрес, `[[...slug]]`, группы `(group)`, `layout` сохраняет состояние, вложенность специальных файлов (порядок), `middleware` → `proxy`; `cookies()` делает маршрут динамическим, гидрация и `new Date()`, `generateStaticParams`, `NEXT_PUBLIC_` вшивается при сборке; серверные компоненты по умолчанию, сериализуемые пропсы, серверное внутри клиентского через `children`, `server-only`; `fetch` не кешируется с 15-й версии, `revalidatePath`/`updateTag`, водопад и `Promise.all`; Server Action — публичный POST, `route.ts`; `next/image` и CLS (`preload` вместо `priority`), `next/font`, `<Link>`.
+- Next.js быстро меняется (16.4 на 14.10): все факты сверены с markdown-версией документации (`nextjs.org/docs/….md`), нестабильные детали (`reset`/`retry` в `error.tsx`, профили `revalidateTag`) в вопросы не брал. Машинной проверки нет — Next.js в проекте не стоит.
+
 Дальше — `docs/roadmap.md`.

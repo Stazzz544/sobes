@@ -102,6 +102,16 @@ export const TOPICS: Record<TopicId, Topic> = {
       en: 'Runtime and threads, modules and npm, the event loop, async and errors, buffers and streams, HTTP and Express',
     },
   },
+  next: {
+    id: 'next',
+    accent: 'next',
+    shortTitle: 'Next',
+    title: { ru: 'Next.js', en: 'Next.js' },
+    description: {
+      ru: 'App Router и файлы маршрутов, рендеринг и гидрация, серверные и клиентские компоненты, данные и кеш, Server Actions, оптимизация',
+      en: 'App Router and route files, rendering and hydration, Server and Client Components, data and caching, Server Actions, optimization',
+    },
+  },
   git: {
     id: 'git',
     accent: 'git',

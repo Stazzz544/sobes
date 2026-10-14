@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.14.0',
+    date: '2026-10-14',
+    changes: [
+      {
+        ru: 'Новая тема «Next.js»: App Router и файлы маршрутов, рендеринг и гидрация, серверные и клиентские компоненты, данные и кеш, Server Actions, оптимизация.',
+        en: 'New topic “Next.js”: App Router and route files, rendering and hydration, Server and Client Components, data and caching, Server Actions, optimization.',
+      },
+      { ru: '22 вопроса и 6 конспектов по актуальной версии Next.js 16 — всего 488 вопросов.', en: '22 questions and 6 lessons for the current Next.js 16 — 488 questions in total.' },
+    ],
+  },
+  {
     version: '1.13.0',
     date: '2026-10-14',
     changes: [

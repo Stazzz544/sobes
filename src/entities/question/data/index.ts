@@ -12,6 +12,7 @@ import { GIT_QUESTIONS } from './git';
 import { HR_QUESTIONS } from './hr';
 import { HR_QUESTIONS_2 } from './hr-2';
 import { HTML_QUESTIONS } from './html';
+import { NEXT_QUESTIONS } from './next';
 import { NODE_QUESTIONS } from './node';
 import { STATE_QUESTIONS } from './state';
 import { TESTING_QUESTIONS } from './testing';
@@ -78,6 +79,7 @@ export const QUESTIONS: Question[] = [
   ...TESTING_QUESTIONS,
   ...STATE_QUESTIONS,
   ...NODE_QUESTIONS,
+  ...NEXT_QUESTIONS,
   ...GIT_QUESTIONS,
   ...HR_QUESTIONS,
   ...HR_QUESTIONS_2,
