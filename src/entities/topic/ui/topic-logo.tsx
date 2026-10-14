@@ -21,6 +21,8 @@ const LOGO_COLORS = {
   hrAmber: '#B45309',
   gitRed: '#B91C1C',
   htmlTeal: '#0F766E',
+  testSky: '#0369A1',
+  testIce: '#BAE6FD',
   hrCream: '#FDE68A',
   black: '#000000',
   white: '#FFFFFF',
@@ -58,6 +60,20 @@ const HtmlMark = ({ size }: { size: number }): JSX.Element => (
       <Path d="M15 25 H49" />
       <Path d="M32 25 V38" />
       <Path d="M23 52 L32 38 L41 52" />
+    </G>
+  </Svg>
+);
+
+const TestingMark = ({ size }: { size: number }): JSX.Element => (
+  <Svg width={size} height={size} viewBox="0 0 64 64">
+    <Rect width={64} height={64} rx={12} fill={LOGO_COLORS.testSky} />
+    <G stroke={LOGO_COLORS.white} strokeWidth={4} fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <Path d="M11 19 L15 23 L23 14" />
+      <Path d="M11 41 L15 45 L23 36" />
+    </G>
+    <G stroke={LOGO_COLORS.testIce} strokeWidth={4} strokeLinecap="round">
+      <Path d="M31 19 H53" />
+      <Path d="M31 41 H53" />
     </G>
   </Svg>
 );
@@ -161,6 +177,9 @@ export const TopicLogo = ({ topic, size = 40 }: TopicLogoProps): JSX.Element => 
   }
   if (topic === 'html') {
     return <HtmlMark size={size} />;
+  }
+  if (topic === 'testing') {
+    return <TestingMark size={size} />;
   }
   if (topic === 'git') {
     return <GitMark size={size} />;

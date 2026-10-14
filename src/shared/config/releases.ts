@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.8.0',
+    date: '2026-10-14',
+    changes: [
+      {
+        ru: 'Новая тема «Тестирование»: пирамида тестов, матчеры, моки и таймеры, Testing Library, E2E и TDD.',
+        en: 'New topic “Testing”: the test pyramid, matchers, mocks and timers, Testing Library, E2E and TDD.',
+      },
+      { ru: '20 вопросов и 6 конспектов — всего 388 вопросов.', en: '20 questions and 6 lessons — 388 questions in total.' },
+    ],
+  },
+  {
     version: '1.7.0',
     date: '2026-10-14',
     changes: [

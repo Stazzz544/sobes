@@ -72,6 +72,16 @@ export const TOPICS: Record<TopicId, Topic> = {
       en: 'Semantics, forms, HTML parsing, accessible names, ARIA, keyboard and focus',
     },
   },
+  testing: {
+    id: 'testing',
+    accent: 'testing',
+    shortTitle: 'Tests',
+    title: { ru: 'Тестирование', en: 'Testing' },
+    description: {
+      ru: 'Пирамида тестов, матчеры, моки и таймеры, Testing Library, E2E, TDD',
+      en: 'The test pyramid, matchers, mocks and timers, Testing Library, E2E, TDD',
+    },
+  },
   git: {
     id: 'git',
     accent: 'git',
