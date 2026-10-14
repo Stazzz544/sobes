@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.5.0',
+    date: '2026-10-14',
+    changes: [
+      {
+        ru: 'Новая тема «HR и поведенческое интервью»: рассказ о себе, метод STAR, трудные вопросы, зарплата, вопросы работодателю.',
+        en: 'New topic “HR & behavioral interview”: self-introduction, STAR, tough questions, salary, questions to ask.',
+      },
+      { ru: '28 вопросов и 6 конспектов по HR — всего 322 вопроса.', en: '28 HR questions and 6 lessons — 322 questions in total.' },
+    ],
+  },
+  {
     version: '1.4.0',
     date: '2026-10-14',
     changes: [

@@ -20,7 +20,7 @@ import type { ChoiceQuestion, OptionContent, Question, QuestionVerification } fr
 type CssComputedVerification = Extract<QuestionVerification, { kind: 'css-computed' }>;
 
 const LOCALES = ['ru', 'en'] as const;
-const ID_PREFIX = { javascript: 'js', typescript: 'ts', react: 'react', web: 'web', css: 'css', ai: 'ai', algorithms: 'algo' } as const;
+const ID_PREFIX = { javascript: 'js', typescript: 'ts', react: 'react', web: 'web', css: 'css', ai: 'ai', algorithms: 'algo', hr: 'hr' } as const;
 const CHROME_CANDIDATES = [
   process.env.CHROME_PATH,
   'C:/Program Files/Google/Chrome/Application/chrome.exe',

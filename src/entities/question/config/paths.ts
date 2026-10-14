@@ -81,4 +81,5 @@ export const TOPIC_PATHS: Record<TopicId, readonly TagId[]> = {
     'trees-graphs',
     'dynamic-programming',
   ],
+  hr: ['self-presentation', 'star', 'tough-questions', 'motivation', 'questions-to-employer', 'hiring-process'],
 };

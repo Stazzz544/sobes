@@ -18,6 +18,8 @@ const LOGO_COLORS = {
   aiMint: '#A7F3D0',
   algoPink: '#DB2777',
   algoBlush: '#FBCFE8',
+  hrAmber: '#B45309',
+  hrCream: '#FDE68A',
   black: '#000000',
   white: '#FFFFFF',
 } as const;
@@ -43,6 +45,14 @@ const AlgoMark = ({ size }: { size: number }): JSX.Element => (
         fill={index === ALGO_BARS.length - 1 ? LOGO_COLORS.white : LOGO_COLORS.algoBlush}
       />
     ))}
+  </Svg>
+);
+
+const HrMark = ({ size }: { size: number }): JSX.Element => (
+  <Svg width={size} height={size} viewBox="0 0 64 64">
+    <Rect width={64} height={64} rx={12} fill={LOGO_COLORS.hrAmber} />
+    <Path d="M10 14 H38 A5 5 0 0 1 43 19 V31 A5 5 0 0 1 38 36 H22 L14 43 V36 H10 A5 5 0 0 1 5 31 V19 A5 5 0 0 1 10 14 Z" fill={LOGO_COLORS.white} />
+    <Path d="M28 30 H54 A5 5 0 0 1 59 35 V46 A5 5 0 0 1 54 51 H52 V57 L45 51 H28 A5 5 0 0 1 23 46 V35 A5 5 0 0 1 28 30 Z" fill={LOGO_COLORS.hrCream} />
   </Svg>
 );
 
@@ -121,6 +131,9 @@ export const TopicLogo = ({ topic, size = 40 }: TopicLogoProps): JSX.Element => 
   }
   if (topic === 'algorithms') {
     return <AlgoMark size={size} />;
+  }
+  if (topic === 'hr') {
+    return <HrMark size={size} />;
   }
   return <AllMark size={size} />;
 };

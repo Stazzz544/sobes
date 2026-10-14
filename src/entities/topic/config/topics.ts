@@ -62,6 +62,16 @@ export const TOPICS: Record<TopicId, Topic> = {
       en: 'LLMs, prompting, RAG, agents, safety and AI in the frontend',
     },
   },
+  hr: {
+    id: 'hr',
+    accent: 'hr',
+    shortTitle: 'HR',
+    title: { ru: 'HR и поведенческое интервью', en: 'HR & behavioral interview' },
+    description: {
+      ru: 'Рассказ о себе, метод STAR, трудные вопросы, мотивация и зарплата, вопросы работодателю',
+      en: 'Self-introduction, the STAR method, tough questions, motivation and salary, questions to ask',
+    },
+  },
   algorithms: {
     id: 'algorithms',
     accent: 'algorithms',

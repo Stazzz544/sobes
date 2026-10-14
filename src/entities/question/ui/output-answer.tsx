@@ -1,10 +1,10 @@
 import { JSX } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { BORDER_RADIUS, MIN_TOUCH_SIZE } from '@app/shared/config';
 import { useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
-import { AppText, CodeBlock } from '@app/shared/ui';
+import { AppText } from '@app/shared/ui';
 import type { ThemeColors } from '@app/shared/theme';
 import type { OutputQuestion } from '../model/types';
 
@@ -59,7 +59,9 @@ export const OutputAnswer = ({ question, text, isRevealed, isCorrect, onChange }
               {t('question.outputCorrect')}
             </AppText>
           </View>
-          <CodeBlock source={question.answers[0] ?? ''} lang="text" />
+          <View style={[styles.answer, { backgroundColor: colors.codeBg, borderColor: colors.border }]}>
+            <Text style={[styles.answerText, { color: colors.codeText }]}>{question.answers[0] ?? ''}</Text>
+          </View>
         </View>
       ) : null}
     </View>
@@ -80,6 +82,17 @@ const styles = StyleSheet.create({
   },
   correct: {
     gap: 8,
+  },
+  answer: {
+    minHeight: MIN_TOUCH_SIZE,
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderRadius: BORDER_RADIUS,
+    paddingHorizontal: 14,
+  },
+  answerText: {
+    fontFamily: 'monospace',
+    fontSize: 15,
   },
   correctTitle: {
     flexDirection: 'row',

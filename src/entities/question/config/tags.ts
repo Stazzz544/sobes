@@ -86,6 +86,12 @@ export const TAGS = {
   hashing: { topic: 'algorithms', title: { ru: 'Хэш-таблицы', en: 'Hash maps' } },
   'trees-graphs': { topic: 'algorithms', title: { ru: 'Деревья и графы', en: 'Trees & graphs' } },
   'dynamic-programming': { topic: 'algorithms', title: { ru: 'Динамическое программирование', en: 'Dynamic programming' } },
+  'self-presentation': { topic: 'hr', title: { ru: 'Рассказ о себе', en: 'Self-introduction' } },
+  star: { topic: 'hr', title: { ru: 'Метод STAR', en: 'The STAR method' } },
+  'tough-questions': { topic: 'hr', title: { ru: 'Трудные вопросы', en: 'Tough questions' } },
+  motivation: { topic: 'hr', title: { ru: 'Мотивация и зарплата', en: 'Motivation & salary' } },
+  'questions-to-employer': { topic: 'hr', title: { ru: 'Вопросы работодателю', en: 'Questions to ask' } },
+  'hiring-process': { topic: 'hr', title: { ru: 'Процесс найма и оффер', en: 'Hiring process & offer' } },
 } satisfies Record<string, TagMeta>;
 
 export type TagId = keyof typeof TAGS;
