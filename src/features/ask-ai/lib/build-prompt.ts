@@ -1,4 +1,5 @@
 import { OPTION_IDS, OPTION_LETTERS, getOption, getOptionText, isChoiceQuestion } from '@app/entities/question';
+import { getTopicDirection } from '@app/entities/topic';
 import { DICTIONARIES, translate } from '@app/shared/i18n';
 import type { OptionContent, OptionId, Question, QuestionResponse } from '@app/entities/question';
 import type { Dictionary, Locale } from '@app/shared/i18n';
@@ -49,7 +50,7 @@ const formatCode = (question: Question): string => {
 export const buildAiPrompt = (question: Question, response: QuestionResponse | null | undefined, locale: Locale): string => {
   const dictionary = DICTIONARIES[locale];
   const lines = [
-    translate(dictionary, 'askAi.promptIntro'),
+    translate(dictionary, 'askAi.promptIntro', { role: getTopicDirection(question.topic).role[locale] }),
     '',
     `${translate(dictionary, 'askAi.promptQuestion')}: ${question.prompt[locale]}`,
   ];

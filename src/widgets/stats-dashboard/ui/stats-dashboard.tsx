@@ -4,7 +4,7 @@ import { useUnit } from 'effector-react';
 import { progressModel } from '@app/entities/progress';
 import { LESSONS_BY_TAG, QUESTIONS, QUESTIONS_BY_ID, TAGS } from '@app/entities/question';
 import { settingsModel } from '@app/entities/settings';
-import { TOPICS, TopicLogo, topicModel } from '@app/entities/topic';
+import { DIRECTIONS, DIRECTION_IDS, TOPICS, TopicLogo, topicModel } from '@app/entities/topic';
 import { useI18n } from '@app/shared/i18n';
 import { useNow } from '@app/shared/lib';
 import { useTheme } from '@app/shared/theme';
@@ -83,7 +83,7 @@ export const StatsDashboard = ({ onPracticeTag, onOpenLesson, footer }: StatsDas
             ) : (
               overview.weakTags.map((weakTag) => (
                 <View key={weakTag.tag} style={styles.weakRow}>
-                  <View style={styles.weakTexts}>
+                  <View style={styles.weakMain}>
                     <View style={styles.rowHeader}>
                       <AppText variant="bodyStrong" style={styles.shrink}>
                         {text(TAGS[weakTag.tag].title)}
@@ -94,19 +94,21 @@ export const StatsDashboard = ({ onPracticeTag, onOpenLesson, footer }: StatsDas
                     </View>
                     <ProgressBar value={weakTag.accuracy} color={colors.danger} height={6} />
                   </View>
-                  {LESSONS_BY_TAG[weakTag.tag] ? (
-                    <IconButton
-                      icon="book-outline"
-                      accessibilityLabel={t('lesson.open', { tag: text(TAGS[weakTag.tag].title) })}
-                      onPress={() => onOpenLesson(weakTag.tag)}
+                  <View style={styles.weakActions}>
+                    {LESSONS_BY_TAG[weakTag.tag] ? (
+                      <IconButton
+                        icon="book-outline"
+                        accessibilityLabel={t('lesson.open', { tag: text(TAGS[weakTag.tag].title) })}
+                        onPress={() => onOpenLesson(weakTag.tag)}
+                      />
+                    ) : null}
+                    <Button
+                      title={t('stats.train')}
+                      variant="secondary"
+                      size="compact"
+                      onPress={() => onPracticeTag(TAGS[weakTag.tag].topic, weakTag.tag)}
                     />
-                  ) : null}
-                  <Button
-                    title={t('stats.train')}
-                    variant="secondary"
-                    size="compact"
-                    onPress={() => onPracticeTag(TAGS[weakTag.tag].topic, weakTag.tag)}
-                  />
+                  </View>
                 </View>
               ))
             )}
@@ -119,23 +121,35 @@ export const StatsDashboard = ({ onPracticeTag, onOpenLesson, footer }: StatsDas
 
           <Card style={styles.section}>
             <AppText variant="subtitle">{t('stats.topicsTitle')}</AppText>
-            {overview.topics.map((topicOverview) => (
-              <View key={topicOverview.topic} style={styles.topicRow}>
-                <TopicLogo topic={topicOverview.topic} size={32} />
-                <View style={styles.weakTexts}>
-                  <View style={styles.rowHeader}>
-                    <AppText variant="bodyStrong" style={styles.shrink}>
-                      {text(TOPICS[topicOverview.topic].title)}
-                    </AppText>
-                    <AppText variant="caption" tone="secondary">
-                      {formatPercent(topicOverview.accuracy)}
-                    </AppText>
-                  </View>
-                  <ProgressBar value={topicOverview.total > 0 ? topicOverview.seen / topicOverview.total : 0} height={6} />
-                  <AppText variant="caption" tone="muted">
-                    {t('stats.seen', { seen: topicOverview.seen, total: topicOverview.total })}
-                  </AppText>
-                </View>
+            {DIRECTION_IDS.map((directionId) => (
+              <View key={directionId} style={styles.section}>
+                <AppText variant="label" tone="muted" accessibilityRole="header">
+                  {text(DIRECTIONS[directionId].title)}
+                </AppText>
+                {overview.topics
+                  .filter((topicOverview) => DIRECTIONS[directionId].topics.includes(topicOverview.topic))
+                  .map((topicOverview) => (
+                    <View key={topicOverview.topic} style={styles.topicRow}>
+                      <TopicLogo topic={topicOverview.topic} size={32} />
+                      <View style={styles.weakTexts}>
+                        <View style={styles.rowHeader}>
+                          <AppText variant="bodyStrong" style={styles.shrink}>
+                            {text(TOPICS[topicOverview.topic].title)}
+                          </AppText>
+                          <AppText variant="caption" tone="secondary">
+                            {formatPercent(topicOverview.accuracy)}
+                          </AppText>
+                        </View>
+                        <ProgressBar
+                          value={topicOverview.total > 0 ? topicOverview.seen / topicOverview.total : 0}
+                          height={6}
+                        />
+                        <AppText variant="caption" tone="muted">
+                          {t('stats.seen', { seen: topicOverview.seen, total: topicOverview.total })}
+                        </AppText>
+                      </View>
+                    </View>
+                  ))}
               </View>
             ))}
           </Card>
@@ -176,6 +190,19 @@ const styles = StyleSheet.create({
     gap: 14,
   },
   weakRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    gap: 12,
+  },
+  weakMain: {
+    flexGrow: 1,
+    flexBasis: 160,
+    minWidth: 0,
+    gap: 6,
+  },
+  weakActions: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,

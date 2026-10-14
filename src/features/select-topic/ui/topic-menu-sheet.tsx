@@ -11,6 +11,8 @@ import { useTheme } from '@app/shared/theme';
 import { AppText } from '@app/shared/ui';
 import { topicMenuModel } from '../model/topic-menu-model';
 
+const SELECTED_TOPIC_OFFSET = 56;
+
 type TopicMenuSheetProps = {
   children: ReactNode;
 };
@@ -63,7 +65,9 @@ export const TopicMenuSheet = ({ children }: TopicMenuSheetProps): JSX.Element =
               <TopicCardList
                 value={topic}
                 onChange={onPick}
-                onSelectedLayout={(offsetY) => scrollRef.current?.scrollTo({ y: offsetY, animated: false })}
+                onSelectedLayout={(offsetY) =>
+                  scrollRef.current?.scrollTo({ y: Math.max(offsetY - SELECTED_TOPIC_OFFSET, 0), animated: false })
+                }
               />
             </ScrollView>
           </Animated.View>

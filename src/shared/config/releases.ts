@@ -8,6 +8,20 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.3.0',
+    date: '2026-10-14',
+    changes: [
+      {
+        ru: 'Темы сгруппированы по направлениям в выборе темы и статистике — пока это «Фронтенд».',
+        en: 'Topics are grouped by track in the topic picker and stats — for now, “Front-end”.',
+      },
+      {
+        ru: 'Исправлено: в «Слабых местах» на узком экране название темы больше не разрывается посреди слова.',
+        en: 'Fixed: on narrow screens, tag names in “Weak spots” no longer break mid-word.',
+      },
+    ],
+  },
+  {
     version: '1.2.0',
     date: '2026-10-14',
     changes: [

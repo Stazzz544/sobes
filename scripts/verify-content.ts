@@ -11,7 +11,9 @@ import { GLOSSARY } from '../src/entities/question/glossary/glossary';
 import { LESSON_GROUPS } from '../src/entities/question/lessons';
 import { TOPIC_PATHS } from '../src/entities/question/config/paths';
 import { OPTION_IDS } from '../src/entities/question/model/types';
+import { DIRECTIONS } from '../src/entities/topic/config/directions';
 import { RELEASES } from '../src/shared/config/releases';
+import { DIRECTION_IDS, TOPIC_IDS } from '../src/shared/config/topics';
 import { ACCENT_COLORS, BASE_COLORS } from '../src/shared/theme/colors';
 import type { ChoiceQuestion, OptionContent, Question, QuestionVerification } from '../src/entities/question/model/types';
 
@@ -532,6 +534,26 @@ const checkGlossary = (): void => {
   LESSONS.forEach((lesson) => visit(lesson, `конспект ${lesson.tag}`));
 };
 
+const checkDirections = (): void => {
+  for (const topic of TOPIC_IDS) {
+    const owners = DIRECTION_IDS.filter((directionId) => DIRECTIONS[directionId].topics.includes(topic));
+    if (owners.length !== 1) {
+      errors.push(`тема ${topic}: должна быть ровно в одном направлении, сейчас — ${owners.join(', ') || 'ни в одном'}`);
+    }
+  }
+  for (const directionId of DIRECTION_IDS) {
+    const direction = DIRECTIONS[directionId];
+    if (direction.topics.length === 0) {
+      errors.push(`направление ${directionId}: нет тем`);
+    }
+    for (const locale of LOCALES) {
+      if (!direction.title[locale].trim() || !direction.role[locale].trim()) {
+        errors.push(`направление ${directionId}: пустое название или роль (${locale})`);
+      }
+    }
+  }
+};
+
 const checkPaths = (): void => {
   for (const [topic, path] of Object.entries(TOPIC_PATHS)) {
     const topicTags = Object.entries(TAGS)
@@ -706,6 +728,7 @@ const main = async (): Promise<void> => {
   checkDiagrams();
   checkLessons();
   checkPaths();
+  checkDirections();
   checkGlossary();
   checkReleases();
   printDistribution();

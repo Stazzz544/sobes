@@ -32,7 +32,7 @@ export const en: Dictionary = {
   onboarding: {
     welcomeTitle: 'Hi! This is Sobes',
     welcomeText:
-      'A trainer for front-end developer interviews. Answer questions, review your mistakes and see where the gaps are.',
+      'An IT interview trainer, starting with front-end. Answer questions, review your mistakes and see where the gaps are.',
     languageLabel: 'Language',
     topicTitle: 'What do you want to practice?',
     topicHint: 'You can switch topics any time on the home screen.',
@@ -124,7 +124,7 @@ export const en: Dictionary = {
     toastPrefilled: 'The question is already in the chat. If not, paste it from the clipboard',
     toastCopied: 'Question copied — paste it into the chat',
     promptIntro:
-      'I’m preparing for a front-end developer interview. Explain the question below in detail and in simple terms, with code examples.',
+      'I’m preparing for a {role} interview. Explain the question below in detail and in simple terms, with code examples.',
     promptQuestion: 'Question',
     promptOptions: 'Answer options',
     promptCorrect: 'Correct answer',
