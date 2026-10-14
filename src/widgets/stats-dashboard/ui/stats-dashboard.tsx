@@ -1,4 +1,4 @@
-import { JSX, useMemo } from 'react';
+import { JSX, ReactNode, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useUnit } from 'effector-react';
 import { progressModel } from '@app/entities/progress';
@@ -17,6 +17,7 @@ import type { TopicSelection } from '@app/shared/config';
 type StatsDashboardProps = {
   onPracticeTag: (topic: TopicSelection, tag: TagId) => void;
   onOpenLesson: (tag: TagId) => void;
+  footer?: ReactNode;
 };
 
 type TileProps = {
@@ -37,7 +38,7 @@ const Tile = ({ label, value }: TileProps): JSX.Element => (
   </Card>
 );
 
-export const StatsDashboard = ({ onPracticeTag, onOpenLesson }: StatsDashboardProps): JSX.Element => {
+export const StatsDashboard = ({ onPracticeTag, onOpenLesson, footer }: StatsDashboardProps): JSX.Element => {
   const { colors } = useTheme();
   const { t, text } = useI18n();
   const { log, stats, topic, settings } = useUnit({
@@ -153,6 +154,7 @@ export const StatsDashboard = ({ onPracticeTag, onOpenLesson }: StatsDashboardPr
               </View>
             ))}
           </Card>
+          {footer}
         </>
       )}
     </Screen>

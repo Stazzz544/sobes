@@ -4,10 +4,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { useUnit } from 'effector-react';
 import { progressModel } from '@app/entities/progress';
 import { TAGS } from '@app/entities/question';
+import { getPathProgress } from '@app/features/learning-path';
 import { useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
 import { AppText, Card, ProgressBar } from '@app/shared/ui';
-import { getPathProgress } from '../lib/path-progress';
 import type { TopicId } from '@app/shared/config';
 
 type TopicPathCardProps = {
