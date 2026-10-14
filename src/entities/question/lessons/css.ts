@@ -13,8 +13,8 @@ export const CSS_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: 'Специфичность считается тройкой (id, классы/атрибуты/псевдоклассы, теги/псевдоэлементы) и сравнивается слева направо: один id сильнее любого числа классов. Инлайн-стиль сильнее любого селектора, `!important` переворачивает обычный порядок. `:is()` и `:not()` берут специфичность самого сильного аргумента, `:where()` — всегда ноль.',
-          en: 'Specificity is a triple (ids, classes/attributes/pseudo-classes, types/pseudo-elements) compared left to right: one id beats any number of classes. An inline style beats any selector, and `!important` flips the usual order. `:is()` and `:not()` take the specificity of their strongest argument, `:where()` is always zero.',
+          ru: '[[specificity|Специфичность]] считается тройкой (id, классы/атрибуты/псевдоклассы, теги/псевдоэлементы) и сравнивается слева направо: один id сильнее любого числа классов. Инлайн-стиль сильнее любого селектора, `!important` переворачивает обычный порядок. `:is()` и `:not()` берут специфичность самого сильного аргумента, `:where()` — всегда ноль.',
+          en: '[[specificity|Specificity]] is a triple (ids, classes/attributes/pseudo-classes, types/pseudo-elements) compared left to right: one id beats any number of classes. An inline style beats any selector, and `!important` flips the usual order. `:is()` and `:not()` take the specificity of their strongest argument, `:where()` is always zero.',
         },
       },
       {
@@ -318,8 +318,8 @@ h2 + p { margin-top: 0; }            /* the paragraph right after h2 */`,
       {
         type: 'text',
         text: {
-          ru: '`z-index` сравнивается только между элементами одного **контекста наложения**. Новый контекст создают позиционированный элемент с `z-index`, `opacity < 1`, `transform`, `filter`, `isolation: isolate` и другие свойства — и дети уже не выберутся выше соседей родителя, какой бы `z-index` им ни дали. `isolation: isolate` создаёт контекст без побочных эффектов.',
-          en: '`z-index` is compared only between elements of the same **stacking context**. A new context is created by a positioned element with `z-index`, `opacity < 1`, `transform`, `filter`, `isolation: isolate` and other properties — and its children can’t rise above the parent’s siblings, whatever `z-index` they get. `isolation: isolate` creates a context without side effects.',
+          ru: '`z-index` сравнивается только между элементами одного [[stacking-context|контекста наложения]]. Новый контекст создают позиционированный элемент с `z-index`, `opacity < 1`, `transform`, `filter`, `isolation: isolate` и другие свойства — и дети уже не выберутся выше соседей родителя, какой бы `z-index` им ни дали. `isolation: isolate` создаёт контекст без побочных эффектов.',
+          en: '`z-index` is compared only between elements of the same [[stacking-context|stacking context]]. A new context is created by a positioned element with `z-index`, `opacity < 1`, `transform`, `filter`, `isolation: isolate` and other properties — and its children can’t rise above the parent’s siblings, whatever `z-index` they get. `isolation: isolate` creates a context without side effects.',
         },
       },
     ],

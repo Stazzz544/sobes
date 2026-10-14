@@ -283,8 +283,8 @@ type Loaded = Awaited<ReturnType<typeof loadUser>>; // User`,
       {
         type: 'text',
         text: {
-          ru: 'Условный тип выбирает ветку по совместимости типов. Если `T` — «голый» параметр и в него подставлен union, условие применяется к каждому члену отдельно (**дистрибутивность**) — на этом построен `Exclude`. Обёртка в кортеж `[T] extends [U]` дистрибутивность отключает.',
-          en: 'A conditional type picks a branch by type compatibility. If `T` is a “naked” parameter and a union is passed, the condition applies to each member separately (**distributivity**) — that’s how `Exclude` works. Wrapping in a tuple `[T] extends [U]` turns distributivity off.',
+          ru: 'Условный тип выбирает ветку по совместимости типов. Если `T` — «голый» параметр и в него подставлен union, условие применяется к каждому члену отдельно ([[distributive|дистрибутивность]]) — на этом построен `Exclude`. Обёртка в кортеж `[T] extends [U]` дистрибутивность отключает.',
+          en: 'A conditional type picks a branch by type compatibility. If `T` is a “naked” parameter and a union is passed, the condition applies to each member separately ([[distributive|distributivity]]) — that’s how `Exclude` works. Wrapping in a tuple `[T] extends [U]` turns distributivity off.',
         },
       },
       {

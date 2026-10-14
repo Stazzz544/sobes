@@ -8,14 +8,16 @@ type FormattedTextProps = {
   children: string;
   variant?: TextVariant;
   tone?: TextTone;
+  onTermPress?: (termId: string) => void;
 };
 
 type Segment = {
-  kind: 'plain' | 'code' | 'bold';
+  kind: 'plain' | 'code' | 'bold' | 'term';
   value: string;
+  termId?: string;
 };
 
-const SEGMENT_PATTERN = /`([^`]+)`|\*\*([^*]+)\*\*/g;
+const SEGMENT_PATTERN = /`([^`]+)`|\*\*([^*]+)\*\*|\[\[([a-z0-9-]+)\|([^\]]+)\]\]/g;
 
 const splitSegments = (source: string): Segment[] => {
   const segments: Segment[] = [];
@@ -27,6 +29,8 @@ const splitSegments = (source: string): Segment[] => {
     }
     if (match[1] !== undefined) {
       segments.push({ kind: 'code', value: match[1] });
+    } else if (match[3] !== undefined) {
+      segments.push({ kind: 'term', value: match[4] ?? '', termId: match[3] });
     } else {
       segments.push({ kind: 'bold', value: match[2] ?? '' });
     }
@@ -38,7 +42,12 @@ const splitSegments = (source: string): Segment[] => {
   return segments;
 };
 
-export const FormattedText = ({ children, variant = 'body', tone = 'primary' }: FormattedTextProps): JSX.Element => {
+export const FormattedText = ({
+  children,
+  variant = 'body',
+  tone = 'primary',
+  onTermPress,
+}: FormattedTextProps): JSX.Element => {
   const { colors } = useTheme();
   const segments = useMemo(() => splitSegments(children), [children]);
 
@@ -51,6 +60,22 @@ export const FormattedText = ({ children, variant = 'body', tone = 'primary' }: 
               {` ${segment.value} `}
             </Text>
           );
+        }
+        if (segment.kind === 'term' && onTermPress) {
+          const termId = segment.termId ?? '';
+          return (
+            <Text
+              key={index}
+              onPress={() => onTermPress(termId)}
+              accessibilityRole="link"
+              style={[styles.term, { color: colors.accentText }]}
+            >
+              {segment.value}
+            </Text>
+          );
+        }
+        if (segment.kind === 'term') {
+          return segment.value;
         }
         if (segment.kind === 'bold') {
           return (
@@ -72,5 +97,9 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: '700',
+  },
+  term: {
+    textDecorationLine: 'underline',
+    textDecorationStyle: 'dotted',
   },
 });

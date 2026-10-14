@@ -431,8 +431,8 @@ console.log(longestUnique('abcabcbb')); // 3`,
       {
         type: 'text',
         text: {
-          ru: 'Хэш-функция вычисляет по ключу индекс ячейки. Разные ключи иногда попадают в одну ячейку — это коллизии, их разрешают цепочками или поиском свободной ячейки. Когда таблица заполняется, она увеличивается и перекладывает элементы — поэтому вставка O(1) **амортизированно**. В худшем случае (все ключи в одной ячейке) операции деградируют до O(n).',
-          en: 'A hash function computes a slot index from the key. Different keys sometimes land in the same slot — collisions, resolved with chaining or by probing for a free slot. When the table fills up, it grows and rehashes — so insertion is **amortized** O(1). In the worst case (all keys in one slot) operations degrade to O(n).',
+          ru: 'Хэш-функция вычисляет по ключу индекс ячейки. Разные ключи иногда попадают в одну ячейку — это коллизии, их разрешают цепочками или поиском свободной ячейки. Когда таблица заполняется, она увеличивается и перекладывает элементы — поэтому вставка O(1) [[amortized|амортизированно]]. В худшем случае (все ключи в одной ячейке) операции деградируют до O(n).',
+          en: 'A hash function computes a slot index from the key. Different keys sometimes land in the same slot — collisions, resolved with chaining or by probing for a free slot. When the table fills up, it grows and rehashes — so insertion is [[amortized|amortized]] O(1). In the worst case (all keys in one slot) operations degrade to O(n).',
         },
       },
       {
@@ -594,8 +594,8 @@ console.log([...dfs(tree, 'A')].join(' ')); // A B D E C F`,
       {
         type: 'text',
         text: {
-          ru: 'ДП нужно, когда подзадачи **повторяются** и из их ответов собирается ответ задачи. Наивная рекурсия для чисел Фибоначчи пересчитывает одни и те же значения и работает за O(2ⁿ); с запоминанием — O(n). Два способа: **мемоизация** (рекурсия сверху вниз плюс кэш) и **табуляция** (таблица снизу вверх от базовых случаев).',
-          en: 'DP is needed when subproblems **repeat** and the answer is built from their answers. Naive recursion for Fibonacci numbers recomputes the same values and runs in O(2ⁿ); with memoization it’s O(n). Two approaches: **memoization** (top-down recursion plus a cache) and **tabulation** (a bottom-up table from the base cases).',
+          ru: 'ДП нужно, когда подзадачи **повторяются** и из их ответов собирается ответ задачи. Наивная рекурсия для чисел Фибоначчи пересчитывает одни и те же значения и работает за O(2ⁿ); с запоминанием — O(n). Два способа: [[memoization|мемоизация]] (рекурсия сверху вниз плюс кэш) и **табуляция** (таблица снизу вверх от базовых случаев).',
+          en: 'DP is needed when subproblems **repeat** and the answer is built from their answers. Naive recursion for Fibonacci numbers recomputes the same values and runs in O(2ⁿ); with memoization it’s O(n). Two approaches: [[memoization|memoization]] (top-down recursion plus a cache) and **tabulation** (a bottom-up table from the base cases).',
         },
       },
       {

@@ -13,8 +13,8 @@ export const WEB_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: 'Метод задаёт смысл запроса. `GET` только читает: он безопасен, идемпотентен и кэшируется. `POST` создаёт или запускает действие и не идемпотентен — повтор может создать дубль. `PUT` заменяет ресурс целиком, `PATCH` меняет часть, `DELETE` удаляет; `PUT` и `DELETE` идемпотентны — повтор даёт тот же результат, поэтому их безопасно переотправлять при сбое сети.',
-          en: 'The method defines the meaning of a request. `GET` only reads: it is safe, idempotent and cacheable. `POST` creates or triggers an action and isn’t idempotent — a retry may create a duplicate. `PUT` replaces a resource, `PATCH` changes part of it, `DELETE` removes it; `PUT` and `DELETE` are idempotent — a repeat gives the same result, so they’re safe to retry after a network failure.',
+          ru: 'Метод задаёт смысл запроса. `GET` только читает: он безопасен, идемпотентен и кэшируется. `POST` создаёт или запускает действие и не идемпотентен — повтор может создать дубль. `PUT` заменяет ресурс целиком, `PATCH` меняет часть, `DELETE` удаляет; `PUT` и `DELETE` [[idempotent|идемпотентны]] — повтор даёт тот же результат, поэтому их безопасно переотправлять при сбое сети.',
+          en: 'The method defines the meaning of a request. `GET` only reads: it is safe, idempotent and cacheable. `POST` creates or triggers an action and isn’t idempotent — a retry may create a duplicate. `PUT` replaces a resource, `PATCH` changes part of it, `DELETE` removes it; `PUT` and `DELETE` are [[idempotent|idempotent]] — a repeat gives the same result, so they’re safe to retry after a network failure.',
         },
       },
       {
@@ -142,8 +142,8 @@ ETag: "v42"`,
       {
         type: 'text',
         text: {
-          ru: 'Цена изменения зависит от свойства: геометрия (`width`, `top`) запускает layout и всё после него, цвет — только paint и composite, а `transform` и `opacity` часто обходятся одним composite — поэтому их и анимируют. Чтение размеров (`offsetWidth`) сразу после записи стилей заставляет браузер пересчитать layout синхронно; в цикле это layout thrashing.',
-          en: 'The cost of a change depends on the property: geometry (`width`, `top`) triggers layout and everything after it, color only paint and composite, while `transform` and `opacity` often need just composite — that’s why they’re animated. Reading sizes (`offsetWidth`) right after writing styles forces a synchronous layout; in a loop that’s layout thrashing.',
+          ru: 'Цена изменения зависит от свойства: геометрия (`width`, `top`) запускает [[layout|layout]] и всё после него, цвет — только paint и composite, а `transform` и `opacity` часто обходятся одним composite — поэтому их и анимируют. Чтение размеров (`offsetWidth`) сразу после записи стилей заставляет браузер пересчитать layout синхронно; в цикле это layout thrashing.',
+          en: 'The cost of a change depends on the property: geometry (`width`, `top`) triggers [[layout|layout]] and everything after it, color only paint and composite, while `transform` and `opacity` often need just composite — that’s why they’re animated. Reading sizes (`offsetWidth`) right after writing styles forces a synchronous layout; in a loop that’s layout thrashing.',
         },
       },
       {
@@ -201,8 +201,8 @@ for (const item of items) {
       {
         type: 'text',
         text: {
-          ru: '**XSS** — данные пользователя попадают в страницу как разметка и выполняются с правами вашего сайта: читают данные, шлют запросы. React экранирует текст сам; опасны `innerHTML`, `dangerouslySetInnerHTML` и подстановка в `href` (`javascript:`). Чужой HTML выводят только после санитизации (DOMPurify). **CSP** ограничивает источники скриптов и снижает ущерб, если уязвимость всё же есть.',
-          en: '**XSS**: user data ends up in the page as markup and runs with your site’s privileges — reading data, sending requests. React escapes text itself; the dangerous parts are `innerHTML`, `dangerouslySetInnerHTML` and values in `href` (`javascript:`). Foreign HTML is rendered only after sanitizing (DOMPurify). **CSP** restricts script sources and limits the damage if a hole exists.',
+          ru: '[[xss|XSS]] — данные пользователя попадают в страницу как разметка и выполняются с правами вашего сайта: читают данные, шлют запросы. React экранирует текст сам; опасны `innerHTML`, `dangerouslySetInnerHTML` и подстановка в `href` (`javascript:`). Чужой HTML выводят только после санитизации (DOMPurify). **CSP** ограничивает источники скриптов и снижает ущерб, если уязвимость всё же есть.',
+          en: '[[xss|XSS]]: user data ends up in the page as markup and runs with your site’s privileges — reading data, sending requests. React escapes text itself; the dangerous parts are `innerHTML`, `dangerouslySetInnerHTML` and values in `href` (`javascript:`). Foreign HTML is rendered only after sanitizing (DOMPurify). **CSP** restricts script sources and limits the damage if a hole exists.',
         },
       },
       {
@@ -216,8 +216,8 @@ element.innerHTML = comment; // dangerous: <img src=x onerror=...> will run`,
       {
         type: 'text',
         text: {
-          ru: '**CSRF** — браузер прикладывает cookie к запросу на ваш домен, даже если его отправила форма с чужого сайта. Защита: `SameSite=Lax` или `Strict` у сессионной cookie, CSRF-токен в запросах, проверка заголовка `Origin`. CORS от CSRF не защищает: он ограничивает чтение ответа, а не отправку простого запроса. `HttpOnly` прячет cookie от JavaScript, `Secure` — отправляет только по HTTPS.',
-          en: '**CSRF**: the browser attaches cookies to a request to your domain even if a form on another site sent it. Defenses: `SameSite=Lax` or `Strict` on the session cookie, a CSRF token in requests, checking the `Origin` header. CORS doesn’t protect against CSRF: it limits reading the response, not sending a simple request. `HttpOnly` hides a cookie from JavaScript, `Secure` sends it over HTTPS only.',
+          ru: '[[csrf|CSRF]] — браузер прикладывает cookie к запросу на ваш домен, даже если его отправила форма с чужого сайта. Защита: `SameSite=Lax` или `Strict` у сессионной cookie, CSRF-токен в запросах, проверка заголовка `Origin`. CORS от CSRF не защищает: он ограничивает чтение ответа, а не отправку простого запроса. `HttpOnly` прячет cookie от JavaScript, `Secure` — отправляет только по HTTPS.',
+          en: '[[csrf|CSRF]]: the browser attaches cookies to a request to your domain even if a form on another site sent it. Defenses: `SameSite=Lax` or `Strict` on the session cookie, a CSRF token in requests, checking the `Origin` header. CORS doesn’t protect against CSRF: it limits reading the response, not sending a simple request. `HttpOnly` hides a cookie from JavaScript, `Secure` sends it over HTTPS only.',
         },
       },
       {
@@ -254,8 +254,8 @@ element.innerHTML = comment; // dangerous: <img src=x onerror=...> will run`,
       {
         type: 'text',
         text: {
-          ru: 'Origin — это схема, хост и порт: `https://app.example.com` и `https://api.example.com` — разные origin. Политика same-origin запрещает JavaScript читать ответы чужого origin. Сервер разрешает это заголовком `Access-Control-Allow-Origin`. Для «непростых» запросов — `PUT`, `DELETE`, свои заголовки, `Content-Type: application/json` — браузер сначала шлёт preflight `OPTIONS` и отправляет настоящий запрос, только если сервер согласился.',
-          en: 'An origin is scheme, host and port: `https://app.example.com` and `https://api.example.com` are different origins. The same-origin policy forbids JavaScript from reading another origin’s responses. A server allows it with `Access-Control-Allow-Origin`. For “non-simple” requests — `PUT`, `DELETE`, custom headers, `Content-Type: application/json` — the browser first sends a preflight `OPTIONS` and sends the real request only if the server agrees.',
+          ru: '[[origin|Origin]] — это схема, хост и порт: `https://app.example.com` и `https://api.example.com` — разные origin. Политика same-origin запрещает JavaScript читать ответы чужого origin. Сервер разрешает это заголовком `Access-Control-Allow-Origin`. Для «непростых» запросов — `PUT`, `DELETE`, свои заголовки, `Content-Type: application/json` — браузер сначала шлёт [[preflight|preflight]] `OPTIONS` и отправляет настоящий запрос, только если сервер согласился.',
+          en: 'An [[origin|origin]] is scheme, host and port: `https://app.example.com` and `https://api.example.com` are different origins. The same-origin policy forbids JavaScript from reading another origin’s responses. A server allows it with `Access-Control-Allow-Origin`. For “non-simple” requests — `PUT`, `DELETE`, custom headers, `Content-Type: application/json` — the browser first sends a [[preflight|preflight]] `OPTIONS` and sends the real request only if the server agrees.',
         },
       },
       {
@@ -549,8 +549,8 @@ window.addEventListener('storage', (event) => {
       {
         type: 'text',
         text: {
-          ru: 'Tree-shaking удаляет неиспользуемые экспорты, но работает только со статическими ES-модулями и кодом без побочных эффектов при импорте (`"sideEffects": false` в `package.json` помогает). Динамический `import()` делит бандл на чанки, которые грузятся по требованию. Хеш содержимого в имени файла позволяет кэшировать его навсегда.',
-          en: 'Tree-shaking removes unused exports, but only works with static ES modules and code without import-time side effects (`"sideEffects": false` in `package.json` helps). Dynamic `import()` splits the bundle into chunks loaded on demand. A content hash in the file name lets it be cached forever.',
+          ru: '[[tree-shaking|Tree-shaking]] удаляет неиспользуемые экспорты, но работает только со статическими ES-модулями и кодом без побочных эффектов при импорте (`"sideEffects": false` в `package.json` помогает). Динамический `import()` делит бандл на чанки, которые грузятся по требованию. Хеш содержимого в имени файла позволяет кэшировать его навсегда.',
+          en: '[[tree-shaking|Tree-shaking]] removes unused exports, but only works with static ES modules and code without import-time side effects (`"sideEffects": false` in `package.json` helps). Dynamic `import()` splits the bundle into chunks loaded on demand. A content hash in the file name lets it be cached forever.',
         },
       },
       {

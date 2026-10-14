@@ -13,8 +13,8 @@ export const JAVASCRIPT_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: 'Когда функция создаётся, она получает ссылку на **лексическое окружение** — переменные той области, где её объявили. Функция вместе с этим окружением и называется замыканием. Хранится **ссылка на переменные, а не копия значений**: если переменная изменится, функция увидит новое значение.',
-          en: 'When a function is created, it gets a reference to its **lexical environment** — the variables of the scope where it was declared. The function together with that environment is called a closure. It keeps a **reference to the variables, not a copy of their values**: if a variable changes, the function sees the new value.',
+          ru: 'Когда функция создаётся, она получает ссылку на [[lexical-environment|лексическое окружение]] — переменные той области, где её объявили. Функция вместе с этим окружением и называется замыканием. Хранится **ссылка на переменные, а не копия значений**: если переменная изменится, функция увидит новое значение.',
+          en: 'When a function is created, it gets a reference to its [[lexical-environment|lexical environment]] — the variables of the scope where it was declared. The function together with that environment is called a closure. It keeps a **reference to the variables, not a copy of their values**: if a variable changes, the function sees the new value.',
         },
       },
       {
@@ -105,8 +105,8 @@ for (let j = 0; j < 3; j++) {
       {
         type: 'text',
         text: {
-          ru: 'Очередей две. **Макрозадачи**: таймеры, события ввода, `postMessage`, ввод-вывод. **Микрозадачи**: колбэки промисов (`then`, `catch`, `finally`, продолжение после `await`) и `queueMicrotask`. Цикл событий берёт одну макрозадачу, затем **полностью** опустошает очередь микрозадач, в браузере при необходимости рисует кадр — и переходит к следующей макрозадаче.',
-          en: 'There are two queues. **Tasks** (macrotasks): timers, input events, `postMessage`, I/O. **Microtasks**: promise callbacks (`then`, `catch`, `finally`, the continuation after `await`) and `queueMicrotask`. The event loop takes one task, then drains the microtask queue **completely**, renders a frame in the browser if needed — and moves on to the next task.',
+          ru: 'Очередей две. **Макрозадачи**: таймеры, события ввода, `postMessage`, ввод-вывод. [[microtask|Микрозадачи]]: колбэки промисов (`then`, `catch`, `finally`, продолжение после `await`) и `queueMicrotask`. Цикл событий берёт одну макрозадачу, затем **полностью** опустошает очередь микрозадач, в браузере при необходимости рисует кадр — и переходит к следующей макрозадаче.',
+          en: 'There are two queues. **Tasks** (macrotasks): timers, input events, `postMessage`, I/O. [[microtask|Microtasks]]: promise callbacks (`then`, `catch`, `finally`, the continuation after `await`) and `queueMicrotask`. The event loop takes one task, then drains the microtask queue **completely**, renders a frame in the browser if needed — and moves on to the next task.',
         },
       },
       {

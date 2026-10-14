@@ -200,6 +200,9 @@ export const en: Dictionary = {
       'long-memory': { title: 'Long memory', description: 'Bring 10 questions to the weekly review' },
     },
   },
+  glossary: {
+    label: 'Term',
+  },
   reviewToday: {
     title: 'Review today',
     due: '{count} from all topics',

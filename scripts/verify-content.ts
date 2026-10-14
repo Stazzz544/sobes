@@ -7,6 +7,7 @@ import ts from 'typescript';
 import { TAGS } from '../src/entities/question/config/tags';
 import { QUESTIONS } from '../src/entities/question/data';
 import { DIAGRAMS } from '../src/entities/question/data/diagrams';
+import { GLOSSARY } from '../src/entities/question/glossary/glossary';
 import { LESSON_GROUPS } from '../src/entities/question/lessons';
 import { TOPIC_PATHS } from '../src/entities/question/config/paths';
 import { OPTION_IDS } from '../src/entities/question/model/types';
@@ -436,6 +437,46 @@ const checkLessons = (): void => {
   }
 };
 
+const TERM_PATTERN = /\[\[([a-z0-9-]+)\|[^\]]+\]\]/g;
+
+const termIds = (value: string): string[] => [...value.matchAll(TERM_PATTERN)].map((match) => match[1] ?? '');
+
+const checkGlossary = (): void => {
+  for (const [id, entry] of Object.entries(GLOSSARY)) {
+    for (const locale of LOCALES) {
+      if (!entry.term[locale].trim() || !entry.definition[locale].trim()) {
+        errors.push(`глоссарий ${id}: пусто (${locale})`);
+      }
+    }
+  }
+  const visit = (node: unknown, where: string): void => {
+    if (Array.isArray(node)) {
+      node.forEach((item) => visit(item, where));
+      return;
+    }
+    if (typeof node !== 'object' || node === null) {
+      return;
+    }
+    const record = node as Record<string, unknown>;
+    if (typeof record.ru === 'string' && typeof record.en === 'string') {
+      const ruIds = termIds(record.ru);
+      const enIds = termIds(record.en);
+      for (const id of [...ruIds, ...enIds]) {
+        if (!(id in GLOSSARY)) {
+          errors.push(`${where}: нет термина ${id} в глоссарии`);
+        }
+      }
+      if ([...ruIds].sort().join() !== [...enIds].sort().join()) {
+        errors.push(`${where}: разные термины в RU (${ruIds.join(', ')}) и EN (${enIds.join(', ')})`);
+      }
+      return;
+    }
+    Object.values(record).forEach((value) => visit(value, where));
+  };
+  QUESTIONS.forEach((question) => visit(question, question.id));
+  LESSONS.forEach((lesson) => visit(lesson, `конспект ${lesson.tag}`));
+};
+
 const checkPaths = (): void => {
   for (const [topic, path] of Object.entries(TOPIC_PATHS)) {
     const topicTags = Object.entries(TAGS)
@@ -562,6 +603,7 @@ const main = async (): Promise<void> => {
   checkDiagrams();
   checkLessons();
   checkPaths();
+  checkGlossary();
   printDistribution();
   if (process.argv.includes('--links')) {
     await checkLinks();

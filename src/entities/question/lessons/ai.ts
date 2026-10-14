@@ -15,8 +15,8 @@ export const AI_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: 'Текст делится на **токены** — куски слов; русский текст обычно занимает больше токенов, чем английский того же смысла. **Окно контекста** ограничивает промпт и ответ вместе. Модель **не помнит** прошлые запросы: в чате вся история пересылается с каждым сообщением, и от её длины растут цена и задержка. Знания модели заканчиваются на дате среза обучения.',
-          en: 'Text is split into **tokens** — pieces of words; Russian text usually takes more tokens than English with the same meaning. The **context window** limits the prompt and the response together. The model **doesn’t remember** previous requests: in a chat the whole history is resent with every message, and cost and latency grow with its length. The model’s knowledge ends at its training cutoff.',
+          ru: 'Текст делится на [[token|токены]] — куски слов; русский текст обычно занимает больше токенов, чем английский того же смысла. [[context-window|Окно контекста]] ограничивает промпт и ответ вместе. Модель **не помнит** прошлые запросы: в чате вся история пересылается с каждым сообщением, и от её длины растут цена и задержка. Знания модели заканчиваются на дате среза обучения.',
+          en: 'Text is split into [[token|tokens]] — pieces of words; Russian text usually takes more tokens than English with the same meaning. The [[context-window|context window]] limits the prompt and the response together. The model **doesn’t remember** previous requests: in a chat the whole history is resent with every message, and cost and latency grow with its length. The model’s knowledge ends at its training cutoff.',
         },
       },
       {
@@ -129,8 +129,8 @@ If there are no problems, return [].
       {
         type: 'text',
         text: {
-          ru: 'Подготовка: документы режут на фрагменты, для каждого считают **эмбеддинг** — вектор чисел, где близкие по смыслу тексты дают близкие векторы, — и кладут в векторную базу. На вопрос: считают эмбеддинг вопроса, находят ближайшие фрагменты, подставляют их в промпт и просят ответить только по ним, со ссылками.',
-          en: 'Preparation: documents are split into chunks, an **embedding** is computed for each — a vector of numbers where texts with similar meaning get similar vectors — and stored in a vector database. For a question: compute the question’s embedding, find the nearest chunks, put them into the prompt and ask the model to answer only from them, with citations.',
+          ru: 'Подготовка: документы режут на фрагменты, для каждого считают [[embedding|эмбеддинг]] — вектор чисел, где близкие по смыслу тексты дают близкие векторы, — и кладут в векторную базу. На вопрос: считают эмбеддинг вопроса, находят ближайшие фрагменты, подставляют их в промпт и просят ответить только по ним, со ссылками.',
+          en: 'Preparation: documents are split into chunks, an [[embedding|embedding]] is computed for each — a vector of numbers where texts with similar meaning get similar vectors — and stored in a vector database. For a question: compute the question’s embedding, find the nearest chunks, put them into the prompt and ask the model to answer only from them, with citations.',
         },
       },
       {

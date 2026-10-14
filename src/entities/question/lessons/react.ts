@@ -21,8 +21,8 @@ export const REACT_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: 'Когда рендерится родитель, по умолчанию рендерятся и все его дети — даже если их пропсы не изменились. Сравнение деревьев (reconciliation) идёт по позиции и типу: тот же тип на том же месте — компонент обновляется и сохраняет state; другой тип — поддерево пересоздаётся, и state теряется.',
-          en: 'When a parent renders, all its children render too by default — even if their props didn’t change. Tree comparison (reconciliation) goes by position and type: the same type in the same place is updated and keeps its state; a different type recreates the subtree and the state is lost.',
+          ru: 'Когда рендерится родитель, по умолчанию рендерятся и все его дети — даже если их пропсы не изменились. [[reconciliation|Сравнение деревьев (reconciliation)]] идёт по позиции и типу: тот же тип на том же месте — компонент обновляется и сохраняет state; другой тип — поддерево пересоздаётся, и state теряется.',
+          en: 'When a parent renders, all its children render too by default — even if their props didn’t change. [[reconciliation|Tree comparison (reconciliation)]] goes by position and type: the same type in the same place is updated and keeps its state; a different type recreates the subtree and the state is lost.',
         },
       },
       {
@@ -199,8 +199,8 @@ function Child() {
       {
         type: 'text',
         text: {
-          ru: 'Внутри одного рендера state — **снимок**, константа. `setCount(count + 1)` три раза подряд даст `+1`: каждый раз читается одно и то же `count`. Функция-обновлятор `setCount((c) => c + 1)` получает результат предыдущих обновлений из очереди. Несколько обновлений в одном событии React объединяет в один рендер (batching) — в React 18+ это работает и в таймерах, и в промисах.',
-          en: 'Within one render, state is a **snapshot**, a constant. `setCount(count + 1)` three times in a row gives `+1`: the same `count` is read each time. An updater function `setCount((c) => c + 1)` receives the result of the previous queued updates. React batches several updates in one event into a single render — since React 18 that works in timers and promises too.',
+          ru: 'Внутри одного рендера state — **снимок**, константа. `setCount(count + 1)` три раза подряд даст `+1`: каждый раз читается одно и то же `count`. Функция-обновлятор `setCount((c) => c + 1)` получает результат предыдущих обновлений из очереди. Несколько обновлений в одном событии React объединяет в один рендер ([[batching|batching]]) — в React 18+ это работает и в таймерах, и в промисах.',
+          en: 'Within one render, state is a **snapshot**, a constant. `setCount(count + 1)` three times in a row gives `+1`: the same `count` is read each time. An updater function `setCount((c) => c + 1)` receives the result of the previous queued updates. React [[batching|batches]] several updates in one event into a single render — since React 18 that works in timers and promises too.',
         },
       },
       {

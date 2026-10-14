@@ -107,8 +107,8 @@ outer();`,
       {
         type: 'text',
         text: {
-          ru: '**Всплытие** (hoisting): объявления обрабатываются до выполнения кода. `var` всплывает со значением `undefined`, объявление функции — целиком. `let`, `const` и `class` тоже известны заранее, но до строки объявления находятся во «временной мёртвой зоне» (TDZ): обращение к ним — `ReferenceError`.',
-          en: '**Hoisting**: declarations are processed before the code runs. `var` is hoisted with the value `undefined`, a function declaration — entirely. `let`, `const` and `class` are known in advance too, but until their declaration line they are in the temporal dead zone (TDZ): accessing them throws `ReferenceError`.',
+          ru: '[[hoisting|Всплытие]] (hoisting): объявления обрабатываются до выполнения кода. `var` всплывает со значением `undefined`, объявление функции — целиком. `let`, `const` и `class` тоже известны заранее, но до строки объявления находятся во [[tdz|«временной мёртвой зоне» (TDZ)]]: обращение к ним — `ReferenceError`.',
+          en: '[[hoisting|Hoisting]]: declarations are processed before the code runs. `var` is hoisted with the value `undefined`, a function declaration — entirely. `let`, `const` and `class` are known in advance too, but until their declaration line they are in the [[tdz|temporal dead zone (TDZ)]]: accessing them throws `ReferenceError`.',
         },
       },
       {
@@ -169,8 +169,8 @@ let y = 2;`,
       {
         type: 'text',
         text: {
-          ru: 'У каждого объекта есть скрытая ссылка на прототип (`[[Prototype]]`). Если свойства нет у самого объекта, движок ищет его в прототипе, затем в прототипе прототипа — пока не дойдёт до `null`. Так методы хранятся в одном месте и разделяются всеми экземплярами.',
-          en: 'Every object has a hidden link to its prototype (`[[Prototype]]`). If a property isn’t on the object itself, the engine looks in the prototype, then in the prototype’s prototype — until it reaches `null`. That way methods live in one place and are shared by all instances.',
+          ru: 'У каждого объекта есть скрытая ссылка на прототип (`[[Prototype]]`). Если свойства нет у самого объекта, движок ищет его в прототипе, затем [[prototype-chain|в прототипе прототипа]] — пока не дойдёт до `null`. Так методы хранятся в одном месте и разделяются всеми экземплярами.',
+          en: 'Every object has a hidden link to its prototype (`[[Prototype]]`). If a property isn’t on the object itself, the engine looks in the prototype, then [[prototype-chain|in the prototype’s prototype]] — until it reaches `null`. That way methods live in one place and are shared by all instances.',
         },
       },
       {

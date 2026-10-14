@@ -198,6 +198,9 @@ export const ru = {
       'long-memory': { title: 'Долгая память', description: 'Довести 10 вопросов до недельного повторения' },
     },
   },
+  glossary: {
+    label: 'Термин',
+  },
   reviewToday: {
     title: 'Повторить сегодня',
     due: '{count} из всех тем',

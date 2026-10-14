@@ -1,4 +1,4 @@
-import { JSX } from 'react';
+import { JSX, useState } from 'react';
 import { Linking, Pressable, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { MIN_TOUCH_SIZE } from '@app/shared/config';
@@ -9,6 +9,7 @@ import { TAGS } from '../config/tags';
 import { DIAGRAMS } from '../data/diagrams';
 import { LESSONS_BY_TAG } from '../lessons';
 import { DiagramPlayer } from './diagram-player';
+import { GlossarySheet } from './glossary-sheet';
 import type { TagId } from '../config/tags';
 import type { ExplanationBlock, Question, QuestionSource } from '../model/types';
 
@@ -27,6 +28,13 @@ type ExplanationViewProps = {
 
 export const ExplanationBlocks = ({ blocks }: ExplanationBlocksProps): JSX.Element => {
   const { text } = useI18n();
+  const [termId, setTermId] = useState<string | null>(null);
+  const [isTermOpen, setIsTermOpen] = useState(false);
+
+  const openTerm = (id: string): void => {
+    setTermId(id);
+    setIsTermOpen(true);
+  };
 
   return (
     <>
@@ -44,8 +52,13 @@ export const ExplanationBlocks = ({ blocks }: ExplanationBlocksProps): JSX.Eleme
             />
           );
         }
-        return <FormattedText key={index}>{text(block.text)}</FormattedText>;
+        return (
+          <FormattedText key={index} onTermPress={openTerm}>
+            {text(block.text)}
+          </FormattedText>
+        );
       })}
+      <GlossarySheet termId={termId} isOpen={isTermOpen} onClose={() => setIsTermOpen(false)} />
     </>
   );
 };

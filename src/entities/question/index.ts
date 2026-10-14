@@ -3,6 +3,7 @@ export { TAGS } from './config/tags';
 export { TOPIC_PATHS } from './config/paths';
 export { QUESTIONS, QUESTIONS_BY_ID } from './data';
 export { LESSON_GROUPS, LESSONS_BY_TAG } from './lessons';
+export { GLOSSARY } from './glossary/glossary';
 export { OPTION_LETTERS, getOption, getOptionText } from './lib/options';
 export { isQuizMode, isTagId } from './lib/guards';
 export type {
