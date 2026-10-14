@@ -8,15 +8,18 @@ import { useI18n } from '@app/shared/i18n';
 import { toPlainText } from '@app/shared/lib';
 import { useTheme } from '@app/shared/theme';
 import { AppText, Button, Card, Pill, ProgressBar, Screen } from '@app/shared/ui';
+import { ShareResultButton } from './share-result-button';
 import type { AnswerResult } from '@app/entities/progress';
-import type { TagId } from '@app/entities/question';
-import type { TopicId } from '@app/shared/config';
+import type { QuizMode, TagId } from '@app/entities/question';
+import type { TopicId, TopicSelection } from '@app/shared/config';
 import type { ThemeColors } from '@app/shared/theme';
 import type { IconName } from '@app/shared/ui';
 import type { SessionAnswer, SessionSummary as Summary } from '../model/quiz-session-model';
 
 type SessionSummaryProps = {
   summary: Summary;
+  mode: QuizMode;
+  topic: TopicSelection;
   queue: string[];
   answers: SessionAnswer[];
   placementTopic: TopicId | null;
@@ -50,6 +53,8 @@ const getResultIcon = (result: AnswerResult | null, colors: ThemeColors): { name
 
 export const SessionSummary = ({
   summary,
+  mode,
+  topic,
   queue,
   answers,
   placementTopic,
@@ -163,6 +168,7 @@ export const SessionSummary = ({
       ) : null}
 
       <View style={styles.actions}>
+        {summary.answered > 0 ? <ShareResultButton summary={summary} mode={mode} topic={topic} /> : null}
         <Button title={t('quiz.again')} icon="refresh" onPress={onRestart} />
         <Button title={t('common.done')} variant="ghost" onPress={onDone} />
       </View>

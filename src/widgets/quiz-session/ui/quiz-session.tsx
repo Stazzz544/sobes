@@ -107,6 +107,8 @@ export const QuizSession = ({ params, onOpenQuestion, onOpenLesson, onOpenPath, 
     return (
       <SessionSummary
         summary={model.summary}
+        mode={mode}
+        topic={topic}
         queue={model.queue}
         answers={model.answers}
         placementTopic={mode === 'placement' && topic !== 'all' ? topic : null}

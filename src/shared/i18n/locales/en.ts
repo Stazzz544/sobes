@@ -271,6 +271,13 @@ export const en: Dictionary = {
     bodyGoal: 'Today’s goal is {count}. Start with one.',
     denied: 'Allow notifications for Sobes in Android settings',
   },
+  share: {
+    button: 'Share result',
+    send: 'Send as image',
+    correctOf: 'correct answers · {percent}%',
+    tagline: 'IT interview trainer',
+    error: 'Couldn’t prepare the image',
+  },
   releases: {
     title: 'What’s new',
     current: 'Current',

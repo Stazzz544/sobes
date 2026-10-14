@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.4.0',
+    date: '2026-10-14',
+    changes: [
+      {
+        ru: 'Итог тренировки можно отправить картинкой: тема, результат и уровень.',
+        en: 'Share your session result as an image: topic, score and level.',
+      },
+    ],
+  },
+  {
     version: '1.3.0',
     date: '2026-10-14',
     changes: [

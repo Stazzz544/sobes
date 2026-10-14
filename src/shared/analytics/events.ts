@@ -49,6 +49,11 @@ type AnalyticsEventParams = {
   mistake_resolved: {
     question_id: string;
   };
+  result_shared: {
+    mode: string;
+    topic: string;
+    score_percent: number;
+  };
 };
 
 export type AnalyticsEventName = keyof AnalyticsEventParams;
