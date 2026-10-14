@@ -207,4 +207,11 @@
 - Весь код с выводом запущен в Node (модули — двумя `.mjs`), комментарии-выводы совпадают; 28 источников MDN/HTML отвечают 200. Без вывода (не запускаемые) — только пример `WeakMap` со счётчиком кликов.
 - На эмуляторе (360 dp, light) проверен конспект prototypes: код, подпись, схема цепочки.
 
+## R2-2, шаг 3 — конспекты TypeScript (14.10.2026)
+
+- `lessons/typescript.ts`: any-unknown-never, narrowing, generics, utility-types, conditional-types, mapped-types, keyof-typeof, satisfies, enums, structural-typing.
+- Проверка кода: все фрагменты собраны `tsc --strict` (TS 5.9) во временных файлах; типы из комментариев сверены утверждениями `Expect<Equal<…>>`, строки «// error» — через `@ts-expect-error`; enum/structural/unknown транспилированы и запущены (`0 Up`, `5`, `Ann`). Гоча: в скрипте без `export` функция `length` конфликтует с `window.length` из lib.dom — в примере переименована в `distance`.
+- 16 страниц TypeScript Handbook отвечают 200, якоря проверены (у «TS для ООП» верный якорь — `#erased-structural-types`).
+- На эмуляторе (360 dp) — конспект mapped-types. Длинные комментарии-результаты в коде уходят за край блока и видны прокруткой по горизонтали — как и в коде вопросов.
+
 Дальше — `docs/roadmap.md`.
