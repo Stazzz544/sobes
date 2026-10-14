@@ -201,4 +201,10 @@
 - Пилот: `closures` (+ схема closure-counters), `event-loop` (+ схема event-loop-basic), `this`. Весь код запущен в Node, вывод совпадает с комментариями; 8 источников отвечают 200.
 - Проверено на эмуляторе (360 dp, light/dark): ссылка из разбора → конспект → «Потренироваться» открывает практику по тегу (4 вопроса), несуществующий тег — «Конспект не найден».
 
+## R2-2, шаг 2 — конспекты JavaScript (14.10.2026)
+
+- `lessons/javascript-2.ts`: types-coercion, scope, prototypes (+ схема prototype-chain с кодом из js-proto-001), promises (+ схема event-loop-async с кодом A D B C), objects, equality, modules, iterators, collections, arrays. Вместе с пилотом — все 13 тегов JS.
+- Весь код с выводом запущен в Node (модули — двумя `.mjs`), комментарии-выводы совпадают; 28 источников MDN/HTML отвечают 200. Без вывода (не запускаемые) — только пример `WeakMap` со счётчиком кликов.
+- На эмуляторе (360 dp, light) проверен конспект prototypes: код, подпись, схема цепочки.
+
 Дальше — `docs/roadmap.md`.
