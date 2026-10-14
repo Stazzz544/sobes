@@ -54,7 +54,9 @@ Android-тренажёр для подготовки к собеседовани
 ## Аналитика
 
 - AppMetrica, ключ — `EXPO_PUBLIC_APPMETRICA_API_KEY` в `.env.local` (в git не идёт, `build:apk` предупреждает, если его нет). Отправляет только release-сборка с ключом; в debug события пишутся в лог Metro (`[analytics] …`). `EXPO_PUBLIC_APPMETRICA_LOGS=1` включает логи SDK в logcat.
+- SDK активируется после загрузки настроек (`activateAnalyticsFx` в `settings-model`) с учётом переключателя «Анонимная статистика»; при выключенном `trackEventFx` / `reportErrorFx` ничего не делают.
 - Событие — только из каталога `src/shared/analytics/events.ts`, через `trackEventFx` (в модели — `target` у `sample`). Без персональных данных и свободного текста. Новое событие или параметр = правка политики конфиденциальности (`site/privacy/`) до выхода версии.
+- Сбои: ошибки рендера ловит `ErrorBoundary` в `app/_layout.tsx` (экран «Что-то пошло не так» + `reportErrorFx`), остальные JS-ошибки роняют приложение и уходят в AppMetrica нативным крашем `JavascriptException`. Свой `ErrorUtils.setGlobalHandler` не ставить: ошибки рендера идут мимо него (`ExceptionsManager.handleException` напрямую), а для прочих он даст дубль краша.
 
 ## Эмулятор
 

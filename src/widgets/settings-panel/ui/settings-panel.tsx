@@ -13,9 +13,31 @@ import type { ThemePreference } from '@app/shared/theme';
 
 const SESSION_LENGTHS: readonly SessionLength[] = [10, 20, 30];
 
+type SwitchRowProps = {
+  label: string;
+  value: boolean;
+  onChange: (value: boolean) => void;
+};
+
+const SwitchRow = ({ label, value, onChange }: SwitchRowProps): JSX.Element => {
+  const { colors } = useTheme();
+
+  return (
+    <View style={styles.switchRow}>
+      <AppText style={styles.switchLabel}>{label}</AppText>
+      <Switch
+        value={value}
+        onValueChange={onChange}
+        trackColor={{ true: colors.accent, false: colors.border }}
+        thumbColor={value ? colors.bgCard : colors.textMuted}
+        accessibilityLabel={label}
+      />
+    </View>
+  );
+};
+
 export const SettingsPanel = (): JSX.Element => {
   const { t } = useI18n();
-  const { colors } = useTheme();
   const { settings, onSettingsChange } = useUnit({
     settings: settingsModel.$settings,
     onSettingsChange: settingsModel.settingsChanged,
@@ -67,18 +89,11 @@ export const SettingsPanel = (): JSX.Element => {
           }
           accessibilityLabel={t('settings.sessionLength')}
         />
-        <View style={styles.switchRow}>
-          <AppText style={styles.switchLabel}>{t('settings.haptics')}</AppText>
-          <Switch
-            value={settings.haptics}
-            onValueChange={(value) => {
-              onSettingsChange({ haptics: value });
-            }}
-            trackColor={{ true: colors.accent, false: colors.border }}
-            thumbColor={colors.bgCard}
-            accessibilityLabel={t('settings.haptics')}
-          />
-        </View>
+        <SwitchRow
+          label={t('settings.haptics')}
+          value={settings.haptics}
+          onChange={(value) => onSettingsChange({ haptics: value })}
+        />
       </Card>
 
       <Card style={styles.card}>
@@ -96,6 +111,11 @@ export const SettingsPanel = (): JSX.Element => {
         <AppText variant="caption" tone="secondary">
           {t('settings.aboutText')}
         </AppText>
+        <SwitchRow
+          label={t('settings.analytics')}
+          value={settings.analytics}
+          onChange={(value) => onSettingsChange({ analytics: value })}
+        />
         <Button
           title={t('settings.privacy')}
           variant="ghost"

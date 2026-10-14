@@ -128,6 +128,11 @@ export const en: Dictionary = {
     version: 'App version',
     whatIsWrong: 'What’s wrong',
   },
+  errorFallback: {
+    title: 'Something went wrong',
+    text: 'The app ran into an error. Your progress is saved — please try again.',
+    retry: 'Try again',
+  },
   review: {
     notFound: 'Question not found',
     stats: 'Answered: {attempts}, correct: {correct}',
@@ -176,6 +181,7 @@ export const en: Dictionary = {
     aboutText:
       'Questions are checked against MDN, react.dev and the TypeScript docs. Spotted a mistake? Tap “Report a problem” under the question.',
     privacy: 'Privacy policy',
+    analytics: 'Anonymous usage stats and crash reports',
   },
   plurals: {
     question: ['question', 'questions'],

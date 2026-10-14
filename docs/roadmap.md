@@ -62,11 +62,11 @@ Sobes — карманный тренажёр, который ведёт нов�
 
 ### Этап 1. Видеть пользователей
 
-- R1-1 [~] Аналитика без персональных данных — AppMetrica (`@appmetrica/react-native-analytics` 4.2). Слой событий готов: каталог `src/shared/analytics/events.ts`, `trackEventFx`; события `onboarding_completed`, `topic_selected`, `quiz_started` / `quiz_finished` / `quiz_abandoned`, `question_answered` (id, результат, выбранный вариант), `ask_ai_used`, `question_reported`, `mistake_resolved`. Осталось: 👤 API-ключ с appmetrica.yandex.ru → `.env.local`, сборка, проверка событий в консоли AppMetrica. Выпускать сборку с ключом — только после R1-5. M. 📦.
-- R1-2 [ ] Краш-репорты (AppMetrica или Sentry). S. 📦.
+- R1-1 [~] Аналитика без персональных данных — AppMetrica (`@appmetrica/react-native-analytics` 4.2). Слой событий готов: каталог `src/shared/analytics/events.ts`, `trackEventFx`; события `onboarding_completed`, `topic_selected`, `quiz_started` / `quiz_finished` / `quiz_abandoned`, `question_answered` (id, результат, выбранный вариант), `ask_ai_used`, `question_reported`, `mistake_resolved`. Осталось: 👤 API-ключ с appmetrica.yandex.ru → `.env.local`, сборка, проверка событий в консоли AppMetrica. Выпускать сборку с ключом — только когда новая политика (R1-5) уже на сайте. M. 📦.
+- R1-2 [x] Краш-репорты — AppMetrica: нативные краши и JS-ошибки (`JavascriptException`), ошибки рендера — экран «Что-то пошло не так» с «Попробовать снова» и отчёт об ошибке. Проверено на эмуляторе. Позже по желанию — загрузка source map, чтобы стек JS был читаемым. S.
 - R1-3 [ ] Просьба об оценке после удачной тренировки, не чаще раза в месяц (RuStore Review SDK). S. 📦.
 - R1-4 [ ] Отчёт по качеству вопросов из аналитики: аномальная доля ошибок, один «любимый» дистрактор → на переписывание. S.
-- R1-5 [ ] Политика конфиденциальности и анкета данных в RuStore — под аналитику. Блокирует выпуск сборки с ключом AppMetrica: текущая политика обещает «нет аналитики» и обновление до выхода такой версии. S.
+- R1-5 [~] Политика под аналитику обновлена (`site/privacy/`: состав событий, тех. данные, AppMetrica/Яндекс, как отключить), в настройках — переключатель «Анонимная статистика и отчёты о сбоях»; ответы для анкеты данных — `docs/store/rustore.md`. Осталось: запушить (Pages выкатит политику) до выпуска сборки с ключом; заполнить анкету в консоли RuStore вместе с R0-7. S. 👤.
 
 ### Этап 2. Учить, а не только проверять
 

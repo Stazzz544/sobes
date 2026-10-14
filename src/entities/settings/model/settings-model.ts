@@ -1,4 +1,5 @@
 import { createEffect, createEvent, createStore, sample } from 'effector';
+import { activateAnalyticsFx, setAnalyticsEnabledFx } from '@app/shared/analytics';
 import { STORAGE_KEYS } from '@app/shared/config';
 import { detectDeviceLocale, i18nModel } from '@app/shared/i18n';
 import { storage } from '@app/shared/lib';
@@ -15,6 +16,7 @@ export type Settings = {
   sessionLength: SessionLength;
   haptics: boolean;
   aiProvider: string | null;
+  analytics: boolean;
   onboardingDone: boolean;
 };
 
@@ -24,6 +26,7 @@ export const DEFAULT_SETTINGS: Settings = {
   sessionLength: 10,
   haptics: true,
   aiProvider: null,
+  analytics: true,
   onboardingDone: false,
 };
 
@@ -48,11 +51,18 @@ const $effectiveLocale = $settings.map(
 sample({ clock: settingsLoaded, target: loadSettingsFx });
 sample({ clock: loadSettingsFx.doneData, target: $settings });
 sample({ clock: loadSettingsFx.finally, fn: () => true, target: $isLoaded });
+sample({ clock: loadSettingsFx.doneData, fn: (settings) => settings.analytics, target: activateAnalyticsFx });
 sample({
   clock: settingsChanged,
   source: $settings,
   fn: (settings, patch): Settings => ({ ...settings, ...patch }),
   target: [$settings, saveSettingsFx],
+});
+sample({
+  clock: settingsChanged,
+  filter: (patch) => patch.analytics !== undefined,
+  fn: (patch) => patch.analytics === true,
+  target: setAnalyticsEnabledFx,
 });
 sample({ clock: onboardingCompleted, fn: (): Partial<Settings> => ({ onboardingDone: true }), target: settingsChanged });
 sample({ clock: $effectiveLocale, target: i18nModel.localeChanged });

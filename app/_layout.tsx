@@ -9,11 +9,12 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { progressModel } from '@app/entities/progress';
 import { settingsModel } from '@app/entities/settings';
 import { getSelectionAccent, topicModel } from '@app/entities/topic';
-import { activateAnalytics } from '@app/shared/analytics';
+import { reportErrorFx } from '@app/shared/analytics';
 import { useI18n } from '@app/shared/i18n';
 import { BASE_COLORS, ThemeProvider, useTheme } from '@app/shared/theme';
+import { ErrorFallback } from '@app/widgets/error-fallback';
+import type { ErrorBoundaryProps } from 'expo-router';
 
-activateAnalytics();
 SplashScreen.preventAutoHideAsync();
 SplashScreen.setOptions({ fade: true, duration: 250 });
 
@@ -88,6 +89,22 @@ const AppRoot = (): JSX.Element => {
     </ThemeProvider>
   );
 };
+
+export function ErrorBoundary({ error, retry }: ErrorBoundaryProps): JSX.Element {
+  const { settings } = useUnit({ settings: settingsModel.$settings });
+
+  useEffect(() => {
+    reportErrorFx(error);
+  }, [error]);
+
+  return (
+    <SafeAreaProvider>
+      <ThemeProvider preference={settings.theme} accent="brand">
+        <ErrorFallback onRetry={() => retry()} />
+      </ThemeProvider>
+    </SafeAreaProvider>
+  );
+}
 
 export default function RootLayout(): JSX.Element {
   return (
