@@ -1,0 +1,88 @@
+name: Новый вопрос
+description: Предложить вопрос в банк. Правила — docs/content-guidelines.md.
+title: '[Вопрос] '
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Хороший вопрос: ровно один верный ответ, правдоподобные, но точно неверные варианты, без подвохов в формулировке, подтверждение в первоисточнике. Подробнее — [правила составления вопросов](https://github.com/Stazzz544/sobes/blob/main/docs/content-guidelines.md).
+  - type: dropdown
+    id: topic
+    attributes:
+      label: Тема
+      options:
+        - JavaScript
+        - TypeScript
+        - React
+        - Общие знания (веб)
+        - CSS
+        - Алгоритмы
+        - ИИ и LLM
+        - Новая тема
+    validations:
+      required: true
+  - type: dropdown
+    id: difficulty
+    attributes:
+      label: Уровень
+      options:
+        - Junior
+        - Middle
+        - Senior
+    validations:
+      required: true
+  - type: textarea
+    id: prompt
+    attributes:
+      label: Вопрос
+      description: Формулировка и код, если он нужен.
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: Варианты ответа
+      description: Пять вариантов, по одному в строке.
+      value: |
+        A.
+        B.
+        C.
+        D.
+        E.
+    validations:
+      required: true
+  - type: dropdown
+    id: answer
+    attributes:
+      label: Верный вариант
+      options:
+        - A
+        - B
+        - C
+        - D
+        - E
+    validations:
+      required: true
+  - type: textarea
+    id: explanation
+    attributes:
+      label: Разбор
+      description: Почему верный ответ верен и почему популярные неверные — нет.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Источники
+      description: Ссылки на конкретные разделы MDN, react.dev, typescriptlang.org, спецификаций.
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Проверка
+      options:
+        - label: Верный ответ ровно один, и это подтверждает источник
+          required: true
+        - label: Если в вопросе есть код — я запустил его и сверил вывод

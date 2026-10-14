@@ -1,0 +1,48 @@
+name: Ошибка в вопросе
+description: Неверный ответ, спорная формулировка, устаревшие сведения, ошибка перевода или битая ссылка.
+title: '[Ошибка] '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Спасибо, что помогаете! ID вопроса есть в тексте, который формирует кнопка «Сообщить об ошибке» под разбором вопроса.
+  - type: input
+    id: question-id
+    attributes:
+      label: ID вопроса
+      placeholder: js-closures-001
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Что не так
+      options:
+        - Отмечен неверный ответ
+        - Верных ответов больше одного
+        - Неточность в разборе
+        - Сведения устарели
+        - Ошибка в переводе (RU/EN)
+        - Битая ссылка на источник
+        - Другое
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Подробности
+      description: Что именно неверно и как должно быть.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Источник
+      description: Ссылка на MDN, спецификацию или официальную документацию, которая подтверждает правку.
+  - type: input
+    id: version
+    attributes:
+      label: Версия приложения
+      description: «Настройки → О приложении».
+      placeholder: 1.0.0
