@@ -498,4 +498,9 @@
 
 - `data/typescript-6.ts`, 10 вопросов, все проверяет компилятор TypeScript: `ts-type` (сужение через `in`, `asserts value is NonNullable<T>`, `const T` → `"admin"`, `as const` → `"dark"`), `ts-check` с помощником `Equal` (`Awaited<ReturnType<…>>`, `Parameters<…>[1]`, шаблонный тип с `Capitalize`, `-readonly`/`-?`), `ts-error` (TS2339 у `push` на `readonly string[]`, TS18046 у `unknown`). Все сошлись с первого прогона.
 
+## R3-3, наполнение: React 44 → 54 (15.10.2026, версия 1.39.0)
+
+- `data/react-6.ts`, 10 вопросов: очистка эффекта перед новым запуском (порядок), `useEffectEvent` (стабилен с 19.2), `useImperativeHandle`, функция очистки в ref-колбэке (React 19), `<title>` поднимается в `<head>`, `useFormStatus` только внутри `<form>`, `<Activity mode="hidden">` (19.2: `display: none`, эффекты очищаются, состояние живёт), `startTransition` против фолбэка `<Suspense>`, `key={Math.random()}`, `defaultValue` вместо `value` без `onChange`.
+- Машинной проверки нет: в проекте есть только `react` без `react-dom`/test-renderer, а `js-output` запускается вне `node_modules`. Факты о 19.2 сверены с исходниками react.dev (блог 2025-10-01 и справочник).
+
 Дальше — `docs/roadmap.md`.

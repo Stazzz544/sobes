@@ -1,5 +1,10 @@
 # Что нового
 
+## 1.39.0
+
+- 10 новых вопросов в React: порядок эффектов и очисток, useEffectEvent, useImperativeHandle, очистка в ref-колбэке, <title> в компонентах, useFormStatus, <Activity>, переходы вместо фолбэка Suspense, случайные ключи, value без onChange.
+- Всего 778 вопросов.
+
 ## 1.38.0
 
 - 10 новых вопросов в TypeScript, все проверяются компилятором: сужение через in, функции-утверждения, const-параметры типа, Awaited и ReturnType, Parameters, шаблонные литеральные типы, as const, readonly-массивы, unknown после JSON.parse, снятие модификаторов в mapped types.

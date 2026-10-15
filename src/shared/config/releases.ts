@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.39.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в React: порядок эффектов и очисток, useEffectEvent, useImperativeHandle, очистка в ref-колбэке, <title> в компонентах, useFormStatus, <Activity>, переходы вместо фолбэка Suspense, случайные ключи, value без onChange.',
+        en: '10 new React questions: effect and cleanup order, useEffectEvent, useImperativeHandle, ref callback cleanup, <title> in components, useFormStatus, <Activity>, transitions instead of Suspense fallbacks, random keys, value without onChange.',
+      },
+      { ru: 'Всего 778 вопросов.', en: '778 questions in total.' },
+    ],
+  },
+  {
     version: '1.38.0',
     date: '2026-10-15',
     changes: [
