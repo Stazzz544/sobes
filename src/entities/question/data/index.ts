@@ -10,6 +10,7 @@ import { CSS_QUESTIONS_3 } from './css-3';
 import { CSS_QUESTIONS_4 } from './css-4';
 import { GIT_QUESTIONS } from './git';
 import { GIT_QUESTIONS_2 } from './git-2';
+import { GIT_QUESTIONS_3 } from './git-3';
 import { HR_QUESTIONS } from './hr';
 import { HR_QUESTIONS_2 } from './hr-2';
 import { HR_QUESTIONS_3 } from './hr-3';
@@ -100,6 +101,7 @@ export const QUESTIONS: Question[] = [
   ...ARCHITECTURE_QUESTIONS_2,
   ...GIT_QUESTIONS,
   ...GIT_QUESTIONS_2,
+  ...GIT_QUESTIONS_3,
   ...HR_QUESTIONS,
   ...HR_QUESTIONS_2,
   ...HR_QUESTIONS_3,

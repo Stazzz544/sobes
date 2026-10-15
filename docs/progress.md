@@ -417,4 +417,9 @@
 - HTML (`data/html-2.ts`, +8, 5 проверяются в Chrome через `dom-probe`): `aria-labelledby` важнее `aria-label`, `typeof input.value`, `disabled` не попадает в `FormData`, `<a>` без `href` — `generic`, foster parenting выносит `<div>` из таблицы, live-регионы, skip link, `showModal()`.
 - Находка проверки: Chrome отдаёт роль `link` для `<a>` без `href`, если у него есть `onclick` (по спецификации — `generic`). Вопрос переписан без обработчика, нюанс вынесен в разбор.
 
+## R3-3, наполнение: Git 29 → 40 (15.10.2026, версия 1.21.0)
+
+- `data/git-3.ts`, 11 вопросов, все `shell-output` (сошлись с первого прогона): `MM` в коротком статусе, `rm --cached` → `D` + `??`, `git show HEAD:файл`, незакоммиченное переезжает при `switch -c`, rebase меняет хеш (сравнение `rev-parse` до и после), `cherry-pick` одного коммита, `revert` добавляет коммит, `restore --staged`, `push -u` и `## feature...origin/feature`, конфликт `UU`, `--theirs` при merge (и разворот сторон при rebase в разборе).
+- Ограничение проверки: вывод нормализуется по пробелам, поэтому различие `M ` / ` M` в `--porcelain` в ответах не выразить — такие вопросы строил на других признаках.
+
 Дальше — `docs/roadmap.md`.

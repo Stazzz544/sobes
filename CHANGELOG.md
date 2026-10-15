@@ -1,5 +1,10 @@
 # Что нового
 
+## 1.21.0
+
+- 11 новых вопросов по Git — каждый проверяется запуском git: две колонки git status, rm --cached, git show коммит:файл, изменения при переключении веток, rebase меняет хеши, cherry-pick, revert, restore --staged, push -u, конфликт UU, --ours и --theirs.
+- Всего 595 вопросов.
+
 ## 1.20.0
 
 - 7 новых вопросов в Node.js: path.resolve, base64 и Buffer, событие error без слушателя, потоки и for await, util.parseArgs, worker_threads, отмена через AbortController — все проверяются запуском.

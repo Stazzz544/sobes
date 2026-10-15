@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.21.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '11 новых вопросов по Git — каждый проверяется запуском git: две колонки git status, rm --cached, git show коммит:файл, изменения при переключении веток, rebase меняет хеши, cherry-pick, revert, restore --staged, push -u, конфликт UU, --ours и --theirs.',
+        en: '11 new Git questions, each verified by running git: the two git status columns, rm --cached, git show commit:file, changes across branch switches, rebase changes hashes, cherry-pick, revert, restore --staged, push -u, a UU conflict, --ours vs --theirs.',
+      },
+      { ru: 'Всего 595 вопросов.', en: '595 questions in total.' },
+    ],
+  },
+  {
     version: '1.20.0',
     date: '2026-10-15',
     changes: [
