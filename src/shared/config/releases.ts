@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.29.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в HR: сравнение офферов по годовому доходу, вопрос о текущей зарплате, сокращение и частая смена работы, «вам не хватает опыта», «я» против «мы» в рассказе о проекте, рассказ о себе под вакансию, вопрос о росте, README к тестовому, письмо после тишины.',
+        en: '10 new HR questions: comparing offers by yearly income, the current-salary question, layoffs and frequent job changes, “you lack experience”, “I” vs “we” in project stories, tailoring your intro to the job, asking about growth, a README for the take-home, following up after silence.',
+      },
+      { ru: 'Всего 675 вопросов.', en: '675 questions in total.' },
+    ],
+  },
+  {
     version: '1.28.0',
     date: '2026-10-15',
     changes: [
