@@ -394,4 +394,11 @@
 - 12 задач в `data/javascript-6.ts`, тег `live-coding` в теме JavaScript (последним юнитом в пути), конспект «как решать live-coding»: `debounce`, `promiseAll` (фрагмент в каркасе), `flatten`, `curry` (порядок строк), LRU на `Map` и скобки (bug-line), `memoize` с ключом из всех аргументов, `groupBy`, `chunk` (bug-line), `once` у эмиттера, `structuredClone`, `withTimeout` через `Promise.race`.
 - Проверку проверил: подменил правильный ответ, порядок и строку ошибки — `verify-content` поймал все три. Интерфейс не менялся — эмулятор не нужен.
 
+## R3-3, наполнение: сложные вопросы (15.10.2026, версия 1.17.0)
+
+- Git (`data/git-2.ts`, +6, из них 5 `shell-output`): `.gitignore` не действует на отслеживаемый `.env`, `stash` без `-u` не прячет новые файлы, после `merge --squash` ветка не считается слитой, `main..feature`, `--amend` заменяет коммит, `bisect` ≈ log₂ n. Тема: 29 вопросов, 6 сложных.
+- Тестирование (`data/testing-2.ts`, +8): тест без `await` проходит ложно и `expect.assertions`, подъём `vi.mock` и `vi.hoisted`, предупреждение `act`, `renderHook`, `storageState` в Playwright, fake против stub/mock/spy, случайный порядок выявляет общее состояние, слепое обновление снапшотов. Тема: 28 вопросов, 7 сложных.
+- HR (`data/hr-3.ts`, +5): контрпредложение, торг по офферу ниже ожиданий, влияние без полномочий (STAR), перерыв в резюме, тревожный ответ о процессах. Тема: 33 вопроса, 5 сложных.
+- Гоча: `git merge --squash -q` всё равно печатает «Squash commit -- not updating HEAD» — глушить `> /dev/null`.
+
 Дальше — `docs/roadmap.md`.

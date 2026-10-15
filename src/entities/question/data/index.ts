@@ -9,14 +9,17 @@ import { CSS_QUESTIONS_2 } from './css-2';
 import { CSS_QUESTIONS_3 } from './css-3';
 import { CSS_QUESTIONS_4 } from './css-4';
 import { GIT_QUESTIONS } from './git';
+import { GIT_QUESTIONS_2 } from './git-2';
 import { HR_QUESTIONS } from './hr';
 import { HR_QUESTIONS_2 } from './hr-2';
+import { HR_QUESTIONS_3 } from './hr-3';
 import { HTML_QUESTIONS } from './html';
 import { ARCHITECTURE_QUESTIONS } from './architecture';
 import { NEXT_QUESTIONS } from './next';
 import { NODE_QUESTIONS } from './node';
 import { STATE_QUESTIONS } from './state';
 import { TESTING_QUESTIONS } from './testing';
+import { TESTING_QUESTIONS_2 } from './testing-2';
 import { JAVASCRIPT_QUESTIONS } from './javascript';
 import { JAVASCRIPT_QUESTIONS_2 } from './javascript-2';
 import { JAVASCRIPT_QUESTIONS_3 } from './javascript-3';
@@ -80,13 +83,16 @@ export const QUESTIONS: Question[] = [
   ...ALGORITHMS_QUESTIONS_3,
   ...HTML_QUESTIONS,
   ...TESTING_QUESTIONS,
+  ...TESTING_QUESTIONS_2,
   ...STATE_QUESTIONS,
   ...NODE_QUESTIONS,
   ...NEXT_QUESTIONS,
   ...ARCHITECTURE_QUESTIONS,
   ...GIT_QUESTIONS,
+  ...GIT_QUESTIONS_2,
   ...HR_QUESTIONS,
   ...HR_QUESTIONS_2,
+  ...HR_QUESTIONS_3,
 ];
 
 export const QUESTIONS_BY_ID: Readonly<Record<string, Question>> = Object.fromEntries(

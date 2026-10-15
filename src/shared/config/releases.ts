@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.17.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '19 новых вопросов, в основном сложных: Git (.gitignore и отслеживаемые файлы, stash, squash-слияние, диапазоны коммитов, amend, bisect), Тестирование (асинхронные тесты, vi.mock, act, renderHook, авторизация в Playwright, тестовые дублёры, случайный порядок, снапшоты), HR (контрпредложение, торг по офферу, влияние без полномочий, перерыв в работе, тревожные ответы работодателя).',
+        en: '19 new questions, mostly hard: Git (.gitignore and tracked files, stash, squash merge, commit ranges, amend, bisect), Testing (async tests, vi.mock, act, renderHook, Playwright auth, test doubles, random order, snapshots), HR (counteroffers, offer negotiation, influence without authority, career gaps, employer red flags).',
+      },
+      { ru: 'Всего 541 вопрос.', en: '541 questions in total.' },
+    ],
+  },
+  {
     version: '1.16.0',
     date: '2026-10-15',
     changes: [
