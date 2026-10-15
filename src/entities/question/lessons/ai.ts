@@ -1,6 +1,6 @@
 import type { Lesson } from '../model/types';
 
-const CLAUDE_DOCS = 'https://docs.claude.com/en/docs';
+const CLAUDE_DOCS = 'https://platform.claude.com/docs/en';
 const OWASP_LLM = 'https://genai.owasp.org/llmrisk';
 const MDN = 'https://developer.mozilla.org/en-US/docs';
 

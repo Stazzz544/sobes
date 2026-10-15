@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.36.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в «Архитектуре и паттернах», 4 проверяются запуском: Строитель, Итератор на генераторе, Null Object, экспоненциальная задержка повторов, логика отдельно от отображения, headless-компоненты, где ставить Error Boundary, semver для своей библиотеки, булева ловушка, бюджет производительности.',
+        en: '10 new questions in “Architecture & patterns”, 4 verified by running code: Builder, an Iterator via generators, Null Object, exponential retry backoff, separating logic from rendering, headless components, where to put Error Boundaries, semver for your own library, the boolean trap, performance budgets.',
+      },
+      { ru: 'Ссылки на документацию Claude переведены на новый адрес. Всего 748 вопросов.', en: 'Claude documentation links moved to the new address. 748 questions in total.' },
+    ],
+  },
+  {
     version: '1.35.0',
     date: '2026-10-15',
     changes: [

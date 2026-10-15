@@ -1,6 +1,6 @@
 import type { Question } from '../model/types';
 
-const CLAUDE_DOCS = 'https://docs.claude.com/en/docs';
+const CLAUDE_DOCS = 'https://platform.claude.com/docs/en';
 const GOOGLE_ML = 'https://developers.google.com/machine-learning';
 const GLOSSARY = `${CLAUDE_DOCS}/about-claude/glossary`;
 
