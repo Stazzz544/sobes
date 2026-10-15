@@ -22,6 +22,7 @@ import { NEXT_QUESTIONS } from './next';
 import { NEXT_QUESTIONS_2 } from './next-2';
 import { NODE_QUESTIONS } from './node';
 import { NODE_QUESTIONS_2 } from './node-2';
+import { NODE_QUESTIONS_3 } from './node-3';
 import { STATE_QUESTIONS } from './state';
 import { STATE_QUESTIONS_2 } from './state-2';
 import { TESTING_QUESTIONS } from './testing';
@@ -97,6 +98,7 @@ export const QUESTIONS: Question[] = [
   ...STATE_QUESTIONS_2,
   ...NODE_QUESTIONS,
   ...NODE_QUESTIONS_2,
+  ...NODE_QUESTIONS_3,
   ...NEXT_QUESTIONS,
   ...NEXT_QUESTIONS_2,
   ...ARCHITECTURE_QUESTIONS,

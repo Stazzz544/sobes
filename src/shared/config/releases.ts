@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.23.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в Node.js: nextTick против микрозадач, HTTP-сервер на node:http, Transform и pipeline, events.once, параллельное чтение файлов, поиск пакетов в node_modules, --env-file, встроенный тест-раннер, запуск TypeScript без сборки, require для ES-модулей.',
+        en: '10 new Node.js questions: nextTick vs microtasks, an HTTP server on node:http, Transform and pipeline, events.once, parallel file reads, node_modules lookup, --env-file, the built-in test runner, running TypeScript without a build, require for ES modules.',
+      },
+      { ru: 'Всего 616 вопросов.', en: '616 questions in total.' },
+    ],
+  },
+  {
     version: '1.22.0',
     date: '2026-10-15',
     changes: [

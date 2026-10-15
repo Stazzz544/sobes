@@ -1,5 +1,10 @@
 # Что нового
 
+## 1.23.0
+
+- 10 новых вопросов в Node.js: nextTick против микрозадач, HTTP-сервер на node:http, Transform и pipeline, events.once, параллельное чтение файлов, поиск пакетов в node_modules, --env-file, встроенный тест-раннер, запуск TypeScript без сборки, require для ES-модулей.
+- Всего 616 вопросов.
+
 ## 1.22.0
 
 - 11 новых вопросов в «Тестировании»: toBe и Object.is, toEqual против toStrictEqual, mockClear/Reset/Restore, фиксированное время, within в таблицах, getByRole как проверка доступности, web-first проверки Playwright, page.route, регрессионный тест, тестовый трофей, Arrange — Act — Assert.

@@ -427,4 +427,9 @@
 - `data/testing-3.ts`, 11 вопросов: `toBe` = `Object.is` (`js-output`: `NaN`, `-0`), `toEqual` игнорирует `undefined`-поля, три уровня сброса моков, `setSystemTime` против «полуночных» падений, `within` для строки таблицы, ненайденный `getByRole` как баг доступности, web-first `await expect(locator)` против `isVisible()`, `page.route` для ответа 500, регрессионный тест сначала красный, тестовый трофей, Arrange — Act — Assert (порядок).
 - Факт про `Object.is` в `toBe` сверён с документацией Jest; Jest/Vitest в проекте по-прежнему не стоят — остальное сверено с документацией.
 
+## R3-3, наполнение: Node.js 30 → 40 (15.10.2026, версия 1.23.0)
+
+- `data/node-3.ts`, 10 вопросов, 4 проверяются запуском: порядок `nextTick`/`then`/`queueMicrotask` в CommonJS (порядок, с оговоркой про ESM в разборе), сервер на `node:http` + `fetch` к нему (`201 /users?id=7`), `Transform` в `pipeline`, `events.once`; параллельное чтение файлов и `EMFILE`, поиск в `node_modules` вверх по дереву, `--env-file`, `node:test`, type stripping (по умолчанию с 23.6/22.18, без `enum` и проверки типов), `require(esm)` и `ERR_REQUIRE_ASYNC_MODULE`.
+- Факты о TypeScript и `require(esm)` сверены с документацией Node (там уже есть v26: флаг `--experimental-transform-types` удалён), якоря ссылок — с HTML страниц.
+
 Дальше — `docs/roadmap.md`.
