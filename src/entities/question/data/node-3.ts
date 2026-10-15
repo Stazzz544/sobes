@@ -30,8 +30,8 @@ console.log('sync');`,
       {
         type: 'text',
         text: {
-          ru: 'После синхронного кода Node сначала опустошает очередь `process.nextTick` целиком, а потом — очередь микрозадач, где `then` и `queueMicrotask` идут в порядке добавления. Оговорка: в ES-модуле порядок другой — модуль сам выполняется как асинхронная задача, и микрозадачи успевают раньше `nextTick`. Поэтому на порядок между ними лучше не полагаться.',
-          en: 'After synchronous code Node first drains the whole `process.nextTick` queue, then the microtask queue, where `then` and `queueMicrotask` run in insertion order. Caveat: in an ES module the order differs — the module itself runs as an async task, so microtasks run before `nextTick`. So don’t rely on the order between them.',
+          ru: 'После синхронного кода Node сначала опустошает очередь `process.nextTick` целиком, а потом — очередь [[microtask|микрозадач]], где `then` и `queueMicrotask` идут в порядке добавления. Оговорка: в ES-модуле порядок другой — модуль сам выполняется как асинхронная задача, и микрозадачи успевают раньше `nextTick`. Поэтому на порядок между ними лучше не полагаться.',
+          en: 'After synchronous code Node first drains the whole `process.nextTick` queue, then the [[microtask|microtask]] queue, where `then` and `queueMicrotask` run in insertion order. Caveat: in an ES module the order differs — the module itself runs as an async task, so microtasks run before `nextTick`. So don’t rely on the order between them.',
         },
       },
     ],
@@ -112,8 +112,8 @@ pipeline(
       {
         type: 'text',
         text: {
-          ru: '**Transform** — поток посередине: получает чанк, преобразует и отдаёт дальше через `callback(null, result)`. `pipeline` из `node:stream/promises` соединяет цепочку, следит за backpressure и возвращает промис, который выполнится, когда всё записано, или отклонится при ошибке любого звена. Так строят сжатие, парсинг CSV, шифрование на лету.',
-          en: 'A **Transform** is a stream in the middle: it receives a chunk, transforms it and passes it on via `callback(null, result)`. `pipeline` from `node:stream/promises` connects the chain, handles backpressure and returns a promise that resolves once everything is written or rejects if any stage fails. That’s how on-the-fly compression, CSV parsing and encryption are built.',
+          ru: '**Transform** — поток посередине: получает чанк, преобразует и отдаёт дальше через `callback(null, result)`. `pipeline` из `node:stream/promises` соединяет цепочку, следит за [[backpressure|backpressure]] и возвращает промис, который выполнится, когда всё записано, или отклонится при ошибке любого звена. Так строят сжатие, парсинг CSV, шифрование на лету.',
+          en: 'A **Transform** is a stream in the middle: it receives a chunk, transforms it and passes it on via `callback(null, result)`. `pipeline` from `node:stream/promises` connects the chain, handles [[backpressure|backpressure]] and returns a promise that resolves once everything is written or rejects if any stage fails. That’s how on-the-fly compression, CSV parsing and encryption are built.',
         },
       },
     ],

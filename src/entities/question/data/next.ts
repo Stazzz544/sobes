@@ -367,8 +367,8 @@ export const NEXT_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Пропсы из серверного компонента в клиентский идут по сети, поэтому должны быть **сериализуемыми**: строки, числа, массивы, простые объекты, `Date`, промисы. Обычную функцию передать нельзя — её код остался на сервере. Исключение — Server Functions с `"use server"`: клиент получает ссылку и вызывает их запросом.',
-          en: 'Props from a Server Component to a Client Component cross the network, so they must be **serializable**: strings, numbers, arrays, plain objects, `Date`, promises. A regular function can’t be passed — its code stays on the server. The exception is Server Functions with `"use server"`: the client gets a reference and calls them via a request.',
+          ru: 'Пропсы из [[rsc|серверного компонента]] в клиентский идут по сети, поэтому должны быть **сериализуемыми**: строки, числа, массивы, простые объекты, `Date`, промисы. Обычную функцию передать нельзя — её код остался на сервере. Исключение — Server Functions с `"use server"`: клиент получает ссылку и вызывает их запросом.',
+          en: 'Props from a [[rsc|Server Component]] to a Client Component cross the network, so they must be **serializable**: strings, numbers, arrays, plain objects, `Date`, promises. A regular function can’t be passed — its code stays on the server. The exception is Server Functions with `"use server"`: the client gets a reference and calls them via a request.',
         },
       },
     ],
@@ -401,8 +401,8 @@ export const NEXT_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Всё, что импортирует клиентский файл, становится клиентским кодом. Но серверный компонент, переданный через `children` или другой проп-слот, рендерится на сервере, а `Modal` получает уже готовый результат. Так клиентская обёртка управляет видимостью, а данные корзины читаются на сервере.',
-          en: 'Everything a client file imports becomes client code. But a Server Component passed via `children` or another slot prop renders on the server, and `Modal` receives the finished output. The client wrapper controls visibility while cart data is read on the server.',
+          ru: 'Всё, что импортирует клиентский файл, становится клиентским кодом. Но [[rsc|серверный компонент]], переданный через `children` или другой проп-слот, рендерится на сервере, а `Modal` получает уже готовый результат. Так клиентская обёртка управляет видимостью, а данные корзины читаются на сервере.',
+          en: 'Everything a client file imports becomes client code. But a [[rsc|Server Component]] passed via `children` or another slot prop renders on the server, and `Modal` receives the finished output. The client wrapper controls visibility while cart data is read on the server.',
         },
       },
     ],
@@ -464,8 +464,8 @@ export const NEXT_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'В Next.js 13–14 `fetch` кешировался по умолчанию, и это постоянно удивляло. С 15-й версии запросы по умолчанию **не кешируются**: кеш включают явно — директивой `"use cache"` (Cache Components) или опцией `cache: \'force-cache\'`. Одинаковые `fetch` внутри одного рендера при этом всё равно выполняются один раз — это мемоизация, а не кеш.',
-          en: 'In Next.js 13–14 `fetch` was cached by default, which kept surprising people. Since version 15 requests are **not cached** by default: caching is explicit — the `"use cache"` directive (Cache Components) or the `cache: \'force-cache\'` option. Identical `fetch` calls within one render still run once — that’s memoization, not caching.',
+          ru: 'В Next.js 13–14 `fetch` кешировался по умолчанию, и это постоянно удивляло. С 15-й версии запросы по умолчанию **не кешируются**: кеш включают явно — директивой `"use cache"` (Cache Components) или опцией `cache: \'force-cache\'`. Одинаковые `fetch` внутри одного рендера при этом всё равно выполняются один раз — это [[memoization|мемоизация]], а не кеш.',
+          en: 'In Next.js 13–14 `fetch` was cached by default, which kept surprising people. Since version 15 requests are **not cached** by default: caching is explicit — the `"use cache"` directive (Cache Components) or the `cache: \'force-cache\'` option. Identical `fetch` calls within one render still run once — that’s [[memoization|memoization]], not caching.',
         },
       },
     ],
@@ -636,8 +636,8 @@ export const NEXT_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Зная пропорции, браузер оставляет под картинку место до загрузки, и текст не «прыгает». `next/image` также отдаёт картинки в нужном размере и современном формате и по умолчанию грузит их лениво. Картинке первого экрана (LCP) в Next.js 16 ставят `preload` — прежний `priority` объявлен устаревшим.',
-          en: 'Knowing the aspect ratio, the browser reserves space before loading, so text doesn’t “jump”. `next/image` also serves images at the right size and in modern formats and lazy-loads by default. For the above-the-fold (LCP) image Next.js 16 uses `preload` — the former `priority` is deprecated.',
+          ru: 'Зная пропорции, браузер оставляет под картинку место до загрузки, и текст не «прыгает». `next/image` также отдаёт картинки в нужном размере и современном формате и по умолчанию грузит их лениво. Картинке первого экрана ([[lcp|LCP]]) в Next.js 16 ставят `preload` — прежний `priority` объявлен устаревшим.',
+          en: 'Knowing the aspect ratio, the browser reserves space before loading, so text doesn’t “jump”. `next/image` also serves images at the right size and in modern formats and lazy-loads by default. For the above-the-fold ([[lcp|LCP]]) image Next.js 16 uses `preload` — the former `priority` is deprecated.',
         },
       },
     ],

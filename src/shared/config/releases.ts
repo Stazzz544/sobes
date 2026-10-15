@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.45.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: 'Термины в разборах вопросов: подчёркнутое слово открывает определение. Размечено около 180 разборов, в глоссарии теперь 75 терминов — от замыкания и цикла событий до CORS, гидратации, дерева доступности, rebase и RAG.',
+        en: 'Terms in question explanations: an underlined word opens its definition. About 180 explanations are marked up, and the glossary now has 75 terms — from closures and the event loop to CORS, hydration, the accessibility tree, rebase and RAG.',
+      },
+    ],
+  },
+  {
     version: '1.44.0',
     date: '2026-10-15',
     changes: [{ ru: 'Новое достижение теперь видно сразу: сверху появляется плашка с его названием, она скрывается сама через 4 секунды или по нажатию. Достижения, полученные до обновления, повторно не показываются.', en: 'New achievements now show up right away: a banner with the name appears at the top and hides by itself after 4 seconds or on tap. Achievements earned before the update aren’t shown again.' }],

@@ -78,8 +78,8 @@ export const REACT_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Эффект с `[]` выполнился один раз, и колбэк интервала **замкнул** `count` из первого рендера — `0`. Каждую секунду вызывается `setCount(0 + 1)`, поэтому счётчик застревает на `1`. Это «устаревшее замыкание» (stale closure).',
-          en: 'The effect with `[]` ran once, and the interval callback **closed over** `count` from the first render — `0`. Every second it calls `setCount(0 + 1)`, so the counter is stuck at `1`. That’s a stale closure.',
+          ru: 'Эффект с `[]` выполнился один раз, и колбэк интервала **замкнул** `count` из первого рендера — `0`. Каждую секунду вызывается `setCount(0 + 1)`, поэтому счётчик застревает на `1`. Это «[[stale-closure|устаревшее замыкание]]» (stale closure).',
+          en: 'The effect with `[]` ran once, and the interval callback **closed over** `count` from the first render — `0`. Every second it calls `setCount(0 + 1)`, so the counter is stuck at `1`. That’s a [[stale-closure|stale closure]].',
         },
       },
       {
@@ -356,8 +356,8 @@ export const REACT_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'React Compiler — инструмент сборки (плагин Babel), который анализирует компоненты и сам вставляет мемоизацию там, где она нужна. Он рассчитывает, что код соблюдает правила React: компоненты чистые, состояние не мутируется.',
-          en: 'React Compiler is a build-time tool (a Babel plugin) that analyzes components and inserts memoization where it’s needed. It assumes the code follows the Rules of React: components are pure and state isn’t mutated.',
+          ru: 'React Compiler — инструмент сборки (плагин Babel), который анализирует компоненты и сам вставляет [[memoization|мемоизацию]] там, где она нужна. Он рассчитывает, что код соблюдает правила React: компоненты чистые, состояние не мутируется.',
+          en: 'React Compiler is a build-time tool (a Babel plugin) that analyzes components and inserts [[memoization|memoization]] where it’s needed. It assumes the code follows the Rules of React: components are pure and state isn’t mutated.',
         },
       },
       {
@@ -428,8 +428,8 @@ export const REACT_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'React сравнивает зависимости через `Object.is`. Объект `filter` создаётся заново на каждом рендере, поэтому сравнение всегда даёт «изменилось», и мемоизация бесполезна.',
-          en: 'React compares dependencies with `Object.is`. The `filter` object is created anew on every render, so the comparison always says “changed”, and the memoization is useless.',
+          ru: 'React сравнивает зависимости через `Object.is`. Объект `filter` создаётся заново на каждом рендере, поэтому сравнение всегда даёт «изменилось», и [[memoization|мемоизация]] бесполезна.',
+          en: 'React compares dependencies with `Object.is`. The `filter` object is created anew on every render, so the comparison always says “changed”, and the [[memoization|memoization]] is useless.',
         },
       },
       {

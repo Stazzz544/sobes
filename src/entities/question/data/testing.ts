@@ -89,8 +89,8 @@ export const TESTING_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Нестабильный (flaky) тест опасен: к красному CI привыкают и пропускают настоящие поломки. Перезапуски и таймауты прячут проблему. Причину ищут в зависимости от времени, сети, порядка тестов или общего состояния; пока не починили — изолируют, чтобы не шумел.',
-          en: 'A flaky test is dangerous: people get used to red CI and miss real breakages. Reruns and timeouts hide the problem. Look for the cause in time, network, test order or shared state; until it’s fixed, quarantine it so it doesn’t add noise.',
+          ru: 'Нестабильный ([[flaky-test|flaky]]) тест опасен: к красному CI привыкают и пропускают настоящие поломки. Перезапуски и таймауты прячут проблему. Причину ищут в зависимости от времени, сети, порядка тестов или общего состояния; пока не починили — изолируют, чтобы не шумел.',
+          en: 'A [[flaky-test|flaky test]] is dangerous: people get used to red CI and miss real breakages. Reruns and timeouts hide the problem. Look for the cause in time, network, test order or shared state; until it’s fixed, quarantine it so it doesn’t add noise.',
         },
       },
     ],
@@ -196,8 +196,8 @@ export const TESTING_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`beforeEach` выполняется перед **каждым** тестом: свежие данные, новый рендер, сброшенные моки. Тогда тесты не зависят от порядка и от того, что «наследили» соседи. Один раз перед всеми тестами файла — это `beforeAll`.',
-          en: '`beforeEach` runs before **every** test: fresh data, a new render, reset mocks. Then tests don’t depend on order or on what neighbors left behind. Running once before all tests in a file is `beforeAll`.',
+          ru: '`beforeEach` выполняется перед **каждым** тестом: свежие данные, новый рендер, сброшенные [[test-double|моки]]. Тогда тесты не зависят от порядка и от того, что «наследили» соседи. Один раз перед всеми тестами файла — это `beforeAll`.',
+          en: '`beforeEach` runs before **every** test: fresh data, a new render, reset [[test-double|mocks]]. Then tests don’t depend on order or on what neighbors left behind. Running once before all tests in a file is `beforeAll`.',
         },
       },
     ],
@@ -257,8 +257,8 @@ export const TESTING_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Мок-функция запоминает каждый вызов и аргументы, поэтому можно проверить и сам факт вызова, и данные: `toHaveBeenCalledWith`, `toHaveBeenCalledTimes`. Настоящий запрос на сервер сделает тест медленным и нестабильным.',
-          en: 'A mock function records every call and its arguments, so you can check both the call and the data: `toHaveBeenCalledWith`, `toHaveBeenCalledTimes`. A real server call makes the test slow and flaky.',
+          ru: '[[test-double|Мок]]-функция запоминает каждый вызов и аргументы, поэтому можно проверить и сам факт вызова, и данные: `toHaveBeenCalledWith`, `toHaveBeenCalledTimes`. Настоящий запрос на сервер сделает тест медленным и нестабильным.',
+          en: 'A [[test-double|mock]] function records every call and its arguments, so you can check both the call and the data: `toHaveBeenCalledWith`, `toHaveBeenCalledTimes`. A real server call makes the test slow and flaky.',
         },
       },
     ],
@@ -291,8 +291,8 @@ export const TESTING_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`jest.useFakeTimers()` (или `vi.useFakeTimers()`) подменяет таймеры, а `advanceTimersByTime(300)` мгновенно «прокручивает» время — тест быстрый и детерминированный. Настоящие паузы замедляют набор и делают его нестабильным, а удаление debounce проверяет уже другой код.',
-          en: '`jest.useFakeTimers()` (or `vi.useFakeTimers()`) replaces timers, and `advanceTimersByTime(300)` moves time forward instantly — the test is fast and deterministic. Real waits slow the suite and make it flaky, and removing the debounce tests different code.',
+          ru: '`jest.useFakeTimers()` (или `vi.useFakeTimers()`) подменяет таймеры, а `advanceTimersByTime(300)` мгновенно «прокручивает» время — тест быстрый и детерминированный. Настоящие паузы замедляют набор и делают его нестабильным, а удаление [[debounce|debounce]] проверяет уже другой код.',
+          en: '`jest.useFakeTimers()` (or `vi.useFakeTimers()`) replaces timers, and `advanceTimersByTime(300)` moves time forward instantly — the test is fast and deterministic. Real waits slow the suite and make it flaky, and removing the [[debounce|debounce]] tests different code.',
         },
       },
     ],
@@ -328,8 +328,8 @@ export const TESTING_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Мок, объявленный на уровне файла, хранит историю вызовов всех тестов. Его сбрасывают в `beforeEach` (`jest.clearAllMocks()`) или включают `clearMocks` в конфигурации — тогда каждый тест начинает с чистого листа.',
-          en: 'A mock declared at file level keeps the call history of all tests. Reset it in `beforeEach` (`jest.clearAllMocks()`) or enable `clearMocks` in the config — then each test starts from a clean slate.',
+          ru: '[[test-double|Мок]], объявленный на уровне файла, хранит историю вызовов всех тестов. Его сбрасывают в `beforeEach` (`jest.clearAllMocks()`) или включают `clearMocks` в конфигурации — тогда каждый тест начинает с чистого листа.',
+          en: 'A [[test-double|mock]] declared at file level keeps the call history of all tests. Reset it in `beforeEach` (`jest.clearAllMocks()`) or enable `clearMocks` in the config — then each test starts from a clean slate.',
         },
       },
     ],
@@ -572,8 +572,8 @@ export const TESTING_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Роль и доступное имя — то, что видит пользователь; они меняются только когда меняется смысл интерфейса. Сгенерированные классы, XPath по структуре и индексы ломаются при любой перестановке вёрстки.',
-          en: 'Role and accessible name are what the user sees; they change only when the UI’s meaning changes. Generated classes, structural XPath and indexes break with any markup rearrangement.',
+          ru: 'Роль и [[accessible-name|доступное имя]] — то, что видит пользователь; они меняются только когда меняется смысл интерфейса. Сгенерированные классы, XPath по структуре и индексы ломаются при любой перестановке вёрстки.',
+          en: 'Role and [[accessible-name|accessible name]] are what the user sees; they change only when the UI’s meaning changes. Generated classes, structural XPath and indexes break with any markup rearrangement.',
         },
       },
     ],

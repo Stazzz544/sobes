@@ -79,8 +79,8 @@ export const NEXT_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: 'Серверный компонент может быть `async`, читать базу и секреты, а его код в браузер не попадает. Клиентский нужен для `useState`, эффектов, обработчиков и браузерных API. Границу ставят как можно ниже — на интерактивных листьях дерева. Модули с секретами защищают `import \'server-only\'`: импорт в клиентский код сломает сборку.',
-          en: 'A Server Component can be `async`, read the database and secrets, and its code never reaches the browser. Client Components are for `useState`, effects, handlers and browser APIs. Put the boundary as low as possible — on interactive leaves. Guard modules with secrets via `import \'server-only\'`: importing them into client code breaks the build.',
+          ru: '[[rsc|Серверный компонент]] может быть `async`, читать базу и секреты, а его код в браузер не попадает. Клиентский нужен для `useState`, эффектов, обработчиков и браузерных API. Границу ставят как можно ниже — на интерактивных листьях дерева. Модули с секретами защищают `import \'server-only\'`: импорт в клиентский код сломает сборку.',
+          en: 'A [[rsc|Server Component]] can be `async`, read the database and secrets, and its code never reaches the browser. Client Components are for `useState`, effects, handlers and browser APIs. Put the boundary as low as possible — on interactive leaves. Guard modules with secrets via `import \'server-only\'`: importing them into client code breaks the build.',
         },
       },
       {
@@ -108,8 +108,8 @@ export const NEXT_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: 'Одинаковые `fetch` в одном рендере выполняются один раз (мемоизация), поэтому данные можно запрашивать там, где они нужны. Независимые запросы запускают параллельно — `Promise.all` или отдельные компоненты за `<Suspense>`, иначе получается водопад.',
-          en: 'Identical `fetch` calls in one render run once (memoization), so fetch data where it’s needed. Start independent requests in parallel — `Promise.all` or separate components behind `<Suspense>` — otherwise you get a waterfall.',
+          ru: 'Одинаковые `fetch` в одном рендере выполняются один раз ([[memoization|мемоизация]]), поэтому данные можно запрашивать там, где они нужны. Независимые запросы запускают параллельно — `Promise.all` или отдельные компоненты за `<Suspense>`, иначе получается водопад.',
+          en: 'Identical `fetch` calls in one render run once ([[memoization|memoization]]), so fetch data where it’s needed. Start independent requests in parallel — `Promise.all` or separate components behind `<Suspense>` — otherwise you get a waterfall.',
         },
       },
       {

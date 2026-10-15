@@ -120,8 +120,8 @@ export const NEXT_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'С Next.js 15 `params` и `searchParams` — **промисы**: их ожидают через `await` в серверном компоненте или `use()` в клиентском. Это позволяет Next.js рендерить статические части, не дожидаясь параметров запроса. `window` на сервере нет, `useSearchParams` — клиентский хук, а `params` — сегменты пути вроде `[slug]`, а не строка запроса.',
-          en: 'Since Next.js 15, `params` and `searchParams` are **promises**: await them in a Server Component or use `use()` in a Client Component. This lets Next.js render static parts without waiting for request params. There’s no `window` on the server, `useSearchParams` is a client hook, and `params` are path segments like `[slug]`, not the query string.',
+          ru: 'С Next.js 15 `params` и `searchParams` — **промисы**: их ожидают через `await` в [[rsc|серверном компоненте]] или `use()` в клиентском. Это позволяет Next.js рендерить статические части, не дожидаясь параметров запроса. `window` на сервере нет, `useSearchParams` — клиентский хук, а `params` — сегменты пути вроде `[slug]`, а не строка запроса.',
+          en: 'Since Next.js 15, `params` and `searchParams` are **promises**: await them in a [[rsc|Server Component]] or use `use()` in a Client Component. This lets Next.js render static parts without waiting for request params. There’s no `window` on the server, `useSearchParams` is a client hook, and `params` are path segments like `[slug]`, not the query string.',
         },
       },
     ],
@@ -207,8 +207,8 @@ export default function Page() {
       {
         type: 'text',
         text: {
-          ru: 'Промис можно передать из серверного компонента в клиентский: загрузка начинается на сервере сразу, а клиентский компонент читает результат хуком `use(posts)`. Пока промис не выполнен, показывается ближайший `<Suspense>`. Клиентские компоненты не бывают `async`, а сам промис — не массив данных. Так интерактивная часть получает данные стримингом без водопада «загрузили JS → сделали запрос».',
-          en: 'A promise can be passed from a Server Component to a Client Component: loading starts on the server right away, and the client component reads the result with `use(posts)`. Until it resolves, the nearest `<Suspense>` shows. Client components can’t be `async`, and the promise itself isn’t the data array. This way the interactive part gets streamed data without the “load JS → fetch” waterfall.',
+          ru: 'Промис можно передать из [[rsc|серверного компонента]] в клиентский: загрузка начинается на сервере сразу, а клиентский компонент читает результат хуком `use(posts)`. Пока промис не выполнен, показывается ближайший `<Suspense>`. Клиентские компоненты не бывают `async`, а сам промис — не массив данных. Так интерактивная часть получает данные стримингом без водопада «загрузили JS → сделали запрос».',
+          en: 'A promise can be passed from a [[rsc|Server Component]] to a Client Component: loading starts on the server right away, and the client component reads the result with `use(posts)`. Until it resolves, the nearest `<Suspense>` shows. Client components can’t be `async`, and the promise itself isn’t the data array. This way the interactive part gets streamed data without the “load JS → fetch” waterfall.',
         },
       },
     ],
@@ -338,8 +338,8 @@ export default function Page() {
       {
         type: 'text',
         text: {
-          ru: 'Статический экспорт превращает приложение в набор HTML, CSS и JS — сервера Next.js нет. Всё, что выполняется во время запроса, отпадает: Server Actions, `cookies()` и `headers()`, `proxy.ts`, ISR, редиректы из конфига, оптимизатор картинок по умолчанию. Серверные компоненты при этом работают — они рендерятся один раз при сборке, а динамические маршруты требуют `generateStaticParams`.',
-          en: 'A static export turns the app into HTML, CSS and JS — there’s no Next.js server. Everything that runs at request time is gone: Server Actions, `cookies()` and `headers()`, `proxy.ts`, ISR, config redirects, the default image optimizer. Server Components still work — they render once at build time, and dynamic routes need `generateStaticParams`.',
+          ru: 'Статический экспорт превращает приложение в набор HTML, CSS и JS — сервера Next.js нет. Всё, что выполняется во время запроса, отпадает: Server Actions, `cookies()` и `headers()`, `proxy.ts`, [[isr|ISR]], редиректы из конфига, оптимизатор картинок по умолчанию. [[rsc|Серверные компоненты]] при этом работают — они рендерятся один раз при сборке, а динамические маршруты требуют `generateStaticParams`.',
+          en: 'A static export turns the app into HTML, CSS and JS — there’s no Next.js server. Everything that runs at request time is gone: Server Actions, `cookies()` and `headers()`, `proxy.ts`, [[isr|ISR]], config redirects, the default image optimizer. [[rsc|Server Components]] still work — they render once at build time, and dynamic routes need `generateStaticParams`.',
         },
       },
     ],

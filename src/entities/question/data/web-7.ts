@@ -60,8 +60,8 @@ console.log(payload.role);`,
       {
         type: 'text',
         text: {
-          ru: 'Всё, что доступно из JavaScript (`localStorage`, `sessionStorage`, переменные), внедрённый скрипт прочитает и отправит злоумышленнику. Cookie с `HttpOnly` из JS не читается, `Secure` не уходит по HTTP, `SameSite` снижает риск CSRF. Токен в URL попадает в историю, логи и `Referer`.',
-          en: 'Anything accessible from JavaScript (`localStorage`, `sessionStorage`, variables) an injected script can read and send to an attacker. An `HttpOnly` cookie can’t be read from JS, `Secure` keeps it off HTTP, and `SameSite` reduces CSRF risk. A token in the URL ends up in history, logs and `Referer`.',
+          ru: 'Всё, что доступно из JavaScript (`localStorage`, `sessionStorage`, переменные), внедрённый скрипт прочитает и отправит злоумышленнику. Cookie с `HttpOnly` из JS не читается, `Secure` не уходит по HTTP, `SameSite` снижает риск [[csrf|CSRF]]. Токен в URL попадает в историю, логи и `Referer`.',
+          en: 'Anything accessible from JavaScript (`localStorage`, `sessionStorage`, variables) an injected script can read and send to an attacker. An `HttpOnly` cookie can’t be read from JS, `Secure` keeps it off HTTP, and `SameSite` reduces [[csrf|CSRF]] risk. A token in the URL ends up in history, logs and `Referer`.',
         },
       },
     ],
@@ -299,8 +299,8 @@ console.log(candidates.filter(isSafeRedirect).length);`,
       {
         type: 'text',
         text: {
-          ru: '**Nonce** — случайное значение, которое сервер генерирует заново для каждого ответа и ставит и в заголовок CSP, и в атрибут нужного `<script>`. Выполнятся только скрипты с совпадающим nonce; внедрённый злоумышленником его не знает. `\'unsafe-inline\'` разрешает любой инлайн-код и сводит защиту CSP от XSS на нет.',
-          en: 'A **nonce** is a random value the server generates fresh for each response and puts both in the CSP header and in the `<script>`’s attribute. Only scripts with a matching nonce run; an injected one doesn’t know it. `\'unsafe-inline\'` allows any inline code and defeats CSP’s XSS protection.',
+          ru: '**Nonce** — случайное значение, которое сервер генерирует заново для каждого ответа и ставит и в заголовок [[csp|CSP]], и в атрибут нужного `<script>`. Выполнятся только скрипты с совпадающим nonce; внедрённый злоумышленником его не знает. `\'unsafe-inline\'` разрешает любой инлайн-код и сводит защиту CSP от [[xss|XSS]] на нет.',
+          en: 'A **nonce** is a random value the server generates fresh for each response and puts both in the [[csp|CSP]] header and in the `<script>`’s attribute. Only scripts with a matching nonce run; an injected one doesn’t know it. `\'unsafe-inline\'` allows any inline code and defeats CSP’s [[xss|XSS]] protection.',
         },
       },
     ],
@@ -415,8 +415,8 @@ console.log({}.isAdmin);`,
       {
         type: 'text',
         text: {
-          ru: 'Для запросов с cookie или авторизацией браузер требует, чтобы сервер назвал **конкретный** origin в `Access-Control-Allow-Origin` и разрешил учётные данные `Access-Control-Allow-Credentials: true`. Звёздочка с ними не работает — иначе любой сайт читал бы ответы с вашими cookie. `no-cors` не поможет: ответ станет непрозрачным.',
-          en: 'For requests with cookies or auth, the browser requires the server to name a **specific** origin in `Access-Control-Allow-Origin` and allow credentials with `Access-Control-Allow-Credentials: true`. A wildcard doesn’t work with them — otherwise any site could read responses made with your cookies. `no-cors` won’t help: the response becomes opaque.',
+          ru: 'Для запросов с cookie или авторизацией браузер требует, чтобы сервер назвал **конкретный** [[origin|origin]] в `Access-Control-Allow-Origin` и разрешил учётные данные `Access-Control-Allow-Credentials: true`. Звёздочка с ними не работает — иначе любой сайт читал бы ответы с вашими cookie. `no-cors` не поможет: ответ станет непрозрачным.',
+          en: 'For requests with cookies or auth, the browser requires the server to name a **specific** [[origin|origin]] in `Access-Control-Allow-Origin` and allow credentials with `Access-Control-Allow-Credentials: true`. A wildcard doesn’t work with them — otherwise any site could read responses made with your cookies. `no-cors` won’t help: the response becomes opaque.',
         },
       },
     ],

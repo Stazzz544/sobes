@@ -34,8 +34,8 @@ export const CSS_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Специфичность `ul li a` — `(0, 0, 3)`, `.menu a` — `(0, 1, 1)`. В списке селекторов каждый считается **отдельно**: с элементом совпадает `a.active` со специфичностью `(0, 1, 1)`, как у `.menu a`. При равной специфичности побеждает правило ниже по коду — синий. Наведение не нужно: сработала вторая часть списка.',
-          en: 'The specificity of `ul li a` is `(0, 0, 3)` and of `.menu a` is `(0, 1, 1)`. In a selector list each selector counts **separately**: `a.active` matches with `(0, 1, 1)`, same as `.menu a`. With equal specificity the later rule wins — blue. No hover needed: the second part of the list matched.',
+          ru: '[[specificity|Специфичность]] `ul li a` — `(0, 0, 3)`, `.menu a` — `(0, 1, 1)`. В списке селекторов каждый считается **отдельно**: с элементом совпадает `a.active` со специфичностью `(0, 1, 1)`, как у `.menu a`. При равной специфичности побеждает правило ниже по коду — синий. Наведение не нужно: сработала вторая часть списка.',
+          en: 'The [[specificity|specificity]] of `ul li a` is `(0, 0, 3)` and of `.menu a` is `(0, 1, 1)`. In a selector list each selector counts **separately**: `a.active` matches with `(0, 1, 1)`, same as `.menu a`. With equal specificity the later rule wins — blue. No hover needed: the second part of the list matched.',
         },
       },
       {
@@ -69,8 +69,8 @@ export const CSS_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Специфичность — три разряда: ID; классы, атрибуты и псевдоклассы; типы и псевдоэлементы. `#nav` даёт единицу в первый разряд, `.item` и `:hover` — две во второй (псевдокласс считается как класс), `a` — одну в третий. Итого `(1, 2, 1)`.',
-          en: 'Specificity has three components: IDs; classes, attributes and pseudo-classes; types and pseudo-elements. `#nav` adds one to the first, `.item` and `:hover` add two to the second (a pseudo-class counts as a class), `a` adds one to the third. Total: `(1, 2, 1)`.',
+          ru: '[[specificity|Специфичность]] — три разряда: ID; классы, атрибуты и псевдоклассы; типы и псевдоэлементы. `#nav` даёт единицу в первый разряд, `.item` и `:hover` — две во второй (псевдокласс считается как класс), `a` — одну в третий. Итого `(1, 2, 1)`.',
+          en: '[[specificity|Specificity]] has three components: IDs; classes, attributes and pseudo-classes; types and pseudo-elements. `#nav` adds one to the first, `.item` and `:hover` add two to the second (a pseudo-class counts as a class), `a` adds one to the third. Total: `(1, 2, 1)`.',
         },
       },
       {
@@ -114,8 +114,8 @@ export const CSS_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`:is()` получает специфичность **самого специфичного** аргумента — здесь `#main`, независимо от того, какой аргумент совпал. Итого `:is(#main, .x) p` = `(1, 0, 1)`, это больше, чем `(0, 1, 1)` у `p.note`. Поэтому синий, хотя правило объявлено первым.',
-          en: '`:is()` takes the specificity of its **most specific** argument — `#main` here, whichever argument actually matched. So `:is(#main, .x) p` is `(1, 0, 1)`, higher than `(0, 1, 1)` for `p.note`. Blue wins even though the rule comes first.',
+          ru: '`:is()` получает [[specificity|специфичность]] **самого специфичного** аргумента — здесь `#main`, независимо от того, какой аргумент совпал. Итого `:is(#main, .x) p` = `(1, 0, 1)`, это больше, чем `(0, 1, 1)` у `p.note`. Поэтому синий, хотя правило объявлено первым.',
+          en: '`:is()` takes the [[specificity|specificity]] of its **most specific** argument — `#main` here, whichever argument actually matched. So `:is(#main, .x) p` is `(1, 0, 1)`, higher than `(0, 1, 1)` for `p.note`. Blue wins even though the rule comes first.',
         },
       },
       {
@@ -265,8 +265,8 @@ export const CSS_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Каскад сравнивает слои **раньше** специфичности. Обычные (без `!important`) стили вне слоёв побеждают стили из любого слоя — поэтому `button` с минимальной специфичностью перебивает `#app .btn`.',
-          en: 'The cascade compares layers **before** specificity. Normal (non-`!important`) unlayered styles beat styles from any layer — so `button`, with minimal specificity, overrides `#app .btn`.',
+          ru: 'Каскад сравнивает слои **раньше** [[specificity|специфичности]]. Обычные (без `!important`) стили вне слоёв побеждают стили из любого слоя — поэтому `button` с минимальной специфичностью перебивает `#app .btn`.',
+          en: 'The cascade compares layers **before** [[specificity|specificity]]. Normal (non-`!important`) unlayered styles beat styles from any layer — so `button`, with minimal specificity, overrides `#app .btn`.',
         },
       },
       {
@@ -670,8 +670,8 @@ export const CSS_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Процентные `padding` и `margin` — даже вертикальные — считаются от **ширины** содержащего блока. 10% от 400px = 40px, высота родителя не участвует.',
-          en: 'Percentage `padding` and `margin` — even vertical ones — are calculated from the containing block’s **width**. 10% of 400px is 40px; the parent’s height plays no part.',
+          ru: 'Процентные `padding` и `margin` — даже вертикальные — считаются от **ширины** [[containing-block|содержащего блока]]. 10% от 400px = 40px, высота родителя не участвует.',
+          en: 'Percentage `padding` and `margin` — even vertical ones — are calculated from the [[containing-block|containing block]]’s **width**. 10% of 400px is 40px; the parent’s height plays no part.',
         },
       },
       {

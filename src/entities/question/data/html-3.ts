@@ -28,8 +28,8 @@ export const HTML_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Ориентир `banner` (шапка сайта) даёт только `<header>`, который относится ко всей странице. Внутри `<article>`, `<section>`, `<aside>`, `<nav>` или `<main>` это шапка раздела — по ARIA 1.3 роль `sectionheader` (раньше — `generic`), не ориентир. Иначе на странице со списком статей дикторы показывали бы десятки «баннеров». То же правило работает для `<footer>`: `contentinfo` только у подвала страницы.',
-          en: 'Only a `<header>` scoped to the whole page gives the `banner` landmark (the site header). Inside `<article>`, `<section>`, `<aside>`, `<nav>` or `<main>` it’s a section header — role `sectionheader` per ARIA 1.3 (formerly `generic`), not a landmark. Otherwise a page of articles would show dozens of “banners” to screen readers. The same rule applies to `<footer>`: only the page footer gets `contentinfo`.',
+          ru: '[[landmark|Ориентир]] `banner` (шапка сайта) даёт только `<header>`, который относится ко всей странице. Внутри `<article>`, `<section>`, `<aside>`, `<nav>` или `<main>` это шапка раздела — по ARIA 1.3 роль `sectionheader` (раньше — `generic`), не ориентир. Иначе на странице со списком статей дикторы показывали бы десятки «баннеров». То же правило работает для `<footer>`: `contentinfo` только у подвала страницы.',
+          en: 'Only a `<header>` scoped to the whole page gives the `banner` [[landmark|landmark]] (the site header). Inside `<article>`, `<section>`, `<aside>`, `<nav>` or `<main>` it’s a section header — role `sectionheader` per ARIA 1.3 (formerly `generic`), not a landmark. Otherwise a page of articles would show dozens of “banners” to screen readers. The same rule applies to `<footer>`: only the page footer gets `contentinfo`.',
         },
       },
     ],
@@ -174,8 +174,8 @@ export const HTML_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`aria-hidden="true"` убирает декоративный символ из дерева доступности, а визуально скрытый (но не `display: none`) текст в нём остаётся. Это распространённый приём для кнопок-иконок: на экране — крестик, диктор говорит «Close». Альтернатива — `aria-label="Close"` на самой кнопке.',
-          en: '`aria-hidden="true"` removes the decorative symbol from the accessibility tree, while visually hidden (but not `display: none`) text stays in it. It’s a common pattern for icon buttons: a cross on screen, “Close” from the screen reader. The alternative is `aria-label="Close"` on the button itself.',
+          ru: '`aria-hidden="true"` убирает декоративный символ из [[accessibility-tree|дерева доступности]], а визуально скрытый (но не `display: none`) текст в нём остаётся. Это распространённый приём для кнопок-иконок: на экране — крестик, диктор говорит «Close». Альтернатива — `aria-label="Close"` на самой кнопке.',
+          en: '`aria-hidden="true"` removes the decorative symbol from the [[accessibility-tree|accessibility tree]], while visually hidden (but not `display: none`) text stays in it. It’s a common pattern for icon buttons: a cross on screen, “Close” from the screen reader. The alternative is `aria-label="Close"` on the button itself.',
         },
       },
     ],

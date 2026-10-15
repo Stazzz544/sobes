@@ -239,8 +239,8 @@ console.log(prev === next, prev.items.length);`,
       {
         type: 'text',
         text: {
-          ru: 'Редьюсер обязан быть **чистым**: одинаковые входы — одинаковый результат, без запросов и таймеров. Побочные эффекты живут в middleware: thunk делает запрос и отправляет `pending`/`fulfilled`/`rejected` действия, а редьюсеры только обновляют состояние по ним (`createAsyncThunk` делает это за вас).',
-          en: 'A reducer must be **pure**: same inputs — same result, no requests or timers. Side effects live in middleware: a thunk makes the request and dispatches `pending`/`fulfilled`/`rejected` actions, while reducers only update state from them (`createAsyncThunk` does this for you).',
+          ru: 'Редьюсер обязан быть **чистым**: одинаковые входы — одинаковый результат, без запросов и таймеров. [[side-effect|Побочные эффекты]] живут в middleware: thunk делает запрос и отправляет `pending`/`fulfilled`/`rejected` действия, а редьюсеры только обновляют состояние по ним (`createAsyncThunk` делает это за вас).',
+          en: 'A reducer must be **pure**: same inputs — same result, no requests or timers. [[side-effect|Side effects]] live in middleware: a thunk makes the request and dispatches `pending`/`fulfilled`/`rejected` actions, while reducers only update state from them (`createAsyncThunk` does this for you).',
         },
       },
     ],
@@ -311,8 +311,8 @@ console.log(prev === next, prev.items.length);`,
       {
         type: 'text',
         text: {
-          ru: '`useSelector` после каждого действия вызывает селектор и сравнивает результат с прошлым по ссылке (`===`). `filter` всегда создаёт новый массив, поэтому сравнение «не равно» — и перерисовка. Решение — мемоизированный селектор `createSelector`, который возвращает прежний массив, пока не изменились `todos`.',
-          en: '`useSelector` runs the selector after every action and compares the result with the previous one by reference (`===`). `filter` always creates a new array, so the comparison fails — and the component re-renders. The fix is a memoized `createSelector` that returns the same array until `todos` changes.',
+          ru: '`useSelector` после каждого действия вызывает селектор и сравнивает результат с прошлым по ссылке (`===`). `filter` всегда создаёт новый массив, поэтому сравнение «не равно» — и перерисовка. Решение — [[memoization|мемоизированный]] селектор `createSelector`, который возвращает прежний массив, пока не изменились `todos`.',
+          en: '`useSelector` runs the selector after every action and compares the result with the previous one by reference (`===`). `filter` always creates a new array, so the comparison fails — and the component re-renders. The fix is a [[memoization|memoized]] `createSelector` that returns the same array until `todos` changes.',
         },
       },
     ],

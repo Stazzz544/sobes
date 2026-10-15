@@ -32,8 +32,8 @@ export const CSS_QUESTIONS_5: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Инлайн-стиль сильнее любого селектора, но **`!important`** проверяется раньше специфичности: важное объявление из таблицы стилей побеждает обычный инлайн-стиль. Перебить его можно только другим `!important` — например, инлайновым. Отсюда «гонка вооружений» в проектах, где `!important` ставят по привычке; для своих правил есть каскадные слои.',
-          en: 'An inline style beats any selector, but **`!important`** is checked before specificity: an important declaration from a stylesheet beats a normal inline style. Only another `!important` can override it — an inline one, for example. That’s how the “arms race” starts in projects that use `!important` by habit; cascade layers exist for your own rules.',
+          ru: 'Инлайн-стиль сильнее любого селектора, но **`!important`** проверяется раньше [[specificity|специфичности]]: важное объявление из таблицы стилей побеждает обычный инлайн-стиль. Перебить его можно только другим `!important` — например, инлайновым. Отсюда «гонка вооружений» в проектах, где `!important` ставят по привычке; для своих правил есть каскадные слои.',
+          en: 'An inline style beats any selector, but **`!important`** is checked before [[specificity|specificity]]: an important declaration from a stylesheet beats a normal inline style. Only another `!important` can override it — an inline one, for example. That’s how the “arms race” starts in projects that use `!important` by habit; cascade layers exist for your own rules.',
         },
       },
     ],
@@ -62,8 +62,8 @@ export const CSS_QUESTIONS_5: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`:where()` всегда даёт нулевую специфичность своему содержимому, поэтому у `:where(.card) p` она такая же, как у `p`, — `(0, 0, 1)`. При равенстве побеждает правило ниже — зелёный. Этим пользуются в библиотеках и сбросах стилей: их правила легко перебить без борьбы за специфичность. `:is()` наоборот берёт специфичность самого сильного аргумента.',
-          en: '`:where()` always gives its contents zero specificity, so `:where(.card) p` has the same specificity as `p` — `(0, 0, 1)`. On a tie the later rule wins — green. Libraries and resets use this: their rules are easy to override without a specificity fight. `:is()`, by contrast, takes the specificity of its strongest argument.',
+          ru: '`:where()` всегда даёт нулевую [[specificity|специфичность]] своему содержимому, поэтому у `:where(.card) p` она такая же, как у `p`, — `(0, 0, 1)`. При равенстве побеждает правило ниже — зелёный. Этим пользуются в библиотеках и сбросах стилей: их правила легко перебить без борьбы за специфичность. `:is()` наоборот берёт специфичность самого сильного аргумента.',
+          en: '`:where()` always gives its contents zero [[specificity|specificity]], so `:where(.card) p` has the same specificity as `p` — `(0, 0, 1)`. On a tie the later rule wins — green. Libraries and resets use this: their rules are easy to override without a specificity fight. `:is()`, by contrast, takes the specificity of its strongest argument.',
         },
       },
     ],
@@ -136,8 +136,8 @@ export const CSS_QUESTIONS_5: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Вертикальные отступы соседних блоков **схлопываются**: между ними остаётся больший из двух — 30px, а не 50. Значит, `.second` начинается на 10 + 30 = 40px. Схлопывание бывает только по вертикали и только у обычных блоков — во flex- и grid-контейнерах отступы складываются. Поэтому в компонентах часто задают отступы только в одну сторону или используют `gap`.',
-          en: 'Vertical margins of adjacent blocks **collapse**: only the larger one remains between them — 30px, not 50. So `.second` starts at 10 + 30 = 40px. Collapsing happens only vertically and only for normal blocks — in flex and grid containers margins add up. That’s why components often set margins in one direction only or use `gap`.',
+          ru: 'Вертикальные отступы соседних блоков **схлопываются**: между ними остаётся больший из двух — 30px, а не 50. Значит, `.second` начинается на 10 + 30 = 40px. [[margin-collapsing|Схлопывание]] бывает только по вертикали и только у обычных блоков — во flex- и grid-контейнерах отступы складываются. Поэтому в компонентах часто задают отступы только в одну сторону или используют `gap`.',
+          en: 'Vertical margins of adjacent blocks **collapse**: only the larger one remains between them — 30px, not 50. So `.second` starts at 10 + 30 = 40px. [[margin-collapsing|Collapsing]] happens only vertically and only for normal blocks — in flex and grid containers margins add up. That’s why components often set margins in one direction only or use `gap`.',
         },
       },
     ],

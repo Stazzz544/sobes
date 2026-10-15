@@ -103,8 +103,8 @@ console.log(log.length, target.count);`,
       {
         type: 'text',
         text: {
-          ru: '**ISP**: клиент не должен зависеть от методов, которые не использует. Узкий тип делает зависимость честной: для теста хватит объекта с одним `get`, а изменения в остальных методах `Storage` виджет не заденут. В TypeScript это бесплатно — структурная типизация примет и полный `Storage`, и заглушку.',
-          en: '**ISP**: a client shouldn’t depend on methods it doesn’t use. A narrow type makes the dependency honest: a test needs an object with just `get`, and changes to other `Storage` methods won’t affect the widget. In TypeScript it’s free — structural typing accepts both the full `Storage` and a stub.',
+          ru: '**ISP**: клиент не должен зависеть от методов, которые не использует. Узкий тип делает зависимость честной: для теста хватит объекта с одним `get`, а изменения в остальных методах `Storage` виджет не заденут. В TypeScript это бесплатно — [[structural-typing|структурная типизация]] примет и полный `Storage`, и заглушку.',
+          en: '**ISP**: a client shouldn’t depend on methods it doesn’t use. A narrow type makes the dependency honest: a test needs an object with just `get`, and changes to other `Storage` methods won’t affect the widget. In TypeScript it’s free — [[structural-typing|structural typing]] accepts both the full `Storage` and a stub.',
         },
       },
     ],
@@ -137,8 +137,8 @@ console.log(log.length, target.count);`,
       {
         type: 'text',
         text: {
-          ru: '**Закон Деметры** — «разговаривай только с ближайшими друзьями»: модуль обращается к своим прямым зависимостям, а не к их внутренностям. Длинная цепочка связывает компонент с формой пяти объектов. Лучше получить готовое значение — `deliveryCity` из адаптера или селектора — или передать компоненту только то, что он показывает. `?.` спасает от падения, но не от связанности.',
-          en: 'The **Law of Demeter** — “talk only to your immediate friends”: a module calls its direct dependencies, not their internals. A long chain couples the component to the shape of five objects. Better get a ready value — `deliveryCity` from an adapter or selector — or pass the component only what it displays. `?.` prevents crashes, not coupling.',
+          ru: '**Закон Деметры** — «разговаривай только с ближайшими друзьями»: модуль обращается к своим прямым зависимостям, а не к их внутренностям. Длинная цепочка связывает компонент с формой пяти объектов. Лучше получить готовое значение — `deliveryCity` из адаптера или селектора — или передать компоненту только то, что он показывает. `?.` спасает от падения, но не от [[coupling|связанности]].',
+          en: 'The **Law of Demeter** — “talk only to your immediate friends”: a module calls its direct dependencies, not their internals. A long chain couples the component to the shape of five objects. Better get a ready value — `deliveryCity` from an adapter or selector — or pass the component only what it displays. `?.` prevents crashes, not [[coupling|coupling]].',
         },
       },
     ],

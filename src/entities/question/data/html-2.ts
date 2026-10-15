@@ -22,8 +22,8 @@ export const HTML_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'В расчёте доступного имени `aria-labelledby` стоит выше всего: выше `aria-label`, содержимого и `title`. Имя берётся из текста элемента с указанным id — «Cart». Этим пользуются, чтобы не дублировать текст: кнопка или регион называется видимым заголовком. Ссылаться можно и на несколько id через пробел — тексты склеятся.',
-          en: 'In the accessible name computation `aria-labelledby` ranks highest: above `aria-label`, content and `title`. The name comes from the text of the element with that id — “Cart”. It’s used to avoid duplicating text: a button or region is named by a visible heading. You can reference several ids separated by spaces — the texts are joined.',
+          ru: 'В расчёте [[accessible-name|доступного имени]] `aria-labelledby` стоит выше всего: выше `aria-label`, содержимого и `title`. Имя берётся из текста элемента с указанным id — «Cart». Этим пользуются, чтобы не дублировать текст: кнопка или регион называется видимым заголовком. Ссылаться можно и на несколько id через пробел — тексты склеятся.',
+          en: 'In the [[accessible-name|accessible name]] computation `aria-labelledby` ranks highest: above `aria-label`, content and `title`. The name comes from the text of the element with that id — “Cart”. It’s used to avoid duplicating text: a button or region is named by a visible heading. You can reference several ids separated by spaces — the texts are joined.',
         },
       },
     ],
@@ -210,8 +210,8 @@ export const HTML_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '**Skip link** ведёт на `<main id="main">` и экономит десятки нажатий Tab. Обычно её прячут визуально и показывают при фокусе — но не через `display: none`, иначе она пропадёт и для клавиатуры. Вместе с ориентирами (`<main>`, `<nav>`) и заголовками это основа навигации без мыши.',
-          en: 'A **skip link** points to `<main id="main">` and saves dozens of Tab presses. It’s usually visually hidden and shown on focus — but not with `display: none`, or it disappears for the keyboard too. Together with landmarks (`<main>`, `<nav>`) and headings it’s the basis of mouse-free navigation.',
+          ru: '**Skip link** ведёт на `<main id="main">` и экономит десятки нажатий Tab. Обычно её прячут визуально и показывают при фокусе — но не через `display: none`, иначе она пропадёт и для клавиатуры. Вместе с [[landmark|ориентирами]] (`<main>`, `<nav>`) и заголовками это основа навигации без мыши.',
+          en: 'A **skip link** points to `<main id="main">` and saves dozens of Tab presses. It’s usually visually hidden and shown on focus — but not with `display: none`, or it disappears for the keyboard too. Together with [[landmark|landmarks]] (`<main>`, `<nav>`) and headings it’s the basis of mouse-free navigation.',
         },
       },
     ],

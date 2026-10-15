@@ -196,8 +196,8 @@ console.log(state);`,
       {
         type: 'text',
         text: {
-          ru: 'Расчёт скидки, валидация или переход статуса заказа — чистые функции: на вход данные, на выход данные. Их легко тестировать без моков и переиспользовать на клиенте и сервере. Оболочка делает побочные эффекты: загружает данные, вызывает ядро, сохраняет результат. Чем толще ядро и тоньше оболочка, тем меньше кода, который трудно проверить.',
-          en: 'Discount calculation, validation or order status transitions are pure functions: data in, data out. They’re easy to test without mocks and to reuse on client and server. The shell performs side effects: loads data, calls the core, saves the result. The thicker the core and the thinner the shell, the less code that’s hard to test.',
+          ru: 'Расчёт скидки, валидация или переход статуса заказа — [[pure-function|чистые функции]]: на вход данные, на выход данные. Их легко тестировать без моков и переиспользовать на клиенте и сервере. Оболочка делает [[side-effect|побочные эффекты]]: загружает данные, вызывает ядро, сохраняет результат. Чем толще ядро и тоньше оболочка, тем меньше кода, который трудно проверить.',
+          en: 'Discount calculation, validation or order status transitions are [[pure-function|pure functions]]: data in, data out. They’re easy to test without mocks and to reuse on client and server. The shell performs [[side-effect|side effects]]: loads data, calls the core, saves the result. The thicker the core and the thinner the shell, the less code that’s hard to test.',
         },
       },
     ],
@@ -298,8 +298,8 @@ console.log(state);`,
       {
         type: 'text',
         text: {
-          ru: '**Composition root** — единственное место, которое знает обо всех конкретных классах: в `main.ts` или корневом провайдере создают клиент, логгер, сторы и раздают их модулям. Остальной код зависит только от интерфейсов. Подмена для тестов, стейджа или SSR — правка в одном файле, а не охота по проекту.',
-          en: 'The **composition root** is the only place that knows all concrete classes: `main.ts` or the root provider creates the client, logger and stores and hands them to modules. The rest of the code depends only on interfaces. Swapping for tests, staging or SSR is a one-file change, not a hunt across the project.',
+          ru: '**Composition root** — единственное место, которое знает обо всех конкретных классах: в `main.ts` или корневом провайдере создают клиент, логгер, сторы и раздают их модулям. Остальной код зависит только от интерфейсов. Подмена для тестов, стейджа или [[ssr|SSR]] — правка в одном файле, а не охота по проекту.',
+          en: 'The **composition root** is the only place that knows all concrete classes: `main.ts` or the root provider creates the client, logger and stores and hands them to modules. The rest of the code depends only on interfaces. Swapping for tests, staging or [[ssr|SSR]] is a one-file change, not a hunt across the project.',
         },
       },
     ],

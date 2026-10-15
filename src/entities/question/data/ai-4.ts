@@ -107,8 +107,8 @@ console.log(chunk('a b c d e f g h'.split(' '), 4, 1).length);`,
       {
         type: 'text',
         text: {
-          ru: 'Эмбеддинги хорошо ловят смысл и перефразировки, но редкие точные токены — коды, имена функций, артикулы — для них почти неотличимы. Полнотекстовый поиск (BM25) наоборот силён в точных совпадениях. Гибридный поиск берёт кандидатов из обоих, а реранкер упорядочивает их. Так устроено большинство серьёзных RAG-систем.',
-          en: 'Embeddings capture meaning and paraphrases well, but rare exact tokens — codes, function names, SKUs — look almost the same to them. Full-text search (BM25) is the opposite: strong at exact matches. Hybrid search takes candidates from both, and a reranker orders them. Most serious RAG systems work this way.',
+          ru: '[[embedding|Эмбеддинги]] хорошо ловят смысл и перефразировки, но редкие точные токены — коды, имена функций, артикулы — для них почти неотличимы. Полнотекстовый поиск (BM25) наоборот силён в точных совпадениях. Гибридный поиск берёт кандидатов из обоих, а реранкер упорядочивает их. Так устроено большинство серьёзных [[rag|RAG]]-систем.',
+          en: '[[embedding|Embeddings]] capture meaning and paraphrases well, but rare exact tokens — codes, function names, SKUs — look almost the same to them. Full-text search (BM25) is the opposite: strong at exact matches. Hybrid search takes candidates from both, and a reranker orders them. Most serious [[rag|RAG]] systems work this way.',
         },
       },
     ],
@@ -180,8 +180,8 @@ console.log(text);`,
       {
         type: 'text',
         text: {
-          ru: '`controller.abort()` закрывает соединение и отклоняет промис с `AbortError` — его обрабатывают как штатную остановку, а не ошибку. Важно и на сервере: если продолжать генерацию после ухода клиента, токены всё равно будут оплачены. Уже показанный текст обычно сохраняют в истории как частичный ответ.',
-          en: '`controller.abort()` closes the connection and rejects the promise with `AbortError` — handle it as a normal stop, not an error. The server side matters too: if generation continues after the client leaves, the tokens are still billed. The text already shown is usually kept in history as a partial answer.',
+          ru: '`controller.abort()` закрывает соединение и отклоняет промис с `AbortError` — его обрабатывают как штатную остановку, а не ошибку. Важно и на сервере: если продолжать генерацию после ухода клиента, [[token|токены]] всё равно будут оплачены. Уже показанный текст обычно сохраняют в истории как частичный ответ.',
+          en: '`controller.abort()` closes the connection and rejects the promise with `AbortError` — handle it as a normal stop, not an error. The server side matters too: if generation continues after the client leaves, the [[token|tokens]] are still billed. The text already shown is usually kept in history as a partial answer.',
         },
       },
     ],
@@ -247,8 +247,8 @@ console.log(cost.toFixed(3));`,
       {
         type: 'text',
         text: {
-          ru: 'Вход — 12 000 × 3 = 36 000, выход — 800 × 15 = 12 000, вместе 48 000 / 1 000 000 = $0.048. Здесь основную часть цены даёт **вход**: длинный системный промпт, история чата и документы RAG отправляются заново в каждом запросе. Поэтому историю обрезают или сжимают, а неизменную часть промпта кешируют.',
-          en: 'Input is 12,000 × 3 = 36,000, output is 800 × 15 = 12,000, total 48,000 / 1,000,000 = $0.048. Here most of the cost comes from **input**: a long system prompt, chat history and RAG documents are resent with every request. So history is trimmed or summarized, and the unchanging part of the prompt is cached.',
+          ru: 'Вход — 12 000 × 3 = 36 000, выход — 800 × 15 = 12 000, вместе 48 000 / 1 000 000 = $0.048. Здесь основную часть цены даёт **вход**: длинный системный промпт, история чата и документы [[rag|RAG]] отправляются заново в каждом запросе. Поэтому историю обрезают или сжимают, а неизменную часть промпта кешируют.',
+          en: 'Input is 12,000 × 3 = 36,000, output is 800 × 15 = 12,000, total 48,000 / 1,000,000 = $0.048. Here most of the cost comes from **input**: a long system prompt, chat history and [[rag|RAG]] documents are resent with every request. So history is trimmed or summarized, and the unchanging part of the prompt is cached.',
         },
       },
     ],
@@ -319,8 +319,8 @@ console.log(cost.toFixed(3));`,
       {
         type: 'text',
         text: {
-          ru: 'Инструкции в промпте не защищают: их обходят через prompt injection в сообщении пользователя или в данных. Защита — в устройстве инструментов: вместо произвольного SQL — узкие функции вроде `getOrderStatus(orderId)`, которые сами проверяют, что заказ принадлежит этому пользователю, и права только на чтение нужных таблиц. Что модель не может вызвать, то нельзя и злоупотребить.',
-          en: 'Prompt instructions don’t protect: they’re bypassed via prompt injection in the user’s message or the data. Protection lives in the tool design: instead of arbitrary SQL, narrow functions like `getOrderStatus(orderId)` that check the order belongs to this user, with read-only rights to the needed tables. What the model can’t call can’t be abused.',
+          ru: 'Инструкции в промпте не защищают: их обходят через [[prompt-injection|prompt injection]] в сообщении пользователя или в данных. Защита — в устройстве инструментов: вместо произвольного SQL — узкие функции вроде `getOrderStatus(orderId)`, которые сами проверяют, что заказ принадлежит этому пользователю, и права только на чтение нужных таблиц. Что модель не может вызвать, то нельзя и злоупотребить.',
+          en: 'Prompt instructions don’t protect: they’re bypassed via [[prompt-injection|prompt injection]] in the user’s message or the data. Protection lives in the tool design: instead of arbitrary SQL, narrow functions like `getOrderStatus(orderId)` that check the order belongs to this user, with read-only rights to the needed tables. What the model can’t call can’t be abused.',
         },
       },
     ],

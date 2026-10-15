@@ -168,8 +168,8 @@ git rebase -q main feature
       {
         type: 'text',
         text: {
-          ru: 'Rebase не перемещает коммиты, а **создаёт новые** с теми же изменениями поверх другой базы — у них другой родитель, поэтому и другой хеш. Старые коммиты остаются в `reflog`. Отсюда правило: не делать rebase веток, которые уже забрали другие, — их история разойдётся с вашей.',
-          en: 'Rebase doesn’t move commits — it **creates new ones** with the same changes on a different base; they have a different parent, hence a different hash. The old commits stay in the `reflog`. Hence the rule: don’t rebase branches others have already pulled — their history will diverge from yours.',
+          ru: '[[rebase|Rebase]] не перемещает коммиты, а **создаёт новые** с теми же изменениями поверх другой базы — у них другой родитель, поэтому и другой хеш. Старые коммиты остаются в `reflog`. Отсюда правило: не делать rebase веток, которые уже забрали другие, — их история разойдётся с вашей.',
+          en: '[[rebase|Rebase]] doesn’t move commits — it **creates new ones** with the same changes on a different base; they have a different parent, hence a different hash. The old commits stay in the `reflog`. Hence the rule: don’t rebase branches others have already pulled — their history will diverge from yours.',
         },
       },
     ],

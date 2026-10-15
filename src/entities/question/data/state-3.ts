@@ -231,8 +231,8 @@ console.log(state.counter, state.user);`,
       {
         type: 'text',
         text: {
-          ru: 'Атом — минимальная единица состояния с подпиской. Производный атом читает другие и пересчитывается только при их изменении, а компонент перерисовывается только из-за атомов, которые использует, — без селекторов и мемоизации. Это ближе к `useState`, вынесенному за пределы компонента, чем к одному большому стору Redux.',
-          en: 'An atom is the smallest unit of state with subscriptions. A derived atom reads others and recomputes only when they change, and a component re-renders only for the atoms it uses — no selectors or memoization needed. It’s closer to `useState` lifted out of the component than to one big Redux store.',
+          ru: 'Атом — минимальная единица состояния с подпиской. Производный атом читает другие и пересчитывается только при их изменении, а компонент перерисовывается только из-за атомов, которые использует, — без селекторов и [[memoization|мемоизации]]. Это ближе к `useState`, вынесенному за пределы компонента, чем к одному большому стору Redux.',
+          en: 'An atom is the smallest unit of state with subscriptions. A derived atom reads others and recomputes only when they change, and a component re-renders only for the atoms it uses — no selectors or [[memoization|memoization]] needed. It’s closer to `useState` lifted out of the component than to one big Redux store.',
         },
       },
     ],

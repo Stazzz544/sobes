@@ -269,8 +269,8 @@ export const WEB_QUESTIONS_4: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`display: none` и атрибут `hidden` убирают элемент из раскладки и из дерева доступности. `visibility: hidden` сохраняет место, но элемент не реагирует на клики и скрыт от скринридеров. `opacity: 0` делает его прозрачным, но он остаётся на месте, кликабелен и доступен с клавиатуры.',
-          en: '`display: none` and the `hidden` attribute remove the element from layout and the accessibility tree. `visibility: hidden` keeps its space but it ignores clicks and is hidden from screen readers. `opacity: 0` makes it transparent, but it stays in place, clickable and keyboard-focusable.',
+          ru: '`display: none` и атрибут `hidden` убирают элемент из раскладки и из [[accessibility-tree|дерева доступности]]. `visibility: hidden` сохраняет место, но элемент не реагирует на клики и скрыт от скринридеров. `opacity: 0` делает его прозрачным, но он остаётся на месте, кликабелен и доступен с клавиатуры.',
+          en: '`display: none` and the `hidden` attribute remove the element from layout and the [[accessibility-tree|accessibility tree]]. `visibility: hidden` keeps its space but it ignores clicks and is hidden from screen readers. `opacity: 0` makes it transparent, but it stays in place, clickable and keyboard-focusable.',
         },
       },
       {
@@ -471,15 +471,15 @@ export const WEB_QUESTIONS_4: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Оба хранилища привязаны к origin, синхронные и хранят строки. `sessionStorage` отдельный для каждой вкладки и переживает перезагрузку, но исчезает при закрытии вкладки. `localStorage` общий для всех вкладок этого origin и не имеет срока жизни.',
-          en: 'Both are scoped to the origin, synchronous, and store strings. `sessionStorage` is separate per tab and survives reloads but disappears when the tab closes. `localStorage` is shared by all tabs of that origin and never expires.',
+          ru: 'Оба хранилища привязаны к [[origin|origin]], синхронные и хранят строки. `sessionStorage` отдельный для каждой вкладки и переживает перезагрузку, но исчезает при закрытии вкладки. `localStorage` общий для всех вкладок этого origin и не имеет срока жизни.',
+          en: 'Both are scoped to the [[origin|origin]], synchronous, and store strings. `sessionStorage` is separate per tab and survives reloads but disappears when the tab closes. `localStorage` is shared by all tabs of that origin and never expires.',
         },
       },
       {
         type: 'text',
         text: {
-          ru: 'На сервер с запросами уходят только cookie. Токены доступа в веб-хранилищах уязвимы к XSS — для сессий надёжнее `HttpOnly`-cookie.',
-          en: 'Only cookies are sent to the server with requests. Access tokens in web storage are exposed to XSS — `HttpOnly` cookies are safer for sessions.',
+          ru: 'На сервер с запросами уходят только cookie. Токены доступа в веб-хранилищах уязвимы к [[xss|XSS]] — для сессий надёжнее `HttpOnly`-cookie.',
+          en: 'Only cookies are sent to the server with requests. Access tokens in web storage are exposed to [[xss|XSS]] — `HttpOnly` cookies are safer for sessions.',
         },
       },
     ],

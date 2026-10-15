@@ -29,8 +29,8 @@ console.log(urls.filter((url) => new URL(url).origin === base.origin).length);`,
       {
         type: 'text',
         text: {
-          ru: 'Origin — это **схема + хост + порт**. `:443` — порт HTTPS по умолчанию, поэтому `https://example.com:443` совпадает с базой; путь, параметры и якорь в origin не входят. Другая схема (`http`), поддомен (`www`) и порт `8080` — уже другой origin.',
-          en: 'An origin is **scheme + host + port**. `:443` is the default HTTPS port, so `https://example.com:443` matches the base; path, query and hash aren’t part of the origin. A different scheme (`http`), subdomain (`www`) or port `8080` makes a different origin.',
+          ru: '[[origin|Origin]] — это **схема + хост + порт**. `:443` — порт HTTPS по умолчанию, поэтому `https://example.com:443` совпадает с базой; путь, параметры и якорь в origin не входят. Другая схема (`http`), поддомен (`www`) и порт `8080` — уже другой origin.',
+          en: 'An [[origin|origin]] is **scheme + host + port**. `:443` is the default HTTPS port, so `https://example.com:443` matches the base; path, query and hash aren’t part of the origin. A different scheme (`http`), subdomain (`www`) or port `8080` makes a different origin.',
         },
       },
     ],
@@ -69,8 +69,8 @@ console.log(urls.filter((url) => new URL(url).origin === base.origin).length);`,
       {
         type: 'text',
         text: {
-          ru: 'Поэтому `Lax` (умолчание в современных браузерах) уже сильно снижает риск CSRF.',
-          en: 'That’s why `Lax` (the default in modern browsers) already greatly reduces CSRF risk.',
+          ru: 'Поэтому `Lax` (умолчание в современных браузерах) уже сильно снижает риск [[csrf|CSRF]].',
+          en: 'That’s why `Lax` (the default in modern browsers) already greatly reduces [[csrf|CSRF]] risk.',
         },
       },
     ],
@@ -243,8 +243,8 @@ console.log(urls.filter((url) => new URL(url).origin === base.origin).length);`,
       {
         type: 'text',
         text: {
-          ru: 'HSTS запоминается браузером: все запросы к домену на срок `max-age` сразу идут по HTTPS. Это закрывает атаку «понижения» до HTTP, когда злоумышленник в сети перехватывает первый незащищённый запрос. Самый первый визит защищает только включение домена в список HSTS preload.',
-          en: 'The browser remembers HSTS: for `max-age` all requests to the domain go straight to HTTPS. This blocks downgrade attacks where an attacker on the network intercepts the first unencrypted request. Only adding the domain to the HSTS preload list protects the very first visit.',
+          ru: '[[hsts|HSTS]] запоминается браузером: все запросы к домену на срок `max-age` сразу идут по HTTPS. Это закрывает атаку «понижения» до HTTP, когда злоумышленник в сети перехватывает первый незащищённый запрос. Самый первый визит защищает только включение домена в список HSTS preload.',
+          en: 'The browser remembers [[hsts|HSTS]]: for `max-age` all requests to the domain go straight to HTTPS. This blocks downgrade attacks where an attacker on the network intercepts the first unencrypted request. Only adding the domain to the HSTS preload list protects the very first visit.',
         },
       },
     ],
@@ -272,8 +272,8 @@ console.log(urls.filter((url) => new URL(url).origin === base.origin).length);`,
       {
         type: 'text',
         text: {
-          ru: 'При clickjacking страницу прозрачно встраивают во фрейм и заставляют пользователя кликнуть по «невидимой» кнопке. `frame-ancestors` в CSP указывает, кто может встраивать страницу; `\'none\'` — никто. Старый аналог — `X-Frame-Options: DENY`. `script-src`, CORS и флаги cookie от этого не защищают.',
-          en: 'In clickjacking the page is embedded in a transparent frame and the user is tricked into clicking an “invisible” button. CSP `frame-ancestors` says who may embed the page; `\'none\'` — nobody. The older equivalent is `X-Frame-Options: DENY`. `script-src`, CORS and cookie flags don’t protect against it.',
+          ru: 'При clickjacking страницу прозрачно встраивают во фрейм и заставляют пользователя кликнуть по «невидимой» кнопке. `frame-ancestors` в [[csp|CSP]] указывает, кто может встраивать страницу; `\'none\'` — никто. Старый аналог — `X-Frame-Options: DENY`. `script-src`, [[cors|CORS]] и флаги cookie от этого не защищают.',
+          en: 'In clickjacking the page is embedded in a transparent frame and the user is tricked into clicking an “invisible” button. [[csp|CSP]] `frame-ancestors` says who may embed the page; `\'none\'` — nobody. The older equivalent is `X-Frame-Options: DENY`. `script-src`, [[cors|CORS]] and cookie flags don’t protect against it.',
         },
       },
     ],
@@ -342,8 +342,8 @@ console.log(urls.filter((url) => new URL(url).origin === base.origin).length);`,
       {
         type: 'text',
         text: {
-          ru: '`fetch` отклоняет промис только при сетевой ошибке или блокировке CORS. Ответ 404 или 500 — это успешно полученный ответ, у которого `response.ok === false`. Без проверки код попытается разобрать тело ошибки как данные пользователя.',
-          en: '`fetch` rejects only on a network error or a CORS block. A 404 or 500 is a successfully received response with `response.ok === false`. Without a check, the code tries to parse the error body as user data.',
+          ru: '`fetch` отклоняет промис только при сетевой ошибке или блокировке [[cors|CORS]]. Ответ 404 или 500 — это успешно полученный ответ, у которого `response.ok === false`. Без проверки код попытается разобрать тело ошибки как данные пользователя.',
+          en: '`fetch` rejects only on a network error or a [[cors|CORS]] block. A 404 or 500 is a successfully received response with `response.ok === false`. Without a check, the code tries to parse the error body as user data.',
         },
       },
       {

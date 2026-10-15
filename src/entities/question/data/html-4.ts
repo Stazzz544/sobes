@@ -162,8 +162,8 @@ export const HTML_QUESTIONS_4: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`type="search"` даёт полю роль `searchbox` — диктор объявит «поле поиска», а на телефоне клавиатура покажет кнопку «Найти». Роль `search` — это другое: ориентир для всей области поиска, его даёт элемент `<search>` или `<form role="search">`. Подсказки-автодополнение превращают поле в `combobox` — это уже задача ARIA.',
-          en: '`type="search"` gives the field the `searchbox` role — a screen reader announces “search field”, and phones show a “Search” key. The `search` role is different: a landmark for the whole search area, given by the `<search>` element or `<form role="search">`. Autocomplete suggestions turn the field into a `combobox` — that’s an ARIA job.',
+          ru: '`type="search"` даёт полю роль `searchbox` — диктор объявит «поле поиска», а на телефоне клавиатура покажет кнопку «Найти». Роль `search` — это другое: [[landmark|ориентир]] для всей области поиска, его даёт элемент `<search>` или `<form role="search">`. Подсказки-автодополнение превращают поле в `combobox` — это уже задача ARIA.',
+          en: '`type="search"` gives the field the `searchbox` role — a screen reader announces “search field”, and phones show a “Search” key. The `search` role is different: a [[landmark|landmark]] for the whole search area, given by the `<search>` element or `<form role="search">`. Autocomplete suggestions turn the field into a `combobox` — that’s an ARIA job.',
         },
       },
     ],

@@ -298,8 +298,8 @@ const mode = config.mode;`,
       {
         type: 'text',
         text: {
-          ru: '`JSON.parse` возвращает `any`, и с ним опечатка `data.nmae` прошла бы незаметно. Явный `unknown` заставляет сначала проверить форму: `typeof`, `in`, type guard или, лучше всего, схему (zod). Это честное описание внешних данных — ответов API, `localStorage`, сообщений `postMessage`.',
-          en: '`JSON.parse` returns `any`, and with it a typo like `data.nmae` would slip through. An explicit `unknown` forces checking the shape first: `typeof`, `in`, a type guard or, best, a schema (zod). It’s an honest type for external data — API responses, `localStorage`, `postMessage` messages.',
+          ru: '`JSON.parse` возвращает `any`, и с ним опечатка `data.nmae` прошла бы незаметно. Явный `unknown` заставляет сначала проверить форму: `typeof`, `in`, [[type-guard|type guard]] или, лучше всего, схему (zod). Это честное описание внешних данных — ответов API, `localStorage`, сообщений `postMessage`.',
+          en: '`JSON.parse` returns `any`, and with it a typo like `data.nmae` would slip through. An explicit `unknown` forces checking the shape first: `typeof`, `in`, a [[type-guard|type guard]] or, best, a schema (zod). It’s an honest type for external data — API responses, `localStorage`, `postMessage` messages.',
         },
       },
     ],

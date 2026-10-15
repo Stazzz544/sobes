@@ -13,8 +13,8 @@ export const TYPESCRIPT_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: '`any` выключает проверки и «заражает» всё, к чему прикасается: результат операций с ним тоже `any`. `unknown` принимает любое значение, но пользоваться им можно только после сужения — так безопасно описывать внешние данные: JSON, ответы API, `catch (error)`.',
-          en: '`any` turns checks off and “infects” everything it touches: operations on it produce `any` too. `unknown` accepts any value, but you can use it only after narrowing — the safe way to type external data: JSON, API responses, `catch (error)`.',
+          ru: '`any` выключает проверки и «заражает» всё, к чему прикасается: результат операций с ним тоже `any`. `unknown` принимает любое значение, но пользоваться им можно только после [[type-narrowing|сужения]] — так безопасно описывать внешние данные: JSON, ответы API, `catch (error)`.',
+          en: '`any` turns checks off and “infects” everything it touches: operations on it produce `any` too. `unknown` accepts any value, but you can use it only after [[type-narrowing|narrowing]] — the safe way to type external data: JSON, API responses, `catch (error)`.',
         },
       },
       {
@@ -198,8 +198,8 @@ const age = getProperty({ name: 'Ann', age: 30 }, 'age'); // number
       {
         type: 'text',
         text: {
-          ru: 'Дженерики бывают у функций, типов (`type Box<T> = { value: T }`), интерфейсов и классов; у типа может быть значение по умолчанию `T = string`. Правило хорошего дженерика: параметр связывает хотя бы два места — вход и выход или два аргумента. Если он встречается один раз, хватит конкретного типа или `unknown`.',
-          en: 'Generics exist on functions, types (`type Box<T> = { value: T }`), interfaces and classes; a type can have a default `T = string`. Rule of a good generic: the parameter links at least two places — input and output, or two arguments. If it appears once, a concrete type or `unknown` will do.',
+          ru: '[[generic|Дженерики]] бывают у функций, типов (`type Box<T> = { value: T }`), интерфейсов и классов; у типа может быть значение по умолчанию `T = string`. Правило хорошего дженерика: параметр связывает хотя бы два места — вход и выход или два аргумента. Если он встречается один раз, хватит конкретного типа или `unknown`.',
+          en: '[[generic|Generics]] exist on functions, types (`type Box<T> = { value: T }`), interfaces and classes; a type can have a default `T = string`. Rule of a good generic: the parameter links at least two places — input and output, or two arguments. If it appears once, a concrete type or `unknown` will do.',
         },
       },
     ],
@@ -302,8 +302,8 @@ type E = NoDistribute<string | number>; // false`,
       {
         type: 'text',
         text: {
-          ru: '`infer` объявляет переменную типа внутри условия: «если `T` — массив чего-то, назови это `Item`». Так устроены `ReturnType`, `Parameters` и `Awaited`. Пока `T` не известен (внутри дженерик-функции), условный тип не вычисляется — это частая причина «непонятных» ошибок.',
-          en: '`infer` declares a type variable inside the condition: “if `T` is an array of something, call it `Item`”. That’s how `ReturnType`, `Parameters` and `Awaited` work. While `T` is unknown (inside a generic function), a conditional type isn’t resolved — a common source of “weird” errors.',
+          ru: '`infer` объявляет переменную типа внутри условия: «если `T` — массив чего-то, назови это `Item`». Так устроены `ReturnType`, `Parameters` и `Awaited`. Пока `T` не известен (внутри [[generic|дженерик]]-функции), условный тип не вычисляется — это частая причина «непонятных» ошибок.',
+          en: '`infer` declares a type variable inside the condition: “if `T` is an array of something, call it `Item`”. That’s how `ReturnType`, `Parameters` and `Awaited` work. While `T` is unknown (inside a [[generic|generic]] function), a conditional type isn’t resolved — a common source of “weird” errors.',
         },
       },
       {

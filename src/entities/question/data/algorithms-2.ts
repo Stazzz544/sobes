@@ -38,8 +38,8 @@ console.log(fib(10), calls);`,
       {
         type: 'text',
         text: {
-          ru: 'Число вызовов растёт экспоненциально (примерно 1.6ⁿ, на собеседовании обычно говорят O(2ⁿ)): `fib(40)` — уже больше 300 миллионов вызовов. Лечится мемоизацией или циклом.',
-          en: 'The call count grows exponentially (about 1.6ⁿ, usually stated as O(2ⁿ) in interviews): `fib(40)` takes over 300 million calls. Memoization or a loop fixes it.',
+          ru: 'Число вызовов растёт экспоненциально (примерно 1.6ⁿ, на собеседовании обычно говорят O(2ⁿ)): `fib(40)` — уже больше 300 миллионов вызовов. Лечится [[memoization|мемоизацией]] или циклом.',
+          en: 'The call count grows exponentially (about 1.6ⁿ, usually stated as O(2ⁿ) in interviews): `fib(40)` takes over 300 million calls. [[memoization|Memoization]] or a loop fixes it.',
         },
       },
     ],

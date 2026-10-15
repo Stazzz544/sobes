@@ -27,8 +27,8 @@ export const NODE_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Node.js — это движок V8 и библиотека libuv без браузера: DOM, `window` и `document` здесь нет. Зато есть то, чего нет в браузере: `process`, `Buffer`, `setImmediate`, модули `fs` и `http`. Глобальный объект доступен как `globalThis`, а `fetch` встроен начиная с Node 18.',
-          en: 'Node.js is the V8 engine plus libuv without a browser: there’s no DOM, `window` or `document`. Instead it has things browsers lack: `process`, `Buffer`, `setImmediate`, the `fs` and `http` modules. The global object is `globalThis`, and `fetch` is built in since Node 18.',
+          ru: 'Node.js — это движок V8 и библиотека [[libuv|libuv]] без браузера: DOM, `window` и `document` здесь нет. Зато есть то, чего нет в браузере: `process`, `Buffer`, `setImmediate`, модули `fs` и `http`. Глобальный объект доступен как `globalThis`, а `fetch` встроен начиная с Node 18.',
+          en: 'Node.js is the V8 engine plus [[libuv|libuv]] without a browser: there’s no DOM, `window` or `document`. Instead it has things browsers lack: `process`, `Buffer`, `setImmediate`, the `fs` and `http` modules. The global object is `globalThis`, and `fetch` is built in since Node 18.',
         },
       },
     ],
@@ -58,8 +58,8 @@ export const NODE_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Ваш код и колбэки выполняются в одном потоке — поэтому тяжёлое синхронное вычисление останавливает весь сервер. Сетевой ввод-вывод неблокирующий средствами ОС, а операции без асинхронного API в ОС (`fs`, `dns.lookup`, `zlib`, `crypto.pbkdf2`) libuv выполняет в пуле потоков (по умолчанию 4). Для своих тяжёлых вычислений есть `worker_threads`.',
-          en: 'Your code and callbacks run on one thread — that’s why a heavy synchronous computation stalls the whole server. Network I/O is non-blocking via the OS, while operations without an async OS API (`fs`, `dns.lookup`, `zlib`, `crypto.pbkdf2`) are run by libuv in a thread pool (4 by default). For your own heavy computations there’s `worker_threads`.',
+          ru: 'Ваш код и колбэки выполняются в одном потоке — поэтому тяжёлое синхронное вычисление останавливает весь сервер. Сетевой ввод-вывод неблокирующий средствами ОС, а операции без асинхронного API в ОС (`fs`, `dns.lookup`, `zlib`, `crypto.pbkdf2`) [[libuv|libuv]] выполняет в пуле потоков (по умолчанию 4). Для своих тяжёлых вычислений есть `worker_threads`.',
+          en: 'Your code and callbacks run on one thread — that’s why a heavy synchronous computation stalls the whole server. Network I/O is non-blocking via the OS, while operations without an async OS API (`fs`, `dns.lookup`, `zlib`, `crypto.pbkdf2`) are run by [[libuv|libuv]] in a thread pool (4 by default). For your own heavy computations there’s `worker_threads`.',
         },
       },
     ],
@@ -118,8 +118,8 @@ console.log(port);`,
       {
         type: 'text',
         text: {
-          ru: '`process.exit()` завершает процесс сразу, даже если запись в `stdout` или другие асинхронные операции ещё не закончились, — хвост лога может пропасть. `process.exitCode = 1` лишь задаёт код: процесс завершится сам, когда цикл событий опустеет. CI смотрит именно на код выхода: 0 — успех, всё остальное — падение.',
-          en: '`process.exit()` ends the process immediately, even if writes to `stdout` or other async work haven’t finished — the end of the log may be lost. `process.exitCode = 1` only sets the code: the process exits by itself once the event loop is empty. CI looks at the exit code: 0 means success, anything else is a failure.',
+          ru: '`process.exit()` завершает процесс сразу, даже если запись в `stdout` или другие асинхронные операции ещё не закончились, — хвост лога может пропасть. `process.exitCode = 1` лишь задаёт код: процесс завершится сам, когда [[event-loop|цикл событий]] опустеет. CI смотрит именно на код выхода: 0 — успех, всё остальное — падение.',
+          en: '`process.exit()` ends the process immediately, even if writes to `stdout` or other async work haven’t finished — the end of the log may be lost. `process.exitCode = 1` only sets the code: the process exits by itself once the [[event-loop|event loop]] is empty. CI looks at the exit code: 0 means success, anything else is a failure.',
         },
       },
     ],
@@ -314,8 +314,8 @@ fs.readFile(__filename, () => {
       {
         type: 'text',
         text: {
-          ru: 'Сначала синхронный код колбэка. Сразу после него Node опустошает очередь `process.nextTick`, затем микрозадачи промисов. Колбэк `readFile` выполнялся в фазе poll, следующая фаза — check, где выполняется `setImmediate`, а таймеры — только на следующем витке цикла.',
-          en: 'First the callback’s synchronous code. Right after it Node drains the `process.nextTick` queue, then promise microtasks. The `readFile` callback ran in the poll phase; the next phase is check, where `setImmediate` runs, while timers wait for the next loop iteration.',
+          ru: 'Сначала синхронный код колбэка. Сразу после него Node опустошает очередь `process.nextTick`, затем [[microtask|микрозадачи]] промисов. Колбэк `readFile` выполнялся в фазе poll, следующая фаза — check, где выполняется `setImmediate`, а таймеры — только на следующем витке цикла.',
+          en: 'First the callback’s synchronous code. Right after it Node drains the `process.nextTick` queue, then promise [[microtask|microtasks]]. The `readFile` callback ran in the poll phase; the next phase is check, where `setImmediate` runs, while timers wait for the next loop iteration.',
         },
       },
       {
@@ -360,8 +360,8 @@ fs.readFile(__filename, () => {
       {
         type: 'text',
         text: {
-          ru: 'Очередь `nextTick` опустошается целиком, прежде чем цикл событий перейдёт дальше, — а она никогда не пустеет. Ввод-вывод и таймеры «голодают». Стек не переполнится: каждый вызов начинается с чистого стека. Для повторяющейся работы, которая должна пропускать ввод-вывод вперёд, используют `setImmediate`.',
-          en: 'The `nextTick` queue is drained completely before the event loop moves on — and it never empties. I/O and timers starve. The stack won’t overflow: each call starts on a clean stack. For repeated work that should let I/O through, use `setImmediate`.',
+          ru: 'Очередь `nextTick` опустошается целиком, прежде чем [[event-loop|цикл событий]] перейдёт дальше, — а она никогда не пустеет. Ввод-вывод и таймеры «голодают». Стек не переполнится: каждый вызов начинается с чистого стека. Для повторяющейся работы, которая должна пропускать ввод-вывод вперёд, используют `setImmediate`.',
+          en: 'The `nextTick` queue is drained completely before the [[event-loop|event loop]] moves on — and it never empties. I/O and timers starve. The stack won’t overflow: each call starts on a clean stack. For repeated work that should let I/O through, use `setImmediate`.',
         },
       },
     ],
@@ -389,8 +389,8 @@ fs.readFile(__filename, () => {
       {
         type: 'text',
         text: {
-          ru: 'Синхронный код занимает единственный поток JavaScript, и цикл событий не может принять ни один запрос, даже к `/health`. Решения: асинхронные API, вынос расчёта в `worker_threads` или отдельную очередь задач, разбиение работы на части через `setImmediate`. Сюда же относятся `*Sync`-методы `fs` и тяжёлые регулярные выражения в обработчиках.',
-          en: 'Synchronous code holds the only JavaScript thread, and the event loop can’t accept any request, even to `/health`. Fixes: async APIs, moving the computation to `worker_threads` or a job queue, splitting work into chunks via `setImmediate`. The same goes for `fs` `*Sync` methods and heavy regexes in handlers.',
+          ru: 'Синхронный код занимает единственный поток JavaScript, и [[event-loop|цикл событий]] не может принять ни один запрос, даже к `/health`. Решения: асинхронные API, вынос расчёта в `worker_threads` или отдельную очередь задач, разбиение работы на части через `setImmediate`. Сюда же относятся `*Sync`-методы `fs` и тяжёлые регулярные выражения в обработчиках.',
+          en: 'Synchronous code holds the only JavaScript thread, and the [[event-loop|event loop]] can’t accept any request, even to `/health`. Fixes: async APIs, moving the computation to `worker_threads` or a job queue, splitting work into chunks via `setImmediate`. The same goes for `fs` `*Sync` methods and heavy regexes in handlers.',
         },
       },
     ],

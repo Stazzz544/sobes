@@ -22,8 +22,8 @@ export const NODE_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: 'Ваш JavaScript работает в одном потоке. Сетевой ввод-вывод неблокирующий средствами ОС, а файлы, DNS, `zlib` и часть `crypto` libuv выполняет в пуле из 4 потоков. Тяжёлые вычисления выносят в `worker_threads`. Значения `process.env` — всегда строки, а завершать скрипт с ошибкой лучше через `process.exitCode = 1`, а не `process.exit(1)`.',
-          en: 'Your JavaScript runs on one thread. Network I/O is non-blocking via the OS, while files, DNS, `zlib` and some `crypto` run in libuv’s pool of 4 threads. Heavy computations go to `worker_threads`. `process.env` values are always strings, and a script should fail via `process.exitCode = 1` rather than `process.exit(1)`.',
+          ru: 'Ваш JavaScript работает в одном потоке. Сетевой ввод-вывод неблокирующий средствами ОС, а файлы, DNS, `zlib` и часть `crypto` [[libuv|libuv]] выполняет в пуле из 4 потоков. Тяжёлые вычисления выносят в `worker_threads`. Значения `process.env` — всегда строки, а завершать скрипт с ошибкой лучше через `process.exitCode = 1`, а не `process.exit(1)`.',
+          en: 'Your JavaScript runs on one thread. Network I/O is non-blocking via the OS, while files, DNS, `zlib` and some `crypto` run in [[libuv|libuv]]’s pool of 4 threads. Heavy computations go to `worker_threads`. `process.env` values are always strings, and a script should fail via `process.exitCode = 1` rather than `process.exit(1)`.',
         },
       },
     ],
@@ -152,8 +152,8 @@ export const NODE_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: 'Потоки бывают Readable, Writable, Duplex и Transform. Когда приёмник не успевает, `write()` возвращает `false` — это **backpressure**: писать дальше нужно после события `drain`. `stream.pipeline` соединяет потоки, сам соблюдает backpressure и закрывает всё при ошибке.',
-          en: 'Streams are Readable, Writable, Duplex and Transform. When the destination can’t keep up, `write()` returns `false` — that’s **backpressure**: continue after the `drain` event. `stream.pipeline` connects streams, respects backpressure and closes everything on error.',
+          ru: 'Потоки бывают Readable, Writable, Duplex и Transform. Когда приёмник не успевает, `write()` возвращает `false` — это **backpressure**: писать дальше нужно после события `drain`. `stream.pipeline` соединяет потоки, сам соблюдает [[backpressure|backpressure]] и закрывает всё при ошибке.',
+          en: 'Streams are Readable, Writable, Duplex and Transform. When the destination can’t keep up, `write()` returns `false` — that’s **backpressure**: continue after the `drain` event. `stream.pipeline` connects streams, respects [[backpressure|backpressure]] and closes everything on error.',
         },
       },
     ],

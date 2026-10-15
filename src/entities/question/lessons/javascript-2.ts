@@ -283,8 +283,8 @@ console.log(Object.hasOwn(rex, 'speak'), 'speak' in rex); // false true`,
       {
         type: 'text',
         text: {
-          ru: '`async`-функция всегда возвращает промис. `await` приостанавливает её, не блокируя поток; до первого `await` она выполняется синхронно, а продолжение — микрозадача. Ошибки ловятся обычным `try/catch`.',
-          en: 'An `async` function always returns a promise. `await` pauses it without blocking the thread; until the first `await` it runs synchronously, and the continuation is a microtask. Errors are caught with a plain `try/catch`.',
+          ru: '`async`-функция всегда возвращает промис. `await` приостанавливает её, не блокируя поток; до первого `await` она выполняется синхронно, а продолжение — [[microtask|микрозадача]]. Ошибки ловятся обычным `try/catch`.',
+          en: 'An `async` function always returns a promise. `await` pauses it without blocking the thread; until the first `await` it runs synchronously, and the continuation is a [[microtask|microtask]]. Errors are caught with a plain `try/catch`.',
         },
       },
       {
@@ -518,8 +518,8 @@ console.log(count); // 1`,
       {
         type: 'text',
         text: {
-          ru: 'Статические `import` разрешаются до выполнения кода — поэтому сборщики умеют выкидывать неиспользуемое (tree-shaking). `import()` — динамический: возвращает промис и грузит модуль по требованию, например для редко открываемого экрана. CommonJS (`require`, `module.exports`) — система Node до ES-модулей: загружает синхронно и отдаёт объект `module.exports`, а не живые привязки.',
-          en: 'Static `import`s are resolved before the code runs — that’s why bundlers can drop unused code (tree-shaking). `import()` is dynamic: it returns a promise and loads a module on demand, e.g. for a rarely opened screen. CommonJS (`require`, `module.exports`) is Node’s pre-ES-modules system: it loads synchronously and hands out the `module.exports` object, not live bindings.',
+          ru: 'Статические `import` разрешаются до выполнения кода — поэтому сборщики умеют выкидывать неиспользуемое ([[tree-shaking|tree-shaking]]). `import()` — динамический: возвращает промис и грузит модуль по требованию, например для редко открываемого экрана. CommonJS (`require`, `module.exports`) — система Node до ES-модулей: загружает синхронно и отдаёт объект `module.exports`, а не живые привязки.',
+          en: 'Static `import`s are resolved before the code runs — that’s why bundlers can drop unused code ([[tree-shaking|tree-shaking]]). `import()` is dynamic: it returns a promise and loads a module on demand, e.g. for a rarely opened screen. CommonJS (`require`, `module.exports`) is Node’s pre-ES-modules system: it loads synchronously and hands out the `module.exports` object, not live bindings.',
         },
       },
     ],
@@ -655,8 +655,8 @@ console.log(Object.keys(plain)); // ['[object Object]']`,
       {
         type: 'text',
         text: {
-          ru: '`WeakMap` и `WeakSet` держат ключи-объекты **слабо**: если других ссылок на объект нет, сборщик мусора удалит его вместе с записью. Поэтому их нельзя перебрать и у них нет `size`. Применение — данные, привязанные к объекту, без утечек памяти: кеш по DOM-узлу, приватные данные экземпляров.',
-          en: '`WeakMap` and `WeakSet` hold their object keys **weakly**: if there are no other references to an object, the garbage collector removes it along with the entry. That’s why they can’t be iterated and have no `size`. Use them for data attached to an object without memory leaks: a cache per DOM node, private instance data.',
+          ru: '`WeakMap` и `WeakSet` держат ключи-объекты **слабо**: если других ссылок на объект нет, [[garbage-collection|сборщик мусора]] удалит его вместе с записью. Поэтому их нельзя перебрать и у них нет `size`. Применение — данные, привязанные к объекту, без утечек памяти: кеш по DOM-узлу, приватные данные экземпляров.',
+          en: '`WeakMap` and `WeakSet` hold their object keys **weakly**: if there are no other references to an object, the [[garbage-collection|garbage collector]] removes it along with the entry. That’s why they can’t be iterated and have no `size`. Use them for data attached to an object without memory leaks: a cache per DOM node, private instance data.',
         },
       },
       {
@@ -776,8 +776,8 @@ console.log([1, 2, 3].reduce((sum, value) => sum + value, 0)); // 6`,
       {
         type: 'text',
         text: {
-          ru: 'Частые задачи фронтенда: `debounce` и `throttle` (замыкание + таймер), свой `Promise.all` (порядок по индексу, счётчик, пустой массив), `curry` (`fn.length` + замыкание), `flatten` (рекурсия по `Array.isArray`), `memoize` (ключ из всех аргументов), LRU-кеш (`Map` помнит порядок вставки), скобки (стек), `groupBy`, глубокое копирование (`structuredClone`), таймаут через `Promise.race`.',
-          en: 'Common frontend tasks: `debounce` and `throttle` (closure + timer), your own `Promise.all` (order by index, a counter, the empty array), `curry` (`fn.length` + closure), `flatten` (recursion on `Array.isArray`), `memoize` (a key from all arguments), an LRU cache (`Map` keeps insertion order), brackets (a stack), `groupBy`, deep copy (`structuredClone`), a timeout via `Promise.race`.',
+          ru: 'Частые задачи фронтенда: `debounce` и `throttle` ([[closure|замыкание]] + таймер), свой `Promise.all` (порядок по индексу, счётчик, пустой массив), `curry` (`fn.length` + замыкание), `flatten` (рекурсия по `Array.isArray`), `memoize` (ключ из всех аргументов), LRU-кеш (`Map` помнит порядок вставки), скобки (стек), `groupBy`, глубокое копирование (`structuredClone`), таймаут через `Promise.race`.',
+          en: 'Common frontend tasks: `debounce` and `throttle` ([[closure|closure]] + timer), your own `Promise.all` (order by index, a counter, the empty array), `curry` (`fn.length` + closure), `flatten` (recursion on `Array.isArray`), `memoize` (a key from all arguments), an LRU cache (`Map` keeps insertion order), brackets (a stack), `groupBy`, deep copy (`structuredClone`), a timeout via `Promise.race`.',
         },
       },
     ],

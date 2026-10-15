@@ -215,8 +215,8 @@ const strings = values.filter(isString);`,
       {
         type: 'text',
         text: {
-          ru: 'Возвращаемый тип `value is string` — это **предикат типа** (type guard). Он сообщает компилятору: если функция вернула `true`, аргумент — `string`.',
-          en: 'The return type `value is string` is a **type predicate** (type guard). It tells the compiler: if the function returns `true`, the argument is a `string`.',
+          ru: 'Возвращаемый тип `value is string` — это **предикат типа** ([[type-guard|type guard]]). Он сообщает компилятору: если функция вернула `true`, аргумент — `string`.',
+          en: 'The return type `value is string` is a **type predicate** ([[type-guard|type guard]]). It tells the compiler: if the function returns `true`, the argument is a `string`.',
         },
       },
       {

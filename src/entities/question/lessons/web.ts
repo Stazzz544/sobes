@@ -216,8 +216,8 @@ element.innerHTML = comment; // dangerous: <img src=x onerror=...> will run`,
       {
         type: 'text',
         text: {
-          ru: '[[csrf|CSRF]] — браузер прикладывает cookie к запросу на ваш домен, даже если его отправила форма с чужого сайта. Защита: `SameSite=Lax` или `Strict` у сессионной cookie, CSRF-токен в запросах, проверка заголовка `Origin`. CORS от CSRF не защищает: он ограничивает чтение ответа, а не отправку простого запроса. `HttpOnly` прячет cookie от JavaScript, `Secure` — отправляет только по HTTPS.',
-          en: '[[csrf|CSRF]]: the browser attaches cookies to a request to your domain even if a form on another site sent it. Defenses: `SameSite=Lax` or `Strict` on the session cookie, a CSRF token in requests, checking the `Origin` header. CORS doesn’t protect against CSRF: it limits reading the response, not sending a simple request. `HttpOnly` hides a cookie from JavaScript, `Secure` sends it over HTTPS only.',
+          ru: '[[csrf|CSRF]] — браузер прикладывает cookie к запросу на ваш домен, даже если его отправила форма с чужого сайта. Защита: `SameSite=Lax` или `Strict` у сессионной cookie, CSRF-токен в запросах, проверка заголовка `Origin`. [[cors|CORS]] от CSRF не защищает: он ограничивает чтение ответа, а не отправку простого запроса. `HttpOnly` прячет cookie от JavaScript, `Secure` — отправляет только по HTTPS.',
+          en: '[[csrf|CSRF]]: the browser attaches cookies to a request to your domain even if a form on another site sent it. Defenses: `SameSite=Lax` or `Strict` on the session cookie, a CSRF token in requests, checking the `Origin` header. [[cors|CORS]] doesn’t protect against CSRF: it limits reading the response, not sending a simple request. `HttpOnly` hides a cookie from JavaScript, `Secure` sends it over HTTPS only.',
         },
       },
       {
@@ -276,8 +276,8 @@ Access-Control-Allow-Headers: content-type`,
       {
         type: 'text',
         text: {
-          ru: 'Запрос с cookie (`credentials: \'include\'`) требует конкретного origin вместо `*` и `Access-Control-Allow-Credentials: true`. CORS настраивается на сервере: с клиента его не «включить». Для локальной разработки обычно хватает прокси dev-сервера — тогда запросы идут на свой origin.',
-          en: 'A request with cookies (`credentials: \'include\'`) requires a specific origin instead of `*` and `Access-Control-Allow-Credentials: true`. CORS is configured on the server: it can’t be “turned on” from the client. For local development a dev-server proxy usually does the job — requests then go to your own origin.',
+          ru: 'Запрос с cookie (`credentials: \'include\'`) требует конкретного origin вместо `*` и `Access-Control-Allow-Credentials: true`. [[cors|CORS]] настраивается на сервере: с клиента его не «включить». Для локальной разработки обычно хватает прокси dev-сервера — тогда запросы идут на свой origin.',
+          en: 'A request with cookies (`credentials: \'include\'`) requires a specific origin instead of `*` and `Access-Control-Allow-Credentials: true`. [[cors|CORS]] is configured on the server: it can’t be “turned on” from the client. For local development a dev-server proxy usually does the job — requests then go to your own origin.',
         },
       },
     ],
@@ -313,15 +313,15 @@ Access-Control-Allow-Headers: content-type`,
       {
         type: 'text',
         text: {
-          ru: 'Хорошие значения по 75-му перцентилю пользователей: LCP ≤ 2,5 с, INP ≤ 200 мс, CLS ≤ 0,1. INP заменил FID в марте 2024 года: он учитывает задержку всех взаимодействий, а не только первого.',
-          en: 'Good values at the 75th percentile of users: LCP ≤ 2.5 s, INP ≤ 200 ms, CLS ≤ 0.1. INP replaced FID in March 2024: it accounts for the delay of all interactions, not just the first.',
+          ru: 'Хорошие значения по 75-му перцентилю пользователей: [[lcp|LCP]] ≤ 2,5 с, [[inp|INP]] ≤ 200 мс, CLS ≤ 0,1. INP заменил FID в марте 2024 года: он учитывает задержку всех взаимодействий, а не только первого.',
+          en: 'Good values at the 75th percentile of users: [[lcp|LCP]] ≤ 2.5 s, [[inp|INP]] ≤ 200 ms, CLS ≤ 0.1. INP replaced FID in March 2024: it accounts for the delay of all interactions, not just the first.',
         },
       },
       {
         type: 'text',
         text: {
-          ru: 'LCP: быстрый ответ сервера, сжатые картинки, главную картинку не делать ленивой и дать ей высокий приоритет. INP: дробить длинные задачи (дольше 50 мс) и отдавать поток браузеру, грузить меньше JS. CLS: задавать картинкам `width` и `height` (или `aspect-ratio`), резервировать место под рекламу и встраиваемые блоки.',
-          en: 'LCP: a fast server response, compressed images, don’t lazy-load the main image and give it high priority. INP: split long tasks (over 50 ms) and yield to the browser, ship less JS. CLS: give images `width` and `height` (or `aspect-ratio`), reserve space for ads and embeds.',
+          ru: 'LCP: быстрый ответ сервера, сжатые картинки, главную картинку не делать ленивой и дать ей высокий приоритет. INP: дробить длинные задачи (дольше 50 мс) и отдавать поток браузеру, грузить меньше JS. [[cls|CLS]]: задавать картинкам `width` и `height` (или `aspect-ratio`), резервировать место под рекламу и встраиваемые блоки.',
+          en: 'LCP: a fast server response, compressed images, don’t lazy-load the main image and give it high priority. INP: split long tasks (over 50 ms) and yield to the browser, ship less JS. [[cls|CLS]]: give images `width` and `height` (or `aspect-ratio`), reserve space for ads and embeds.',
         },
       },
       {
@@ -399,8 +399,8 @@ Access-Control-Allow-Headers: content-type`,
       {
         type: 'text',
         text: {
-          ru: 'Скрыть элемент: `display: none` — места не занимает, не кликается и не читается скринридером; `visibility: hidden` — место остаётся, кликов нет; `opacity: 0` — место остаётся, и элемент по-прежнему кликается и получает фокус. `position: sticky` работает, только если задан `top` (или другой край) и между элементом и прокручиваемым контейнером нет предка с `overflow: hidden` или `auto`. `z-index` сравнивается только внутри контекста наложения: родитель с `transform`, `opacity < 1` или своим `z-index` «запирает» детей.',
-          en: 'Hiding an element: `display: none` — takes no space, isn’t clickable or read by screen readers; `visibility: hidden` — keeps its space, no clicks; `opacity: 0` — keeps its space and is still clickable and focusable. `position: sticky` works only with `top` (or another edge) set and no ancestor with `overflow: hidden` or `auto` between the element and the scroll container. `z-index` is compared only within a stacking context: a parent with `transform`, `opacity < 1` or its own `z-index` “locks in” its children.',
+          ru: 'Скрыть элемент: `display: none` — места не занимает, не кликается и не читается скринридером; `visibility: hidden` — место остаётся, кликов нет; `opacity: 0` — место остаётся, и элемент по-прежнему кликается и получает фокус. `position: sticky` работает, только если задан `top` (или другой край) и между элементом и прокручиваемым контейнером нет предка с `overflow: hidden` или `auto`. `z-index` сравнивается только внутри [[stacking-context|контекста наложения]]: родитель с `transform`, `opacity < 1` или своим `z-index` «запирает» детей.',
+          en: 'Hiding an element: `display: none` — takes no space, isn’t clickable or read by screen readers; `visibility: hidden` — keeps its space, no clicks; `opacity: 0` — keeps its space and is still clickable and focusable. `position: sticky` works only with `top` (or another edge) set and no ancestor with `overflow: hidden` or `auto` between the element and the scroll container. `z-index` is compared only within a [[stacking-context|stacking context]]: a parent with `transform`, `opacity < 1` or its own `z-index` “locks in” its children.',
         },
       },
     ],
@@ -492,8 +492,8 @@ Access-Control-Allow-Headers: content-type`,
       {
         type: 'text',
         text: {
-          ru: '**Cookie** — до ~4 КБ, автоматически уходят на сервер с каждым запросом к домену; атрибуты `HttpOnly`, `Secure`, `SameSite`, `Max-Age`. **localStorage** — несколько мегабайт на origin, только строки, синхронный API, живёт бессрочно и общий для всех вкладок. **sessionStorage** — то же, но на одну вкладку и до её закрытия. **IndexedDB** — асинхронная база для больших структурированных данных с транзакциями.',
-          en: '**Cookies** — up to ~4 KB, automatically sent to the server with every request to the domain; attributes `HttpOnly`, `Secure`, `SameSite`, `Max-Age`. **localStorage** — a few megabytes per origin, strings only, synchronous API, lives forever and is shared across tabs. **sessionStorage** — the same, but per tab and until it closes. **IndexedDB** — an asynchronous database for large structured data with transactions.',
+          ru: '**Cookie** — до ~4 КБ, автоматически уходят на сервер с каждым запросом к домену; атрибуты `HttpOnly`, `Secure`, `SameSite`, `Max-Age`. **localStorage** — несколько мегабайт на [[origin|origin]], только строки, синхронный API, живёт бессрочно и общий для всех вкладок. **sessionStorage** — то же, но на одну вкладку и до её закрытия. **IndexedDB** — асинхронная база для больших структурированных данных с транзакциями.',
+          en: '**Cookies** — up to ~4 KB, automatically sent to the server with every request to the domain; attributes `HttpOnly`, `Secure`, `SameSite`, `Max-Age`. **localStorage** — a few megabytes per [[origin|origin]], strings only, synchronous API, lives forever and is shared across tabs. **sessionStorage** — the same, but per tab and until it closes. **IndexedDB** — an asynchronous database for large structured data with transactions.',
         },
       },
       {
@@ -515,8 +515,8 @@ window.addEventListener('storage', (event) => {
       {
         type: 'text',
         text: {
-          ru: 'Всё, что лежит в localStorage, прочитает любой скрипт на странице — в том числе внедрённый через XSS. Поэтому сессию безопаснее хранить в `HttpOnly`-cookie, до которой JavaScript не дотянется.',
-          en: 'Anything in localStorage can be read by any script on the page — including one injected via XSS. That’s why a session is safer in an `HttpOnly` cookie that JavaScript can’t reach.',
+          ru: 'Всё, что лежит в localStorage, прочитает любой скрипт на странице — в том числе внедрённый через [[xss|XSS]]. Поэтому сессию безопаснее хранить в `HttpOnly`-cookie, до которой JavaScript не дотянется.',
+          en: 'Anything in localStorage can be read by any script on the page — including one injected via [[xss|XSS]]. That’s why a session is safer in an `HttpOnly` cookie that JavaScript can’t reach.',
         },
       },
     ],
@@ -549,8 +549,8 @@ window.addEventListener('storage', (event) => {
       {
         type: 'text',
         text: {
-          ru: '[[tree-shaking|Tree-shaking]] удаляет неиспользуемые экспорты, но работает только со статическими ES-модулями и кодом без побочных эффектов при импорте (`"sideEffects": false` в `package.json` помогает). Динамический `import()` делит бандл на чанки, которые грузятся по требованию. Хеш содержимого в имени файла позволяет кэшировать его навсегда.',
-          en: '[[tree-shaking|Tree-shaking]] removes unused exports, but only works with static ES modules and code without import-time side effects (`"sideEffects": false` in `package.json` helps). Dynamic `import()` splits the bundle into chunks loaded on demand. A content hash in the file name lets it be cached forever.',
+          ru: '[[tree-shaking|Tree-shaking]] удаляет неиспользуемые экспорты, но работает только со статическими ES-модулями и кодом без [[side-effect|побочных эффектов]] при импорте (`"sideEffects": false` в `package.json` помогает). Динамический `import()` делит бандл на чанки, которые грузятся по требованию. Хеш содержимого в имени файла позволяет кэшировать его навсегда.',
+          en: '[[tree-shaking|Tree-shaking]] removes unused exports, but only works with static ES modules and code without import-time [[side-effect|side effects]] (`"sideEffects": false` in `package.json` helps). Dynamic `import()` splits the bundle into chunks loaded on demand. A content hash in the file name lets it be cached forever.',
         },
       },
       {

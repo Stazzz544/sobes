@@ -235,8 +235,8 @@ git rev-list --count main`,
       {
         type: 'text',
         text: {
-          ru: 'Ветка — указатель на коммит, а `HEAD` — указатель на **текущую ветку**. Новый коммит сдвигает ветку, на которую указывает `HEAD`. Если переключиться прямо на коммит, `HEAD` указывает на него — это состояние «detached HEAD».',
-          en: 'A branch is a pointer to a commit, and `HEAD` points to the **current branch**. A new commit moves the branch `HEAD` points to. If you check out a commit directly, `HEAD` points at it — the “detached HEAD” state.',
+          ru: 'Ветка — указатель на коммит, а `HEAD` — указатель на **текущую ветку**. Новый коммит сдвигает ветку, на которую указывает `HEAD`. Если переключиться прямо на коммит, `HEAD` указывает на него — это состояние «[[detached-head|detached HEAD]]».',
+          en: 'A branch is a pointer to a commit, and `HEAD` points to the **current branch**. A new commit moves the branch `HEAD` points to. If you check out a commit directly, `HEAD` points at it — the “[[detached-head|detached HEAD]]” state.',
         },
       },
     ],
@@ -303,8 +303,8 @@ git log --format=%s`,
       {
         type: 'text',
         text: {
-          ru: 'Коммит `f1` при этом пересоздаётся с новым хешем — поэтому ребейзят только свои, ещё не опубликованные коммиты.',
-          en: 'The `f1` commit is recreated with a new hash — that’s why you only rebase your own unpublished commits.',
+          ru: 'Коммит `f1` при этом пересоздаётся с новым хешем — поэтому [[rebase|ребейзят]] только свои, ещё не опубликованные коммиты.',
+          en: 'The `f1` commit is recreated with a new hash — that’s why you only [[rebase|rebase]] your own unpublished commits.',
         },
       },
     ],
@@ -376,8 +376,8 @@ ls`,
       {
         type: 'text',
         text: {
-          ru: 'Интерактивный rebase (`git rebase -i HEAD~5`) открывает список коммитов, где можно объединить их (`squash`/`fixup`), переставить или переписать сообщения. Делают это со **своими** коммитами до публикации — история меняется.',
-          en: 'Interactive rebase (`git rebase -i HEAD~5`) opens a list of commits where you can combine them (`squash`/`fixup`), reorder or reword them. Do it with **your own** commits before publishing — history changes.',
+          ru: 'Интерактивный [[rebase|rebase]] (`git rebase -i HEAD~5`) открывает список коммитов, где можно объединить их (`squash`/`fixup`), переставить или переписать сообщения. Делают это со **своими** коммитами до публикации — история меняется.',
+          en: 'Interactive [[rebase|rebase]] (`git rebase -i HEAD~5`) opens a list of commits where you can combine them (`squash`/`fixup`), reorder or reword them. Do it with **your own** commits before publishing — history changes.',
         },
       },
       {
@@ -667,8 +667,8 @@ git status -sb`,
       {
         type: 'text',
         text: {
-          ru: 'Rebase переписал коммиты, поэтому нужна принудительная отправка. `--force-with-lease` перезапишет ветку, только если на сервере она в том состоянии, которое вы последний раз видели, — чужие свежие коммиты не потеряются. `--force` перезапишет всё.',
-          en: 'Rebase rewrote the commits, so a forced push is needed. `--force-with-lease` overwrites the branch only if it’s in the state you last saw on the server — others’ fresh commits won’t be lost. `--force` overwrites everything.',
+          ru: '[[rebase|Rebase]] переписал коммиты, поэтому нужна принудительная отправка. `--force-with-lease` перезапишет ветку, только если на сервере она в том состоянии, которое вы последний раз видели, — чужие свежие коммиты не потеряются. `--force` перезапишет всё.',
+          en: '[[rebase|Rebase]] rewrote the commits, so a forced push is needed. `--force-with-lease` overwrites the branch only if it’s in the state you last saw on the server — others’ fresh commits won’t be lost. `--force` overwrites everything.',
         },
       },
       {

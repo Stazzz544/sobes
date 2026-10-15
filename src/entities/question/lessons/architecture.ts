@@ -185,8 +185,8 @@ export const ARCHITECTURE_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: '**BFF** (Backend for Frontend) — серверный слой команды клиента: собирает данные из нескольких сервисов и отдаёт экрану ровно нужное одним запросом. Его роль часто выполняют Next.js Route Handlers и серверные компоненты.',
-          en: 'A **BFF** (Backend for Frontend) is the client team’s server layer: it gathers data from several services and returns exactly what a screen needs in one request. Next.js Route Handlers and Server Components often fill this role.',
+          ru: '**BFF** (Backend for Frontend) — серверный слой команды клиента: собирает данные из нескольких сервисов и отдаёт экрану ровно нужное одним запросом. Его роль часто выполняют Next.js Route Handlers и [[rsc|серверные компоненты]].',
+          en: 'A **BFF** (Backend for Frontend) is the client team’s server layer: it gathers data from several services and returns exactly what a screen needs in one request. Next.js Route Handlers and [[rsc|Server Components]] often fill this role.',
         },
       },
     ],

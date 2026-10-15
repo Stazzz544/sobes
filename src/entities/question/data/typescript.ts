@@ -48,8 +48,8 @@ export const TYPESCRIPT_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'В `unknown` можно положить что угодно, включая `null`, но **использовать** такое значение нельзя: ни вызвать метод, ни присвоить в `string`. Сначала нужно сузить тип — `typeof`, `instanceof`, проверкой свойства или type guard.',
-          en: 'Anything, including `null`, can be stored in `unknown`, but you can’t **use** the value: no method calls, no assigning it to `string`. You have to narrow it first with `typeof`, `instanceof`, a property check or a type guard.',
+          ru: 'В `unknown` можно положить что угодно, включая `null`, но **использовать** такое значение нельзя: ни вызвать метод, ни присвоить в `string`. Сначала нужно сузить тип — `typeof`, `instanceof`, проверкой свойства или [[type-guard|type guard]].',
+          en: 'Anything, including `null`, can be stored in `unknown`, but you can’t **use** the value: no method calls, no assigning it to `string`. You have to narrow it first with `typeof`, `instanceof`, a property check or a [[type-guard|type guard]].',
         },
       },
       {
@@ -125,8 +125,8 @@ const fromUnknown: string = value;`,
       {
         type: 'text',
         text: {
-          ru: 'TypeScript знает, что в JavaScript `typeof null === "object"`. Из `string | number | null` под проверку `typeof value === "object"` подходит только `null` — его и оставляет сужение.',
-          en: 'TypeScript knows that in JavaScript `typeof null === "object"`. Of `string | number | null`, only `null` passes the `typeof value === "object"` check, so that is what narrowing leaves.',
+          ru: 'TypeScript знает, что в JavaScript `typeof null === "object"`. Из `string | number | null` под проверку `typeof value === "object"` подходит только `null` — его и оставляет [[type-narrowing|сужение]].',
+          en: 'TypeScript knows that in JavaScript `typeof null === "object"`. Of `string | number | null`, only `null` passes the `typeof value === "object"` check, so that is what [[type-narrowing|narrowing]] leaves.',
         },
       },
       {

@@ -77,8 +77,8 @@ export const WEB_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Идемпотентный метод даёт одинаковый эффект на сервере, сколько бы раз его ни повторили. `PUT /users/1` с одними данными оставит то же состояние, `DELETE` второй раз удалять уже нечего. А каждый `POST /orders` создаёт новый заказ.',
-          en: 'An idempotent method has the same effect on the server however many times it’s repeated. `PUT /users/1` with the same data leaves the same state, and a second `DELETE` has nothing left to delete. But every `POST /orders` creates a new order.',
+          ru: '[[idempotent|Идемпотентный]] метод даёт одинаковый эффект на сервере, сколько бы раз его ни повторили. `PUT /users/1` с одними данными оставит то же состояние, `DELETE` второй раз удалять уже нечего. А каждый `POST /orders` создаёт новый заказ.',
+          en: 'An [[idempotent|idempotent]] method has the same effect on the server however many times it’s repeated. `PUT /users/1` with the same data leaves the same state, and a second `DELETE` has nothing left to delete. But every `POST /orders` creates a new order.',
         },
       },
       {
@@ -452,8 +452,8 @@ export const WEB_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Ещё дешевле `transform` и `opacity`: их часто можно применить на этапе композитинга без layout и paint.',
-          en: 'Even cheaper are `transform` and `opacity`: they can often be applied at the compositing stage without layout or paint.',
+          ru: 'Ещё дешевле `transform` и `opacity`: их часто можно применить на этапе композитинга без [[layout|layout]] и paint.',
+          en: 'Even cheaper are `transform` and `opacity`: they can often be applied at the compositing stage without [[layout|layout]] or paint.',
         },
       },
       { type: 'diagram', diagram: 'critical-rendering-path' },
@@ -546,8 +546,8 @@ export const WEB_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`transform` и `opacity` браузер может менять на этапе композитинга, часто на GPU, без layout и paint. Анимация `top`, `left`, `width` пересчитывает раскладку на каждом кадре, а `box-shadow` — перерисовку. На слабых устройствах это даёт рывки.',
-          en: 'The browser can change `transform` and `opacity` at the compositing stage, often on the GPU, without layout or paint. Animating `top`, `left` or `width` recomputes layout every frame, and `box-shadow` forces repaints. On weak devices that causes jank.',
+          ru: '`transform` и `opacity` браузер может менять на этапе композитинга, часто на GPU, без [[layout|layout]] и paint. Анимация `top`, `left`, `width` пересчитывает раскладку на каждом кадре, а `box-shadow` — перерисовку. На слабых устройствах это даёт рывки.',
+          en: 'The browser can change `transform` and `opacity` at the compositing stage, often on the GPU, without [[layout|layout]] or paint. Animating `top`, `left` or `width` recomputes layout every frame, and `box-shadow` forces repaints. On weak devices that causes jank.',
         },
       },
       {
@@ -622,8 +622,8 @@ export const WEB_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Браузер копит изменения стилей и пересчитывает раскладку один раз перед кадром. Но чтение геометрии (`offsetWidth`, `getBoundingClientRect`) после записи требует актуальных значений — и layout выполняется **синхронно** прямо сейчас, на каждой итерации.',
-          en: 'The browser batches style changes and recomputes layout once before a frame. But reading geometry (`offsetWidth`, `getBoundingClientRect`) after a write needs up-to-date values, so layout runs **synchronously** right then — on every iteration.',
+          ru: 'Браузер копит изменения стилей и пересчитывает раскладку один раз перед кадром. Но чтение геометрии (`offsetWidth`, `getBoundingClientRect`) после записи требует актуальных значений — и [[layout|layout]] выполняется **синхронно** прямо сейчас, на каждой итерации.',
+          en: 'The browser batches style changes and recomputes [[layout|layout]] once before a frame. But reading geometry (`offsetWidth`, `getBoundingClientRect`) after a write needs up-to-date values, so layout runs **synchronously** right then — on every iteration.',
         },
       },
       {

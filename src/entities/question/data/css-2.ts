@@ -72,8 +72,8 @@ export const CSS_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`display: flow-root` создаёт новый **блочный контекст форматирования** (BFC). BFC растягивается так, чтобы вместить свои float-элементы, и не даёт margin детей схлопываться с внешними.',
-          en: '`display: flow-root` creates a new **block formatting context** (BFC). A BFC grows to contain its floats and stops children’s margins from collapsing with outer ones.',
+          ru: '`display: flow-root` создаёт новый **блочный контекст форматирования** ([[bfc|BFC]]). BFC растягивается так, чтобы вместить свои float-элементы, и не даёт margin детей схлопываться с внешними.',
+          en: '`display: flow-root` creates a new **block formatting context** ([[bfc|BFC]]). A BFC grows to contain its floats and stops children’s margins from collapsing with outer ones.',
         },
       },
       {
@@ -623,8 +623,8 @@ export const CSS_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Для `position: absolute` содержащий блок — ближайший предок с `position`, отличным от `static` (или с `transform`, `filter`, `contain` и т.п.). `.inner` не позиционирован, поэтому `.badge` встаёт в левый верхний угол `.outer`, игнорируя отступ `.inner`.',
-          en: 'For `position: absolute` the containing block is the nearest ancestor whose `position` isn’t `static` (or that has `transform`, `filter`, `contain`, etc.). `.inner` isn’t positioned, so `.badge` lands in the top-left corner of `.outer`, ignoring `.inner`’s margin.',
+          ru: 'Для `position: absolute` [[containing-block|содержащий блок]] — ближайший предок с `position`, отличным от `static` (или с `transform`, `filter`, `contain` и т.п.). `.inner` не позиционирован, поэтому `.badge` встаёт в левый верхний угол `.outer`, игнорируя отступ `.inner`.',
+          en: 'For `position: absolute` the [[containing-block|containing block]] is the nearest ancestor whose `position` isn’t `static` (or that has `transform`, `filter`, `contain`, etc.). `.inner` isn’t positioned, so `.badge` lands in the top-left corner of `.outer`, ignoring `.inner`’s margin.',
         },
       },
       {
@@ -674,8 +674,8 @@ export const CSS_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Обычно `position: fixed` отсчитывается от окна. Но если у предка есть `transform`, `perspective`, `filter`, `contain: paint` или `will-change: transform`, этот предок становится содержащим блоком и для fixed-потомков. `.modal` встаёт в угол `.card` и прокручивается вместе с ней.',
-          en: 'Normally `position: fixed` is relative to the window. But if an ancestor has `transform`, `perspective`, `filter`, `contain: paint` or `will-change: transform`, that ancestor becomes the containing block for fixed descendants too. `.modal` lands in `.card`’s corner and scrolls with it.',
+          ru: 'Обычно `position: fixed` отсчитывается от окна. Но если у предка есть `transform`, `perspective`, `filter`, `contain: paint` или `will-change: transform`, этот предок становится [[containing-block|содержащим блоком]] и для fixed-потомков. `.modal` встаёт в угол `.card` и прокручивается вместе с ней.',
+          en: 'Normally `position: fixed` is relative to the window. But if an ancestor has `transform`, `perspective`, `filter`, `contain: paint` or `will-change: transform`, that ancestor becomes the [[containing-block|containing block]] for fixed descendants too. `.modal` lands in `.card`’s corner and scrolls with it.',
         },
       },
       {
@@ -727,8 +727,8 @@ export const CSS_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Тот же эффект дают `position` вместе с `z-index`, `opacity` меньше 1, `transform`, `filter` — но они меняют поведение или вид элемента. `position: relative` без `z-index` контекст наложения не создаёт, `overflow: hidden` — тоже.',
-          en: '`position` combined with `z-index`, `opacity` below 1, `transform` and `filter` do the same, but they change the element’s behavior or look. `position: relative` without `z-index` doesn’t create a stacking context, and neither does `overflow: hidden`.',
+          ru: 'Тот же эффект дают `position` вместе с `z-index`, `opacity` меньше 1, `transform`, `filter` — но они меняют поведение или вид элемента. `position: relative` без `z-index` [[stacking-context|контекст наложения]] не создаёт, `overflow: hidden` — тоже.',
+          en: '`position` combined with `z-index`, `opacity` below 1, `transform` and `filter` do the same, but they change the element’s behavior or look. `position: relative` without `z-index` doesn’t create a [[stacking-context|stacking context]], and neither does `overflow: hidden`.',
         },
       },
     ],

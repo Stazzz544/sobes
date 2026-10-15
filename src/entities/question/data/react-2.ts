@@ -117,8 +117,8 @@ export const REACT_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Слияние нескольких `setState` — это батчинг, а не reconciliation. Загрузка по требованию — `lazy`.',
-          en: 'Merging several `setState` calls is batching, not reconciliation. On-demand loading is `lazy`.',
+          ru: 'Слияние нескольких `setState` — это [[batching|батчинг]], а не [[reconciliation|reconciliation]]. Загрузка по требованию — `lazy`.',
+          en: 'Merging several `setState` calls is [[batching|batching]], not [[reconciliation|reconciliation]]. On-demand loading is `lazy`.',
         },
       },
       { type: 'diagram', diagram: 'react-render-commit' },

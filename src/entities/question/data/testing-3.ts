@@ -124,8 +124,8 @@ export const TESTING_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Тест зависит от внешнего состояния — текущего времени, — поэтому результат меняется сам по себе. `jest.setSystemTime` или `vi.setSystemTime` (вместе с фейковыми таймерами) делают `Date.now()` и `new Date()` предсказуемыми. Ещё лучше — передавать «сейчас» в функцию параметром: тогда ей и мок не нужен. Не забудьте часовой пояс: в CI он может отличаться от вашего.',
-          en: 'The test depends on external state — the current time — so its result changes by itself. `jest.setSystemTime` or `vi.setSystemTime` (with fake timers) make `Date.now()` and `new Date()` predictable. Even better, pass “now” into the function as a parameter: then no mock is needed. Mind the time zone: CI may differ from yours.',
+          ru: 'Тест зависит от внешнего состояния — текущего времени, — поэтому результат меняется сам по себе. `jest.setSystemTime` или `vi.setSystemTime` (вместе с фейковыми таймерами) делают `Date.now()` и `new Date()` предсказуемыми. Ещё лучше — передавать «сейчас» в функцию параметром: тогда ей и [[test-double|мок]] не нужен. Не забудьте часовой пояс: в CI он может отличаться от вашего.',
+          en: 'The test depends on external state — the current time — so its result changes by itself. `jest.setSystemTime` or `vi.setSystemTime` (with fake timers) make `Date.now()` and `new Date()` predictable. Even better, pass “now” into the function as a parameter: then no [[test-double|mock]] is needed. Mind the time zone: CI may differ from yours.',
         },
       },
     ],
@@ -193,8 +193,8 @@ export const TESTING_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`getByRole` ищет так же, как ассистивные технологии: по роли и доступному имени. Если тест не находит кнопку, её не найдёт и пользователь диктора — тест выявил реальный баг доступности. Правильная реакция — дать кнопке имя (`aria-label` или скрытый текст), а не переходить на `data-testid`, пряча проблему.',
-          en: '`getByRole` searches the way assistive technology does: by role and accessible name. If the test can’t find the button, neither can a screen reader user — the test surfaced a real accessibility bug. The right fix is naming the button (`aria-label` or visually hidden text), not switching to `data-testid` and hiding the problem.',
+          ru: '`getByRole` ищет так же, как ассистивные технологии: по роли и [[accessible-name|доступному имени]]. Если тест не находит кнопку, её не найдёт и пользователь диктора — тест выявил реальный баг доступности. Правильная реакция — дать кнопке имя (`aria-label` или скрытый текст), а не переходить на `data-testid`, пряча проблему.',
+          en: '`getByRole` searches the way assistive technology does: by role and [[accessible-name|accessible name]]. If the test can’t find the button, neither can a screen reader user — the test surfaced a real accessibility bug. The right fix is naming the button (`aria-label` or visually hidden text), not switching to `data-testid` and hiding the problem.',
         },
       },
     ],

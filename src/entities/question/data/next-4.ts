@@ -192,8 +192,8 @@ export const NEXT_QUESTIONS_4: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`after` планирует работу на момент, **когда ответ уже отправлен**: логирование, аналитика, синхронизация — пользователь их не ждёт. `await` перед ответом замедлит каждую страницу, а `setTimeout` в серверлесс-окружении может не выполниться — функцию заморозят сразу после ответа; `after` как раз продлевает её жизнь до завершения задачи. В серверных компонентах эффектов нет.',
-          en: '`after` schedules work for **once the response has been sent**: logging, analytics, syncing — the user doesn’t wait for them. `await` before responding slows every page, and `setTimeout` in a serverless environment may never run — the function is frozen right after responding; `after` extends its life until the task completes. Server Components have no effects.',
+          ru: '`after` планирует работу на момент, **когда ответ уже отправлен**: логирование, аналитика, синхронизация — пользователь их не ждёт. `await` перед ответом замедлит каждую страницу, а `setTimeout` в серверлесс-окружении может не выполниться — функцию заморозят сразу после ответа; `after` как раз продлевает её жизнь до завершения задачи. В [[rsc|серверных компонентах]] эффектов нет.',
+          en: '`after` schedules work for **once the response has been sent**: logging, analytics, syncing — the user doesn’t wait for them. `await` before responding slows every page, and `setTimeout` in a serverless environment may never run — the function is frozen right after responding; `after` extends its life until the task completes. [[rsc|Server Components]] have no effects.',
         },
       },
     ],
@@ -221,8 +221,8 @@ export const NEXT_QUESTIONS_4: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`router.refresh()` заново запрашивает текущий маршрут у сервера и перерисовывает серверные компоненты, а клиентское состояние — поля, прокрутка, `useState` — сохраняется: React сливает новый результат с текущим деревом. `location.reload()` перезагружает страницу целиком и всё теряет. Если данные закешированы, `refresh` может вернуть то же самое — после мутаций кеш сбрасывают через `revalidatePath`/`updateTag`.',
-          en: '`router.refresh()` re-requests the current route from the server and re-renders Server Components, while client state — inputs, scroll, `useState` — is preserved: React merges the new result into the current tree. `location.reload()` reloads the whole page and loses everything. If data is cached, `refresh` may return the same result — after mutations invalidate with `revalidatePath`/`updateTag`.',
+          ru: '`router.refresh()` заново запрашивает текущий маршрут у сервера и перерисовывает [[rsc|серверные компоненты]], а клиентское состояние — поля, прокрутка, `useState` — сохраняется: React сливает новый результат с текущим деревом. `location.reload()` перезагружает страницу целиком и всё теряет. Если данные закешированы, `refresh` может вернуть то же самое — после мутаций кеш сбрасывают через `revalidatePath`/`updateTag`.',
+          en: '`router.refresh()` re-requests the current route from the server and re-renders [[rsc|Server Components]], while client state — inputs, scroll, `useState` — is preserved: React merges the new result into the current tree. `location.reload()` reloads the whole page and loses everything. If data is cached, `refresh` may return the same result — after mutations invalidate with `revalidatePath`/`updateTag`.',
         },
       },
     ],
@@ -293,8 +293,8 @@ export const NEXT_QUESTIONS_4: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Код серверного компонента и его зависимости в браузер не отправляются вовсе. Разбор Markdown, подсветка кода, форматирование дат большими библиотеками — идеальные кандидаты: пользователь получает HTML и ноль лишних килобайт JS. В клиентский бандл стоит пускать только то, что нужно для интерактивности. `ssr: false` наоборот перенесёт всю работу в браузер.',
-          en: 'A Server Component’s code and its dependencies are never sent to the browser. Markdown parsing, code highlighting, date formatting with big libraries are ideal candidates: the user gets HTML and zero extra kilobytes of JS. Only what interactivity needs belongs in the client bundle. `ssr: false` would do the opposite, moving all the work to the browser.',
+          ru: 'Код [[rsc|серверного компонента]] и его зависимости в браузер не отправляются вовсе. Разбор Markdown, подсветка кода, форматирование дат большими библиотеками — идеальные кандидаты: пользователь получает HTML и ноль лишних килобайт JS. В клиентский бандл стоит пускать только то, что нужно для интерактивности. `ssr: false` наоборот перенесёт всю работу в браузер.',
+          en: 'A [[rsc|Server Component]]’s code and its dependencies are never sent to the browser. Markdown parsing, code highlighting, date formatting with big libraries are ideal candidates: the user gets HTML and zero extra kilobytes of JS. Only what interactivity needs belongs in the client bundle. `ssr: false` would do the opposite, moving all the work to the browser.',
         },
       },
     ],
@@ -327,8 +327,8 @@ export const NEXT_QUESTIONS_4: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Cookie ставятся заголовком `Set-Cookie`, а заголовки уходят в начале ответа. Серверный компонент рендерится потоком — к моменту его выполнения заголовки могут быть уже отправлены, поэтому читать cookie в рендере можно, а менять нельзя. Изменение делают в ответ на действие: в Server Action (например, при входе) или Route Handler.',
-          en: 'Cookies are set with a `Set-Cookie` header, and headers go out at the start of the response. A Server Component renders as a stream — by the time it runs, headers may already be sent, so you can read cookies during render but not change them. Changes happen in response to an action: in a Server Action (say, on login) or a Route Handler.',
+          ru: 'Cookie ставятся заголовком `Set-Cookie`, а заголовки уходят в начале ответа. [[rsc|Серверный компонент]] рендерится потоком — к моменту его выполнения заголовки могут быть уже отправлены, поэтому читать cookie в рендере можно, а менять нельзя. Изменение делают в ответ на действие: в Server Action (например, при входе) или Route Handler.',
+          en: 'Cookies are set with a `Set-Cookie` header, and headers go out at the start of the response. A [[rsc|Server Component]] renders as a stream — by the time it runs, headers may already be sent, so you can read cookies during render but not change them. Changes happen in response to an action: in a Server Action (say, on login) or a Route Handler.',
         },
       },
     ],

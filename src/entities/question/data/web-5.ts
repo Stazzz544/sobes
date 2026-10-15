@@ -25,15 +25,15 @@ export const WEB_QUESTIONS_5: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Метод `PUT` и `Content-Type: application/json` делают запрос «непростым», поэтому браузер сначала спрашивает разрешение preflight-запросом `OPTIONS`. Только если сервер разрешил метод и заголовки, уходит сам `PUT`.',
-          en: 'The `PUT` method and `Content-Type: application/json` make the request “non-simple”, so the browser first asks for permission with a preflight `OPTIONS` request. Only if the server allows the method and headers does the actual `PUT` go out.',
+          ru: 'Метод `PUT` и `Content-Type: application/json` делают запрос «непростым», поэтому браузер сначала спрашивает разрешение [[preflight|preflight-запросом]] `OPTIONS`. Только если сервер разрешил метод и заголовки, уходит сам `PUT`.',
+          en: 'The `PUT` method and `Content-Type: application/json` make the request “non-simple”, so the browser first asks for permission with a [[preflight|preflight]] `OPTIONS` request. Only if the server allows the method and headers does the actual `PUT` go out.',
         },
       },
       {
         type: 'text',
         text: {
-          ru: 'Ответ на основной запрос тоже проверяется: без подходящего `Access-Control-Allow-Origin` браузер не отдаст его в JS, хотя сервер запрос уже выполнил. CORS защищает чтение ответа, а не сервер от запросов.',
-          en: 'The main response is checked too: without a matching `Access-Control-Allow-Origin` the browser won’t hand it to JS, even though the server has already processed the request. CORS protects reading the response, not the server from requests.',
+          ru: 'Ответ на основной запрос тоже проверяется: без подходящего `Access-Control-Allow-Origin` браузер не отдаст его в JS, хотя сервер запрос уже выполнил. [[cors|CORS]] защищает чтение ответа, а не сервер от запросов.',
+          en: 'The main response is checked too: without a matching `Access-Control-Allow-Origin` the browser won’t hand it to JS, even though the server has already processed the request. [[cors|CORS]] protects reading the response, not the server from requests.',
         },
       },
     ],

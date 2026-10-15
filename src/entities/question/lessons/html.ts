@@ -13,8 +13,8 @@ export const HTML_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: '`<header>`, `<nav>`, `<main>`, `<footer>`, `<aside>` становятся **ориентирами** (landmarks): пользователь экранного диктора прыгает между ними одной клавишей. `<section>` становится ориентиром «region» только с доступным именем, без него это обычный блок.',
-          en: '`<header>`, `<nav>`, `<main>`, `<footer>`, `<aside>` become **landmarks**: a screen reader user jumps between them with one key. `<section>` becomes a “region” landmark only when it has an accessible name; without one it’s a plain block.',
+          ru: '`<header>`, `<nav>`, `<main>`, `<footer>`, `<aside>` становятся **ориентирами** (landmarks): пользователь экранного диктора прыгает между ними одной клавишей. `<section>` становится [[landmark|ориентиром]] «region» только с [[accessible-name|доступным именем]], без него это обычный блок.',
+          en: '`<header>`, `<nav>`, `<main>`, `<footer>`, `<aside>` become **landmarks**: a screen reader user jumps between them with one key. `<section>` becomes a “region” [[landmark|landmark]] only when it has an [[accessible-name|accessible name]]; without one it’s a plain block.',
         },
       },
       {
@@ -88,8 +88,8 @@ export const HTML_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: 'Типы `email`, `url`, `number` и атрибуты `required`, `minlength`, `pattern` включают встроенную проверку: `checkValidity()` вернёт `false` для `value="abc"` у `type="email"`. Подпись связывают с полем через `<label for>` или обёртку `<label>` — тогда клик по тексту фокусирует поле, а у поля появляется доступное имя.',
-          en: 'Types like `email`, `url`, `number` and attributes `required`, `minlength`, `pattern` enable built-in validation: `checkValidity()` returns `false` for `value="abc"` with `type="email"`. Tie a caption to a field with `<label for>` or a wrapping `<label>` — then clicking the text focuses the field, and the field gets an accessible name.',
+          ru: 'Типы `email`, `url`, `number` и атрибуты `required`, `minlength`, `pattern` включают встроенную проверку: `checkValidity()` вернёт `false` для `value="abc"` у `type="email"`. Подпись связывают с полем через `<label for>` или обёртку `<label>` — тогда клик по тексту фокусирует поле, а у поля появляется [[accessible-name|доступное имя]].',
+          en: 'Types like `email`, `url`, `number` and attributes `required`, `minlength`, `pattern` enable built-in validation: `checkValidity()` returns `false` for `value="abc"` with `type="email"`. Tie a caption to a field with `<label for>` or a wrapping `<label>` — then clicking the text focuses the field, and the field gets an [[accessible-name|accessible name]].',
         },
       },
     ],

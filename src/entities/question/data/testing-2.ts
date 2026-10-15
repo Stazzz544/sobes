@@ -87,8 +87,8 @@ vi.mock('./api', () => ({
       {
         type: 'text',
         text: {
-          ru: 'Чтобы мок применился до импортов, Vitest (как и Jest с `jest.mock`) **поднимает** вызов `vi.mock` в самое начало файла. Фабрика выполняется раньше, чем строка с `const mockUser`, — переменная ещё в «мёртвой зоне». Данные для фабрики объявляют через `const { mockUser } = vi.hoisted(() => ({ mockUser: {…} }))` — этот блок поднимается вместе с моком.',
-          en: 'So the mock applies before imports, Vitest (like Jest with `jest.mock`) **hoists** the `vi.mock` call to the very top of the file. The factory runs before the `const mockUser` line — the variable is still in the temporal dead zone. Declare factory data with `const { mockUser } = vi.hoisted(() => ({ mockUser: {…} }))` — that block is hoisted along with the mock.',
+          ru: 'Чтобы [[test-double|мок]] применился до импортов, Vitest (как и Jest с `jest.mock`) **поднимает** вызов `vi.mock` в самое начало файла. Фабрика выполняется раньше, чем строка с `const mockUser`, — переменная ещё в «мёртвой зоне». Данные для фабрики объявляют через `const { mockUser } = vi.hoisted(() => ({ mockUser: {…} }))` — этот блок поднимается вместе с моком.',
+          en: 'So the [[test-double|mock]] applies before imports, Vitest (like Jest with `jest.mock`) **hoists** the `vi.mock` call to the very top of the file. The factory runs before the `const mockUser` line — the variable is still in the temporal dead zone. Declare factory data with `const { mockUser } = vi.hoisted(() => ({ mockUser: {…} }))` — that block is hoisted along with the mock.',
         },
       },
     ],
@@ -247,8 +247,8 @@ vi.mock('./api', () => ({
       {
         type: 'text',
         text: {
-          ru: 'Каждый тест должен проходить отдельно и в любом порядке. Если перестановка ломает тесты, кто-то из них мутирует общий объект, не сбрасывает моки, данные в базе или модульное состояние. Лечится изоляцией: свежие данные в `beforeEach`, сброс моков, отдельные экземпляры вместо общих синглтонов. Случайный порядок как раз и нужен, чтобы находить такие связи.',
-          en: 'Each test must pass on its own and in any order. If shuffling breaks tests, one of them mutates a shared object or leaves mocks, database data or module state behind. The cure is isolation: fresh data in `beforeEach`, resetting mocks, separate instances instead of shared singletons. Random order exists precisely to surface such coupling.',
+          ru: 'Каждый тест должен проходить отдельно и в любом порядке. Если перестановка ломает тесты, кто-то из них мутирует общий объект, не сбрасывает [[test-double|моки]], данные в базе или модульное состояние. Лечится изоляцией: свежие данные в `beforeEach`, сброс моков, отдельные экземпляры вместо общих синглтонов. Случайный порядок как раз и нужен, чтобы находить такие связи.',
+          en: 'Each test must pass on its own and in any order. If shuffling breaks tests, one of them mutates a shared object or leaves [[test-double|mocks]], database data or module state behind. The cure is isolation: fresh data in `beforeEach`, resetting mocks, separate instances instead of shared singletons. Random order exists precisely to surface such coupling.',
         },
       },
     ],

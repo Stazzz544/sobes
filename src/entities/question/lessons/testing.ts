@@ -95,15 +95,15 @@ export const TESTING_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: '`jest.fn()` / `vi.fn()` — функция-шпион: запоминает вызовы и аргументы (`toHaveBeenCalledWith`) и может возвращать заданное значение. Между тестами вызовы накапливаются, поэтому моки очищают (`clearAllMocks` или настройка `clearMocks`).',
-          en: '`jest.fn()` / `vi.fn()` is a spy function: it records calls and arguments (`toHaveBeenCalledWith`) and can return a set value. Calls accumulate across tests, so clear mocks (`clearAllMocks` or the `clearMocks` option).',
+          ru: '`jest.fn()` / `vi.fn()` — функция-шпион: запоминает вызовы и аргументы (`toHaveBeenCalledWith`) и может возвращать заданное значение. Между тестами вызовы накапливаются, поэтому [[test-double|моки]] очищают (`clearAllMocks` или настройка `clearMocks`).',
+          en: '`jest.fn()` / `vi.fn()` is a spy function: it records calls and arguments (`toHaveBeenCalledWith`) and can return a set value. Calls accumulate across tests, so clear [[test-double|mocks]] (`clearAllMocks` or the `clearMocks` option).',
         },
       },
       {
         type: 'text',
         text: {
-          ru: 'Таймеры (`setTimeout`, debounce) не ждут по-настоящему: `useFakeTimers()` и `advanceTimersByTime(300)` прокручивают время мгновенно. Сеть в тестах компонентов удобно подменять на уровне запросов (MSW): код делает настоящий `fetch`, а ответ приходит из обработчика.',
-          en: 'Don’t really wait for timers (`setTimeout`, debounce): `useFakeTimers()` and `advanceTimersByTime(300)` move time instantly. In component tests, mock the network at the request level (MSW): code makes a real `fetch`, and the response comes from a handler.',
+          ru: 'Таймеры (`setTimeout`, [[debounce|debounce]]) не ждут по-настоящему: `useFakeTimers()` и `advanceTimersByTime(300)` прокручивают время мгновенно. Сеть в тестах компонентов удобно подменять на уровне запросов (MSW): код делает настоящий `fetch`, а ответ приходит из обработчика.',
+          en: 'Don’t really wait for timers (`setTimeout`, [[debounce|debounce]]): `useFakeTimers()` and `advanceTimersByTime(300)` move time instantly. In component tests, mock the network at the request level (MSW): code makes a real `fetch`, and the response comes from a handler.',
         },
       },
     ],
@@ -128,8 +128,8 @@ export const TESTING_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: 'Приоритет запросов: `getByRole` (с `name` — доступным именем) → `getByLabelText` → `getByText` → … → `getByTestId` в последнюю очередь. Поиск по роли заодно проверяет доступность: если кнопку не найти по роли, её не найдёт и экранный диктор.',
-          en: 'Query priority: `getByRole` (with `name` — the accessible name) → `getByLabelText` → `getByText` → … → `getByTestId` as a last resort. Querying by role also checks accessibility: if a button can’t be found by role, a screen reader can’t find it either.',
+          ru: 'Приоритет запросов: `getByRole` (с `name` — [[accessible-name|доступным именем]]) → `getByLabelText` → `getByText` → … → `getByTestId` в последнюю очередь. Поиск по роли заодно проверяет доступность: если кнопку не найти по роли, её не найдёт и экранный диктор.',
+          en: 'Query priority: `getByRole` (with `name` — the [[accessible-name|accessible name]]) → `getByLabelText` → `getByText` → … → `getByTestId` as a last resort. Querying by role also checks accessibility: if a button can’t be found by role, a screen reader can’t find it either.',
         },
       },
       {

@@ -37,8 +37,8 @@ console.log('a');
       {
         type: 'text',
         text: {
-          ru: 'Когда стек пуст, выполняется очередь микрозадач в порядке добавления: колбэк `then` (`c`), потом `queueMicrotask` (`d`). Таймер — макрозадача, он идёт последним даже с задержкой 0: `b`.',
-          en: 'Once the stack is empty, the microtask queue runs in insertion order: the `then` callback (`c`), then `queueMicrotask` (`d`). The timer is a macrotask, so it comes last even with a 0 delay: `b`.',
+          ru: 'Когда стек пуст, выполняется очередь [[microtask|микрозадач]] в порядке добавления: колбэк `then` (`c`), потом `queueMicrotask` (`d`). Таймер — макрозадача, он идёт последним даже с задержкой 0: `b`.',
+          en: 'Once the stack is empty, the [[microtask|microtask]] queue runs in insertion order: the `then` callback (`c`), then `queueMicrotask` (`d`). The timer is a macrotask, so it comes last even with a 0 delay: `b`.',
         },
       },
     ],

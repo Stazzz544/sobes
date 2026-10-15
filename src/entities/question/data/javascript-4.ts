@@ -449,8 +449,8 @@ console.log(map.size, map.get(key), map.get({ id: 1 }));`,
       {
         type: 'text',
         text: {
-          ru: '`WeakMap` держит **ключи** слабо: запись не удерживает объект в памяти. Поэтому его нельзя перебрать и у него нет `size` — содержимое зависит от сборщика мусора.',
-          en: '`WeakMap` holds its **keys** weakly: an entry doesn’t keep the object alive. That’s why it isn’t iterable and has no `size` — its contents depend on the garbage collector.',
+          ru: '`WeakMap` держит **ключи** слабо: запись не удерживает объект в памяти. Поэтому его нельзя перебрать и у него нет `size` — содержимое зависит от [[garbage-collection|сборщика мусора]].',
+          en: '`WeakMap` holds its **keys** weakly: an entry doesn’t keep the object alive. That’s why it isn’t iterable and has no `size` — its contents depend on the [[garbage-collection|garbage collector]].',
         },
       },
       {

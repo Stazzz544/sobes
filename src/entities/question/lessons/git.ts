@@ -92,8 +92,8 @@ export const GIT_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: 'После `git rebase main` коммиты фичи оказываются **после** всех коммитов `main`: история линейная, как будто работу начали только сейчас. Хеши меняются, поэтому уже опубликованные коммиты, на которых работают другие, не ребейзят.',
-          en: 'After `git rebase main` the feature commits come **after** all of `main`’s commits: history is linear, as if the work started just now. Hashes change, so you don’t rebase published commits others build on.',
+          ru: 'После `git rebase main` коммиты фичи оказываются **после** всех коммитов `main`: история линейная, как будто работу начали только сейчас. Хеши меняются, поэтому уже опубликованные коммиты, на которых работают другие, не [[rebase|ребейзят]].',
+          en: 'After `git rebase main` the feature commits come **after** all of `main`’s commits: history is linear, as if the work started just now. Hashes change, so you don’t [[rebase|rebase]] published commits others build on.',
         },
       },
       {
@@ -167,8 +167,8 @@ export const GIT_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: 'Если история на сервере ушла вперёд, обычный `push` откажется. После своего rebase ветку пушат с `--force-with-lease`: в отличие от `--force`, он не перезапишет чужие коммиты, которых вы ещё не видели.',
-          en: 'If the server history moved ahead, a plain `push` is rejected. After your own rebase you push with `--force-with-lease`: unlike `--force`, it won’t overwrite others’ commits you haven’t seen yet.',
+          ru: 'Если история на сервере ушла вперёд, обычный `push` откажется. После своего [[rebase|rebase]] ветку пушат с `--force-with-lease`: в отличие от `--force`, он не перезапишет чужие коммиты, которых вы ещё не видели.',
+          en: 'If the server history moved ahead, a plain `push` is rejected. After your own [[rebase|rebase]] you push with `--force-with-lease`: unlike `--force`, it won’t overwrite others’ commits you haven’t seen yet.',
         },
       },
     ],

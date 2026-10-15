@@ -24,8 +24,8 @@ console.log('4');`,
       {
         type: 'text',
         text: {
-          ru: 'Сначала выполняется весь синхронный код: `1` и `4`. Колбэк `.then` попадает в очередь микрозадач, а колбэк `setTimeout` — в очередь макрозадач (задач таймеров).',
-          en: 'All synchronous code runs first: `1` and `4`. The `.then` callback goes to the microtask queue, and the `setTimeout` callback goes to the task (macrotask) queue.',
+          ru: 'Сначала выполняется весь синхронный код: `1` и `4`. Колбэк `.then` попадает в очередь [[microtask|микрозадач]], а колбэк `setTimeout` — в очередь макрозадач (задач таймеров).',
+          en: 'All synchronous code runs first: `1` and `4`. The `.then` callback goes to the [[microtask|microtask]] queue, and the `setTimeout` callback goes to the task (macrotask) queue.',
         },
       },
       {
@@ -247,8 +247,8 @@ console.log('D');`,
       {
         type: 'text',
         text: {
-          ru: '`await null` ставит продолжение функции в очередь микрозадач. Затем `.then` ставит туда же колбэк с `C`. Синхронный код заканчивается выводом `D`, после чего микрозадачи выполняются по порядку постановки: сначала `B`, потом `C`.',
-          en: '`await null` queues the rest of the function as a microtask. Then `.then` queues the `C` callback after it. Synchronous code ends with `D`, and microtasks run in the order they were queued: `B` first, then `C`.',
+          ru: '`await null` ставит продолжение функции в очередь [[microtask|микрозадач]]. Затем `.then` ставит туда же колбэк с `C`. Синхронный код заканчивается выводом `D`, после чего микрозадачи выполняются по порядку постановки: сначала `B`, потом `C`.',
+          en: '`await null` queues the rest of the function as a [[microtask|microtask]]. Then `.then` queues the `C` callback after it. Synchronous code ends with `D`, and microtasks run in the order they were queued: `B` first, then `C`.',
         },
       },
       { type: 'diagram', diagram: 'event-loop-async' },

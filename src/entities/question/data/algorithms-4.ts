@@ -370,8 +370,8 @@ console.log(calls);`,
       {
         type: 'text',
         text: {
-          ru: 'Дерево вызовов ветвится надвое, и одни и те же значения считаются снова и снова: `fib(2)` здесь вычисляется 34 раза. Число вызовов растёт экспоненциально — для `fib(40)` их больше 300 миллионов. С мемоизацией каждый `fib(k)` считается один раз, и вызовов становится O(n). Это главный пример, зачем нужно динамическое программирование.',
-          en: 'The call tree branches in two, and the same values are computed again and again: `fib(2)` is evaluated 34 times here. Calls grow exponentially — over 300 million for `fib(40)`. With memoization each `fib(k)` is computed once, and calls become O(n). It’s the classic example of why dynamic programming exists.',
+          ru: 'Дерево вызовов ветвится надвое, и одни и те же значения считаются снова и снова: `fib(2)` здесь вычисляется 34 раза. Число вызовов растёт экспоненциально — для `fib(40)` их больше 300 миллионов. С [[memoization|мемоизацией]] каждый `fib(k)` считается один раз, и вызовов становится O(n). Это главный пример, зачем нужно динамическое программирование.',
+          en: 'The call tree branches in two, and the same values are computed again and again: `fib(2)` is evaluated 34 times here. Calls grow exponentially — over 300 million for `fib(40)`. With [[memoization|memoization]] each `fib(k)` is computed once, and calls become O(n). It’s the classic example of why dynamic programming exists.',
         },
       },
     ],

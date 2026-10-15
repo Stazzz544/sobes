@@ -81,15 +81,15 @@ export const STATE_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: 'Поток данных однонаправленный: UI отправляет **action** → middleware (например, thunk) может выполнить побочные эффекты → **reducer** по старому состоянию и действию вычисляет новое → стор уведомляет подписчиков → UI перерисовывается. Редьюсер — чистая функция: без запросов, таймеров, `Math.random` и мутаций.',
-          en: 'Data flows one way: the UI dispatches an **action** → middleware (e.g. a thunk) may run side effects → the **reducer** computes the new state from the old state and the action → the store notifies subscribers → the UI re-renders. A reducer is a pure function: no requests, timers, `Math.random` or mutation.',
+          ru: 'Поток данных однонаправленный: UI отправляет **action** → middleware (например, thunk) может выполнить [[side-effect|побочные эффекты]] → **reducer** по старому состоянию и действию вычисляет новое → стор уведомляет подписчиков → UI перерисовывается. Редьюсер — [[pure-function|чистая функция]]: без запросов, таймеров, `Math.random` и мутаций.',
+          en: 'Data flows one way: the UI dispatches an **action** → middleware (e.g. a thunk) may run [[side-effect|side effects]] → the **reducer** computes the new state from the old state and the action → the store notifies subscribers → the UI re-renders. A reducer is a [[pure-function|pure function]]: no requests, timers, `Math.random` or mutation.',
         },
       },
       {
         type: 'text',
         text: {
-          ru: 'В `createSlice` можно писать `state.items.push(x)`: Immer записывает изменения черновика и создаёт новый неизменяемый объект. Вне таких редьюсеров мутации по-прежнему запрещены. Селекторы, которые строят новые массивы (`filter`, `map`), мемоизируют через `createSelector` — иначе каждый вызов вернёт новую ссылку и компонент будет перерисовываться.',
-          en: 'In `createSlice` you can write `state.items.push(x)`: Immer records draft changes and produces a new immutable object. Outside such reducers mutation is still forbidden. Selectors that build new arrays (`filter`, `map`) are memoized with `createSelector` — otherwise every call returns a new reference and the component re-renders.',
+          ru: 'В `createSlice` можно писать `state.items.push(x)`: Immer записывает изменения черновика и создаёт новый [[immutability|неизменяемый]] объект. Вне таких редьюсеров мутации по-прежнему запрещены. Селекторы, которые строят новые массивы (`filter`, `map`), [[memoization|мемоизируют]] через `createSelector` — иначе каждый вызов вернёт новую ссылку и компонент будет перерисовываться.',
+          en: 'In `createSlice` you can write `state.items.push(x)`: Immer records draft changes and produces a new [[immutability|immutable]] object. Outside such reducers mutation is still forbidden. Selectors that build new arrays (`filter`, `map`) are [[memoization|memoized]] with `createSelector` — otherwise every call returns a new reference and the component re-renders.',
         },
       },
     ],
@@ -122,8 +122,8 @@ export const STATE_LESSONS: Lesson[] = [
       {
         type: 'text',
         text: {
-          ru: 'Подписывайтесь **селектором** на нужный кусок: `useStore((s) => s.count)` перерисует компонент только при смене `count`, а `useStore()` без селектора — при любом изменении стора. Селектор, возвращающий новый объект или массив, для этого сравнивают поверхностно (`useShallow`) или мемоизируют.',
-          en: 'Subscribe with a **selector** to the piece you need: `useStore((s) => s.count)` re-renders only when `count` changes, while `useStore()` without a selector re-renders on any store change. A selector returning a new object or array is compared shallowly (`useShallow`) or memoized.',
+          ru: 'Подписывайтесь **селектором** на нужный кусок: `useStore((s) => s.count)` перерисует компонент только при смене `count`, а `useStore()` без селектора — при любом изменении стора. Селектор, возвращающий новый объект или массив, для этого сравнивают поверхностно (`useShallow`) или [[memoization|мемоизируют]].',
+          en: 'Subscribe with a **selector** to the piece you need: `useStore((s) => s.count)` re-renders only when `count` changes, while `useStore()` without a selector re-renders on any store change. A selector returning a new object or array is compared shallowly (`useShallow`) or [[memoization|memoized]].',
         },
       },
     ],

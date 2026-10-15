@@ -129,8 +129,8 @@ console.log([0, 1, 2, 3, 4].map(delayFor).join(','));`,
       {
         type: 'text',
         text: {
-          ru: '**Экспоненциальная задержка** удваивает паузу после каждой неудачи и не даёт добить упавший сервер шквалом повторов, а потолок не даёт ждать бесконечно. В реальном коде добавляют **джиттер** — случайную часть задержки: иначе тысячи клиентов, упавших одновременно, будут повторять синхронно. Повторяют только то, что безопасно повторить: GET, идемпотентные запросы, ошибки 429 и 5xx.',
-          en: '**Exponential backoff** doubles the pause after each failure so a struggling server isn’t hammered by retries, and the cap prevents endless waits. Real code adds **jitter** — a random part of the delay: otherwise thousands of clients that failed together retry in sync. Retry only what’s safe to retry: GETs, idempotent requests, 429 and 5xx errors.',
+          ru: '**Экспоненциальная задержка** удваивает паузу после каждой неудачи и не даёт добить упавший сервер шквалом повторов, а потолок не даёт ждать бесконечно. В реальном коде добавляют **джиттер** — случайную часть задержки: иначе тысячи клиентов, упавших одновременно, будут повторять синхронно. Повторяют только то, что безопасно повторить: GET, [[idempotent|идемпотентные]] запросы, ошибки 429 и 5xx.',
+          en: '**Exponential backoff** doubles the pause after each failure so a struggling server isn’t hammered by retries, and the cap prevents endless waits. Real code adds **jitter** — a random part of the delay: otherwise thousands of clients that failed together retry in sync. Retry only what’s safe to retry: GETs, [[idempotent|idempotent]] requests, 429 and 5xx errors.',
         },
       },
     ],
@@ -334,8 +334,8 @@ console.log([0, 1, 2, 3, 4].map(delayFor).join(','));`,
       {
         type: 'text',
         text: {
-          ru: 'Производительность деградирует постепенно: каждый PR добавляет «всего 20 КБ». **Бюджет** превращает это в видимое решение — проверка в CI (например, `size-limit` или Lighthouse CI) падает, когда лимит превышен, и команда обсуждает, стоит ли новая библиотека своего веса. Бюджеты задают и для метрик: LCP, INP, число запросов.',
-          en: 'Performance degrades gradually: each PR adds “only 20 KB”. A **budget** makes it a visible decision — a CI check (e.g. `size-limit` or Lighthouse CI) fails when the limit is exceeded, and the team discusses whether a new library is worth its weight. Budgets also cover metrics: LCP, INP, request count.',
+          ru: 'Производительность деградирует постепенно: каждый PR добавляет «всего 20 КБ». **Бюджет** превращает это в видимое решение — проверка в CI (например, `size-limit` или Lighthouse CI) падает, когда лимит превышен, и команда обсуждает, стоит ли новая библиотека своего веса. Бюджеты задают и для метрик: [[lcp|LCP]], [[inp|INP]], число запросов.',
+          en: 'Performance degrades gradually: each PR adds “only 20 KB”. A **budget** makes it a visible decision — a CI check (e.g. `size-limit` or Lighthouse CI) fails when the limit is exceeded, and the team discusses whether a new library is worth its weight. Budgets also cover metrics: [[lcp|LCP]], [[inp|INP]], request count.',
         },
       },
     ],

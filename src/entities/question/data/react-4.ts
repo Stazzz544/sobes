@@ -243,8 +243,8 @@ export const REACT_QUESTIONS_4: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'В отличие от хуков, `use` можно вызывать в условиях и циклах. Промис не стоит создавать прямо в рендере клиентского компонента: он будет новым на каждом рендере. Его передают из серверного компонента или кэшируют.',
-          en: 'Unlike hooks, `use` can be called in conditions and loops. Don’t create the promise during a client component’s render — it would be new on every render. Pass it from a server component or cache it.',
+          ru: 'В отличие от хуков, `use` можно вызывать в условиях и циклах. Промис не стоит создавать прямо в рендере клиентского компонента: он будет новым на каждом рендере. Его передают из [[rsc|серверного компонента]] или кэшируют.',
+          en: 'Unlike hooks, `use` can be called in conditions and loops. Don’t create the promise during a client component’s render — it would be new on every render. Pass it from a [[rsc|server component]] or cache it.',
         },
       },
     ],
@@ -417,8 +417,8 @@ export const REACT_QUESTIONS_4: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Error Boundary ловит ошибки, которые происходят во время **рендера**, в методах жизненного цикла и конструкторах дерева под ним. Обработчики событий вызываются вне рендера, поэтому их ошибки нужно ловить обычным `try/catch`. То же с асинхронным кодом (`setTimeout`), SSR и ошибками в самом Boundary.',
-          en: 'An Error Boundary catches errors that happen during **rendering**, in lifecycle methods, and in constructors of the tree below it. Event handlers run outside rendering, so their errors need a regular `try/catch`. The same goes for async code (`setTimeout`), SSR, and errors in the boundary itself.',
+          ru: 'Error Boundary ловит ошибки, которые происходят во время **рендера**, в методах жизненного цикла и конструкторах дерева под ним. Обработчики событий вызываются вне рендера, поэтому их ошибки нужно ловить обычным `try/catch`. То же с асинхронным кодом (`setTimeout`), [[ssr|SSR]] и ошибками в самом Boundary.',
+          en: 'An Error Boundary catches errors that happen during **rendering**, in lifecycle methods, and in constructors of the tree below it. Event handlers run outside rendering, so their errors need a regular `try/catch`. The same goes for async code (`setTimeout`), [[ssr|SSR]], and errors in the boundary itself.',
         },
       },
       {
@@ -484,8 +484,8 @@ export const REACT_QUESTIONS_4: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Серверные компоненты выполняются на сервере (или во время сборки), их код не попадает в клиентский бандл. Они могут быть асинхронными и напрямую ходить в базу или читать файлы.',
-          en: 'Server Components run on the server (or at build time), and their code isn’t shipped in the client bundle. They can be async and query a database or read files directly.',
+          ru: '[[rsc|Серверные компоненты]] выполняются на сервере (или во время сборки), их код не попадает в клиентский бандл. Они могут быть асинхронными и напрямую ходить в базу или читать файлы.',
+          en: '[[rsc|Server Components]] run on the server (or at build time), and their code isn’t shipped in the client bundle. They can be async and query a database or read files directly.',
         },
       },
       {
@@ -545,15 +545,15 @@ export const REACT_QUESTIONS_4: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`"use client"` отмечает **границу** между серверным и клиентским кодом. Модуль с директивой и его импорты отправляются в браузер. Клиентские компоненты при этом всё равно могут предварительно рендериться на сервере (SSR) — директива говорит о том, где код **может выполняться**, а не об отказе от SSR.',
-          en: '`"use client"` marks the **boundary** between server and client code. The module with the directive and its imports are shipped to the browser. Client components can still be pre-rendered on the server (SSR) — the directive is about where code **can run**, not about opting out of SSR.',
+          ru: '`"use client"` отмечает **границу** между серверным и клиентским кодом. Модуль с директивой и его импорты отправляются в браузер. Клиентские компоненты при этом всё равно могут предварительно рендериться на сервере ([[ssr|SSR]]) — директива говорит о том, где код **может выполняться**, а не об отказе от SSR.',
+          en: '`"use client"` marks the **boundary** between server and client code. The module with the directive and its imports are shipped to the browser. Client components can still be pre-rendered on the server ([[ssr|SSR]]) — the directive is about where code **can run**, not about opting out of SSR.',
         },
       },
       {
         type: 'text',
         text: {
-          ru: 'Импортировать серверный компонент в клиентский нельзя, но можно передать его как `children` или другой проп — он отрендерится на сервере.',
-          en: 'You can’t import a server component into a client one, but you can pass it as `children` or another prop — it renders on the server.',
+          ru: 'Импортировать [[rsc|серверный компонент]] в клиентский нельзя, но можно передать его как `children` или другой проп — он отрендерится на сервере.',
+          en: 'You can’t import a [[rsc|server component]] into a client one, but you can pass it as `children` or another prop — it renders on the server.',
         },
       },
     ],
@@ -606,8 +606,8 @@ export const REACT_QUESTIONS_4: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Компоненты должны быть чистыми функциями: одинаковые пропсы и состояние — одинаковый JSX, без побочных эффектов во время рендера. Двойной вызов в разработке быстро выявляет ошибки вроде мутации внешнего массива или счётчика вне компонента.',
-          en: 'Components must be pure functions: the same props and state give the same JSX, with no side effects during render. The double call in development quickly exposes bugs like mutating an outside array or a counter outside the component.',
+          ru: 'Компоненты должны быть [[pure-function|чистыми функциями]]: одинаковые пропсы и состояние — одинаковый JSX, без [[side-effect|побочных эффектов]] во время рендера. Двойной вызов в разработке быстро выявляет ошибки вроде мутации внешнего массива или счётчика вне компонента.',
+          en: 'Components must be [[pure-function|pure functions]]: the same props and state give the same JSX, with no [[side-effect|side effects]] during render. The double call in development quickly exposes bugs like mutating an outside array or a counter outside the component.',
         },
       },
       {

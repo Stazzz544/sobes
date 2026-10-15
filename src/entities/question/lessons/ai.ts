@@ -159,8 +159,8 @@ console.log(cosineSimilarity([1, 0], [1, 0]), cosineSimilarity([1, 0], [0, 1]));
       {
         type: 'text',
         text: {
-          ru: 'Зачем: свежие и приватные данные без дообучения модели, меньше галлюцинаций, проверяемые ответы. Слабые места: размер фрагментов, промахи поиска (тогда ответ хорош настолько, насколько хорош поиск), бюджет окна контекста и инструкции, спрятанные в самих документах.',
-          en: 'Why: fresh and private data without fine-tuning, fewer hallucinations, verifiable answers. Weak spots: chunk size, retrieval misses (the answer is only as good as the search), the context window budget and instructions hidden inside the documents themselves.',
+          ru: 'Зачем: свежие и приватные данные без дообучения модели, меньше [[hallucination|галлюцинаций]], проверяемые ответы. Слабые места: размер фрагментов, промахи поиска (тогда ответ хорош настолько, насколько хорош поиск), бюджет [[context-window|окна контекста]] и инструкции, спрятанные в самих документах.',
+          en: 'Why: fresh and private data without fine-tuning, fewer [[hallucination|hallucinations]], verifiable answers. Weak spots: chunk size, retrieval misses (the answer is only as good as the search), the [[context-window|context window]] budget and instructions hidden inside the documents themselves.',
         },
       },
     ],
@@ -257,8 +257,8 @@ console.log(cosineSimilarity([1, 0], [1, 0]), cosineSimilarity([1, 0], [0, 1]));
       {
         type: 'text',
         text: {
-          ru: 'Ответ модели — **недоверенный ввод**: его нельзя вставлять в HTML как есть (XSS), выполнять через `eval` или подставлять в SQL; структурированный ответ проверяют схемой (например, zod). Секреты не кладут в промпт и не держат в клиентском бандле: ключ API — только на сервере.',
-          en: 'A model’s answer is **untrusted input**: don’t put it into HTML as is (XSS), run it with `eval` or paste it into SQL; validate a structured answer against a schema (e.g. zod). Secrets don’t go into prompts or the client bundle: the API key stays on the server.',
+          ru: 'Ответ модели — **недоверенный ввод**: его нельзя вставлять в HTML как есть ([[xss|XSS]]), выполнять через `eval` или подставлять в SQL; структурированный ответ проверяют схемой (например, zod). Секреты не кладут в промпт и не держат в клиентском бандле: ключ API — только на сервере.',
+          en: 'A model’s answer is **untrusted input**: don’t put it into HTML as is ([[xss|XSS]]), run it with `eval` or paste it into SQL; validate a structured answer against a schema (e.g. zod). Secrets don’t go into prompts or the client bundle: the API key stays on the server.',
         },
       },
       {

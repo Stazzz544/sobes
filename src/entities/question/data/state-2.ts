@@ -34,8 +34,8 @@ export const STATE_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Prop drilling часто лечится композицией: родитель, у которого есть данные, сам собирает `<Avatar user={user} />` и передаёт его вниз как `children`. Промежуточные компоненты просто рендерят слот. Если данные действительно нужны многим компонентам на разной глубине (тема, текущий пользователь), подходит контекст, а глобальный стор — когда состояние сложное и часто меняется.',
-          en: 'Prop drilling is often cured by composition: the parent that has the data builds `<Avatar user={user} />` itself and passes it down as `children`. Intermediate components just render the slot. If many components at different depths really need the data (theme, current user), use context, and a global store when the state is complex and changes often.',
+          ru: '[[prop-drilling|Prop drilling]] часто лечится композицией: родитель, у которого есть данные, сам собирает `<Avatar user={user} />` и передаёт его вниз как `children`. Промежуточные компоненты просто рендерят слот. Если данные действительно нужны многим компонентам на разной глубине (тема, текущий пользователь), подходит контекст, а глобальный стор — когда состояние сложное и часто меняется.',
+          en: '[[prop-drilling|Prop drilling]] is often cured by composition: the parent that has the data builds `<Avatar user={user} />` itself and passes it down as `children`. Intermediate components just render the slot. If many components at different depths really need the data (theme, current user), use context, and a global store when the state is complex and changes often.',
         },
       },
     ],
@@ -68,8 +68,8 @@ export const STATE_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Если автор лежит внутри каждого поста и комментария, смена его имени требует найти и обновить все копии — и легко пропустить одну. В нормализованном виде сущности хранятся таблицами по id, а связи — списками id, как в базе данных. Иммутабельные обновления становятся короче, а мемоизированные селекторы перестают пересчитываться без причины. В Redux Toolkit для этого есть `createEntityAdapter`.',
-          en: 'If the author sits inside every post and comment, renaming them means finding and updating every copy — and it’s easy to miss one. Normalized entities are stored as tables by id, with relations as id lists, like a database. Immutable updates get shorter, and memoized selectors stop recomputing for no reason. Redux Toolkit offers `createEntityAdapter` for this.',
+          ru: 'Если автор лежит внутри каждого поста и комментария, смена его имени требует найти и обновить все копии — и легко пропустить одну. В [[normalization|нормализованном]] виде сущности хранятся таблицами по id, а связи — списками id, как в базе данных. [[immutability|Иммутабельные]] обновления становятся короче, а мемоизированные селекторы перестают пересчитываться без причины. В Redux Toolkit для этого есть `createEntityAdapter`.',
+          en: 'If the author sits inside every post and comment, renaming them means finding and updating every copy — and it’s easy to miss one. [[normalization|Normalized]] entities are stored as tables by id, with relations as id lists, like a database. [[immutability|Immutable]] updates get shorter, and memoized selectors stop recomputing for no reason. Redux Toolkit offers `createEntityAdapter` for this.',
         },
       },
     ],
@@ -242,8 +242,8 @@ console.log(state);`,
       {
         type: 'text',
         text: {
-          ru: 'Редьюсер — **чистая функция**: один и тот же вход всегда даёт тот же результат и без побочных эффектов. На этом держатся отладка «путешествием во времени», воспроизведение багов по логу действий и тесты. Случайные id и время вычисляют до диспатча — в action creator или в `prepare` у `createSlice`, — а запросы к API делают в thunk.',
-          en: 'A reducer is a **pure function**: the same input always yields the same result, with no side effects. Time-travel debugging, replaying bugs from an action log and tests all rely on this. Random ids and time are computed before dispatch — in an action creator or `createSlice`’s `prepare` — and API calls go in thunks.',
+          ru: 'Редьюсер — **чистая функция**: один и тот же вход всегда даёт тот же результат и без [[side-effect|побочных эффектов]]. На этом держатся отладка «путешествием во времени», воспроизведение багов по логу действий и тесты. Случайные id и время вычисляют до диспатча — в action creator или в `prepare` у `createSlice`, — а запросы к API делают в thunk.',
+          en: 'A reducer is a **pure function**: the same input always yields the same result, with no [[side-effect|side effects]]. Time-travel debugging, replaying bugs from an action log and tests all rely on this. Random ids and time are computed before dispatch — in an action creator or `createSlice`’s `prepare` — and API calls go in thunks.',
         },
       },
     ],
@@ -340,8 +340,8 @@ console.log(runs);`,
       {
         type: 'text',
         text: {
-          ru: 'Мемоизированный селектор пересчитывает результат, только когда входные данные изменились **по ссылке**. Смена `filter` не касается `todos` — второй вызов берёт кеш. Третий получил новый массив с теми же элементами, и ссылка другая — пересчёт. Поэтому иммутабельные обновления, создающие новые объекты только там, где что-то поменялось, так важны для производительности.',
-          en: 'A memoized selector recomputes only when its inputs change **by reference**. Changing `filter` doesn’t touch `todos` — the second call hits the cache. The third gets a new array with the same items, so the reference differs — recompute. That’s why immutable updates that create new objects only where something changed matter for performance.',
+          ru: '[[memoization|Мемоизированный]] селектор пересчитывает результат, только когда входные данные изменились **по ссылке**. Смена `filter` не касается `todos` — второй вызов берёт кеш. Третий получил новый массив с теми же элементами, и ссылка другая — пересчёт. Поэтому [[immutability|иммутабельные]] обновления, создающие новые объекты только там, где что-то поменялось, так важны для производительности.',
+          en: 'A [[memoization|memoized]] selector recomputes only when its inputs change **by reference**. Changing `filter` doesn’t touch `todos` — the second call hits the cache. The third gets a new array with the same items, so the reference differs — recompute. That’s why [[immutability|immutable]] updates that create new objects only where something changed matter for performance.',
         },
       },
     ],
@@ -375,8 +375,8 @@ console.log(runs);`,
       {
         type: 'text',
         text: {
-          ru: '**Сигнал** — контейнер значения с автоматическим отслеживанием зависимостей: когда `computed` или шаблон читает сигнал, он подписывается на него. При изменении обновляются только эти подписчики — это мелкозернистая реактивность. В React же изменение `useState` перерисовывает компонент целиком и его потомков, а лишнее отсекают мемоизацией.',
-          en: 'A **signal** is a value container with automatic dependency tracking: when a `computed` or template reads a signal, it subscribes to it. On change only those subscribers update — fine-grained reactivity. In React, a `useState` change re-renders the whole component and its children, with memoization cutting the excess.',
+          ru: '**Сигнал** — контейнер значения с автоматическим отслеживанием зависимостей: когда `computed` или шаблон читает сигнал, он подписывается на него. При изменении обновляются только эти подписчики — это мелкозернистая реактивность. В React же изменение `useState` перерисовывает компонент целиком и его потомков, а лишнее отсекают [[memoization|мемоизацией]].',
+          en: 'A **signal** is a value container with automatic dependency tracking: when a `computed` or template reads a signal, it subscribes to it. On change only those subscribers update — fine-grained reactivity. In React, a `useState` change re-renders the whole component and its children, with [[memoization|memoization]] cutting the excess.',
         },
       },
     ],

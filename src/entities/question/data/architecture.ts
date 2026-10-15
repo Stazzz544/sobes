@@ -523,8 +523,8 @@ export const b = 'b';`,
       {
         type: 'text',
         text: {
-          ru: 'Принцип **colocation**: то, что меняется вместе, лежит рядом. В маленьком проекте раскладка по типам удобна, но с ростом в `components/` оказываются сотни несвязанных файлов, и связность модулей падает. Группировка по фичам (как в FSD) держит компонент, хук, API и стили фичи в одной папке.',
-          en: 'The **colocation** principle: what changes together lives together. In a small project grouping by type is handy, but as it grows `components/` fills with hundreds of unrelated files, and cohesion drops. Grouping by feature (as in FSD) keeps a feature’s component, hook, API and styles in one folder.',
+          ru: 'Принцип **colocation**: то, что меняется вместе, лежит рядом. В маленьком проекте раскладка по типам удобна, но с ростом в `components/` оказываются сотни несвязанных файлов, и [[cohesion|связность]] модулей падает. Группировка по фичам (как в FSD) держит компонент, хук, API и стили фичи в одной папке.',
+          en: 'The **colocation** principle: what changes together lives together. In a small project grouping by type is handy, but as it grows `components/` fills with hundreds of unrelated files, and [[cohesion|cohesion]] drops. Grouping by feature (as in FSD) keeps a feature’s component, hook, API and styles in one folder.',
         },
       },
     ],

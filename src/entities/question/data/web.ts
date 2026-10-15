@@ -132,8 +132,8 @@ Cache-Control: private    # только браузер / browser only`,
       {
         type: 'text',
         text: {
-          ru: 'Для остальных браузер сначала спрашивает сервер `OPTIONS`-запросом с `Access-Control-Request-Method` и `Access-Control-Request-Headers`. Основной запрос уйдёт, только если ответ разрешит метод, заголовки и origin.',
-          en: 'For anything else the browser first asks the server with an `OPTIONS` request carrying `Access-Control-Request-Method` and `Access-Control-Request-Headers`. The actual request is sent only if the response allows the method, headers and origin.',
+          ru: 'Для остальных браузер сначала спрашивает сервер `OPTIONS`-запросом с `Access-Control-Request-Method` и `Access-Control-Request-Headers`. Основной запрос уйдёт, только если ответ разрешит метод, заголовки и [[origin|origin]].',
+          en: 'For anything else the browser first asks the server with an `OPTIONS` request carrying `Access-Control-Request-Method` and `Access-Control-Request-Headers`. The actual request is sent only if the response allows the method, headers and [[origin|origin]].',
         },
       },
     ],
@@ -240,8 +240,8 @@ Cache-Control: private    # только браузер / browser only`,
       {
         type: 'text',
         text: {
-          ru: 'XSS возникает, когда ввод пользователя попадает в страницу как исполняемый код. Главная защита — контекстное экранирование при выводе: `textContent`, автоэкранирование в шаблонизаторах и фреймворках. React экранирует текст в JSX, пока вы не используете `dangerouslySetInnerHTML`.',
-          en: 'XSS happens when user input ends up in the page as executable code. The main defense is context-aware output encoding: `textContent`, auto-escaping in template engines and frameworks. React escapes text in JSX unless you use `dangerouslySetInnerHTML`.',
+          ru: '[[xss|XSS]] возникает, когда ввод пользователя попадает в страницу как исполняемый код. Главная защита — контекстное экранирование при выводе: `textContent`, автоэкранирование в шаблонизаторах и фреймворках. React экранирует текст в JSX, пока вы не используете `dangerouslySetInnerHTML`.',
+          en: '[[xss|XSS]] happens when user input ends up in the page as executable code. The main defense is context-aware output encoding: `textContent`, auto-escaping in template engines and frameworks. React escapes text in JSX unless you use `dangerouslySetInnerHTML`.',
         },
       },
       {
@@ -255,8 +255,8 @@ comment.textContent = userInput; // безопасно / safe`,
       {
         type: 'text',
         text: {
-          ru: 'Content-Security-Policy и `HttpOnly`-cookies — полезная вторая линия обороны. HTTPS, CSRF-токены и CORS решают другие задачи, а токен в `localStorage` XSS как раз легко украдёт.',
-          en: 'Content-Security-Policy and `HttpOnly` cookies are a useful second line of defense. HTTPS, CSRF tokens and CORS solve different problems, and a token in `localStorage` is exactly what XSS can steal.',
+          ru: 'Content-Security-Policy и `HttpOnly`-cookies — полезная вторая линия обороны. HTTPS, [[csrf|CSRF]]-токены и [[cors|CORS]] решают другие задачи, а токен в `localStorage` XSS как раз легко украдёт.',
+          en: 'Content-Security-Policy and `HttpOnly` cookies are a useful second line of defense. HTTPS, [[csrf|CSRF]] tokens and [[cors|CORS]] solve different problems, and a token in `localStorage` is exactly what XSS can steal.',
         },
       },
     ],

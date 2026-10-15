@@ -49,15 +49,15 @@ export const AI_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'RAG — «генерация с дополнением найденным». Схема: вопрос пользователя → поиск похожих фрагментов в базе знаний (часто по эмбеддингам) → найденные фрагменты добавляются в промпт → модель отвечает, опираясь на них, и может сослаться на источник.',
-          en: 'RAG means “generation augmented with retrieved content.” The flow: user question → search for similar passages in the knowledge base (often via embeddings) → the passages are added to the prompt → the model answers based on them and can cite the source.',
+          ru: '[[rag|RAG]] — «генерация с дополнением найденным». Схема: вопрос пользователя → поиск похожих фрагментов в базе знаний (часто по [[embedding|эмбеддингам]]) → найденные фрагменты добавляются в промпт → модель отвечает, опираясь на них, и может сослаться на источник.',
+          en: '[[rag|RAG]] means “generation augmented with retrieved content.” The flow: user question → search for similar passages in the knowledge base (often via [[embedding|embeddings]]) → the passages are added to the prompt → the model answers based on them and can cite the source.',
         },
       },
       {
         type: 'text',
         text: {
-          ru: 'Модель при этом не меняется: знания подставляются на лету, поэтому их легко обновлять. Это снижает галлюцинации, но не устраняет их полностью.',
-          en: 'The model itself doesn’t change: knowledge is injected on the fly, so it’s easy to update. It reduces hallucinations but doesn’t fully eliminate them.',
+          ru: 'Модель при этом не меняется: знания подставляются на лету, поэтому их легко обновлять. Это снижает [[hallucination|галлюцинации]], но не устраняет их полностью.',
+          en: 'The model itself doesn’t change: knowledge is injected on the fly, so it’s easy to update. It reduces [[hallucination|hallucinations]] but doesn’t fully eliminate them.',
         },
       },
     ],
@@ -113,8 +113,8 @@ export const AI_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Модель эмбеддингов превращает текст в вектор из сотен или тысяч чисел. Фразы «как вернуть товар» и «оформить возврат» получат близкие векторы, хотя слова разные. Близость считают, например, косинусным расстоянием — на этом построен семантический поиск в RAG.',
-          en: 'An embedding model turns text into a vector of hundreds or thousands of numbers. “How do I return an item” and “start a refund” get close vectors despite different words. Similarity is measured with, for example, cosine distance — that’s what semantic search in RAG is built on.',
+          ru: 'Модель [[embedding|эмбеддингов]] превращает текст в вектор из сотен или тысяч чисел. Фразы «как вернуть товар» и «оформить возврат» получат близкие векторы, хотя слова разные. Близость считают, например, косинусным расстоянием — на этом построен семантический поиск в [[rag|RAG]].',
+          en: 'An [[embedding|embedding]] model turns text into a vector of hundreds or thousands of numbers. “How do I return an item” and “start a refund” get close vectors despite different words. Similarity is measured with, for example, cosine distance — that’s what semantic search in [[rag|RAG]] is built on.',
         },
       },
       {
@@ -180,8 +180,8 @@ export const AI_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'RAG подтягивает свежие данные при каждом запросе: обновили документ — ассистент сразу отвечает по новой версии и может дать ссылку на страницу. Дообучение дорогое, требует подготовленных примеров, не гарантирует точного воспроизведения фактов и устаревает при каждом изменении.',
-          en: 'RAG pulls fresh data on every request: update a document and the assistant immediately answers from the new version and can link to the page. Fine-tuning is expensive, needs prepared examples, doesn’t guarantee exact recall of facts, and goes stale with every change.',
+          ru: '[[rag|RAG]] подтягивает свежие данные при каждом запросе: обновили документ — ассистент сразу отвечает по новой версии и может дать ссылку на страницу. Дообучение дорогое, требует подготовленных примеров, не гарантирует точного воспроизведения фактов и устаревает при каждом изменении.',
+          en: '[[rag|RAG]] pulls fresh data on every request: update a document and the assistant immediately answers from the new version and can link to the page. Fine-tuning is expensive, needs prepared examples, doesn’t guarantee exact recall of facts, and goes stale with every change.',
         },
       },
       {
@@ -247,8 +247,8 @@ export const AI_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Эмбеддинг целого большого документа «размывает» смысл, и поиск хуже находит конкретный ответ. Небольшие фрагменты (абзац, раздел) ищутся точнее, а в промпт можно положить только самые подходящие из них — это экономит контекст и деньги.',
-          en: 'An embedding of a whole large document “blurs” its meaning, and search struggles to find the specific answer. Small chunks (a paragraph, a section) are found more precisely, and only the best matches go into the prompt — saving context and money.',
+          ru: '[[embedding|Эмбеддинг]] целого большого документа «размывает» смысл, и поиск хуже находит конкретный ответ. Небольшие фрагменты (абзац, раздел) ищутся точнее, а в промпт можно положить только самые подходящие из них — это экономит контекст и деньги.',
+          en: 'An [[embedding|embedding]] of a whole large document “blurs” its meaning, and search struggles to find the specific answer. Small chunks (a paragraph, a section) are found more precisely, and only the best matches go into the prompt — saving context and money.',
         },
       },
       {
@@ -612,8 +612,8 @@ export const AI_QUESTIONS_2: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Ответ модели может содержать что угодно — в том числе `<img src=x onerror=…>`, если в контекст попал вредоносный текст (prompt injection). Вставка без очистки — классическая XSS. Относитесь к выводу модели как к пользовательскому вводу.',
-          en: 'A model’s answer can contain anything — including `<img src=x onerror=…>` if malicious text got into its context (prompt injection). Inserting it unsanitized is classic XSS. Treat model output like user input.',
+          ru: 'Ответ модели может содержать что угодно — в том числе `<img src=x onerror=…>`, если в контекст попал вредоносный текст ([[prompt-injection|prompt injection]]). Вставка без очистки — классическая [[xss|XSS]]. Относитесь к выводу модели как к пользовательскому вводу.',
+          en: 'A model’s answer can contain anything — including `<img src=x onerror=…>` if malicious text got into its context ([[prompt-injection|prompt injection]]). Inserting it unsanitized is classic [[xss|XSS]]. Treat model output like user input.',
         },
       },
     ],
@@ -855,8 +855,8 @@ for (let chunk = await reader.read(); !chunk.done; chunk = await reader.read()) 
       {
         type: 'text',
         text: {
-          ru: 'ИИ отвечает медленнее обычного API и может ошибаться. Пользователю нужно видеть, что работа идёт, иметь возможность прервать генерацию (обычно `AbortController` у `fetch` — заодно экономит токены), повторить или уточнить запрос и понимать, что результат стоит проверить.',
-          en: 'AI responds slower than a typical API and can be wrong. Users need to see that work is in progress, be able to stop generation (usually `AbortController` on `fetch` — which also saves tokens), retry or refine the request, and understand the result is worth checking.',
+          ru: 'ИИ отвечает медленнее обычного API и может ошибаться. Пользователю нужно видеть, что работа идёт, иметь возможность прервать генерацию (обычно `AbortController` у `fetch` — заодно экономит [[token|токены]]), повторить или уточнить запрос и понимать, что результат стоит проверить.',
+          en: 'AI responds slower than a typical API and can be wrong. Users need to see that work is in progress, be able to stop generation (usually `AbortController` on `fetch` — which also saves [[token|tokens]]), retry or refine the request, and understand the result is worth checking.',
         },
       },
     ],
@@ -1028,8 +1028,8 @@ for (let chunk = await reader.read(); !chunk.done; chunk = await reader.read()) 
       {
         type: 'text',
         text: {
-          ru: 'Модели иногда «галлюцинируют» имена пакетов. Злоумышленники отслеживают такие имена и публикуют под ними вредоносные пакеты — атака получила название **slopsquatting**. `npm install` выполняет скрипты пакета, поэтому одна установка может скомпрометировать машину или CI.',
-          en: 'Models sometimes “hallucinate” package names. Attackers track such names and publish malicious packages under them — an attack dubbed **slopsquatting**. `npm install` runs package scripts, so a single install can compromise a machine or CI.',
+          ru: 'Модели иногда «[[hallucination|галлюцинируют]]» имена пакетов. Злоумышленники отслеживают такие имена и публикуют под ними вредоносные пакеты — атака получила название **slopsquatting**. `npm install` выполняет скрипты пакета, поэтому одна установка может скомпрометировать машину или CI.',
+          en: 'Models sometimes “[[hallucination|hallucinate]]” package names. Attackers track such names and publish malicious packages under them — an attack dubbed **slopsquatting**. `npm install` runs package scripts, so a single install can compromise a machine or CI.',
         },
       },
       {

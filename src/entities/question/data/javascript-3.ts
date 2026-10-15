@@ -46,8 +46,8 @@ console.log(
       {
         type: 'text',
         text: {
-          ru: 'Метод `speak` объекту не копируется: при обращении `dog.speak` движок не находит свойство у объекта и идёт вверх по цепочке прототипов. Поэтому `Object.hasOwn(dog, "speak")` — `false`, а сам вызов работает.',
-          en: 'The `speak` method isn’t copied onto the object: when you access `dog.speak`, the engine doesn’t find it on the object and walks up the prototype chain. So `Object.hasOwn(dog, "speak")` is `false`, yet the call works.',
+          ru: 'Метод `speak` объекту не копируется: при обращении `dog.speak` движок не находит свойство у объекта и идёт вверх по [[prototype-chain|цепочке прототипов]]. Поэтому `Object.hasOwn(dog, "speak")` — `false`, а сам вызов работает.',
+          en: 'The `speak` method isn’t copied onto the object: when you access `dog.speak`, the engine doesn’t find it on the object and walks up the [[prototype-chain|prototype chain]]. So `Object.hasOwn(dog, "speak")` is `false`, yet the call works.',
         },
       },
       { type: 'diagram', diagram: 'prototype-chain' },
@@ -206,8 +206,8 @@ console.log('sync');`,
       {
         type: 'text',
         text: {
-          ru: 'После синхронного `sync` в очереди микрозадач лежат `then 1` и `micro` — в порядке постановки. Колбэк `then 1` ставит ещё одну микрозадачу (`then 2`) в **конец** этой же очереди и новый таймер в очередь задач.',
-          en: 'After the synchronous `sync`, the microtask queue holds `then 1` and `micro`, in the order they were queued. The `then 1` callback adds another microtask (`then 2`) to the **end** of the same queue and a new timer to the task queue.',
+          ru: 'После синхронного `sync` в очереди [[microtask|микрозадач]] лежат `then 1` и `micro` — в порядке постановки. Колбэк `then 1` ставит ещё одну микрозадачу (`then 2`) в **конец** этой же очереди и новый таймер в очередь задач.',
+          en: 'After the synchronous `sync`, the [[microtask|microtask]] queue holds `then 1` and `micro`, in the order they were queued. The `then 1` callback adds another microtask (`then 2`) to the **end** of the same queue and a new timer to the task queue.',
         },
       },
       {
@@ -278,8 +278,8 @@ loop();`,
       {
         type: 'text',
         text: {
-          ru: 'Цикл событий опустошает очередь микрозадач **целиком**, включая добавленные во время обработки. Пока в ней что-то есть, браузер не отрисовывает кадр и не берёт следующую задачу (клики, таймеры).',
-          en: 'The event loop drains the microtask queue **completely**, including microtasks added during processing. While anything is in it, the browser doesn’t render a frame or take the next task (clicks, timers).',
+          ru: '[[event-loop|Цикл событий]] опустошает очередь [[microtask|микрозадач]] **целиком**, включая добавленные во время обработки. Пока в ней что-то есть, браузер не отрисовывает кадр и не берёт следующую задачу (клики, таймеры).',
+          en: 'The [[event-loop|event loop]] drains the [[microtask|microtask]] queue **completely**, including microtasks added during processing. While anything is in it, the browser doesn’t render a frame or take the next task (clicks, timers).',
         },
       },
       {
@@ -333,8 +333,8 @@ console.log(4);`,
       {
         type: 'text',
         text: {
-          ru: 'Управление возвращается в основной код — выводится `4`. Продолжение `a` выполняется микрозадачей после синхронного кода — `2`.',
-          en: 'Control returns to the main code, which logs `4`. The rest of `a` runs as a microtask after the synchronous code — `2`.',
+          ru: 'Управление возвращается в основной код — выводится `4`. Продолжение `a` выполняется [[microtask|микрозадачей]] после синхронного кода — `2`.',
+          en: 'Control returns to the main code, which logs `4`. The rest of `a` runs as a [[microtask|microtask]] after the synchronous code — `2`.',
         },
       },
     ],
@@ -499,8 +499,8 @@ console.log('D');`,
       {
         type: 'text',
         text: {
-          ru: 'Колбэк `.then` всегда асинхронный — это микрозадача. Он выполнится после синхронного `D`.',
-          en: 'A `.then` callback is always asynchronous — it’s a microtask. It runs after the synchronous `D`.',
+          ru: 'Колбэк `.then` всегда асинхронный — это [[microtask|микрозадача]]. Он выполнится после синхронного `D`.',
+          en: 'A `.then` callback is always asynchronous — it’s a [[microtask|microtask]]. It runs after the synchronous `D`.',
         },
       },
     ],

@@ -273,8 +273,8 @@ setCount((c) => c + 1);
       {
         type: 'text',
         text: {
-          ru: '`memo` сравнивает каждый пропс через `Object.is`. Стрелочная функция, созданная при рендере, — каждый раз новый объект, поэтому сравнение не проходит и мемоизация не срабатывает.',
-          en: '`memo` compares every prop with `Object.is`. An arrow function created during render is a new object each time, so the comparison fails and memoization does nothing.',
+          ru: '`memo` сравнивает каждый пропс через `Object.is`. Стрелочная функция, созданная при рендере, — каждый раз новый объект, поэтому сравнение не проходит и [[memoization|мемоизация]] не срабатывает.',
+          en: '`memo` compares every prop with `Object.is`. An arrow function created during render is a new object each time, so the comparison fails and [[memoization|memoization]] does nothing.',
         },
       },
       {

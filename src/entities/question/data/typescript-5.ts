@@ -33,8 +33,8 @@ export const TYPESCRIPT_QUESTIONS_5: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Дальше сужают через `in`: после `"id" in data` у `data` появляется свойство `id: unknown`, которое проверяют `typeof data.id === "number"`. Для сложных данных удобнее схема (zod) или type guard.',
-          en: 'Narrow further with `in`: after `"id" in data`, `data` gets an `id: unknown` property that you check with `typeof data.id === "number"`. For complex data a schema (zod) or a type guard is handier.',
+          ru: 'Дальше сужают через `in`: после `"id" in data` у `data` появляется свойство `id: unknown`, которое проверяют `typeof data.id === "number"`. Для сложных данных удобнее схема (zod) или [[type-guard|type guard]].',
+          en: 'Narrow further with `in`: after `"id" in data`, `data` gets an `id: unknown` property that you check with `typeof data.id === "number"`. For complex data a schema (zod) or a [[type-guard|type guard]] is handier.',
         },
       },
     ],

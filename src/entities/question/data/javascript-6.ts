@@ -83,8 +83,8 @@ export const JAVASCRIPT_QUESTIONS_6: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Таймер должен жить в замыкании **снаружи** возвращаемой функции, чтобы каждый новый вызов отменял предыдущий через `clearTimeout`. Без отмены сработают все вызовы, с `let timer` внутри — тоже: у каждого вызова свой таймер. Вариант с флагом `ready` — это throttle с ведущим вызовом: он отработает на первой букве. А если не передать `...args`, функция получит `undefined`.',
-          en: 'The timer must live in the closure **outside** the returned function so each new call cancels the previous one via `clearTimeout`. Without cancelling, every call fires; with `let timer` inside, too: each call gets its own timer. The `ready` flag version is a leading-edge throttle: it fires on the first letter. And without passing `...args`, the function receives `undefined`.',
+          ru: 'Таймер должен жить в [[closure|замыкании]] **снаружи** возвращаемой функции, чтобы каждый новый вызов отменял предыдущий через `clearTimeout`. Без отмены сработают все вызовы, с `let timer` внутри — тоже: у каждого вызова свой таймер. Вариант с флагом `ready` — это throttle с ведущим вызовом: он отработает на первой букве. А если не передать `...args`, функция получит `undefined`.',
+          en: 'The timer must live in the [[closure|closure]] **outside** the returned function so each new call cancels the previous one via `clearTimeout`. Without cancelling, every call fires; with `let timer` inside, too: each call gets its own timer. The `ready` flag version is a leading-edge throttle: it fires on the first letter. And without passing `...args`, the function receives `undefined`.',
         },
       },
     ],
@@ -253,8 +253,8 @@ const sum = curry((a, b, c) => a + b + c);`,
       {
         type: 'text',
         text: {
-          ru: '`fn.length` — число объявленных параметров. Если аргументов набралось достаточно, вызываем исходную функцию. Иначе возвращаем новую функцию, которая запомнила уже переданные `args` в замыкании и добавит к ним следующие. Рекурсивный вызов `curried` позволяет передавать аргументы любыми порциями.',
-          en: '`fn.length` is the number of declared parameters. If enough arguments have arrived, call the original function. Otherwise return a new function that remembers the `args` passed so far in a closure and appends the next ones. The recursive `curried` call allows passing arguments in any batches.',
+          ru: '`fn.length` — число объявленных параметров. Если аргументов набралось достаточно, вызываем исходную функцию. Иначе возвращаем новую функцию, которая запомнила уже переданные `args` в [[closure|замыкании]] и добавит к ним следующие. Рекурсивный вызов `curried` позволяет передавать аргументы любыми порциями.',
+          en: '`fn.length` is the number of declared parameters. If enough arguments have arrived, call the original function. Otherwise return a new function that remembers the `args` passed so far in a [[closure|closure]] and appends the next ones. The recursive `curried` call allows passing arguments in any batches.',
         },
       },
     ],

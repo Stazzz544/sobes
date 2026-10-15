@@ -29,8 +29,8 @@ console.log(save.mock.callCount(), save.mock.calls[1].arguments[0]);`,
       {
         type: 'text',
         text: {
-          ru: 'Мок-функция записывает каждый вызов: сколько их было и с какими аргументами. Здесь три вызова, второй — с `20`. В Jest и Vitest то же самое: `jest.fn()`/`vi.fn()`, а проверки пишут через `toHaveBeenCalledTimes(3)` и `toHaveBeenNthCalledWith(2, 20)`. Встроенный `node:test` даёт моки без сторонних пакетов.',
-          en: 'A mock function records every call: how many and with which arguments. Here there are three calls, the second with `20`. Jest and Vitest work the same: `jest.fn()`/`vi.fn()`, asserted with `toHaveBeenCalledTimes(3)` and `toHaveBeenNthCalledWith(2, 20)`. The built-in `node:test` provides mocks without third-party packages.',
+          ru: '[[test-double|Мок]]-функция записывает каждый вызов: сколько их было и с какими аргументами. Здесь три вызова, второй — с `20`. В Jest и Vitest то же самое: `jest.fn()`/`vi.fn()`, а проверки пишут через `toHaveBeenCalledTimes(3)` и `toHaveBeenNthCalledWith(2, 20)`. Встроенный `node:test` даёт моки без сторонних пакетов.',
+          en: 'A [[test-double|mock]] function records every call: how many and with which arguments. Here there are three calls, the second with `20`. Jest and Vitest work the same: `jest.fn()`/`vi.fn()`, asserted with `toHaveBeenCalledTimes(3)` and `toHaveBeenNthCalledWith(2, 20)`. The built-in `node:test` provides mocks without third-party packages.',
         },
       },
     ],
@@ -245,8 +245,8 @@ console.log(results.join(' '));`,
       {
         type: 'text',
         text: {
-          ru: 'Testing Library рекомендует собственную функцию рендера с опцией `wrapper`: тесты получают настоящие провайдеры и работают как в приложении, а не с горой моков. Клиент запросов и стор создают заново для каждого теста, чтобы кеш не переходил между тестами. Подменяют только то, что выходит за границы, — сеть (например, через MSW).',
-          en: 'Testing Library recommends your own render function with the `wrapper` option: tests get real providers and behave like the app instead of piles of mocks. Create the query client and store fresh for each test so cache doesn’t leak between tests. Only replace what crosses the boundary — the network (e.g. with MSW).',
+          ru: 'Testing Library рекомендует собственную функцию рендера с опцией `wrapper`: тесты получают настоящие провайдеры и работают как в приложении, а не с горой [[test-double|моков]]. Клиент запросов и стор создают заново для каждого теста, чтобы кеш не переходил между тестами. Подменяют только то, что выходит за границы, — сеть (например, через MSW).',
+          en: 'Testing Library recommends your own render function with the `wrapper` option: tests get real providers and behave like the app instead of piles of [[test-double|mocks]]. Create the query client and store fresh for each test so cache doesn’t leak between tests. Only replace what crosses the boundary — the network (e.g. with MSW).',
         },
       },
     ],
@@ -347,8 +347,8 @@ console.log(results.join(' '));`,
       {
         type: 'text',
         text: {
-          ru: 'Моки во фронтенд-тестах описывают API таким, каким его **представляет** фронтенд, — и не узнают, что бэкенд переименовал поле. В **контрактном тестировании** ожидания потребителя сохраняются в контракт, а провайдер прогоняет его против настоящего сервиса: изменение, ломающее клиента, падает в CI бэкенда до релиза. Это дешевле полного E2E на два репозитория.',
-          en: 'Mocks in frontend tests describe the API as the frontend **imagines** it — and never learn that the backend renamed a field. In **contract testing**, consumer expectations are saved as a contract, and the provider runs it against the real service: a client-breaking change fails in the backend’s CI before release. It’s cheaper than full E2E across two repos.',
+          ru: '[[test-double|Моки]] во фронтенд-тестах описывают API таким, каким его **представляет** фронтенд, — и не узнают, что бэкенд переименовал поле. В **контрактном тестировании** ожидания потребителя сохраняются в контракт, а провайдер прогоняет его против настоящего сервиса: изменение, ломающее клиента, падает в CI бэкенда до релиза. Это дешевле полного E2E на два репозитория.',
+          en: '[[test-double|Mocks]] in frontend tests describe the API as the frontend **imagines** it — and never learn that the backend renamed a field. In **contract testing**, consumer expectations are saved as a contract, and the provider runs it against the real service: a client-breaking change fails in the backend’s CI before release. It’s cheaper than full E2E across two repos.',
         },
       },
     ],
@@ -381,8 +381,8 @@ console.log(results.join(' '));`,
       {
         type: 'text',
         text: {
-          ru: 'Каждый мок — предположение о том, как ведёт себя настоящий код. Чем их больше, тем меньше тест проверяет реальность: дочерний компонент изменил пропсы, хук — формат данных, а моки остались прежними. Надёжнее рендерить настоящие компоненты и подменять только внешний мир: сеть через MSW, время через фейковые таймеры.',
-          en: 'Every mock is an assumption about how real code behaves. The more there are, the less the test checks reality: a child changed its props, the hook its data shape, while the mocks stayed the same. It’s more reliable to render real components and replace only the outside world: the network via MSW, time via fake timers.',
+          ru: 'Каждый [[test-double|мок]] — предположение о том, как ведёт себя настоящий код. Чем их больше, тем меньше тест проверяет реальность: дочерний компонент изменил пропсы, хук — формат данных, а моки остались прежними. Надёжнее рендерить настоящие компоненты и подменять только внешний мир: сеть через MSW, время через фейковые таймеры.',
+          en: 'Every [[test-double|mock]] is an assumption about how real code behaves. The more there are, the less the test checks reality: a child changed its props, the hook its data shape, while the mocks stayed the same. It’s more reliable to render real components and replace only the outside world: the network via MSW, time via fake timers.',
         },
       },
     ],

@@ -225,8 +225,8 @@ config.debug = false;`,
       {
         type: 'text',
         text: {
-          ru: 'Это проверка только на этапе компиляции: в JavaScript объект остаётся обычным. Для настоящей неизменяемости нужен `Object.freeze` (его тип как раз `Readonly<T>`).',
-          en: 'It’s a compile-time check only: in JavaScript the object stays mutable. For real immutability you need `Object.freeze` (whose return type is exactly `Readonly<T>`).',
+          ru: 'Это проверка только на этапе компиляции: в JavaScript объект остаётся обычным. Для настоящей [[immutability|неизменяемости]] нужен `Object.freeze` (его тип как раз `Readonly<T>`).',
+          en: 'It’s a compile-time check only: in JavaScript the object stays mutable. For real [[immutability|immutability]] you need `Object.freeze` (whose return type is exactly `Readonly<T>`).',
         },
       },
     ],
@@ -394,8 +394,8 @@ type Result = [A, B];`,
       {
         type: 'text',
         text: {
-          ru: 'Дистрибутивный условный тип применяется к каждому члену объединения отдельно: `string[] | number[]`, а не `(string | number)[]`.',
-          en: 'A distributive conditional type is applied to each union member separately: `string[] | number[]`, not `(string | number)[]`.',
+          ru: '[[distributive|Дистрибутивный]] условный тип применяется к каждому члену объединения отдельно: `string[] | number[]`, а не `(string | number)[]`.',
+          en: 'A [[distributive|distributive]] conditional type is applied to each union member separately: `string[] | number[]`, not `(string | number)[]`.',
         },
       },
       {

@@ -31,8 +31,8 @@ export const WEB_QUESTIONS_8: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '**INP** — задержка от взаимодействия до следующей отрисовки. Пока главный поток занят длинной задачей, браузер не может показать отклик. `async` не делает синхронный код неблокирующим, микрозадачи из `then` выполняются до отрисовки, а колбэк `requestAnimationFrame` — прямо перед ней, так что кадр всё равно ждёт. Помогает разбить работу и уступать поток: браузер успевает отрисовать отклик между частями.',
-          en: '**INP** is the delay from an interaction to the next paint. While the main thread runs a long task, the browser can’t show feedback. `async` doesn’t make synchronous code non-blocking, `then` microtasks run before rendering, and a `requestAnimationFrame` callback runs right before paint, so the frame still waits. Splitting the work and yielding helps: the browser paints feedback between chunks.',
+          ru: '**INP** — задержка от взаимодействия до следующей отрисовки. Пока главный поток занят длинной задачей, браузер не может показать отклик. `async` не делает синхронный код неблокирующим, [[microtask|микрозадачи]] из `then` выполняются до отрисовки, а колбэк `requestAnimationFrame` — прямо перед ней, так что кадр всё равно ждёт. Помогает разбить работу и уступать поток: браузер успевает отрисовать отклик между частями.',
+          en: '**INP** is the delay from an interaction to the next paint. While the main thread runs a long task, the browser can’t show feedback. `async` doesn’t make synchronous code non-blocking, `then` [[microtask|microtasks]] run before rendering, and a `requestAnimationFrame` callback runs right before paint, so the frame still waits. Splitting the work and yielding helps: the browser paints feedback between chunks.',
         },
       },
     ],
@@ -64,8 +64,8 @@ export const WEB_QUESTIONS_8: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Ленивая картинка начинает грузиться, только когда браузер построит раскладку и поймёт, что она во вьюпорте, — загрузка стартует позже. `loading="lazy"` ставят картинкам ниже первого экрана. Для LCP-картинки наоборот поднимают приоритет: `fetchpriority="high"` или `preload`, а размеры `width`/`height` спасают от сдвигов макета.',
-          en: 'A lazy image starts loading only after the browser builds layout and sees it’s in the viewport — the download starts later. Use `loading="lazy"` for images below the fold. For the LCP image raise the priority instead: `fetchpriority="high"` or `preload`, while `width`/`height` prevent layout shifts.',
+          ru: 'Ленивая картинка начинает грузиться, только когда браузер построит раскладку и поймёт, что она во вьюпорте, — загрузка стартует позже. `loading="lazy"` ставят картинкам ниже первого экрана. Для [[lcp|LCP]]-картинки наоборот поднимают приоритет: `fetchpriority="high"` или `preload`, а размеры `width`/`height` спасают от сдвигов макета.',
+          en: 'A lazy image starts loading only after the browser builds layout and sees it’s in the viewport — the download starts later. Use `loading="lazy"` for images below the fold. For the [[lcp|LCP]] image raise the priority instead: `fetchpriority="high"` or `preload`, while `width`/`height` prevent layout shifts.',
         },
       },
     ],
@@ -140,8 +140,8 @@ setTimeout(() => console.log(requests), 500);`,
       {
         type: 'text',
         text: {
-          ru: '**Debounce** ждёт паузы — для поиска нужен один запрос, когда пользователь закончил ввод. **Throttle** вызывает функцию не чаще раза в N мс, пока события идут, — полоска прогресса должна двигаться во время прокрутки, а не после неё. С debounce она бы застывала, пока пользователь листает.',
-          en: '**Debounce** waits for a pause — search needs one request once the user finishes typing. **Throttle** calls the function at most once per N ms while events keep coming — the progress bar must move during scrolling, not after. With debounce it would freeze while the user scrolls.',
+          ru: '**Debounce** ждёт паузы — для поиска нужен один запрос, когда пользователь закончил ввод. **Throttle** вызывает функцию не чаще раза в N мс, пока события идут, — полоска прогресса должна двигаться во время прокрутки, а не после неё. С [[debounce|debounce]] она бы застывала, пока пользователь листает.',
+          en: '**Debounce** waits for a pause — search needs one request once the user finishes typing. **Throttle** calls the function at most once per N ms while events keep coming — the progress bar must move during scrolling, not after. With [[debounce|debounce]] it would freeze while the user scrolls.',
         },
       },
     ],
@@ -314,8 +314,8 @@ setTimeout(() => console.log(requests), 500);`,
       {
         type: 'text',
         text: {
-          ru: '**Web Worker** выполняет код в отдельном потоке, и главный поток остаётся свободным для ввода и отрисовки. Доступа к DOM у воркера нет — данные передаются сообщениями. `async`, `setTimeout` и `useEffect` лишь откладывают ту же работу, но выполняют её в главном потоке. Service Worker — прокси для сетевых запросов и кеша, не для вычислений страницы.',
-          en: 'A **Web Worker** runs code in a separate thread, leaving the main thread free for input and rendering. A worker has no DOM access — data is passed via messages. `async`, `setTimeout` and `useEffect` only postpone the same work but still run it on the main thread. A Service Worker is a proxy for network requests and caching, not for page computations.',
+          ru: '**Web Worker** выполняет код в отдельном потоке, и главный поток остаётся свободным для ввода и отрисовки. Доступа к DOM у воркера нет — данные передаются сообщениями. `async`, `setTimeout` и `useEffect` лишь откладывают ту же работу, но выполняют её в главном потоке. [[service-worker|Service Worker]] — прокси для сетевых запросов и кеша, не для вычислений страницы.',
+          en: 'A **Web Worker** runs code in a separate thread, leaving the main thread free for input and rendering. A worker has no DOM access — data is passed via messages. `async`, `setTimeout` and `useEffect` only postpone the same work but still run it on the main thread. A [[service-worker|Service Worker]] is a proxy for network requests and caching, not for page computations.',
         },
       },
     ],
@@ -359,8 +359,8 @@ console.log(calls);`,
       {
         type: 'text',
         text: {
-          ru: '**Мемоизация** запоминает результат для каждого аргумента: функция считает только для новых значений 2, 3 и 4, остальное берётся из кеша. Подходит только для чистых функций. Кеш без ограничений растёт вечно — в долгоживущих приложениях его ограничивают (LRU). `useMemo` в React — та же идея, но хранит лишь последний результат.',
-          en: '**Memoization** remembers the result for each argument: the function computes only for the new values 2, 3 and 4, the rest comes from the cache. It suits only pure functions. An unbounded cache grows forever — long-lived apps limit it (LRU). React’s `useMemo` is the same idea but keeps only the last result.',
+          ru: '**Мемоизация** запоминает результат для каждого аргумента: функция считает только для новых значений 2, 3 и 4, остальное берётся из кеша. Подходит только для [[pure-function|чистых функций]]. Кеш без ограничений растёт вечно — в долгоживущих приложениях его ограничивают (LRU). `useMemo` в React — та же идея, но хранит лишь последний результат.',
+          en: '**Memoization** remembers the result for each argument: the function computes only for the new values 2, 3 and 4, the rest comes from the cache. It suits only [[pure-function|pure functions]]. An unbounded cache grows forever — long-lived apps limit it (LRU). React’s `useMemo` is the same idea but keeps only the last result.',
         },
       },
     ],
@@ -429,8 +429,8 @@ console.log(calls);`,
       {
         type: 'text',
         text: {
-          ru: 'Lighthouse загружает страницу один раз, имитируя средний телефон и медленную сеть, и никуда не кликает — INP он не измеряет, вместо него смотрит на Total Blocking Time. **Полевые данные** (CrUX, свой RUM через `web-vitals`) собираются у реальных пользователей: слабые телефоны, расширения, долгие сессии и настоящие клики. Решения принимают по полю, а лабораторные замеры нужны, чтобы воспроизвести и проверить исправление.',
-          en: 'Lighthouse loads the page once, simulating an average phone and a slow network, and clicks nothing — it doesn’t measure INP, using Total Blocking Time instead. **Field data** (CrUX, your own RUM via `web-vitals`) comes from real users: weak phones, extensions, long sessions and real clicks. Decide based on field data; lab runs help reproduce and verify a fix.',
+          ru: 'Lighthouse загружает страницу один раз, имитируя средний телефон и медленную сеть, и никуда не кликает — [[inp|INP]] он не измеряет, вместо него смотрит на Total Blocking Time. **Полевые данные** (CrUX, свой RUM через `web-vitals`) собираются у реальных пользователей: слабые телефоны, расширения, долгие сессии и настоящие клики. Решения принимают по полю, а лабораторные замеры нужны, чтобы воспроизвести и проверить исправление.',
+          en: 'Lighthouse loads the page once, simulating an average phone and a slow network, and clicks nothing — it doesn’t measure [[inp|INP]], using Total Blocking Time instead. **Field data** (CrUX, your own RUM via `web-vitals`) comes from real users: weak phones, extensions, long sessions and real clicks. Decide based on field data; lab runs help reproduce and verify a fix.',
         },
       },
     ],

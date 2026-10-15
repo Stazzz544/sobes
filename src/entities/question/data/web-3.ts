@@ -47,15 +47,15 @@ export const WEB_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'В CSRF чужой сайт заставляет браузер жертвы отправить запрос на ваш сайт, и браузер сам прикладывает cookie сессии. `SameSite` запрещает отправку cookie в межсайтовых запросах (`Lax` — кроме навигации по ссылке методом GET), а CSRF-токен, который знает только ваша страница, подделать нельзя.',
-          en: 'In CSRF, another site makes the victim’s browser send a request to your site, and the browser attaches the session cookie automatically. `SameSite` stops cookies from being sent on cross-site requests (`Lax` still allows top-level GET navigations), and a CSRF token known only to your page can’t be forged.',
+          ru: 'В [[csrf|CSRF]] чужой сайт заставляет браузер жертвы отправить запрос на ваш сайт, и браузер сам прикладывает cookie сессии. `SameSite` запрещает отправку cookie в межсайтовых запросах (`Lax` — кроме навигации по ссылке методом GET), а CSRF-токен, который знает только ваша страница, подделать нельзя.',
+          en: 'In [[csrf|CSRF]], another site makes the victim’s browser send a request to your site, and the browser attaches the session cookie automatically. `SameSite` stops cookies from being sent on cross-site requests (`Lax` still allows top-level GET navigations), and a CSRF token known only to your page can’t be forged.',
         },
       },
       {
         type: 'text',
         text: {
-          ru: '`HttpOnly` и экранирование защищают от XSS, HTTPS — от перехвата. CORS не мешает «простым» запросам дойти до сервера.',
-          en: '`HttpOnly` and escaping protect against XSS, and HTTPS against interception. CORS doesn’t stop “simple” requests from reaching the server.',
+          ru: '`HttpOnly` и экранирование защищают от [[xss|XSS]], HTTPS — от перехвата. [[cors|CORS]] не мешает «простым» запросам дойти до сервера.',
+          en: '`HttpOnly` and escaping protect against [[xss|XSS]], and HTTPS against interception. [[cors|CORS]] doesn’t stop “simple” requests from reaching the server.',
         },
       },
     ],
@@ -111,8 +111,8 @@ export const WEB_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Браузер по-прежнему отправляет `HttpOnly`-cookie на сервер с запросами, но скрипты на странице её не видят. Даже если злоумышленник выполнит JavaScript через XSS, токен сессии он не прочитает.',
-          en: 'The browser still sends an `HttpOnly` cookie to the server with requests, but page scripts can’t see it. Even if an attacker runs JavaScript via XSS, they can’t read the session token.',
+          ru: 'Браузер по-прежнему отправляет `HttpOnly`-cookie на сервер с запросами, но скрипты на странице её не видят. Даже если злоумышленник выполнит JavaScript через [[xss|XSS]], токен сессии он не прочитает.',
+          en: 'The browser still sends an `HttpOnly` cookie to the server with requests, but page scripts can’t see it. Even if an attacker runs JavaScript via [[xss|XSS]], they can’t read the session token.',
         },
       },
       {
@@ -179,8 +179,8 @@ export const WEB_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'CSP говорит браузеру, откуда разрешено загружать ресурсы. `script-src \'self\'` пропускает только скрипты с вашего origin. Встроенные скрипты и `eval` по умолчанию запрещены, поэтому даже внедрённый через XSS `<script>` не выполнится.',
-          en: 'CSP tells the browser where resources may be loaded from. `script-src \'self\'` only lets through scripts from your origin. Inline scripts and `eval` are blocked by default, so even a `<script>` injected via XSS won’t run.',
+          ru: '[[csp|CSP]] говорит браузеру, откуда разрешено загружать ресурсы. `script-src \'self\'` пропускает только скрипты с вашего [[origin|origin]]. Встроенные скрипты и `eval` по умолчанию запрещены, поэтому даже внедрённый через XSS `<script>` не выполнится.',
+          en: '[[csp|CSP]] tells the browser where resources may be loaded from. `script-src \'self\'` only lets through scripts from your [[origin|origin]]. Inline scripts and `eval` are blocked by default, so even a `<script>` injected via XSS won’t run.',
         },
       },
       {
@@ -240,15 +240,15 @@ export const WEB_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'CORS **ослабляет** политику одного источника (same-origin policy) для доверенных сайтов, а проверяет её браузер. Сервер просто отдаёт заголовки, а решение «отдать ли ответ скрипту» принимает браузер. Простые запросы (например, `POST` из формы) при этом выполняются и могут изменить данные.',
-          en: 'CORS **relaxes** the same-origin policy for trusted sites, and it’s enforced by the browser. The server just sends headers; the browser decides whether to hand the response to the script. Simple requests (like a form `POST`) still execute and can change data.',
+          ru: '[[cors|CORS]] **ослабляет** [[same-origin-policy|политику одного источника]] (same-origin policy) для доверенных сайтов, а проверяет её браузер. Сервер просто отдаёт заголовки, а решение «отдать ли ответ скрипту» принимает браузер. Простые запросы (например, `POST` из формы) при этом выполняются и могут изменить данные.',
+          en: '[[cors|CORS]] **relaxes** the [[same-origin-policy|same-origin policy]] for trusted sites, and it’s enforced by the browser. The server just sends headers; the browser decides whether to hand the response to the script. Simple requests (like a form `POST`) still execute and can change data.',
         },
       },
       {
         type: 'text',
         text: {
-          ru: 'API защищают аутентификация, проверка прав, CSRF-защита и лимиты, а не CORS.',
-          en: 'APIs are protected by authentication, authorization checks, CSRF defenses and rate limits — not by CORS.',
+          ru: 'API защищают аутентификация, проверка прав, [[csrf|CSRF]]-защита и лимиты, а не CORS.',
+          en: 'APIs are protected by authentication, authorization checks, [[csrf|CSRF]] defenses and rate limits — not by CORS.',
         },
       },
     ],
@@ -347,8 +347,8 @@ export const WEB_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'От уязвимостей самого приложения (XSS, CSRF) HTTPS не защищает, а IP-адрес клиента сервер видит всегда.',
-          en: 'HTTPS doesn’t protect against the app’s own vulnerabilities (XSS, CSRF), and the server always sees the client’s IP address.',
+          ru: 'От уязвимостей самого приложения ([[xss|XSS]], [[csrf|CSRF]]) HTTPS не защищает, а IP-адрес клиента сервер видит всегда.',
+          en: 'HTTPS doesn’t protect against the app’s own vulnerabilities ([[xss|XSS]], [[csrf|CSRF]]), and the server always sees the client’s IP address.',
         },
       },
     ],
@@ -447,8 +447,8 @@ export const WEB_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'В марте 2024 года INP заменил FID, поэтому вариант с FID устарел.',
-          en: 'In March 2024 INP replaced FID, so the FID option is outdated.',
+          ru: 'В марте 2024 года [[inp|INP]] заменил FID, поэтому вариант с FID устарел.',
+          en: 'In March 2024 [[inp|INP]] replaced FID, so the FID option is outdated.',
         },
       },
     ],
@@ -518,8 +518,8 @@ export const WEB_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`transform`-анимации не вызывают сдвигов макета, а большой бандл и медленный сервер бьют по LCP и INP.',
-          en: '`transform` animations don’t cause layout shifts, while a big bundle or slow server hurts LCP and INP.',
+          ru: '`transform`-анимации не вызывают сдвигов макета, а большой бандл и медленный сервер бьют по [[lcp|LCP]] и [[inp|INP]].',
+          en: '`transform` animations don’t cause layout shifts, while a big bundle or slow server hurts [[lcp|LCP]] and [[inp|INP]].',
         },
       },
     ],
@@ -575,8 +575,8 @@ export const WEB_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`preload` заранее сообщает браузеру о критичном ресурсе, который он иначе нашёл бы поздно: шрифт из CSS, LCP-картинку. Загрузка начинается сразу, но ресурс не выполняется и не применяется сам по себе. `prefetch` — подсказка «скорее всего понадобится дальше»: браузер скачает в простое и положит в кэш.',
-          en: '`preload` tells the browser early about a critical resource it would otherwise discover late: a font referenced from CSS, the LCP image. The download starts right away, but nothing is executed or applied by itself. `prefetch` is a hint that something will likely be needed next: the browser downloads it when idle and caches it.',
+          ru: '`preload` заранее сообщает браузеру о критичном ресурсе, который он иначе нашёл бы поздно: шрифт из CSS, [[lcp|LCP]]-картинку. Загрузка начинается сразу, но ресурс не выполняется и не применяется сам по себе. `prefetch` — подсказка «скорее всего понадобится дальше»: браузер скачает в простое и положит в кэш.',
+          en: '`preload` tells the browser early about a critical resource it would otherwise discover late: a font referenced from CSS, the [[lcp|LCP]] image. The download starts right away, but nothing is executed or applied by itself. `prefetch` is a hint that something will likely be needed next: the browser downloads it when idle and caches it.',
         },
       },
       {

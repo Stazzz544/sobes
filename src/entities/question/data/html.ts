@@ -219,8 +219,8 @@ export const HTML_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Связанный `<label>` (через `for`/`id` или обёрткой) даёт полю доступное имя, а клик по тексту фокусирует поле — это ещё и большая цель касания. Соседний `<span>` или `<div>` визуально похож, но с полем не связан.',
-          en: 'An associated `<label>` (via `for`/`id` or by wrapping) gives the field an accessible name, and clicking the text focuses the field — a bigger touch target too. A nearby `<span>` or `<div>` looks similar but isn’t associated.',
+          ru: 'Связанный `<label>` (через `for`/`id` или обёрткой) даёт полю [[accessible-name|доступное имя]], а клик по тексту фокусирует поле — это ещё и большая цель касания. Соседний `<span>` или `<div>` визуально похож, но с полем не связан.',
+          en: 'An associated `<label>` (via `for`/`id` or by wrapping) gives the field an [[accessible-name|accessible name]], and clicking the text focuses the field — a bigger touch target too. A nearby `<span>` or `<div>` looks similar but isn’t associated.',
         },
       },
     ],
@@ -324,8 +324,8 @@ export const HTML_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'В ссылке только SVG без текста, поэтому доступное имя пустое. Часть дикторов зачитает адрес, часть — просто «ссылка»; понять, куда она ведёт, нельзя. Нужен `aria-label="Корзина"` на ссылке или скрытый текст.',
-          en: 'The link contains only an SVG with no text, so the accessible name is empty. Some screen readers read the URL, others just say “link”; you can’t tell where it goes. Add `aria-label="Cart"` to the link or visually hidden text.',
+          ru: 'В ссылке только SVG без текста, поэтому [[accessible-name|доступное имя]] пустое. Часть дикторов зачитает адрес, часть — просто «ссылка»; понять, куда она ведёт, нельзя. Нужен `aria-label="Корзина"` на ссылке или скрытый текст.',
+          en: 'The link contains only an SVG with no text, so the [[accessible-name|accessible name]] is empty. Some screen readers read the URL, others just say “link”; you can’t tell where it goes. Add `aria-label="Cart"` to the link or visually hidden text.',
         },
       },
     ],
@@ -356,8 +356,8 @@ export const HTML_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Подсказка пропадает, как только человек начинает печатать, — непонятно, что за поле, особенно при ошибке. Цвет подсказки часто не проходит по контрасту, а как доступное имя `placeholder` — лишь запасной вариант. Подпись нужна всегда, `placeholder` — для примера формата.',
-          en: 'The hint vanishes as soon as someone starts typing — it’s unclear what the field is, especially on error. Placeholder color often fails contrast, and as an accessible name it’s only a fallback. Always have a label; use `placeholder` for a format example.',
+          ru: 'Подсказка пропадает, как только человек начинает печатать, — непонятно, что за поле, особенно при ошибке. Цвет подсказки часто не проходит по контрасту, а как [[accessible-name|доступное имя]] `placeholder` — лишь запасной вариант. Подпись нужна всегда, `placeholder` — для примера формата.',
+          en: 'The hint vanishes as soon as someone starts typing — it’s unclear what the field is, especially on error. Placeholder color often fails contrast, and as an [[accessible-name|accessible name]] it’s only a fallback. Always have a label; use `placeholder` for a format example.',
         },
       },
     ],
@@ -380,8 +380,8 @@ export const HTML_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`<nav>` получает роль `navigation` — это ориентир, к которому пользователь экранного диктора переходит одной командой. Роль `menu` — для меню приложения со стрелочной навигацией, а не для набора ссылок.',
-          en: '`<nav>` gets the `navigation` role — a landmark a screen reader user can jump to with one command. The `menu` role is for application menus with arrow-key navigation, not a set of links.',
+          ru: '`<nav>` получает роль `navigation` — это [[landmark|ориентир]], к которому пользователь экранного диктора переходит одной командой. Роль `menu` — для меню приложения со стрелочной навигацией, а не для набора ссылок.',
+          en: '`<nav>` gets the `navigation` role — a [[landmark|landmark]] a screen reader user can jump to with one command. The `menu` role is for application menus with arrow-key navigation, not a set of links.',
         },
       },
     ],
@@ -405,8 +405,8 @@ export const HTML_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`<section>` становится ориентиром `region` только при наличии доступного имени (`aria-label` или `aria-labelledby` на заголовок). Без имени это `generic` — обычный блок, как `div`. Заголовок внутри сам по себе имя не даёт.',
-          en: '`<section>` becomes a `region` landmark only when it has an accessible name (`aria-label` or `aria-labelledby` pointing to its heading). Without a name it’s `generic` — a plain block like `div`. A heading inside doesn’t name it by itself.',
+          ru: '`<section>` становится [[landmark|ориентиром]] `region` только при наличии [[accessible-name|доступного имени]] (`aria-label` или `aria-labelledby` на заголовок). Без имени это `generic` — обычный блок, как `div`. Заголовок внутри сам по себе имя не даёт.',
+          en: '`<section>` becomes a `region` [[landmark|landmark]] only when it has an [[accessible-name|accessible name]] (`aria-label` or `aria-labelledby` pointing to its heading). Without a name it’s `generic` — a plain block like `div`. A heading inside doesn’t name it by itself.',
         },
       },
     ],
@@ -567,8 +567,8 @@ export const HTML_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: '`aria-hidden` убирает элементы только из дерева доступности, но не из порядка табуляции. Фокус уходит на скрытую ссылку, и диктор молчит или зачитывает непонятное. Для фона модалки используют атрибут `inert` — он убирает и из дерева, и из фокуса.',
-          en: '`aria-hidden` removes elements only from the accessibility tree, not from the tab order. Focus moves to a hidden link, and the screen reader is silent or confusing. For the content behind a modal use the `inert` attribute — it removes things from both the tree and focus.',
+          ru: '`aria-hidden` убирает элементы только из [[accessibility-tree|дерева доступности]], но не из порядка табуляции. Фокус уходит на скрытую ссылку, и диктор молчит или зачитывает непонятное. Для фона модалки используют атрибут `inert` — он убирает и из дерева, и из фокуса.',
+          en: '`aria-hidden` removes elements only from the [[accessibility-tree|accessibility tree]], not from the tab order. Focus moves to a hidden link, and the screen reader is silent or confusing. For the content behind a modal use the `inert` attribute — it removes things from both the tree and focus.',
         },
       },
     ],

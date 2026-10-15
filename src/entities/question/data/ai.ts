@@ -49,8 +49,8 @@ export const AI_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'LLM — это нейросеть с миллиардами параметров, обученная на огромном корпусе текстов. Её базовая задача — по уже написанному тексту предсказать следующий **токен**. Ответ строится по токену за раз: модель дописывает текст, каждый раз выбирая продолжение.',
-          en: 'An LLM is a neural network with billions of parameters trained on a huge text corpus. Its basic task is to predict the next **token** given the text so far. An answer is built one token at a time: the model keeps extending the text, choosing a continuation each step.',
+          ru: 'LLM — это нейросеть с миллиардами параметров, обученная на огромном корпусе текстов. Её базовая задача — по уже написанному тексту предсказать следующий **токен**. Ответ строится по [[token|токену]] за раз: модель дописывает текст, каждый раз выбирая продолжение.',
+          en: 'An LLM is a neural network with billions of parameters trained on a huge text corpus. Its basic task is to predict the next **token** given the text so far. An answer is built one [[token|token]] at a time: the model keeps extending the text, choosing a continuation each step.',
         },
       },
       {
@@ -110,8 +110,8 @@ export const AI_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Перед обработкой текст разбивается **токенизатором** на токены. Частые слова часто становятся одним токеном, редкие и длинные — несколькими. Для русского текста токенов обычно больше, чем для английского того же смысла.',
-          en: 'Before processing, a **tokenizer** splits text into tokens. Common words often become a single token, rare and long ones several. Non-English text, such as Russian, usually takes more tokens than English with the same meaning.',
+          ru: 'Перед обработкой текст разбивается **токенизатором** на [[token|токены]]. Частые слова часто становятся одним токеном, редкие и длинные — несколькими. Для русского текста токенов обычно больше, чем для английского того же смысла.',
+          en: 'Before processing, a **tokenizer** splits text into [[token|tokens]]. Common words often become a single token, rare and long ones several. Non-English text, such as Russian, usually takes more tokens than English with the same meaning.',
         },
       },
       {
@@ -178,8 +178,8 @@ export const AI_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Поэтому в длинных чатах старые сообщения обрезают или сжимают в краткое содержание, а большие базы знаний подключают через поиск (RAG), а не целиком.',
-          en: 'That’s why long chats trim or summarize old messages, and large knowledge bases are connected via search (RAG) instead of being pasted whole.',
+          ru: 'Поэтому в длинных чатах старые сообщения обрезают или сжимают в краткое содержание, а большие базы знаний подключают через поиск ([[rag|RAG]]), а не целиком.',
+          en: 'That’s why long chats trim or summarize old messages, and large knowledge bases are connected via search ([[rag|RAG]]) instead of being pasted whole.',
         },
       },
     ],
@@ -239,8 +239,8 @@ export const AI_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Снизить риск помогают: передать модели проверенный контекст (RAG), разрешить ей отвечать «не знаю», просить ссылки на источник из контекста и проверять важные утверждения. Полностью галлюцинации не исчезают даже у новых моделей.',
-          en: 'What helps: give the model verified context (RAG), allow it to say “I don’t know,” ask it to cite the provided sources, and verify important claims. Hallucinations don’t fully disappear even in newer models.',
+          ru: 'Снизить риск помогают: передать модели проверенный контекст ([[rag|RAG]]), разрешить ей отвечать «не знаю», просить ссылки на источник из контекста и проверять важные утверждения. Полностью [[hallucination|галлюцинации]] не исчезают даже у новых моделей.',
+          en: 'What helps: give the model verified context ([[rag|RAG]]), allow it to say “I don’t know,” ask it to cite the provided sources, and verify important claims. [[hallucination|Hallucinations]] don’t fully disappear even in newer models.',
         },
       },
     ],
@@ -296,8 +296,8 @@ export const AI_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'На каждом шаге модель получает распределение вероятностей следующего токена. Низкая температура делает выбор почти всегда в пользу самых вероятных вариантов — ответы стабильнее и повторяемее. Высокая сглаживает распределение — текст разнообразнее, но и ошибок больше.',
-          en: 'At each step the model has a probability distribution over the next token. A low temperature almost always picks the most likely options — answers are more stable and repeatable. A high one flattens the distribution — text is more varied, but so are the mistakes.',
+          ru: 'На каждом шаге модель получает распределение вероятностей следующего [[token|токена]]. Низкая температура делает выбор почти всегда в пользу самых вероятных вариантов — ответы стабильнее и повторяемее. Высокая сглаживает распределение — текст разнообразнее, но и ошибок больше.',
+          en: 'At each step the model has a probability distribution over the next [[token|token]]. A low temperature almost always picks the most likely options — answers are more stable and repeatable. A high one flattens the distribution — text is more varied, but so are the mistakes.',
         },
       },
       {
@@ -424,8 +424,8 @@ export const AI_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Для модели каждый вызов независим. «Память» чата — это массив сообщений, который приложение хранит и отправляет целиком в каждом запросе. Отсюда следствия: длинный диалог стоит дороже (все токены считаются заново), а при переполнении контекста старые сообщения приходится обрезать или пересказывать.',
-          en: 'For the model each call is independent. Chat “memory” is an array of messages the app stores and sends in full every time. Consequences: a long conversation costs more (all tokens are counted again), and when the context overflows, old messages have to be trimmed or summarized.',
+          ru: 'Для модели каждый вызов независим. «Память» чата — это массив сообщений, который приложение хранит и отправляет целиком в каждом запросе. Отсюда следствия: длинный диалог стоит дороже (все [[token|токены]] считаются заново), а при переполнении контекста старые сообщения приходится обрезать или пересказывать.',
+          en: 'For the model each call is independent. Chat “memory” is an array of messages the app stores and sends in full every time. Consequences: a long conversation costs more (all [[token|tokens]] are counted again), and when the context overflows, old messages have to be trimmed or summarized.',
         },
       },
       {
@@ -549,8 +549,8 @@ export const AI_QUESTIONS: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Слово попадает в модель не по буквам, а одним или несколькими токенами, например `straw` + `berry`. Модель не «видит» отдельные символы напрямую, поэтому побуквенные задачи — подсчёт, переворот строки, точная арифметика — для неё неестественны.',
-          en: 'A word reaches the model not letter by letter but as one or more tokens, like `straw` + `berry`. The model doesn’t directly “see” characters, so character-level tasks — counting, reversing a string, exact arithmetic — are unnatural for it.',
+          ru: 'Слово попадает в модель не по буквам, а одним или несколькими [[token|токенами]], например `straw` + `berry`. Модель не «видит» отдельные символы напрямую, поэтому побуквенные задачи — подсчёт, переворот строки, точная арифметика — для неё неестественны.',
+          en: 'A word reaches the model not letter by letter but as one or more [[token|tokens]], like `straw` + `berry`. The model doesn’t directly “see” characters, so character-level tasks — counting, reversing a string, exact arithmetic — are unnatural for it.',
         },
       },
       {
@@ -917,8 +917,8 @@ const result = Review.safeParse(JSON.parse(modelText));`,
       {
         type: 'text',
         text: {
-          ru: 'Модель генерирует ответ токен за токеном, и выписанные промежуточные шаги становятся частью контекста, на который она опирается дальше. Это приём chain-of-thought. Многие современные «рассуждающие» модели делают это сами.',
-          en: 'The model generates token by token, and written-out intermediate steps become part of the context it builds on. That’s chain-of-thought prompting. Many modern “reasoning” models do this on their own.',
+          ru: 'Модель генерирует ответ [[token|токен]] за токеном, и выписанные промежуточные шаги становятся частью контекста, на который она опирается дальше. Это приём chain-of-thought. Многие современные «рассуждающие» модели делают это сами.',
+          en: 'The model generates [[token|token]] by token, and written-out intermediate steps become part of the context it builds on. That’s chain-of-thought prompting. Many modern “reasoning” models do this on their own.',
         },
       },
       {

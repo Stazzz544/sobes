@@ -112,8 +112,8 @@ console.log(f(7));`,
       {
         type: 'text',
         text: {
-          ru: 'Такая рекурсия работает за `O(2^n)`: одни и те же значения считаются много раз. Мемоизация или цикл дают `O(n)`.',
-          en: 'This recursion runs in `O(2^n)`: the same values are recomputed many times. Memoization or a loop brings it down to `O(n)`.',
+          ru: 'Такая рекурсия работает за `O(2^n)`: одни и те же значения считаются много раз. [[memoization|Мемоизация]] или цикл дают `O(n)`.',
+          en: 'This recursion runs in `O(2^n)`: the same values are recomputed many times. [[memoization|Memoization]] or a loop brings it down to `O(n)`.',
         },
       },
     ],

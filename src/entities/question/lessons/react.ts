@@ -377,8 +377,8 @@ function Page({ items, query }) {
       {
         type: 'text',
         text: {
-          ru: 'Мемоизация окупается для тяжёлых вычислений, для пропсов `memo`-компонентов и для зависимостей эффектов — в остальных случаях она лишь добавляет сравнений. Сначала измерьте React Profiler. React Compiler мемоизирует компоненты и значения автоматически — с ним ручные `useMemo`/`useCallback` почти не нужны.',
-          en: 'Memoization pays off for expensive calculations, for props of `memo` components and for effect dependencies — otherwise it just adds comparisons. Measure with the React Profiler first. React Compiler memoizes components and values automatically — with it, manual `useMemo`/`useCallback` are rarely needed.',
+          ru: '[[memoization|Мемоизация]] окупается для тяжёлых вычислений, для пропсов `memo`-компонентов и для зависимостей эффектов — в остальных случаях она лишь добавляет сравнений. Сначала измерьте React Profiler. React Compiler мемоизирует компоненты и значения автоматически — с ним ручные `useMemo`/`useCallback` почти не нужны.',
+          en: '[[memoization|Memoization]] pays off for expensive calculations, for props of `memo` components and for effect dependencies — otherwise it just adds comparisons. Measure with the React Profiler first. React Compiler memoizes components and values automatically — with it, manual `useMemo`/`useCallback` are rarely needed.',
         },
       },
     ],
@@ -743,8 +743,8 @@ function App() {
       {
         type: 'text',
         text: {
-          ru: 'Серверный компонент может быть `async` и читать данные напрямую — из базы, файлов, внутренних API. Взамен у него нет state, эффектов и обработчиков событий. Интерактивные части выносят в клиентские компоненты: директива `\'use client\'` в начале файла отмечает границу — этот файл и всё, что он импортирует, попадает в клиентский бандл.',
-          en: 'A Server Component can be `async` and read data directly — from a database, files, internal APIs. In exchange it has no state, effects or event handlers. Interactive parts go into Client Components: the `\'use client\'` directive at the top of a file marks the boundary — that file and everything it imports ships to the client.',
+          ru: '[[rsc|Серверный компонент]] может быть `async` и читать данные напрямую — из базы, файлов, внутренних API. Взамен у него нет state, эффектов и обработчиков событий. Интерактивные части выносят в клиентские компоненты: директива `\'use client\'` в начале файла отмечает границу — этот файл и всё, что он импортирует, попадает в клиентский бандл.',
+          en: 'A [[rsc|Server Component]] can be `async` and read data directly — from a database, files, internal APIs. In exchange it has no state, effects or event handlers. Interactive parts go into Client Components: the `\'use client\'` directive at the top of a file marks the boundary — that file and everything it imports ships to the client.',
         },
       },
       {

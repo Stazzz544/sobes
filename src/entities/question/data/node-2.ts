@@ -119,8 +119,8 @@ try {
       {
         type: 'text',
         text: {
-          ru: 'Readable-потоки — асинхронные итераторы: `for await` читает чанки по одному и сам соблюдает backpressure — следующий чанк не запрашивается, пока тело цикла не закончит работу. `Readable.from` превращает массив или генератор в поток. Так удобно обрабатывать большие файлы построчно через `readline` или `fs.createReadStream`.',
-          en: 'Readable streams are async iterators: `for await` reads chunks one by one and respects backpressure itself — the next chunk isn’t requested until the loop body finishes. `Readable.from` turns an array or generator into a stream. This makes processing big files line by line with `readline` or `fs.createReadStream` convenient.',
+          ru: 'Readable-потоки — асинхронные итераторы: `for await` читает чанки по одному и сам соблюдает [[backpressure|backpressure]] — следующий чанк не запрашивается, пока тело цикла не закончит работу. `Readable.from` превращает массив или генератор в поток. Так удобно обрабатывать большие файлы построчно через `readline` или `fs.createReadStream`.',
+          en: 'Readable streams are async iterators: `for await` reads chunks one by one and respects [[backpressure|backpressure]] itself — the next chunk isn’t requested until the loop body finishes. `Readable.from` turns an array or generator into a stream. This makes processing big files line by line with `readline` or `fs.createReadStream` convenient.',
         },
       },
     ],
@@ -191,8 +191,8 @@ worker.postMessage(21);`,
       {
         type: 'text',
         text: {
-          ru: '`worker_threads` запускает JavaScript в отдельном потоке со своим event loop. Общаются через сообщения: данные копируются (structured clone), а `ArrayBuffer` можно передать без копирования. Так выносят тяжёлые вычисления — парсинг, сжатие, хеши, — чтобы главный поток продолжал отвечать на запросы. `terminate()` нужен, иначе воркер держит процесс живым.',
-          en: '`worker_threads` runs JavaScript in a separate thread with its own event loop. They talk via messages: data is copied (structured clone), and an `ArrayBuffer` can be transferred without copying. This offloads heavy work — parsing, compression, hashing — so the main thread keeps serving requests. `terminate()` is needed, or the worker keeps the process alive.',
+          ru: '`worker_threads` запускает JavaScript в отдельном потоке со своим [[event-loop|event loop]]. Общаются через сообщения: данные копируются (structured clone), а `ArrayBuffer` можно передать без копирования. Так выносят тяжёлые вычисления — парсинг, сжатие, хеши, — чтобы главный поток продолжал отвечать на запросы. `terminate()` нужен, иначе воркер держит процесс живым.',
+          en: '`worker_threads` runs JavaScript in a separate thread with its own [[event-loop|event loop]]. They talk via messages: data is copied (structured clone), and an `ArrayBuffer` can be transferred without copying. This offloads heavy work — parsing, compression, hashing — so the main thread keeps serving requests. `terminate()` is needed, or the worker keeps the process alive.',
         },
       },
     ],

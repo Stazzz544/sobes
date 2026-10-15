@@ -309,8 +309,8 @@ console.log(0 || 'a', 0 ?? 'a', null ?? 'b', user?.name);`,
       {
         type: 'text',
         text: {
-          ru: 'Объявления `let` и `const` тоже поднимаются, но до строки объявления переменная находится во «временной мёртвой зоне» (TDZ). Любое обращение к ней в TDZ бросает `ReferenceError`.',
-          en: '`let` and `const` declarations are hoisted too, but until the declaration line runs the variable is in the “temporal dead zone” (TDZ). Any access in the TDZ throws a `ReferenceError`.',
+          ru: 'Объявления `let` и `const` тоже поднимаются, но до строки объявления переменная находится во «[[tdz|временной мёртвой зоне]]» (TDZ). Любое обращение к ней в TDZ бросает `ReferenceError`.',
+          en: '`let` and `const` declarations are hoisted too, but until the declaration line runs the variable is in the “[[tdz|temporal dead zone]]” (TDZ). Any access in the TDZ throws a `ReferenceError`.',
         },
       },
       {
@@ -359,8 +359,8 @@ var expressed = function () {};`,
       {
         type: 'text',
         text: {
-          ru: 'У Function Expression поднимается только переменная `var expressed`, и до присваивания она равна `undefined`. С `let` или `const` здесь был бы `ReferenceError` из-за TDZ.',
-          en: 'For a function expression only the `var expressed` variable is hoisted, and it is `undefined` until the assignment. With `let` or `const` you’d get a `ReferenceError` because of the TDZ.',
+          ru: 'У Function Expression поднимается только переменная `var expressed`, и до присваивания она равна `undefined`. С `let` или `const` здесь был бы `ReferenceError` из-за [[tdz|TDZ]].',
+          en: 'For a function expression only the `var expressed` variable is hoisted, and it is `undefined` until the assignment. With `let` or `const` you’d get a `ReferenceError` because of the [[tdz|TDZ]].',
         },
       },
     ],
@@ -396,15 +396,15 @@ console.log(first(), second());`,
       {
         type: 'text',
         text: {
-          ru: 'Каждый вызов `makeCounter()` создаёт новое лексическое окружение со своей переменной `count`. Возвращённая стрелка замыкает именно его.',
-          en: 'Each `makeCounter()` call creates a new lexical environment with its own `count`. The returned arrow function closes over that particular environment.',
+          ru: 'Каждый вызов `makeCounter()` создаёт новое [[lexical-environment|лексическое окружение]] со своей переменной `count`. Возвращённая стрелка замыкает именно его.',
+          en: 'Each `makeCounter()` call creates a new [[lexical-environment|lexical environment]] with its own `count`. The returned arrow function closes over that particular environment.',
         },
       },
       {
         type: 'text',
         text: {
-          ru: '`first` вызвали трижды — её `count` стал `3`. У `second` свой счётчик, и первый вызов даёт `1`. Так замыкания дают приватное состояние без классов.',
-          en: '`first` was called three times, so its `count` is `3`. `second` has its own counter, and its first call returns `1`. That’s how closures give you private state without classes.',
+          ru: '`first` вызвали трижды — её `count` стал `3`. У `second` свой счётчик, и первый вызов даёт `1`. Так [[closure|замыкания]] дают приватное состояние без классов.',
+          en: '`first` was called three times, so its `count` is `3`. `second` has its own counter, and its first call returns `1`. That’s how [[closure|closures]] give you private state without classes.',
         },
       },
       { type: 'diagram', diagram: 'closure-counters' },
@@ -456,8 +456,8 @@ console.log(first(), second());`,
       {
         type: 'text',
         text: {
-          ru: 'Замыкание — это функция плюс ссылка на окружение, где она была объявлена. Важно: функция хранит **ссылку** на переменные, а не их копию, поэтому видит их актуальные значения.',
-          en: 'A closure is a function plus a reference to the environment where it was declared. Importantly, the function keeps a **reference** to the variables, not a copy, so it sees their current values.',
+          ru: '[[closure|Замыкание]] — это функция плюс ссылка на окружение, где она была объявлена. Важно: функция хранит **ссылку** на переменные, а не их копию, поэтому видит их актуальные значения.',
+          en: 'A [[closure|closure]] is a function plus a reference to the environment where it was declared. Importantly, the function keeps a **reference** to the variables, not a copy, so it sees their current values.',
         },
       },
       {

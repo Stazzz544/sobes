@@ -30,8 +30,8 @@ export const REACT_QUESTIONS_6: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Когда зависимость меняется, React сначала вызывает очистку **предыдущего** эффекта — с теми значениями, которые были у него в замыкании (`a`), — а потом запускает новый эффект с `b`. При размонтировании выполняется последняя очистка. Поэтому подписка, соединение или таймер всегда закрываются ровно один раз на каждое открытие.',
-          en: 'When a dependency changes, React first runs the **previous** effect’s cleanup — with the values from its closure (`a`) — then runs the new effect with `b`. On unmount the last cleanup runs. So a subscription, connection or timer is always closed exactly once per open.',
+          ru: 'Когда зависимость меняется, React сначала вызывает очистку **предыдущего** эффекта — с теми значениями, которые были у него в [[closure|замыкании]] (`a`), — а потом запускает новый эффект с `b`. При размонтировании выполняется последняя очистка. Поэтому подписка, соединение или таймер всегда закрываются ровно один раз на каждое открытие.',
+          en: 'When a dependency changes, React first runs the **previous** effect’s cleanup — with the values from its [[closure|closure]] (`a`) — then runs the new effect with `b`. On unmount the last cleanup runs. So a subscription, connection or timer is always closed exactly once per open.',
         },
       },
     ],

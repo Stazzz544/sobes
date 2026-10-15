@@ -101,8 +101,8 @@ export async function createPost(formData: FormData) {
       {
         type: 'text',
         text: {
-          ru: 'Метаданные задают экспортом `metadata` (статично) или `generateMetadata` (из данных) в `page` или `layout`. Они вычисляются на сервере и попадают в HTML сразу — их видят поисковики и превью ссылок. Оба экспорта работают только в серверных компонентах; `document.title` в эффекте появится лишь после загрузки JS.',
-          en: 'Metadata is set by exporting `metadata` (static) or `generateMetadata` (from data) in a `page` or `layout`. It’s resolved on the server and lands in the HTML right away — search engines and link previews see it. Both exports only work in Server Components; `document.title` in an effect appears only after JS loads.',
+          ru: 'Метаданные задают экспортом `metadata` (статично) или `generateMetadata` (из данных) в `page` или `layout`. Они вычисляются на сервере и попадают в HTML сразу — их видят поисковики и превью ссылок. Оба экспорта работают только в [[rsc|серверных компонентах]]; `document.title` в эффекте появится лишь после загрузки JS.',
+          en: 'Metadata is set by exporting `metadata` (static) or `generateMetadata` (from data) in a `page` or `layout`. It’s resolved on the server and lands in the HTML right away — search engines and link previews see it. Both exports only work in [[rsc|Server Components]]; `document.title` in an effect appears only after JS loads.',
         },
       },
     ],
@@ -235,8 +235,8 @@ export async function createPost(formData: FormData) {
       {
         type: 'text',
         text: {
-          ru: 'Автоматическая мемоизация распространяется только на `fetch`. Для запросов к базе есть `React.cache`: вызовы с теми же аргументами в рамках **одного запроса** вернут один результат. Модульная переменная опасна — она общая для всех пользователей сервера. А `layout` не передаёт пропсы в `page`, поэтому данные запрашивают там, где они нужны, и дедуплицируют.',
-          en: 'Automatic memoization only covers `fetch`. For database calls there’s `React.cache`: calls with the same arguments within **one request** return one result. A module variable is dangerous — it’s shared by all users of the server. And `layout` can’t pass props to `page`, so data is fetched where needed and deduplicated.',
+          ru: 'Автоматическая [[memoization|мемоизация]] распространяется только на `fetch`. Для запросов к базе есть `React.cache`: вызовы с теми же аргументами в рамках **одного запроса** вернут один результат. Модульная переменная опасна — она общая для всех пользователей сервера. А `layout` не передаёт пропсы в `page`, поэтому данные запрашивают там, где они нужны, и дедуплицируют.',
+          en: 'Automatic [[memoization|memoization]] only covers `fetch`. For database calls there’s `React.cache`: calls with the same arguments within **one request** return one result. A module variable is dangerous — it’s shared by all users of the server. And `layout` can’t pass props to `page`, so data is fetched where needed and deduplicated.',
         },
       },
     ],

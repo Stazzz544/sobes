@@ -135,8 +135,8 @@ console.log('done');`,
       {
         type: 'text',
         text: {
-          ru: 'Процесс Node живёт, пока в цикле событий есть активные дела: таймеры, сокеты, серверы. `unref()` говорит: «этот таймер не повод не выходить». Других дел нет, поэтому процесс завершается сразу после `done`, и колбэк не срабатывает. Так делают фоновые задачи — периодическую отправку метрик, очистку кеша, — которые не должны мешать завершению.',
-          en: 'A Node process stays alive while the event loop has active work: timers, sockets, servers. `unref()` says “this timer isn’t a reason to stay”. There’s nothing else, so the process exits right after `done`, and the callback never runs. It’s used for background chores — periodic metrics, cache cleanup — that shouldn’t block shutdown.',
+          ru: 'Процесс Node живёт, пока в [[event-loop|цикле событий]] есть активные дела: таймеры, сокеты, серверы. `unref()` говорит: «этот таймер не повод не выходить». Других дел нет, поэтому процесс завершается сразу после `done`, и колбэк не срабатывает. Так делают фоновые задачи — периодическую отправку метрик, очистку кеша, — которые не должны мешать завершению.',
+          en: 'A Node process stays alive while the [[event-loop|event loop]] has active work: timers, sockets, servers. `unref()` says “this timer isn’t a reason to stay”. There’s nothing else, so the process exits right after `done`, and the callback never runs. It’s used for background chores — periodic metrics, cache cleanup — that shouldn’t block shutdown.',
         },
       },
     ],
@@ -174,8 +174,8 @@ console.log('main');`,
       {
         type: 'text',
         text: {
-          ru: '`beforeExit` срабатывает, когда цикл событий опустел, и в нём ещё можно запланировать асинхронную работу — тогда процесс продолжит жить. Таймер выполнился, цикл снова опустел, `beforeExit` пришёл повторно, но флаг уже стоит. В `exit` асинхронный код уже не выполнится — только синхронный, например запись последней строки лога. При `process.exit()` событие `beforeExit` не наступает вовсе.',
-          en: '`beforeExit` fires when the event loop is empty, and async work can still be scheduled there — the process then keeps running. The timer ran, the loop emptied again, `beforeExit` fired again, but the flag was set. In `exit` async code no longer runs — only sync, like writing a last log line. With `process.exit()`, `beforeExit` doesn’t happen at all.',
+          ru: '`beforeExit` срабатывает, когда [[event-loop|цикл событий]] опустел, и в нём ещё можно запланировать асинхронную работу — тогда процесс продолжит жить. Таймер выполнился, цикл снова опустел, `beforeExit` пришёл повторно, но флаг уже стоит. В `exit` асинхронный код уже не выполнится — только синхронный, например запись последней строки лога. При `process.exit()` событие `beforeExit` не наступает вовсе.',
+          en: '`beforeExit` fires when the [[event-loop|event loop]] is empty, and async work can still be scheduled there — the process then keeps running. The timer ran, the loop emptied again, `beforeExit` fired again, but the flag was set. In `exit` async code no longer runs — only sync, like writing a last log line. With `process.exit()`, `beforeExit` doesn’t happen at all.',
         },
       },
     ],

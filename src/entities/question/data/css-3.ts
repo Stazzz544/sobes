@@ -117,8 +117,8 @@ export const CSS_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Процентная высота считается от высоты содержащего блока, только если та задана явно. У `.parent` высота `auto` (зависит от содержимого), поэтому `height: 50%` ведёт себя как `auto` — `.child` по высоте контента, 40px.',
-          en: 'A percentage height resolves against the containing block’s height only if that height is set explicitly. `.parent` has `height: auto` (it depends on content), so `height: 50%` behaves like `auto` — `.child` is as tall as its content, 40px.',
+          ru: 'Процентная высота считается от высоты [[containing-block|содержащего блока]], только если та задана явно. У `.parent` высота `auto` (зависит от содержимого), поэтому `height: 50%` ведёт себя как `auto` — `.child` по высоте контента, 40px.',
+          en: 'A percentage height resolves against the [[containing-block|containing block]]’s height only if that height is set explicitly. `.parent` has `height: auto` (it depends on content), so `height: 50%` behaves like `auto` — `.child` is as tall as its content, 40px.',
         },
       },
       {
@@ -238,8 +238,8 @@ export const CSS_QUESTIONS_3: Question[] = [
       {
         type: 'text',
         text: {
-          ru: 'Медиазапросы не добавляют специфичности. При ширине 1000px подходят **оба** условия, селекторы одинаковые — побеждает правило ниже по коду, то есть 50%.',
-          en: 'Media queries add no specificity. At 1000px **both** conditions match and the selectors are the same, so the later rule wins — 50%.',
+          ru: 'Медиазапросы не добавляют [[specificity|специфичности]]. При ширине 1000px подходят **оба** условия, селекторы одинаковые — побеждает правило ниже по коду, то есть 50%.',
+          en: 'Media queries add no [[specificity|specificity]]. At 1000px **both** conditions match and the selectors are the same, so the later rule wins — 50%.',
         },
       },
       {
