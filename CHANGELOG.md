@@ -1,5 +1,10 @@
 # Что нового
 
+## 1.50.0
+
+- 10 новых вопросов в «Стейт-менеджмент», 5 проверяются запуском: structuredClone, как combineReducers раздаёт действия, порядок middleware, слияние set в Zustand только на верхнем уровне, дедупликация запросов, производное состояние, подъём состояния, Immer без изменений, WebSocket и кеш запросов, RTK Query вместо createAsyncThunk.
+- Всего 848 вопросов.
+
 ## 1.49.0
 
 - 10 новых вопросов в «HTML и доступность», все проверены в Chrome: вставка tbody, содержимое template, повторный атрибут, очистка значения type="number", чекбокс без value, novalidate и checkValidity, имя fieldset из legend, aria-labelledby со ссылкой на себя, фокус у ссылки без href, hidden против display.

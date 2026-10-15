@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.50.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в «Стейт-менеджмент», 5 проверяются запуском: structuredClone, как combineReducers раздаёт действия, порядок middleware, слияние set в Zustand только на верхнем уровне, дедупликация запросов, производное состояние, подъём состояния, Immer без изменений, WebSocket и кеш запросов, RTK Query вместо createAsyncThunk.',
+        en: '10 new “State management” questions, 5 verified by running code: structuredClone, how combineReducers dispatches actions, middleware order, Zustand’s top-level-only set merge, request deduplication, derived state, lifting state up, Immer with no changes, WebSockets and the query cache, RTK Query instead of createAsyncThunk.',
+      },
+      { ru: 'Всего 848 вопросов.', en: '848 questions in total.' },
+    ],
+  },
+  {
     version: '1.49.0',
     date: '2026-10-15',
     changes: [
