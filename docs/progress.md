@@ -411,4 +411,10 @@
 - Next.js (`data/next-2.ts`, +8): `notFound()` и статус 404 с `noindex`, `redirect` бросает `NEXT_REDIRECT` и не должен стоять в `try`, `generateMetadata` только в серверных компонентах, стриминг через `<Suspense>`, форма с Server Action работает без JS, провайдер контекста — клиентский компонент с `children`, `React.cache` для запросов к базе, `next/dynamic` с `ssr: false` только в клиентских компонентах. Всё сверено с markdown-документацией Next.js 16.4.
 - Архитектура (`data/architecture-2.ts`, +8): Фабрика, `Proxy` в обход перехватчика (`js-output`), ISP на узком типе, закон Деметры, общий код фич — в `entities` и композиция выше (сверено с гайдом FSD о cross-imports), централизованная и доменная обработка ошибок, неявная связанность шины событий, фича-флаги и trunk-based.
 
+## R3-3, наполнение: Node.js и HTML (15.10.2026, версия 1.20.0)
+
+- Node.js (`data/node-2.ts`, +7, все `js-output`): `path.posix.resolve` сбрасывается абсолютным сегментом, base64 через `Buffer`, `emit('error')` без слушателя бросает, `for await` по `Readable.from`, `util.parseArgs`, `worker_threads` с `eval`, `AbortError` из `timers/promises`. `path.posix` — чтобы ответ не зависел от ОС (локально Windows, в CI Linux).
+- HTML (`data/html-2.ts`, +8, 5 проверяются в Chrome через `dom-probe`): `aria-labelledby` важнее `aria-label`, `typeof input.value`, `disabled` не попадает в `FormData`, `<a>` без `href` — `generic`, foster parenting выносит `<div>` из таблицы, live-регионы, skip link, `showModal()`.
+- Находка проверки: Chrome отдаёт роль `link` для `<a>` без `href`, если у него есть `onclick` (по спецификации — `generic`). Вопрос переписан без обработчика, нюанс вынесен в разбор.
+
 Дальше — `docs/roadmap.md`.

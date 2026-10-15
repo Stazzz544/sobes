@@ -8,6 +8,20 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.20.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '7 новых вопросов в Node.js: path.resolve, base64 и Buffer, событие error без слушателя, потоки и for await, util.parseArgs, worker_threads, отмена через AbortController — все проверяются запуском.',
+        en: '7 new Node.js questions: path.resolve, base64 and Buffer, an error event with no listener, streams and for await, util.parseArgs, worker_threads, cancellation with AbortController — all verified by running the code.',
+      },
+      {
+        ru: '8 новых вопросов в «HTML и доступности»: aria-labelledby, value всегда строка, disabled против readonly, <a> без href, foster parenting в таблицах, live-регионы, skip link, <dialog>. Всего 584 вопроса.',
+        en: '8 new questions in “HTML & accessibility”: aria-labelledby, value is always a string, disabled vs readonly, <a> without href, foster parenting in tables, live regions, skip links, <dialog>. 584 questions in total.',
+      },
+    ],
+  },
+  {
     version: '1.19.0',
     date: '2026-10-15',
     changes: [

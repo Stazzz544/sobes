@@ -14,11 +14,13 @@ import { HR_QUESTIONS } from './hr';
 import { HR_QUESTIONS_2 } from './hr-2';
 import { HR_QUESTIONS_3 } from './hr-3';
 import { HTML_QUESTIONS } from './html';
+import { HTML_QUESTIONS_2 } from './html-2';
 import { ARCHITECTURE_QUESTIONS } from './architecture';
 import { ARCHITECTURE_QUESTIONS_2 } from './architecture-2';
 import { NEXT_QUESTIONS } from './next';
 import { NEXT_QUESTIONS_2 } from './next-2';
 import { NODE_QUESTIONS } from './node';
+import { NODE_QUESTIONS_2 } from './node-2';
 import { STATE_QUESTIONS } from './state';
 import { STATE_QUESTIONS_2 } from './state-2';
 import { TESTING_QUESTIONS } from './testing';
@@ -85,11 +87,13 @@ export const QUESTIONS: Question[] = [
   ...ALGORITHMS_QUESTIONS_2,
   ...ALGORITHMS_QUESTIONS_3,
   ...HTML_QUESTIONS,
+  ...HTML_QUESTIONS_2,
   ...TESTING_QUESTIONS,
   ...TESTING_QUESTIONS_2,
   ...STATE_QUESTIONS,
   ...STATE_QUESTIONS_2,
   ...NODE_QUESTIONS,
+  ...NODE_QUESTIONS_2,
   ...NEXT_QUESTIONS,
   ...NEXT_QUESTIONS_2,
   ...ARCHITECTURE_QUESTIONS,

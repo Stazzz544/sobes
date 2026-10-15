@@ -1,5 +1,10 @@
 # Что нового
 
+## 1.20.0
+
+- 7 новых вопросов в Node.js: path.resolve, base64 и Buffer, событие error без слушателя, потоки и for await, util.parseArgs, worker_threads, отмена через AbortController — все проверяются запуском.
+- 8 новых вопросов в «HTML и доступности»: aria-labelledby, value всегда строка, disabled против readonly, <a> без href, foster parenting в таблицах, live-регионы, skip link, <dialog>. Всего 584 вопроса.
+
 ## 1.19.0
 
 - 8 новых вопросов в Next.js: notFound и 404, redirect внутри try/catch, метаданные, стриминг через Suspense, формы без JavaScript, контекст в App Router, React.cache, next/dynamic без SSR.
