@@ -1,5 +1,10 @@
 # Что нового
 
+## 1.40.0
+
+- 10 новых вопросов в CSS, 9 проверяются в Chrome: !important против инлайн-стиля, нулевая специфичность :where(), :nth-child(… of …), схлопывание отступов, margin-left: auto во flex, grid-column до -1, min(), aspect-ratio, inset: 0 и padding box, @starting-style.
+- Всего 788 вопросов.
+
 ## 1.39.0
 
 - 10 новых вопросов в React: порядок эффектов и очисток, useEffectEvent, useImperativeHandle, очистка в ref-колбэке, <title> в компонентах, useFormStatus, <Activity>, переходы вместо фолбэка Suspense, случайные ключи, value без onChange.

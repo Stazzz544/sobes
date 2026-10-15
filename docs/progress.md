@@ -503,4 +503,8 @@
 - `data/react-6.ts`, 10 вопросов: очистка эффекта перед новым запуском (порядок), `useEffectEvent` (стабилен с 19.2), `useImperativeHandle`, функция очистки в ref-колбэке (React 19), `<title>` поднимается в `<head>`, `useFormStatus` только внутри `<form>`, `<Activity mode="hidden">` (19.2: `display: none`, эффекты очищаются, состояние живёт), `startTransition` против фолбэка `<Suspense>`, `key={Math.random()}`, `defaultValue` вместо `value` без `onChange`.
 - Машинной проверки нет: в проекте есть только `react` без `react-dom`/test-renderer, а `js-output` запускается вне `node_modules`. Факты о 19.2 сверены с исходниками react.dev (блог 2025-10-01 и справочник).
 
+## R3-3, наполнение: CSS 46 → 56 (15.10.2026, версия 1.40.0)
+
+- `data/css-5.ts`, 10 вопросов, 9 проверяются в Chrome (`css-computed`), все сошлись с первого прогона: `!important` побеждает инлайн, `:where()` с нулевой специфичностью, `:nth-child(2 of .done)` (плюс проверка, что первый пункт не красный), схлопывание соседних отступов (`rect.top` = 40px), `margin-left: auto` во flex, `grid-column: 2 / -1`, `min(90%, 600px)`, `aspect-ratio: 16 / 9`, `inset: 0` растягивается на padding box. Без машинной проверки — `@starting-style` для анимации появления.
+
 Дальше — `docs/roadmap.md`.

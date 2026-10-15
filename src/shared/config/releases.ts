@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.40.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в CSS, 9 проверяются в Chrome: !important против инлайн-стиля, нулевая специфичность :where(), :nth-child(… of …), схлопывание отступов, margin-left: auto во flex, grid-column до -1, min(), aspect-ratio, inset: 0 и padding box, @starting-style.',
+        en: '10 new CSS questions, 9 verified in Chrome: !important vs inline styles, zero specificity of :where(), :nth-child(… of …), margin collapsing, margin-left: auto in flex, grid-column to -1, min(), aspect-ratio, inset: 0 and the padding box, @starting-style.',
+      },
+      { ru: 'Всего 788 вопросов.', en: '788 questions in total.' },
+    ],
+  },
+  {
     version: '1.39.0',
     date: '2026-10-15',
     changes: [
