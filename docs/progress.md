@@ -566,4 +566,9 @@
 
 - `data/node-5.ts`, 10 вопросов, 5 `js-output` (все сошлись с первого прогона): `setImmediate` раньше `setTimeout(0)` внутри колбэка `readFile`, `node:timers/promises` и порядок `Promise.all`, `pipeline` уничтожает источник при ошибке (`bad chunk true`), `path.posix` (`extname`, `basename`, `join`), `ERR_HTTP_HEADERS_SENT` на локальном сервере с `fetch`. Без запуска: недетерминированный порядок таймеров в главном модуле, `exports` в `package.json` (`ERR_PACKAGE_PATH_NOT_EXPORTED`), Express 5 передаёт отклонённые промисы в `next(err)` (сверено с гайдом миграции), `MaxListenersExceededWarning`, `uncaughtException` (сверено с документацией Node).
 
+## Наполнение до ~60: HTML и доступность 50 → 60 (15.10.2026, версия 1.49.0)
+
+- `data/html-5.ts`, 10 вопросов, все `dom-probe` в Chrome: парсер вставляет `tbody`, содержимое `<template>` вне документа (`0 2`), повторный атрибут — побеждает первый, `type="number"` очищает `12px` до пустой строки, отмеченный чекбокс без `value` → `on`, `novalidate` не отключает `checkValidity()`, имя `fieldset` из `legend`, `aria-labelledby` со ссылкой на себя (`Delete report.pdf`), фокус у ссылки с `href` и без (`true false`), авторский `display: flex` перебивает `hidden`.
+- Находка проверки: `tabIndex` у `<a>` без `href` равен `0`, а не `-1` — по стандарту это значение по умолчанию для любого `<a>`. Вопрос переделан на проверку `focus()`, нюанс вынесен в разбор. Ответы `output` с кириллицей `verify-content` не пускает — разметка в вопросах на английском.
+
 Дальше — `docs/roadmap.md`.

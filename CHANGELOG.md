@@ -1,5 +1,10 @@
 # Что нового
 
+## 1.49.0
+
+- 10 новых вопросов в «HTML и доступность», все проверены в Chrome: вставка tbody, содержимое template, повторный атрибут, очистка значения type="number", чекбокс без value, novalidate и checkValidity, имя fieldset из legend, aria-labelledby со ссылкой на себя, фокус у ссылки без href, hidden против display.
+- Всего 838 вопросов.
+
 ## 1.48.0
 
 - 10 новых вопросов в Node.js, 5 проверяются запуском: setImmediate и setTimeout внутри ввода-вывода и в главном модуле, node:timers/promises, поле exports в package.json, ошибки async-обработчиков в Express 5, pipeline и ошибки потоков, модуль path, MaxListenersExceededWarning, uncaughtException, ERR_HTTP_HEADERS_SENT.

@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.49.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в «HTML и доступность», все проверены в Chrome: вставка tbody, содержимое template, повторный атрибут, очистка значения type="number", чекбокс без value, novalidate и checkValidity, имя fieldset из legend, aria-labelledby со ссылкой на себя, фокус у ссылки без href, hidden против display.',
+        en: '10 new “HTML & accessibility” questions, all verified in Chrome: tbody insertion, template contents, duplicate attributes, type="number" value sanitization, a checkbox without value, novalidate and checkValidity, a fieldset name from legend, self-referencing aria-labelledby, focus on a link without href, hidden vs display.',
+      },
+      { ru: 'Всего 838 вопросов.', en: '838 questions in total.' },
+    ],
+  },
+  {
     version: '1.48.0',
     date: '2026-10-15',
     changes: [
