@@ -467,4 +467,8 @@
 
 - `data/testing-4.ts`, 11 вопросов. Впервые в теме машинная проверка — через встроенный `node:test`, без Jest/Vitest: `mock.fn()` и `callCount`, фейковые таймеры `mock.timers` с автосохранением (перезапуск таймера), `assert.deepEqual` против `deepStrictEqual`. Плюс мутационное тестирование, имена тестов, `userEvent.setup()` + `await`, `renderWithProviders`, скриншоты в одинаковом Docker-образе, изоляция контекстов Playwright, контрактные тесты (Pact), избыток моков.
 
+## R3-3, наполнение: Git 40 → 50 (15.10.2026, версия 1.32.0)
+
+- `data/git-4.ts`, 10 вопросов, все `shell-output`, сошлись с первого прогона: `git mv` → `R old -> new`, `!keep.log` в `.gitignore`, `cat-file -t` у лёгкого и аннотированного тега (`commit tag`), `rev-parse --abbrev-ref` в detached HEAD, `branch -d` отказывается удалять неслитую ветку, `merge --ff-only` при разошедшихся ветках, `reset` = `--mixed`, `clean -n`, `reset --hard HEAD@{1}`, ноль merge-коммитов после `pull --rebase` (два клона одного bare-репозитория). Сообщения об ошибках git в ответы не брал — они разные в версиях; вместо них — код выхода через `&& echo … || echo …`.
+
 Дальше — `docs/roadmap.md`.

@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.32.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов по Git, все проверяются запуском git: git mv и переименования, исключения в .gitignore, лёгкие и аннотированные теги, detached HEAD, branch -d для неслитой ветки, merge --ff-only, reset без флага, git clean -n, возврат через reflog, pull --rebase без merge-коммитов.',
+        en: '10 new Git questions, all verified by running git: git mv and renames, .gitignore negation, lightweight vs annotated tags, detached HEAD, branch -d on an unmerged branch, merge --ff-only, reset without flags, git clean -n, recovery via reflog, pull --rebase without merge commits.',
+      },
+      { ru: 'Всего 708 вопросов.', en: '708 questions in total.' },
+    ],
+  },
+  {
     version: '1.31.0',
     date: '2026-10-15',
     changes: [
