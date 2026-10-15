@@ -13,6 +13,7 @@ import { reminderModel, useReviewReminderTap } from '@app/features/daily-reminde
 import { reportErrorFx } from '@app/shared/analytics';
 import { useI18n } from '@app/shared/i18n';
 import { BASE_COLORS, ThemeProvider, useTheme } from '@app/shared/theme';
+import { AchievementToast } from '@app/widgets/achievements';
 import { ErrorFallback } from '@app/widgets/error-fallback';
 import type { ErrorBoundaryProps } from 'expo-router';
 
@@ -61,6 +62,7 @@ const RootNavigation = ({ isOnboardingDone }: RootNavigationProps): JSX.Element 
           <Stack.Screen name="onboarding" options={{ headerShown: false }} />
         </Stack.Protected>
       </Stack>
+      {isOnboardingDone ? <AchievementToast /> : null}
     </>
   );
 };

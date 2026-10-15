@@ -197,6 +197,8 @@ export const en: Dictionary = {
     summary: '{done} of {total}',
     progress: '{current} / {target}',
     unlocked: 'Unlocked',
+    toast: 'Achievement unlocked',
+    toastHint: 'Dismisses the notification',
     items: {
       'first-steps': { title: 'First step', description: 'Answer your first question' },
       'answers-100': { title: 'A hundred', description: 'Answer 100 questions' },

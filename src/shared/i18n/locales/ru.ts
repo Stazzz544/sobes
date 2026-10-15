@@ -195,6 +195,8 @@ export const ru = {
     summary: '{done} из {total}',
     progress: '{current} / {target}',
     unlocked: 'Получено',
+    toast: 'Новое достижение',
+    toastHint: 'Скрывает уведомление',
     items: {
       'first-steps': { title: 'Первый шаг', description: 'Ответить на первый вопрос' },
       'answers-100': { title: 'Сотня', description: 'Ответить на 100 вопросов' },

@@ -8,6 +8,11 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.44.0',
+    date: '2026-10-15',
+    changes: [{ ru: 'Новое достижение теперь видно сразу: сверху появляется плашка с его названием, она скрывается сама через 4 секунды или по нажатию. Достижения, полученные до обновления, повторно не показываются.', en: 'New achievements now show up right away: a banner with the name appears at the top and hides by itself after 4 seconds or on tap. Achievements earned before the update aren’t shown again.' }],
+  },
+  {
     version: '1.43.0',
     date: '2026-10-15',
     changes: [{ ru: 'Нажатие на напоминание «Ждут повторения» сразу открывает повторение — и когда приложение свёрнуто, и когда закрыто.', en: 'Tapping a “waiting for review” reminder now opens the review right away, whether the app is in the background or closed.' }],
