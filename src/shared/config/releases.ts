@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.52.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в Next.js: loading.tsx, постоянные редиректы в next.config, updateTag против revalidateTag в Next.js 16, сторонние компоненты без "use client", "use server" против server-only, useOptimistic, лимит тела Server Action, размытая заглушка картинки, useSearchParams и Suspense при сборке, запрос к базе прямо в серверном компоненте.',
+        en: '10 new Next.js questions: loading.tsx, permanent redirects in next.config, updateTag vs revalidateTag in Next.js 16, third-party components without "use client", "use server" vs server-only, useOptimistic, the Server Action body limit, a blurred image placeholder, useSearchParams and Suspense at build time, querying the database directly in a Server Component.',
+      },
+      { ru: 'Всего 868 вопросов.', en: '868 questions in total.' },
+    ],
+  },
+  {
     version: '1.51.0',
     date: '2026-10-15',
     changes: [

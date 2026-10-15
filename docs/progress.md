@@ -580,4 +580,8 @@
 - `data/architecture-5.ts`, 10 вопросов, 4 `js-output` (все сошлись с первого прогона): стратегия через объект вместо `switch` (`400 0 180`), цепочка валидаторов с остановкой на первой ошибке, `pipe` против `compose` (`8 7`), результат-объект вместо исключения. Без запуска: Strangler Fig, правило трёх, Nx affected и кеш задач, CQS, кнопка «В избранное» как фича в FSD со слотом в карточке, `react` в `peerDependencies` (сверено с react.dev и докой npm).
 - `mark-glossary`: шаблон «единый источник истины» ловит и «один источник истины» — +2 пометки в старых разборах, +1 «чистая функция» в новом.
 
+## Наполнение до ~60: Next.js 50 → 60 (15.10.2026, версия 1.52.0)
+
+- `data/next-5.ts`, 10 вопросов на выбор, машинной проверки нет — каждое утверждение сверено с `nextjs.org/docs/….md` (обновления 2026): `loading.js` (Suspense, предзагрузка заглушки, прерываемый переход), `redirects()` с `permanent: true` → 308 и почему 307/308, `updateTag` только в Server Actions для read-your-own-writes против `revalidateTag(tag, "max")`, обёртка `"use client"` для сторонних компонентов, `"use server"` против `server-only`, `useOptimistic`, `bodySizeLimit` 1 МБ, `placeholder="blur"` и автоматический `blurDataURL` при статическом импорте, `useSearchParams` без `<Suspense>` ломает `next build`, запрос к базе прямо в серверном компоненте.
+
 Дальше — `docs/roadmap.md`.
