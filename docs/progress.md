@@ -557,4 +557,9 @@
 - `docs/articles/habr-verified-questions.md`: как устроена машинная проверка вопросов — таблица видов `verify` с числами по банку (334 из 808), JS (запуск и проверка, что дистракторы не совпадают с выводом), TypeScript Compiler API (виртуальный файл, `ts-type`/`ts-error`/`ts-error-line`/`ts-check` с `Equal`), Chrome (`--dump-dom`, iframe на вопрос, `computedRole`/`computedName`), git (чистый HOME, фиксированные даты, коды выхода вместо текстов ошибок), `js-tests`, находки в Chrome (`<a onclick>` → `link`, `sectionheader`, `<img alt="">` → `image`), CI и паки, история с таймаутом.
 - Все цифры и примеры сверены с кодом и банком; ссылка на RuStore и скриншоты — после публикации приложения.
 
+## Наполнение до ~60: Git 50 → 60 (15.10.2026, версия 1.47.0)
+
+- `data/git-5.ts`, 10 вопросов, все `shell-output` и все сошлись с первого прогона: `stash list` (стек, выбор из вариантов), `main..feature` / `main...feature` (`2 3`), `git diff` против `--cached` после `add`, `git describe` (`v1.0-2`), `log` и `reflog` после `reset --hard` (`1 3`), `pull --ff-only` при разошедшихся ветках (код 128, история не тронута), `log --follow` после `git mv` (`1 3`), `rebase --onto main topic feature`, `commit --fixup` + `rebase -i --autosquash` с `GIT_SEQUENCE_EDITOR=:`, `HEAD^1` / `HEAD^2` / `HEAD~2` у merge-коммита.
+- Git теперь 60 вопросов, из них 50 проверяются запуском.
+
 Дальше — `docs/roadmap.md`.
