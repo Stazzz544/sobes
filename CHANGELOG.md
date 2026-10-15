@@ -1,5 +1,10 @@
 # Что нового
 
+## 1.24.0
+
+- 9 новых вопросов в «HTML и доступности», 8 из них проверяются в Chrome: header внутри article, чекбоксы в FormData, maxlength, <template>, имя ссылки с картинкой, aria-hidden в кнопке-иконке, role="switch", inert, атрибут lang.
+- Всего 625 вопросов.
+
 ## 1.23.0
 
 - 10 новых вопросов в Node.js: nextTick против микрозадач, HTTP-сервер на node:http, Transform и pipeline, events.once, параллельное чтение файлов, поиск пакетов в node_modules, --env-file, встроенный тест-раннер, запуск TypeScript без сборки, require для ES-модулей.

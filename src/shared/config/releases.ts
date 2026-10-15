@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.24.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '9 новых вопросов в «HTML и доступности», 8 из них проверяются в Chrome: header внутри article, чекбоксы в FormData, maxlength, <template>, имя ссылки с картинкой, aria-hidden в кнопке-иконке, role="switch", inert, атрибут lang.',
+        en: '9 new questions in “HTML & accessibility”, 8 verified in Chrome: header inside article, checkboxes in FormData, maxlength, <template>, a link name with an image, aria-hidden in an icon button, role="switch", inert, the lang attribute.',
+      },
+      { ru: 'Всего 625 вопросов.', en: '625 questions in total.' },
+    ],
+  },
+  {
     version: '1.23.0',
     date: '2026-10-15',
     changes: [

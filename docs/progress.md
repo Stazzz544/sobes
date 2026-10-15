@@ -432,4 +432,9 @@
 - `data/node-3.ts`, 10 вопросов, 4 проверяются запуском: порядок `nextTick`/`then`/`queueMicrotask` в CommonJS (порядок, с оговоркой про ESM в разборе), сервер на `node:http` + `fetch` к нему (`201 /users?id=7`), `Transform` в `pipeline`, `events.once`; параллельное чтение файлов и `EMFILE`, поиск в `node_modules` вверх по дереву, `--env-file`, `node:test`, type stripping (по умолчанию с 23.6/22.18, без `enum` и проверки типов), `require(esm)` и `ERR_REQUIRE_ASYNC_MODULE`.
 - Факты о TypeScript и `require(esm)` сверены с документацией Node (там уже есть v26: флаг `--experimental-transform-types` удалён), якоря ссылок — с HTML страниц.
 
+## R3-3, наполнение: «HTML и доступность» 31 → 40 (15.10.2026, версия 1.24.0)
+
+- `data/html-3.ts`, 9 вопросов, 8 проверяются в Chrome (`dom-probe`): `<header>` в `<article>` → `sectionheader`, невыбранный чекбокс не попадает в `FormData`, `maxlength` не обрезает значение из атрибута, содержимое `<template>` не находится селектором, имя ссылки = `alt` + текст, `aria-hidden` у декоративного символа, `role="switch"` на чекбоксе, `inert` не даёт сфокусироваться даже программно (проверка фокуса внутри iframe-пробы работает), `lang`.
+- Находка проверки: Chrome уже отдаёт роль ARIA 1.3 `sectionheader` для шапки раздела (я ожидал `generic`) — вопрос и разбор поправлены под фактическое поведение.
+
 Дальше — `docs/roadmap.md`.
