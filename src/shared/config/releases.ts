@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.27.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в Next.js: перехватывающие и параллельные маршруты для модалок, template против layout, useRouter из next/navigation, searchParams как промис, "use cache" с cacheLife и cacheTag, промис из сервера в use(), useActionState, стратегии next/script, remotePatterns, ограничения статического экспорта.',
+        en: '10 new Next.js questions: intercepting and parallel routes for modals, template vs layout, useRouter from next/navigation, searchParams as a promise, "use cache" with cacheLife and cacheTag, passing a server promise to use(), useActionState, next/script strategies, remotePatterns, static export limits.',
+      },
+      { ru: 'Всего 655 вопросов.', en: '655 questions in total.' },
+    ],
+  },
+  {
     version: '1.26.0',
     date: '2026-10-15',
     changes: [

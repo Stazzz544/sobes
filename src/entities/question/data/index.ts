@@ -22,6 +22,7 @@ import { ARCHITECTURE_QUESTIONS_2 } from './architecture-2';
 import { ARCHITECTURE_QUESTIONS_3 } from './architecture-3';
 import { NEXT_QUESTIONS } from './next';
 import { NEXT_QUESTIONS_2 } from './next-2';
+import { NEXT_QUESTIONS_3 } from './next-3';
 import { NODE_QUESTIONS } from './node';
 import { NODE_QUESTIONS_2 } from './node-2';
 import { NODE_QUESTIONS_3 } from './node-3';
@@ -106,6 +107,7 @@ export const QUESTIONS: Question[] = [
   ...NODE_QUESTIONS_3,
   ...NEXT_QUESTIONS,
   ...NEXT_QUESTIONS_2,
+  ...NEXT_QUESTIONS_3,
   ...ARCHITECTURE_QUESTIONS,
   ...ARCHITECTURE_QUESTIONS_2,
   ...ARCHITECTURE_QUESTIONS_3,
