@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.37.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в Next.js: подсветка активной ссылки через usePathname, global-error.tsx, default.tsx в параллельных слотах, ISR с revalidate, статическая оболочка в Cache Components, after() для фоновой работы, router.refresh, sizes у next/image, серверные компоненты против лишнего JS, где можно ставить cookie.',
+        en: '10 new Next.js questions: active link via usePathname, global-error.tsx, default.tsx in parallel slots, ISR with revalidate, the static shell in Cache Components, after() for background work, router.refresh, sizes on next/image, Server Components vs extra JS, where cookies can be set.',
+      },
+      { ru: 'Всего 758 вопросов.', en: '758 questions in total.' },
+    ],
+  },
+  {
     version: '1.36.0',
     date: '2026-10-15',
     changes: [
