@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.26.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в «Архитектуре и паттернах»: Команда и отмена, «луковая» цепочка middleware, конечный автомат вместо флагов, композиция вместо наследования, функциональное ядро, ключ идемпотентности, курсорная пагинация, composition root, ADR, генерация клиента из OpenAPI.',
+        en: '10 new questions in “Architecture & patterns”: Command and undo, the onion middleware chain, a state machine instead of flags, composition over inheritance, functional core, idempotency keys, cursor pagination, the composition root, ADRs, generating a client from OpenAPI.',
+      },
+      { ru: 'Всего 645 вопросов.', en: '645 questions in total.' },
+    ],
+  },
+  {
     version: '1.25.0',
     date: '2026-10-15',
     changes: [
