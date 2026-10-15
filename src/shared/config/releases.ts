@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.31.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '11 новых вопросов в «Тестировании», 3 проверяются запуском через встроенный node:test: мок-функции, фейковые таймеры, deepEqual против deepStrictEqual, мутационное тестирование, названия тестов, user-event v14, рендер с провайдерами, скриншотные тесты в CI, изоляция E2E, контрактные тесты, избыток моков.',
+        en: '11 new questions in “Testing”, 3 verified by running the built-in node:test: mock functions, fake timers, deepEqual vs deepStrictEqual, mutation testing, test names, user-event v14, rendering with providers, screenshot tests in CI, E2E isolation, contract tests, over-mocking.',
+      },
+      { ru: 'Всего 698 вопросов.', en: '698 questions in total.' },
+    ],
+  },
+  {
     version: '1.30.0',
     date: '2026-10-15',
     changes: [
