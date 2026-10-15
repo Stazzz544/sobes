@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.18.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '12 новых вопросов в «Стейт-менеджменте»: prop drilling и композиция, нормализация, Object.freeze, иммутабельное обновление, чистые редьюсеры, селекторы в Zustand v5, мемоизация селекторов, сигналы, оптимистичные обновления, staleTime и gcTime, гонка запросов.',
+        en: '12 new questions in “State management”: prop drilling and composition, normalization, Object.freeze, immutable updates, pure reducers, Zustand v5 selectors, selector memoization, signals, optimistic updates, staleTime vs gcTime, request races.',
+      },
+      { ru: 'Всего 553 вопроса.', en: '553 questions in total.' },
+    ],
+  },
+  {
     version: '1.17.0',
     date: '2026-10-15',
     changes: [

@@ -18,6 +18,7 @@ import { ARCHITECTURE_QUESTIONS } from './architecture';
 import { NEXT_QUESTIONS } from './next';
 import { NODE_QUESTIONS } from './node';
 import { STATE_QUESTIONS } from './state';
+import { STATE_QUESTIONS_2 } from './state-2';
 import { TESTING_QUESTIONS } from './testing';
 import { TESTING_QUESTIONS_2 } from './testing-2';
 import { JAVASCRIPT_QUESTIONS } from './javascript';
@@ -85,6 +86,7 @@ export const QUESTIONS: Question[] = [
   ...TESTING_QUESTIONS,
   ...TESTING_QUESTIONS_2,
   ...STATE_QUESTIONS,
+  ...STATE_QUESTIONS_2,
   ...NODE_QUESTIONS,
   ...NEXT_QUESTIONS,
   ...ARCHITECTURE_QUESTIONS,
