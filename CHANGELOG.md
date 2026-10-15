@@ -1,5 +1,10 @@
 # Что нового
 
+## 1.38.0
+
+- 10 новых вопросов в TypeScript, все проверяются компилятором: сужение через in, функции-утверждения, const-параметры типа, Awaited и ReturnType, Parameters, шаблонные литеральные типы, as const, readonly-массивы, unknown после JSON.parse, снятие модификаторов в mapped types.
+- Всего 768 вопросов.
+
 ## 1.37.0
 
 - 10 новых вопросов в Next.js: подсветка активной ссылки через usePathname, global-error.tsx, default.tsx в параллельных слотах, ISR с revalidate, статическая оболочка в Cache Components, after() для фоновой работы, router.refresh, sizes у next/image, серверные компоненты против лишнего JS, где можно ставить cookie.

@@ -494,4 +494,8 @@
 - `data/next-4.ts`, 10 вопросов, все сверены с markdown-документацией Next.js: `usePathname` в клиентском меню, `global-error.tsx` со своими `<html>`/`<body>`, `default.tsx` против 404 при обновлении со слотами, ISR через `next: { revalidate: 3600 }` (без Cache Components), статическая оболочка до `<Suspense>`, `after()`, `router.refresh()` с сохранением клиентского состояния, `sizes` для `fill`-картинки, тяжёлая библиотека в серверном компоненте, `cookies().set` только в Server Function/Route Handler.
 - Итог наполнения 15.10: Git, Node.js, HTML, «Стейт», «Архитектура», «Тестирование», «Алгоритмы», Next.js — по 50; HR и ИИ — 43.
 
+## R3-3, наполнение: TypeScript 43 → 53 (15.10.2026, версия 1.38.0)
+
+- `data/typescript-6.ts`, 10 вопросов, все проверяет компилятор TypeScript: `ts-type` (сужение через `in`, `asserts value is NonNullable<T>`, `const T` → `"admin"`, `as const` → `"dark"`), `ts-check` с помощником `Equal` (`Awaited<ReturnType<…>>`, `Parameters<…>[1]`, шаблонный тип с `Capitalize`, `-readonly`/`-?`), `ts-error` (TS2339 у `push` на `readonly string[]`, TS18046 у `unknown`). Все сошлись с первого прогона.
+
 Дальше — `docs/roadmap.md`.

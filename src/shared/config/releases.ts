@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.38.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в TypeScript, все проверяются компилятором: сужение через in, функции-утверждения, const-параметры типа, Awaited и ReturnType, Parameters, шаблонные литеральные типы, as const, readonly-массивы, unknown после JSON.parse, снятие модификаторов в mapped types.',
+        en: '10 new TypeScript questions, all verified by the compiler: narrowing with in, assertion functions, const type parameters, Awaited and ReturnType, Parameters, template literal types, as const, readonly arrays, unknown after JSON.parse, removing modifiers in mapped types.',
+      },
+      { ru: 'Всего 768 вопросов.', en: '768 questions in total.' },
+    ],
+  },
+  {
     version: '1.37.0',
     date: '2026-10-15',
     changes: [
