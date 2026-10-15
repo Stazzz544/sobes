@@ -73,7 +73,7 @@ const orderByMode = (questions: Question[], mode: QuizMode, stats: QuestionStats
 };
 
 export const buildQueue = (
-  questions: Question[],
+  questions: readonly Question[],
   stats: QuestionStats,
   params: SessionParams,
   sessionLength: number,

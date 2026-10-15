@@ -1,9 +1,21 @@
 export { QUIZ_MODES, OPTION_IDS } from './model/types';
 export { TAGS } from './config/tags';
 export { TOPIC_PATHS } from './config/paths';
-export { QUESTIONS, QUESTIONS_BY_ID } from './data';
-export { LESSON_GROUPS, LESSONS_BY_TAG } from './lessons';
-export { GLOSSARY } from './glossary/glossary';
+export {
+  BUNDLED_CONTENT,
+  getContentBank,
+  getDiagram,
+  getGlossaryTerm,
+  getLessonByTag,
+  getQuestionById,
+  getQuestions,
+  getQuestionsById,
+} from './model/content';
+export type { ContentBank } from './model/content';
+export { contentModel, ensurePackDirectory, getPackFile } from './model/content-model';
+export type { ContentInfo } from './model/content-model';
+export { PACK_ID, PACK_SCHEMA } from './config/content-pack';
+export { sanitizePack } from './lib/sanitize-pack';
 export { OPTION_LETTERS, getOption, getOptionText } from './lib/options';
 export { isQuizMode, isTagId } from './lib/guards';
 export {

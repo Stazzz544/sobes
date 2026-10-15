@@ -1,6 +1,6 @@
 import { JSX } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { ExplanationBlocks, LESSONS_BY_TAG, QUESTIONS, SourceList, TAGS } from '@app/entities/question';
+import { ExplanationBlocks, getLessonByTag, getQuestions, SourceList, TAGS } from '@app/entities/question';
 import { useI18n } from '@app/shared/i18n';
 import { AppText, Button, Card, EmptyState, FormattedText, Screen } from '@app/shared/ui';
 import type { TagId } from '@app/entities/question';
@@ -12,7 +12,7 @@ type LessonViewProps = {
 
 export const LessonView = ({ tag, onPractice }: LessonViewProps): JSX.Element => {
   const { t, text, plural } = useI18n();
-  const lesson = tag ? LESSONS_BY_TAG[tag] : undefined;
+  const lesson = tag ? getLessonByTag(tag) : undefined;
 
   if (!tag || !lesson) {
     return (
@@ -22,7 +22,7 @@ export const LessonView = ({ tag, onPractice }: LessonViewProps): JSX.Element =>
     );
   }
 
-  const questionCount = QUESTIONS.filter((question) => question.tags.includes(tag)).length;
+  const questionCount = getQuestions().filter((question) => question.tags.includes(tag)).length;
 
   return (
     <Screen withBottomInset>

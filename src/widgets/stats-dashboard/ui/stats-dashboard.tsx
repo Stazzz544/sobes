@@ -2,7 +2,7 @@ import { JSX, ReactNode, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useUnit } from 'effector-react';
 import { progressModel } from '@app/entities/progress';
-import { LESSONS_BY_TAG, QUESTIONS, QUESTIONS_BY_ID, TAGS } from '@app/entities/question';
+import { getLessonByTag, getQuestions, getQuestionsById, TAGS } from '@app/entities/question';
 import { settingsModel } from '@app/entities/settings';
 import { DIRECTIONS, DIRECTION_IDS, TOPICS, TopicLogo, topicModel } from '@app/entities/topic';
 import { useI18n } from '@app/shared/i18n';
@@ -54,8 +54,8 @@ export const StatsDashboard = ({ onPracticeTag, onOpenLesson, footer }: StatsDas
       aggregateStats({
         log,
         stats,
-        questions: QUESTIONS,
-        questionsById: QUESTIONS_BY_ID,
+        questions: getQuestions(),
+        questionsById: getQuestionsById(),
         selection: topic,
         dailyGoal,
         now,
@@ -95,7 +95,7 @@ export const StatsDashboard = ({ onPracticeTag, onOpenLesson, footer }: StatsDas
                     <ProgressBar value={weakTag.accuracy} color={colors.danger} height={6} />
                   </View>
                   <View style={styles.weakActions}>
-                    {LESSONS_BY_TAG[weakTag.tag] ? (
+                    {getLessonByTag(weakTag.tag) ? (
                       <IconButton
                         icon="book-outline"
                         accessibilityLabel={t('lesson.open', { tag: text(TAGS[weakTag.tag].title) })}

@@ -1,6 +1,6 @@
 {
   "name": "sobes",
-  "version": "1.45.0",
+  "version": "1.46.0",
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
@@ -22,6 +22,7 @@
     "expo": "~54.0.33",
     "expo-clipboard": "~8.0.8",
     "expo-constants": "~18.0.13",
+    "expo-file-system": "~19.0.24",
     "expo-font": "~14.0.0",
     "expo-haptics": "~15.0.8",
     "expo-linking": "~8.0.11",

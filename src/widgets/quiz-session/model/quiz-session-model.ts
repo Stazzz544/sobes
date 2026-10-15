@@ -3,7 +3,7 @@ import * as Haptics from 'expo-haptics';
 import { ToastAndroid } from 'react-native';
 import { interval } from 'patronum';
 import { progressModel } from '@app/entities/progress';
-import { OPTION_IDS, QUESTIONS, QUESTIONS_BY_ID, describeResponse, isResponseComplete, isResponseCorrect } from '@app/entities/question';
+import { describeResponse, getQuestionById, getQuestions, isResponseComplete, isResponseCorrect, OPTION_IDS } from '@app/entities/question';
 import { settingsModel } from '@app/entities/settings';
 import { trackEventFx } from '@app/shared/analytics';
 import { DICTIONARIES, i18nModel, translate } from '@app/shared/i18n';
@@ -73,7 +73,7 @@ const getItemOrder = (question: Question | null, seed: number): number[] => {
 const isExamMode = (mode: QuizMode | undefined): boolean => mode === 'interview' || mode === 'placement';
 
 const buildSummary = (answers: SessionAnswer[], queue: string[], isExam: boolean): SessionSummary => {
-  const questions = queue.map((id) => QUESTIONS_BY_ID[id]).filter((question): question is Question => Boolean(question));
+  const questions = queue.map((id) => getQuestionById(id)).filter((question): question is Question => Boolean(question));
   return {
     total: queue.length,
     answered: answers.length,
@@ -83,7 +83,7 @@ const buildSummary = (answers: SessionAnswer[], queue: string[], isExam: boolean
     level: isExam
       ? estimateLevel(
           answers.map((answer) => ({
-            difficulty: QUESTIONS_BY_ID[answer.questionId]?.difficulty ?? 1,
+            difficulty: getQuestionById(answer.questionId)?.difficulty ?? 1,
             isCorrect: answer.result === 'correct',
           })),
           questions.map((question) => question.difficulty),
@@ -140,7 +140,7 @@ export const createQuizSessionModel = () => {
   const prepareSessionFx = createEffect(
     ({ params, stats, sessionLength }: { params: SessionParams; stats: QuestionStats; sessionLength: number }): PreparedSession => {
       const seed = Date.now();
-      return { params, seed, queue: buildQueue(QUESTIONS, stats, params, sessionLength, createRandom(seed), seed) };
+      return { params, seed, queue: buildQueue(getQuestions(), stats, params, sessionLength, createRandom(seed), seed) };
     },
   );
 
@@ -156,7 +156,7 @@ export const createQuizSessionModel = () => {
   const $isExam = $params.map((params) => isExamMode(params?.mode));
   const $isLast = combine($queue, $index, (queue, index) => index >= queue.length - 1);
   const $hapticsEnabled = settingsModel.$settings.map((settings) => settings.haptics);
-  const $currentQuestion = combine($queue, $index, (queue, index): Question | null => QUESTIONS_BY_ID[queue[index] ?? ''] ?? null);
+  const $currentQuestion = combine($queue, $index, (queue, index): Question | null => getQuestionById(queue[index] ?? '') ?? null);
   const $optionOrder = combine($seed, $index, (seed, index): OptionId[] => shuffle(OPTION_IDS, createRandom(seed + index * 7919)));
   const $itemOrder = combine($seed, $index, $currentQuestion, (seed, index, question) => getItemOrder(question, seed + index * 7919));
   const $currentAnswer = combine($answers, $currentQuestion, (answers, question) =>
@@ -247,7 +247,7 @@ export const createQuizSessionModel = () => {
     clock: answerAdded,
     source: $params,
     fn: (params, answer): AnalyticsEvent => {
-      const question = QUESTIONS_BY_ID[answer.questionId];
+      const question = getQuestionById(answer.questionId);
       return {
         name: 'question_answered',
         params: {

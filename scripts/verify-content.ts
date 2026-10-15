@@ -32,6 +32,8 @@ const CHROME_CANDIDATES = [
 const FORBIDDEN_OPTION_PATTERNS = [/все (перечисленн|вышеперечисленн)/i, /all of the above/i, /none of the above/i];
 const VIRTUAL_FILE = 'question.ts';
 const IS_CI = process.env.CI === 'true';
+// с запасом: под нагрузкой (сборка Gradle, эмулятор) один запуск node занимает секунды
+const RUN_TIMEOUT_MS = 20_000;
 
 const errors: string[] = [];
 const warnings: string[] = [];
@@ -206,9 +208,9 @@ const checkJsOutput = (question: Question, workDir: string, transpile = false): 
       }).outputText
     : question.code.source;
   writeFileSync(file, source);
-  const result = spawnSync(process.execPath, [file], { encoding: 'utf8', timeout: 5000 });
+  const result = spawnSync(process.execPath, [file], { encoding: 'utf8', timeout: RUN_TIMEOUT_MS });
   if (result.status !== 0) {
-    fail(question, `код упал: ${result.stderr.trim().split('\n')[0] ?? ''}`);
+    fail(question, result.error ? `не уложился в ${RUN_TIMEOUT_MS / 1000} с` : `код упал: ${result.stderr.trim().split('\n')[0] ?? ''}`);
     return;
   }
   checkAgainstAnswer(question, normalize(result.stdout), 'вывод');
@@ -227,7 +229,7 @@ const passesJsTests = (source: string, tests: string, file: string): boolean => 
       `})().then(() => console.log('${JS_TESTS_PASSED}'), (error) => console.log('tests failed:', error?.message));`,
     ].join('\n'),
   );
-  const result = spawnSync(process.execPath, [file], { encoding: 'utf8', timeout: 5000 });
+  const result = spawnSync(process.execPath, [file], { encoding: 'utf8', timeout: RUN_TIMEOUT_MS });
   return result.status === 0 && result.stdout.includes(JS_TESTS_PASSED);
 };
 

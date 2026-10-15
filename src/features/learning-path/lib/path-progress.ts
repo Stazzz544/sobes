@@ -1,4 +1,4 @@
-import { QUESTIONS, TOPIC_PATHS } from '@app/entities/question';
+import { getQuestions, TOPIC_PATHS } from '@app/entities/question';
 import type { QuestionStat, QuestionStats } from '@app/entities/progress';
 import type { TagId } from '@app/entities/question';
 import type { TopicId } from '@app/shared/config';
@@ -33,7 +33,7 @@ const getStatus = (total: number, answered: number, correct: number): UnitStatus
 
 export const getPathProgress = (topic: TopicId, stats: QuestionStats): PathProgress => {
   const units = TOPIC_PATHS[topic].map((tag): UnitProgress => {
-    const tagStats = QUESTIONS.filter((question) => question.tags.includes(tag)).map((question) => stats[question.id]);
+    const tagStats = getQuestions().filter((question) => question.tags.includes(tag)).map((question) => stats[question.id]);
     const answeredStats = tagStats.filter((stat): stat is QuestionStat => stat !== undefined);
     const correct = answeredStats.filter((stat) => stat.lastResult === 'correct').length;
     return {

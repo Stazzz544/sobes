@@ -5,12 +5,12 @@ import { progressModel } from '@app/entities/progress';
 import {
   BugLineAnswer,
   ExplanationView,
+  getQuestionById,
   OPTION_IDS,
   OPTION_LETTERS,
   OptionButton,
   OrderAnswer,
   OutputAnswer,
-  QUESTIONS_BY_ID,
   QuestionView,
 } from '@app/entities/question';
 import { AskAiButton } from '@app/features/ask-ai';
@@ -58,7 +58,7 @@ const CorrectAnswer = ({ question }: CorrectAnswerProps): JSX.Element => {
 export const QuestionReview = ({ questionId, onOpenLesson }: QuestionReviewProps): JSX.Element => {
   const { t } = useI18n();
   const { stats } = useUnit({ stats: progressModel.$questionStats });
-  const question = QUESTIONS_BY_ID[questionId];
+  const question = getQuestionById(questionId);
   const stat = stats[questionId];
 
   if (!question) {

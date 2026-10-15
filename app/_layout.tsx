@@ -7,8 +7,10 @@ import { useUnit } from 'effector-react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { progressModel } from '@app/entities/progress';
+import { contentModel } from '@app/entities/question';
 import { settingsModel } from '@app/entities/settings';
 import { getSelectionAccent, topicModel } from '@app/entities/topic';
+import { contentUpdateModel } from '@app/features/content-update';
 import { reminderModel, useReviewReminderTap } from '@app/features/daily-reminder';
 import { reportErrorFx } from '@app/shared/analytics';
 import { useI18n } from '@app/shared/i18n';
@@ -68,27 +70,30 @@ const RootNavigation = ({ isOnboardingDone }: RootNavigationProps): JSX.Element 
 };
 
 const AppRoot = (): JSX.Element => {
-  const { settings, isSettingsLoaded, topic, isTopicLoaded, isProgressLoaded } = useUnit({
+  const { settings, isSettingsLoaded, topic, isTopicLoaded, isProgressLoaded, isContentLoaded } = useUnit({
     settings: settingsModel.$settings,
     isSettingsLoaded: settingsModel.$isLoaded,
     topic: topicModel.$currentTopic,
     isTopicLoaded: topicModel.$isLoaded,
     isProgressLoaded: progressModel.$isLoaded,
+    isContentLoaded: contentModel.$isLoaded,
   });
 
   const systemScheme = useColorScheme();
-  const isReady = isSettingsLoaded && isTopicLoaded && isProgressLoaded;
+  const isReady = isSettingsLoaded && isTopicLoaded && isProgressLoaded && isContentLoaded;
 
   useEffect(() => {
     settingsModel.settingsLoaded();
     topicModel.currentTopicLoaded();
     progressModel.progressLoaded();
+    contentModel.contentLoaded();
     reminderModel.remindersStarted();
   }, []);
 
   useEffect(() => {
     if (isReady) {
       SplashScreen.hideAsync();
+      contentUpdateModel.updateCheckRequested();
     }
   }, [isReady]);
 

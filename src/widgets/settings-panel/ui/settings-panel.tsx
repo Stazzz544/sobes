@@ -4,6 +4,7 @@ import Constants from 'expo-constants';
 import { Ionicons } from '@expo/vector-icons';
 import { useUnit } from 'effector-react';
 import { entitlementModel } from '@app/entities/entitlement';
+import { contentModel } from '@app/entities/question';
 import { REMINDER_TIMES, settingsModel } from '@app/entities/settings';
 import { reminderModel } from '@app/features/daily-reminder';
 import { ResetProgressButton } from '@app/features/reset-progress';
@@ -46,16 +47,23 @@ const SwitchRow = ({ label, value, onChange }: SwitchRowProps): JSX.Element => {
 
 export const SettingsPanel = ({ onOpenReleases }: SettingsPanelProps): JSX.Element => {
   const { colors } = useTheme();
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const version = Constants.expoConfig?.version ?? '—';
-  const { settings, isPro, onSettingsChange, onReminderToggle, onReminderTimeChange, onDevProToggle } = useUnit({
+  const { settings, isPro, content, onSettingsChange, onReminderToggle, onReminderTimeChange, onDevProToggle } = useUnit({
     settings: settingsModel.$settings,
+    content: contentModel.$info,
     isPro: entitlementModel.$isPro,
     onSettingsChange: settingsModel.settingsChanged,
     onReminderToggle: reminderModel.reminderToggled,
     onReminderTimeChange: reminderModel.reminderTimeChanged,
     onDevProToggle: entitlementModel.devProToggled,
   });
+  const contentStatus = content.builtAt
+    ? t('settings.contentUpdated', {
+        count: content.questions,
+        date: new Date(content.builtAt).toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' }),
+      })
+    : t('settings.contentBundled', { count: content.questions });
 
   return (
     <View style={styles.list}>
@@ -168,6 +176,9 @@ export const SettingsPanel = ({ onOpenReleases }: SettingsPanelProps): JSX.Eleme
           </AppText>
           <Ionicons name="chevron-forward" size={18} color={colors.accentText} />
         </Pressable>
+        <AppText variant="caption" tone="secondary">
+          {contentStatus}
+        </AppText>
         <AppText variant="caption" tone="secondary">
           {t('settings.aboutText')}
         </AppText>

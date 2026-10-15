@@ -1,13 +1,11 @@
 import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { PACK_ID, PACK_SCHEMA } from '../src/entities/question/config/content-pack';
 import { QUESTIONS } from '../src/entities/question/data';
 import { DIAGRAMS } from '../src/entities/question/data/diagrams';
 import { GLOSSARY } from '../src/entities/question/glossary/glossary';
 import { LESSON_GROUPS } from '../src/entities/question/lessons';
-
-const PACK_SCHEMA = 1;
-const PACK_ID = 'frontend';
 
 const outFlag = process.argv.indexOf('--out');
 const outDir = path.resolve(outFlag >= 0 ? (process.argv[outFlag + 1] ?? '') : 'site/packs/v1');
@@ -38,6 +36,7 @@ const manifest = {
       questions: questions.length,
       lessons: lessonCount,
       size: Buffer.byteLength(pack),
+      md5: createHash('md5').update(pack).digest('hex'),
       sha256: createHash('sha256').update(pack).digest('hex'),
     },
   },

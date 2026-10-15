@@ -257,6 +257,8 @@ export const en: Dictionary = {
     about: 'About',
     version: 'Version {version}',
     whatsNew: 'What’s new',
+    contentBundled: 'Questions: {count} · built into this version',
+    contentUpdated: 'Questions: {count} · updated {date}',
     aboutText:
       'Questions are checked against MDN, react.dev and the TypeScript docs. Spotted a mistake? Tap “Report a problem” under the question.',
     privacy: 'Privacy policy',

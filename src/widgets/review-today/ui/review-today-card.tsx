@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useUnit } from 'effector-react';
 import { isDueForReview, progressModel } from '@app/entities/progress';
-import { QUESTIONS } from '@app/entities/question';
+import { getQuestions } from '@app/entities/question';
 import { useI18n } from '@app/shared/i18n';
 import { addDays, startOfDay, useNow } from '@app/shared/lib';
 import { useTheme } from '@app/shared/theme';
@@ -20,7 +20,7 @@ export const ReviewTodayCard = ({ onStart }: ReviewTodayCardProps): JSX.Element 
   const { stats } = useUnit({ stats: progressModel.$questionStats });
   const now = useNow();
 
-  const scheduled = QUESTIONS.map((question) => stats[question.id]).filter(
+  const scheduled = getQuestions().map((question) => stats[question.id]).filter(
     (stat): stat is QuestionStat => stat !== undefined,
   );
   if (scheduled.length === 0) {

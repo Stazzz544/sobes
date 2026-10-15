@@ -1,5 +1,5 @@
 import { getBestStreak } from '@app/entities/progress';
-import { QUESTIONS } from '@app/entities/question';
+import { getQuestions } from '@app/entities/question';
 import { getPathProgress } from '@app/features/learning-path';
 import { TOPIC_IDS } from '@app/shared/config';
 import type { AnswerRecord, QuestionStats } from '@app/entities/progress';
@@ -41,7 +41,7 @@ export const getAchievements = ({ stats, log, dailyGoal, now }: AchievementInput
   const doneUnits = paths.reduce((sum, path) => sum + path.doneCount, 0);
   const donePaths = paths.filter((path) => path.doneCount === path.units.length).length;
   const touchedTopics = TOPIC_IDS.filter((topic) =>
-    QUESTIONS.some((question) => question.topic === topic && stats[question.id] !== undefined),
+    getQuestions().some((question) => question.topic === topic && stats[question.id] !== undefined),
   ).length;
   const fixedMistakes = statList.filter((stat) => stat.wrong + stat.dontKnow > 0 && !stat.inMistakes).length;
   const remembered = statList.filter((stat) => stat.reviewStep >= REVIEW_STEP_FOR_MEMORY).length;

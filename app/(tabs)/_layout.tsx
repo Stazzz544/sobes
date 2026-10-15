@@ -4,7 +4,7 @@ import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useUnit } from 'effector-react';
 import { progressModel } from '@app/entities/progress';
-import { QUESTIONS_BY_ID } from '@app/entities/question';
+import { getQuestionById } from '@app/entities/question';
 import { TopicMenuSheet } from '@app/features/select-topic';
 import { useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
@@ -14,7 +14,7 @@ export default function TabsLayout(): JSX.Element {
   const { colors } = useTheme();
   const { t } = useI18n();
   const { mistakeIds } = useUnit({ mistakeIds: progressModel.$mistakeIds });
-  const mistakesCount = mistakeIds.filter((questionId) => QUESTIONS_BY_ID[questionId]).length;
+  const mistakesCount = mistakeIds.filter((questionId) => getQuestionById(questionId)).length;
 
   return (
     <View style={[styles.root, { backgroundColor: colors.bgPrimary }]}>

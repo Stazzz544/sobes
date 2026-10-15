@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useUnit } from 'effector-react';
 import { progressModel } from '@app/entities/progress';
-import { QUESTIONS } from '@app/entities/question';
+import { getQuestions } from '@app/entities/question';
 import { useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
 import { AppText, Card } from '@app/shared/ui';
@@ -18,7 +18,7 @@ export const PlacementCard = ({ topic, onStart }: PlacementCardProps): JSX.Eleme
   const { colors } = useTheme();
   const { t } = useI18n();
   const { stats } = useUnit({ stats: progressModel.$questionStats });
-  const hasAnswers = QUESTIONS.some((question) => question.topic === topic && stats[question.id] !== undefined);
+  const hasAnswers = getQuestions().some((question) => question.topic === topic && stats[question.id] !== undefined);
 
   if (hasAnswers) {
     return null;

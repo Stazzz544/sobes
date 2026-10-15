@@ -6,8 +6,7 @@ import { useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
 import { AppText, Button, CodeBlock, FormattedText } from '@app/shared/ui';
 import { TAGS } from '../config/tags';
-import { DIAGRAMS } from '../data/diagrams';
-import { LESSONS_BY_TAG } from '../lessons';
+import { getDiagram, getLessonByTag } from '../model/content';
 import { DiagramPlayer } from './diagram-player';
 import { GlossarySheet } from './glossary-sheet';
 import type { TagId } from '../config/tags';
@@ -40,7 +39,8 @@ export const ExplanationBlocks = ({ blocks }: ExplanationBlocksProps): JSX.Eleme
     <>
       {blocks.map((block, index) => {
         if (block.type === 'diagram') {
-          return <DiagramPlayer key={index} diagram={DIAGRAMS[block.diagram]} />;
+          const diagram = getDiagram(block.diagram);
+          return diagram ? <DiagramPlayer key={index} diagram={diagram} /> : null;
         }
         if (block.type === 'code') {
           return (
@@ -91,7 +91,7 @@ export const SourceList = ({ sources }: SourceListProps): JSX.Element => {
 
 export const ExplanationView = ({ question, onOpenLesson }: ExplanationViewProps): JSX.Element => {
   const { t, text } = useI18n();
-  const lessonTags = onOpenLesson ? question.tags.filter((tag) => LESSONS_BY_TAG[tag]) : [];
+  const lessonTags = onOpenLesson ? question.tags.filter((tag) => getLessonByTag(tag)) : [];
 
   return (
     <View style={styles.container}>

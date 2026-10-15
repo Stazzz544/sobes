@@ -255,6 +255,8 @@ export const ru = {
     about: 'О приложении',
     version: 'Версия {version}',
     whatsNew: 'Что нового',
+    contentBundled: 'Вопросов: {count} · встроены в эту версию',
+    contentUpdated: 'Вопросов: {count} · обновлены {date}',
     aboutText:
       'Вопросы сверены с MDN, react.dev и документацией TypeScript. Нашли неточность — нажмите «Сообщить об ошибке» под вопросом.',
     privacy: 'Политика конфиденциальности',

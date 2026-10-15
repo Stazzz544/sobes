@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.46.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: 'Вопросы обновляются без обновления приложения: новые и исправленные вопросы скачиваются в фоне и появляются при следующем запуске.',
+        en: 'Questions now update without an app update: new and corrected questions download in the background and appear on the next launch.',
+      },
+      { ru: 'В «О приложении» видно, сколько вопросов в банке и когда он обновлялся.', en: '“About” shows how many questions the bank has and when it was last updated.' },
+    ],
+  },
+  {
     version: '1.45.0',
     date: '2026-10-15',
     changes: [

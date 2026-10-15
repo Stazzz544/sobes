@@ -5,7 +5,7 @@ import { CARD_BORDER_RADIUS } from '@app/shared/config';
 import { useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
 import { AppText, Button, FormattedText } from '@app/shared/ui';
-import { GLOSSARY } from '../glossary/glossary';
+import { getGlossaryTerm } from '../model/content';
 
 type GlossarySheetProps = {
   termId: string | null;
@@ -17,7 +17,7 @@ export const GlossarySheet = ({ termId, isOpen, onClose }: GlossarySheetProps): 
   const { colors } = useTheme();
   const { t, text } = useI18n();
   const insets = useSafeAreaInsets();
-  const term = termId ? GLOSSARY[termId] : undefined;
+  const term = termId ? getGlossaryTerm(termId) : undefined;
 
   return (
     <Modal visible={isOpen && term !== undefined} transparent statusBarTranslucent animationType="slide" onRequestClose={onClose}>

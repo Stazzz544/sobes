@@ -4,6 +4,7 @@ export const STORAGE_KEYS = {
   QUESTION_STATS: 'sobes_question_stats',
   ANSWER_LOG: 'sobes_answer_log',
   SEEN_ACHIEVEMENTS: 'sobes_seen_achievements',
+  CONTENT_CHECKED_AT: 'sobes_content_checked_at',
 } as const;
 
 export const SCREEN_PADDING = 16;
