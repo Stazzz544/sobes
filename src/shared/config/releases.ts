@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.22.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '11 новых вопросов в «Тестировании»: toBe и Object.is, toEqual против toStrictEqual, mockClear/Reset/Restore, фиксированное время, within в таблицах, getByRole как проверка доступности, web-first проверки Playwright, page.route, регрессионный тест, тестовый трофей, Arrange — Act — Assert.',
+        en: '11 new questions in “Testing”: toBe and Object.is, toEqual vs toStrictEqual, mockClear/Reset/Restore, pinned time, within in tables, getByRole as an accessibility check, Playwright web-first assertions, page.route, regression tests, the testing trophy, Arrange — Act — Assert.',
+      },
+      { ru: 'Всего 606 вопросов.', en: '606 questions in total.' },
+    ],
+  },
+  {
     version: '1.21.0',
     date: '2026-10-15',
     changes: [

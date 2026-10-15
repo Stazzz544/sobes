@@ -1,5 +1,10 @@
 # Что нового
 
+## 1.22.0
+
+- 11 новых вопросов в «Тестировании»: toBe и Object.is, toEqual против toStrictEqual, mockClear/Reset/Restore, фиксированное время, within в таблицах, getByRole как проверка доступности, web-first проверки Playwright, page.route, регрессионный тест, тестовый трофей, Arrange — Act — Assert.
+- Всего 606 вопросов.
+
 ## 1.21.0
 
 - 11 новых вопросов по Git — каждый проверяется запуском git: две колонки git status, rm --cached, git show коммит:файл, изменения при переключении веток, rebase меняет хеши, cherry-pick, revert, restore --staged, push -u, конфликт UU, --ours и --theirs.
