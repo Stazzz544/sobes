@@ -535,4 +535,10 @@
 - Отчёт просмотрен вручную: убраны «побочные эффекты» в CSS (`isolation`), `Layout` внутри «Cumulative Layout Shift», сборка мусора Git и «токены» поиска в RAG.
 - Проверено на эмуляторе: подчёркнутый термин в разборе открывает карточку с определением.
 
+## R3-1, шаг 1: сборка и публикация контент-паков (15.10.2026, без версии — приложение не менялось)
+
+- План — `docs/plans/r3-1-content-packs.md`.
+- `scripts/build-packs.ts` (`npm run build:packs`): вопросы (без `verify`), конспекты, глоссарий и диаграммы → `site/packs/v1/frontend.json` (≈2 МБ, ≈570 КБ в gzip) и `manifest.json` со `schema`, `appVersion`, `builtAt`, числом вопросов и конспектов, размером и `sha256`. `site/packs/` в `.gitignore`.
+- `.github/workflows/pages.yml`: запускается и на правки контента; `npm ci` → `verify:content` → `build:packs` → публикация `site/` — непроверенный контент не публикуется.
+
 Дальше — `docs/roadmap.md`.

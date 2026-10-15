@@ -3,7 +3,12 @@ name: Deploy site to GitHub Pages
 on:
   push:
     branches: [main]
-    paths: ['site/**', '.github/workflows/pages.yml']
+    paths:
+      - 'site/**'
+      - 'src/entities/question/**'
+      - 'scripts/build-packs.ts'
+      - 'package.json'
+      - '.github/workflows/pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -20,6 +25,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 25
+          cache: npm
+      - run: npm ci
+      - name: Verify content before publishing packs
+        run: npm run verify:content
+      - name: Build content packs
+        run: npm run build:packs
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site

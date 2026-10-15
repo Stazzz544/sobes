@@ -6,6 +6,9 @@ node_modules/
 # Expo
 .expo/
 dist/
+
+# контент-паки собирает workflow Pages
+site/packs/
 web-build/
 expo-env.d.ts
 
