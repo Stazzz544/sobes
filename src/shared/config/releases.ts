@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.41.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в «ИИ для разработчика», 3 проверяются запуском: температура и softmax, «потеря середины» длинного контекста, теги для пользовательских данных в промпте, recall и precision поиска, реранкер, обрезка истории чата по бюджету, ошибки инструментов агента, персональные данные в запросах, evals для промптов, файл инструкций для ИИ-ассистента.',
+        en: '10 new questions in “AI for developers”, 3 verified by running code: temperature and softmax, “lost in the middle” in long contexts, tags for user data in prompts, retrieval recall and precision, rerankers, trimming chat history to a budget, agent tool errors, personal data in requests, evals for prompts, an instructions file for AI assistants.',
+      },
+      { ru: 'Всего 798 вопросов.', en: '798 questions in total.' },
+    ],
+  },
+  {
     version: '1.40.0',
     date: '2026-10-15',
     changes: [
