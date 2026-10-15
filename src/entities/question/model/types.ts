@@ -88,6 +88,14 @@ type BrowserProbe = {
   viewportWidth?: number;
 };
 
+export type JsTestsVerification = {
+  kind: 'js-tests';
+  tests: string;
+  before?: string;
+  after?: string;
+  fixedLine?: string;
+};
+
 export type QuestionVerification =
   | { kind: 'js-output' }
   | { kind: 'ts-type'; symbol: string }
@@ -96,7 +104,8 @@ export type QuestionVerification =
   | { kind: 'ts-output' }
   | { kind: 'shell-output' }
   | ({ kind: 'css-computed' } & BrowserProbe)
-  | ({ kind: 'dom-probe' } & BrowserProbe);
+  | ({ kind: 'dom-probe' } & BrowserProbe)
+  | JsTestsVerification;
 
 type QuestionBase = {
   id: string;
@@ -120,14 +129,14 @@ export type ChoiceQuestion = QuestionBase & {
 export type OrderQuestion = QuestionBase & {
   kind: 'order';
   items: OptionContent[];
-  verify?: Extract<QuestionVerification, { kind: 'js-output' | 'shell-output' | 'dom-probe' }>;
+  verify?: Extract<QuestionVerification, { kind: 'js-output' | 'shell-output' | 'dom-probe' | 'js-tests' }>;
 };
 
 export type BugLineQuestion = QuestionBase & {
   kind: 'bug-line';
   code: CodeSnippet;
   answerLine: number;
-  verify?: { kind: 'ts-error-line' };
+  verify?: { kind: 'ts-error-line' } | JsTestsVerification;
 };
 
 export type OutputQuestion = QuestionBase & {

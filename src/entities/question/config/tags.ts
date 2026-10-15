@@ -17,6 +17,7 @@ export const TAGS = {
   objects: { topic: 'javascript', title: { ru: 'Объекты и ссылки', en: 'Objects & references' } },
   equality: { topic: 'javascript', title: { ru: 'Сравнения', en: 'Equality' } },
   modules: { topic: 'javascript', title: { ru: 'Модули', en: 'Modules' } },
+  'live-coding': { topic: 'javascript', title: { ru: 'Live-coding задачи', en: 'Live-coding tasks' } },
   iterators: { topic: 'javascript', title: { ru: 'Итераторы и генераторы', en: 'Iterators & generators' } },
   collections: { topic: 'javascript', title: { ru: 'Map, Set, Weak*', en: 'Map, Set, Weak*' } },
   arrays: { topic: 'javascript', title: { ru: 'Массивы', en: 'Arrays' } },

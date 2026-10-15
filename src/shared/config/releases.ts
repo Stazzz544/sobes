@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.16.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: 'Live-coding задачи в теме JavaScript: debounce, свой Promise.all, flatten, curry, LRU-кеш, скобки, memoize, groupBy, chunk, once, глубокое копирование, таймаут.',
+        en: 'Live-coding tasks in the JavaScript topic: debounce, your own Promise.all, flatten, curry, an LRU cache, brackets, memoize, groupBy, chunk, once, deep copy, a timeout.',
+      },
+      { ru: 'Каждое решение проверено автотестами — всего 522 вопроса.', en: 'Every solution is checked by automated tests — 522 questions in total.' },
+    ],
+  },
+  {
     version: '1.15.0',
     date: '2026-10-15',
     changes: [

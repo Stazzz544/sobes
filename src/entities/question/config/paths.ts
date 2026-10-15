@@ -16,6 +16,7 @@ export const TOPIC_PATHS: Record<TopicId, readonly TagId[]> = {
     'event-loop',
     'promises',
     'modules',
+    'live-coding',
   ],
   typescript: [
     'any-unknown-never',

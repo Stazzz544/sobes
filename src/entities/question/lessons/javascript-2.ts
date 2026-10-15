@@ -759,4 +759,36 @@ console.log([1, 2, 3].reduce((sum, value) => sum + value, 0)); // 6`,
       { title: 'MDN — Array.prototype.toSorted()', url: `${MDN}/Reference/Global_Objects/Array/toSorted` },
     ],
   },
+  {
+    tag: 'live-coding',
+    summary: {
+      ru: 'На live-coding проверяют не только результат, но и ход мысли: уточнить задачу, разобрать примеры, написать простое решение, проверить крайние случаи и оценить сложность.',
+      en: 'Live-coding checks not just the result but your reasoning: clarify the task, walk through examples, write a simple solution, check edge cases and estimate complexity.',
+    },
+    blocks: [
+      {
+        type: 'text',
+        text: {
+          ru: 'Порядок, который хорошо работает: переспросить условие и ограничения → разобрать 2–3 примера, включая пустой ввод → назвать идею решения вслух → написать рабочий вариант → прогнать примеры по коду → назвать сложность и что можно улучшить. Молчание хуже неидеального решения: интервьюер может подсказать, только если слышит ход мысли.',
+          en: 'An order that works well: restate the task and constraints → walk through 2–3 examples, including empty input → state the idea out loud → write a working version → trace the examples through the code → name the complexity and what could be improved. Silence is worse than an imperfect solution: the interviewer can only help if they hear your reasoning.',
+        },
+      },
+      {
+        type: 'text',
+        text: {
+          ru: 'Частые задачи фронтенда: `debounce` и `throttle` (замыкание + таймер), свой `Promise.all` (порядок по индексу, счётчик, пустой массив), `curry` (`fn.length` + замыкание), `flatten` (рекурсия по `Array.isArray`), `memoize` (ключ из всех аргументов), LRU-кеш (`Map` помнит порядок вставки), скобки (стек), `groupBy`, глубокое копирование (`structuredClone`), таймаут через `Promise.race`.',
+          en: 'Common frontend tasks: `debounce` and `throttle` (closure + timer), your own `Promise.all` (order by index, a counter, the empty array), `curry` (`fn.length` + closure), `flatten` (recursion on `Array.isArray`), `memoize` (a key from all arguments), an LRU cache (`Map` keeps insertion order), brackets (a stack), `groupBy`, deep copy (`structuredClone`), a timeout via `Promise.race`.',
+        },
+      },
+    ],
+    keyPoints: [
+      { ru: 'Сначала уточнить условие и примеры, потом код.', en: 'Clarify the task and examples first, then code.' },
+      { ru: 'Думать вслух и проверять пустой ввод.', en: 'Think out loud and check empty input.' },
+      { ru: 'Назвать встроенную альтернативу и сложность.', en: 'Name the built-in alternative and the complexity.' },
+    ],
+    sources: [
+      { title: 'MDN — Closures', url: `${MDN}/Guide/Closures` },
+      { title: 'MDN — Promise', url: `${MDN}/Reference/Global_Objects/Promise` },
+    ],
+  },
 ];

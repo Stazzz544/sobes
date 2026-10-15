@@ -22,6 +22,7 @@ import { JAVASCRIPT_QUESTIONS_2 } from './javascript-2';
 import { JAVASCRIPT_QUESTIONS_3 } from './javascript-3';
 import { JAVASCRIPT_QUESTIONS_4 } from './javascript-4';
 import { JAVASCRIPT_QUESTIONS_5 } from './javascript-5';
+import { JAVASCRIPT_QUESTIONS_6 } from './javascript-6';
 import { REACT_QUESTIONS } from './react';
 import { REACT_QUESTIONS_2 } from './react-2';
 import { REACT_QUESTIONS_3 } from './react-3';
@@ -48,6 +49,7 @@ export const QUESTIONS: Question[] = [
   ...JAVASCRIPT_QUESTIONS_3,
   ...JAVASCRIPT_QUESTIONS_4,
   ...JAVASCRIPT_QUESTIONS_5,
+  ...JAVASCRIPT_QUESTIONS_6,
   ...TYPESCRIPT_QUESTIONS,
   ...TYPESCRIPT_QUESTIONS_2,
   ...TYPESCRIPT_QUESTIONS_3,

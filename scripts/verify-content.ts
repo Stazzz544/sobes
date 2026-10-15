@@ -15,7 +15,7 @@ import { DIRECTIONS } from '../src/entities/topic/config/directions';
 import { RELEASES } from '../src/shared/config/releases';
 import { DIRECTION_IDS, TOPIC_IDS } from '../src/shared/config/topics';
 import { ACCENT_COLORS, BASE_COLORS } from '../src/shared/theme/colors';
-import type { ChoiceQuestion, OptionContent, Question, QuestionVerification } from '../src/entities/question/model/types';
+import type { ChoiceQuestion, JsTestsVerification, OptionContent, Question, QuestionVerification } from '../src/entities/question/model/types';
 
 type CssComputedVerification = Extract<QuestionVerification, { kind: 'css-computed' | 'dom-probe' }>;
 
@@ -212,6 +212,75 @@ const checkJsOutput = (question: Question, workDir: string, transpile = false): 
     return;
   }
   checkAgainstAnswer(question, normalize(result.stdout), 'вывод');
+};
+
+const JS_TESTS_PASSED = '__SOBES_TESTS_PASSED__';
+
+const passesJsTests = (source: string, tests: string, file: string): boolean => {
+  writeFileSync(
+    file,
+    [
+      "const assert = require('node:assert/strict');",
+      source,
+      ';(async () => {',
+      tests,
+      `})().then(() => console.log('${JS_TESTS_PASSED}'), (error) => console.log('tests failed:', error?.message));`,
+    ].join('\n'),
+  );
+  const result = spawnSync(process.execPath, [file], { encoding: 'utf8', timeout: 5000 });
+  return result.status === 0 && result.stdout.includes(JS_TESTS_PASSED);
+};
+
+const checkJsTests = (question: Question, verify: JsTestsVerification, workDir: string): void => {
+  const file = path.join(workDir, `${question.id}.tests.js`);
+  const passes = (body: string): boolean => passesJsTests([verify.before ?? '', body, verify.after ?? ''].join('\n'), verify.tests, file);
+  if (question.kind === 'order') {
+    const lines = question.items.map((item) => ('code' in item ? item.code : ''));
+    if (!passes(lines.join('\n'))) {
+      fail(question, 'js-tests: правильный порядок не проходит тесты');
+    }
+    for (let index = 0; index + 1 < lines.length; index++) {
+      const swapped = [...lines];
+      [swapped[index], swapped[index + 1]] = [swapped[index + 1] ?? '', swapped[index] ?? ''];
+      if (passes(swapped.join('\n'))) {
+        fail(question, `js-tests: тесты проходят и с переставленными элементами ${index + 1} и ${index + 2} — порядок неоднозначен`);
+      }
+    }
+    return;
+  }
+  if (question.kind === 'bug-line') {
+    if (passes(question.code.source)) {
+      fail(question, 'js-tests: код с ошибкой проходит тесты');
+    }
+    if (verify.fixedLine === undefined) {
+      fail(question, 'js-tests: для bug-line нужен fixedLine');
+      return;
+    }
+    const lines = question.code.source.split('\n');
+    lines[question.answerLine - 1] = verify.fixedLine;
+    if (!passes(lines.join('\n'))) {
+      fail(question, 'js-tests: код с исправленной строкой не проходит тесты');
+    }
+    return;
+  }
+  if (question.kind === 'output') {
+    fail(question, 'js-tests не для output');
+    return;
+  }
+  OPTION_IDS.forEach((id, index) => {
+    const option = question.options[index];
+    if (!option || !('code' in option)) {
+      fail(question, `js-tests: вариант ${id} без кода`);
+      return;
+    }
+    const passed = passes(option.code);
+    if (id === question.answer && !passed) {
+      fail(question, `js-tests: правильный вариант ${id} не проходит тесты`);
+    }
+    if (id !== question.answer && passed) {
+      fail(question, `js-tests: неправильный вариант ${id} проходит тесты`);
+    }
+  });
 };
 
 const BASH_CANDIDATES = [process.env.BASH_PATH, 'C:/Program Files/Git/bin/bash.exe', '/bin/bash', '/usr/bin/bash'];
@@ -780,6 +849,9 @@ const main = async (): Promise<void> => {
       }
       if (question.verify?.kind === 'shell-output') {
         checkShellOutput(question, workDir);
+      }
+      if (question.verify?.kind === 'js-tests') {
+        checkJsTests(question, question.verify, workDir);
       }
       if (question.verify?.kind === 'ts-output') {
         checkJsOutput(question, workDir, true);
