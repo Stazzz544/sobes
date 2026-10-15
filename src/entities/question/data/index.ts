@@ -30,6 +30,7 @@ import { NEXT_QUESTIONS_3 } from './next-3';
 import { NODE_QUESTIONS } from './node';
 import { NODE_QUESTIONS_2 } from './node-2';
 import { NODE_QUESTIONS_3 } from './node-3';
+import { NODE_QUESTIONS_4 } from './node-4';
 import { STATE_QUESTIONS } from './state';
 import { STATE_QUESTIONS_2 } from './state-2';
 import { STATE_QUESTIONS_3 } from './state-3';
@@ -113,6 +114,7 @@ export const QUESTIONS: Question[] = [
   ...NODE_QUESTIONS,
   ...NODE_QUESTIONS_2,
   ...NODE_QUESTIONS_3,
+  ...NODE_QUESTIONS_4,
   ...NEXT_QUESTIONS,
   ...NEXT_QUESTIONS_2,
   ...NEXT_QUESTIONS_3,

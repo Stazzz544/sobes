@@ -471,4 +471,8 @@
 
 - `data/git-4.ts`, 10 вопросов, все `shell-output`, сошлись с первого прогона: `git mv` → `R old -> new`, `!keep.log` в `.gitignore`, `cat-file -t` у лёгкого и аннотированного тега (`commit tag`), `rev-parse --abbrev-ref` в detached HEAD, `branch -d` отказывается удалять неслитую ветку, `merge --ff-only` при разошедшихся ветках, `reset` = `--mixed`, `clean -n`, `reset --hard HEAD@{1}`, ноль merge-коммитов после `pull --rebase` (два клона одного bare-репозитория). Сообщения об ошибках git в ответы не брал — они разные в версиях; вместо них — код выхода через `&& echo … || echo …`.
 
+## R3-3, наполнение: Node.js 40 → 50 (15.10.2026, версия 1.33.0)
+
+- `data/node-4.ts`, 10 вопросов, все проверяются запуском: `readline` склеивает строку из двух чанков, `write` → `true false false` при `highWaterMark: 4`, удаление из `require.cache` (модуль пишется во временный файл и удаляется), `unref()` не держит процесс, порядок `beforeExit`/`exit` (порядок), `AsyncLocalStorage` через таймеры, первые 8 символов `sha256('abc')`, `[Object]` на третьем уровне `console.log`, `Buffer` в hex, `process.argv.length`. Якоря ссылок на документацию Node сверены с HTML.
+
 Дальше — `docs/roadmap.md`.

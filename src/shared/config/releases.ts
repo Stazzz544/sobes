@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.33.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в Node.js, все проверяются запуском: readline и разорванные строки, write и backpressure, require.cache, timer.unref, beforeExit и exit, AsyncLocalStorage, sha256 через crypto, глубина console.log, Buffer в hex, process.argv.',
+        en: '10 new Node.js questions, all verified by running code: readline and split lines, write and backpressure, require.cache, timer.unref, beforeExit and exit, AsyncLocalStorage, sha256 via crypto, console.log depth, Buffer to hex, process.argv.',
+      },
+      { ru: 'Всего 718 вопросов.', en: '718 questions in total.' },
+    ],
+  },
+  {
     version: '1.32.0',
     date: '2026-10-15',
     changes: [

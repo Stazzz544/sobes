@@ -1,5 +1,10 @@
 # Что нового
 
+## 1.33.0
+
+- 10 новых вопросов в Node.js, все проверяются запуском: readline и разорванные строки, write и backpressure, require.cache, timer.unref, beforeExit и exit, AsyncLocalStorage, sha256 через crypto, глубина console.log, Buffer в hex, process.argv.
+- Всего 718 вопросов.
+
 ## 1.32.0
 
 - 10 новых вопросов по Git, все проверяются запуском git: git mv и переименования, исключения в .gitignore, лёгкие и аннотированные теги, detached HEAD, branch -d для неслитой ветки, merge --ff-only, reset без флага, git clean -n, возврат через reflog, pull --rebase без merge-коммитов.
