@@ -52,6 +52,7 @@ import { TESTING_QUESTIONS } from './testing';
 import { TESTING_QUESTIONS_2 } from './testing-2';
 import { TESTING_QUESTIONS_3 } from './testing-3';
 import { TESTING_QUESTIONS_4 } from './testing-4';
+import { TESTING_QUESTIONS_5 } from './testing-5';
 import { JAVASCRIPT_QUESTIONS } from './javascript';
 import { JAVASCRIPT_QUESTIONS_2 } from './javascript-2';
 import { JAVASCRIPT_QUESTIONS_3 } from './javascript-3';
@@ -131,6 +132,7 @@ export const QUESTIONS: Question[] = [
   ...TESTING_QUESTIONS_2,
   ...TESTING_QUESTIONS_3,
   ...TESTING_QUESTIONS_4,
+  ...TESTING_QUESTIONS_5,
   ...STATE_QUESTIONS,
   ...STATE_QUESTIONS_2,
   ...STATE_QUESTIONS_3,

@@ -588,4 +588,8 @@
 
 - `data/algorithms-5.ts`, 10 вопросов, все `js-output`; ответы сначала посчитаны запуском, потом сверены `verify-content`: проверка скобок стеком (`true false false true`), `sort()` против `localeCompare(…, "de")` для `Äpfel`, бинарный поиск первой сломанной версии из 100 (`37 7`), группировка анаграмм по отсортированному ключу, скользящее окно (`9`), префиксные суммы (`6 14`), поиск цикла DFS с тремя состояниями (`true false` — ромб не цикл), LCS (`4 4`), перестановки `abc`, LRU-кеш на `Map` (`a,c undefined`).
 
+## Наполнение до ~60: тестирование 50 → 60 (15.10.2026, версия 1.54.0)
+
+- `data/testing-5.ts`, 10 вопросов, 5 `js-output` на встроенном `node:test` и чистом JS (ответы сначала посчитаны скриптом): формула `toBeCloseTo` из документации Jest (`false true true false`), шпион `mock.method` вызывает настоящую реализацию и снимается `restore`, `mock.timers` + `setInterval` (`3`), утечка общей заготовки между тестами (`1 2`), табличный тест находит `Café`. Без запуска: `toEqual` против `toStrictEqual` (свойства с `undefined`), `screen.debug`/`logRoles`, трейсы Playwright с `on-first-retry`, проверки готовности перед кликом, property-based тесты (fast-check).
+
 Дальше — `docs/roadmap.md`.

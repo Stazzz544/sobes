@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.54.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в «Тестирование», 5 проверяются запуском: toEqual против toStrictEqual, как работает toBeCloseTo, шпион на методе, фейковые таймеры для опроса, общая заготовка между тестами, табличные тесты, разбор ненайденного элемента в Testing Library, трейсы Playwright, ожидание готовности элемента перед кликом, тесты на основе свойств.',
+        en: '10 new “Testing” questions, 5 verified by running code: toEqual vs toStrictEqual, how toBeCloseTo works, a spy on a method, fake timers for polling, a fixture shared between tests, table-driven tests, debugging a missing element in Testing Library, Playwright traces, actionability checks before a click, property-based tests.',
+      },
+      { ru: 'Всего 888 вопросов.', en: '888 questions in total.' },
+    ],
+  },
+  {
     version: '1.53.0',
     date: '2026-10-15',
     changes: [
