@@ -8,6 +8,11 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.43.0',
+    date: '2026-10-15',
+    changes: [{ ru: 'Нажатие на напоминание «Ждут повторения» сразу открывает повторение — и когда приложение свёрнуто, и когда закрыто.', en: 'Tapping a “waiting for review” reminder now opens the review right away, whether the app is in the background or closed.' }],
+  },
+  {
     version: '1.42.0',
     date: '2026-10-15',
     changes: [

@@ -5,7 +5,7 @@ import { debounce } from 'patronum';
 import { getGoalProgress, progressModel } from '@app/entities/progress';
 import { settingsModel } from '@app/entities/settings';
 import { DICTIONARIES, i18nModel, selectPluralForm, translate } from '@app/shared/i18n';
-import { REMINDER_CHANNEL_ID } from '../config';
+import { REMINDER_CHANNEL_ID, REVIEW_ACTION } from '../config';
 import { planReminders } from '../lib/plan-reminders';
 import type { QuestionStats } from '@app/entities/progress';
 import type { ReminderTime, Settings } from '@app/entities/settings';
@@ -20,6 +20,7 @@ type ScheduledReminder = {
   at: number;
   title: string;
   body: string;
+  opensReview: boolean;
 };
 
 type ReminderSchedule = {
@@ -58,9 +59,9 @@ const scheduleRemindersFx = createEffect(async ({ channelName, reminders }: Remi
   });
   await Notifications.cancelAllScheduledNotificationsAsync();
   await Promise.all(
-    reminders.map(({ at, title, body }) =>
+    reminders.map(({ at, title, body, opensReview }) =>
       Notifications.scheduleNotificationAsync({
-        content: { title, body },
+        content: { title, body, data: opensReview ? { action: REVIEW_ACTION } : {} },
         trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: at, channelId: REMINDER_CHANNEL_ID },
       }),
     ),
@@ -99,6 +100,7 @@ const buildSchedule = (settings: Settings, stats: QuestionStats, isTodayDone: bo
         dueCount > 0
           ? translate(dictionary, 'reminder.bodyReview', { count: formatQuestions(locale, dueCount) })
           : translate(dictionary, 'reminder.bodyGoal', { count: formatQuestions(locale, settings.dailyGoal) }),
+      opensReview: dueCount > 0,
     })),
   };
 };

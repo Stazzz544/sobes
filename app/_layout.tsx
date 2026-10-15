@@ -1,6 +1,6 @@
 import { JSX, useEffect } from 'react';
 import { useColorScheme, View } from 'react-native';
-import { Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useUnit } from 'effector-react';
@@ -9,7 +9,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { progressModel } from '@app/entities/progress';
 import { settingsModel } from '@app/entities/settings';
 import { getSelectionAccent, topicModel } from '@app/entities/topic';
-import { reminderModel } from '@app/features/daily-reminder';
+import { reminderModel, useReviewReminderTap } from '@app/features/daily-reminder';
 import { reportErrorFx } from '@app/shared/analytics';
 import { useI18n } from '@app/shared/i18n';
 import { BASE_COLORS, ThemeProvider, useTheme } from '@app/shared/theme';
@@ -23,6 +23,10 @@ export const unstable_settings = {
   initialRouteName: '(tabs)',
 };
 
+const openReview = (): void => {
+  router.push({ pathname: '/quiz', params: { mode: 'review', topic: 'all' } });
+};
+
 type RootNavigationProps = {
   isOnboardingDone: boolean;
 };
@@ -31,6 +35,8 @@ const RootNavigation = ({ isOnboardingDone }: RootNavigationProps): JSX.Element 
   const { colors, isDark } = useTheme();
   const { t } = useI18n();
   const contentBarStyle = isDark ? 'light' : 'dark';
+
+  useReviewReminderTap(openReview);
 
   return (
     <>
