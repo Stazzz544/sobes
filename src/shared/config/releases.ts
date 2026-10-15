@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.42.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в HR, 3 проверяются запуском: последний день при увольнении по ТК РФ, прогрессивный НДФЛ с 2025 года, вестинг опционов с клиффом, строка резюме с измеримым результатом, подготовка к поведенческому интервью, «Что бы вы сделали иначе?», «Почему именно вас?», самооценка от 1 до 10, почему открыта вакансия, ответ на отказ.',
+        en: '10 new HR questions, 3 verified by running code: the last day after resigning under Russian labor law, progressive income tax since 2025, option vesting with a cliff, a résumé line with a measurable result, preparing for a behavioral interview, “What would you do differently?”, “Why should we hire you?”, rating yourself from 1 to 10, why the position is open, replying to a rejection.',
+      },
+      { ru: 'Всего 808 вопросов.', en: '808 questions in total.' },
+    ],
+  },
+  {
     version: '1.41.0',
     date: '2026-10-15',
     changes: [

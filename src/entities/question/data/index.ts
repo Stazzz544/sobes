@@ -20,6 +20,7 @@ import { HR_QUESTIONS } from './hr';
 import { HR_QUESTIONS_2 } from './hr-2';
 import { HR_QUESTIONS_3 } from './hr-3';
 import { HR_QUESTIONS_4 } from './hr-4';
+import { HR_QUESTIONS_5 } from './hr-5';
 import { HTML_QUESTIONS } from './html';
 import { HTML_QUESTIONS_2 } from './html-2';
 import { HTML_QUESTIONS_3 } from './html-3';
@@ -145,6 +146,7 @@ export const QUESTIONS: Question[] = [
   ...HR_QUESTIONS_2,
   ...HR_QUESTIONS_3,
   ...HR_QUESTIONS_4,
+  ...HR_QUESTIONS_5,
 ];
 
 export const QUESTIONS_BY_ID: Readonly<Record<string, Question>> = Object.fromEntries(
