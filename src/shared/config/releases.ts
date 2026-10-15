@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.55.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в TypeScript, все проверены компилятором: never в проверке полноты switch, вывод дженерика из массива, Awaited и ReturnType, Extract для размеченного объединения, infer и распределение по объединению, фильтрация ключей через as, satisfies ловит лишний ключ, проверка лишних свойств у литерала, функция с типом never, const-параметры типа.',
+        en: '10 new TypeScript questions, all verified by the compiler: never in switch exhaustiveness checks, generic inference from an array, Awaited and ReturnType, Extract on a discriminated union, infer and distribution over unions, filtering keys with as, satisfies catching a missing key, excess property checks on literals, a never-returning function, const type parameters.',
+      },
+      { ru: 'Всего 898 вопросов.', en: '898 questions in total.' },
+    ],
+  },
+  {
     version: '1.54.0',
     date: '2026-10-15',
     changes: [

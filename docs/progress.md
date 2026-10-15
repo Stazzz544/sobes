@@ -592,4 +592,8 @@
 
 - `data/testing-5.ts`, 10 вопросов, 5 `js-output` на встроенном `node:test` и чистом JS (ответы сначала посчитаны скриптом): формула `toBeCloseTo` из документации Jest (`false true true false`), шпион `mock.method` вызывает настоящую реализацию и снимается `restore`, `mock.timers` + `setInterval` (`3`), утечка общей заготовки между тестами (`1 2`), табличный тест находит `Café`. Без запуска: `toEqual` против `toStrictEqual` (свойства с `undefined`), `screen.debug`/`logRoles`, трейсы Playwright с `on-first-retry`, проверки готовности перед кликом, property-based тесты (fast-check).
 
+## Наполнение до ~60: TypeScript 53 → 63 (15.10.2026, версия 1.55.0)
+
+- `data/typescript-7.ts`, 10 вопросов, все проверяет компилятор (`ts-type`, `ts-check` с `Equal`, `ts-error`); типы сначала сняты пробным скриптом на Compiler API: `never` в `default` после всех `case`, `string | number` из `first([1, "a"])`, `Awaited<ReturnType<…>>`, `Extract` по `kind`, `infer` + распределение (`string`), отбрасывание ключей через `as … never`, `satisfies` и TS2339 на `routes.contact`, лишнее свойство у свежего литерала (TS2353), `number | never` → `number`, `const T` → `readonly ["a", 1]`.
+
 Дальше — `docs/roadmap.md`.
