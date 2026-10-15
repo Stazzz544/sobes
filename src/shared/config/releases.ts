@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.30.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '12 новых задач в «Алгоритмах», 10 проверяются запуском: BFS, топологическая сортировка, анаграммы, скользящее окно с ошибкой, нижняя граница бинарного поиска, размен монет (жадность против динамики), подмножества, число вызовов наивного fib, глубина дерева, очередь на двух стеках, амортизированная сложность, алгоритм Дейкстры.',
+        en: '12 new tasks in “Algorithms”, 10 verified by running code: BFS, topological sort, anagrams, a buggy sliding window, binary search lower bound, coin change (greedy vs DP), subsets, naive fib call count, tree depth, a queue on two stacks, amortized complexity, Dijkstra’s algorithm.',
+      },
+      { ru: 'Всего 687 вопросов.', en: '687 questions in total.' },
+    ],
+  },
+  {
     version: '1.29.0',
     date: '2026-10-15',
     changes: [
