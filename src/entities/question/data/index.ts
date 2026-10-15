@@ -1,6 +1,7 @@
 import { AI_QUESTIONS } from './ai';
 import { AI_QUESTIONS_2 } from './ai-2';
 import { AI_QUESTIONS_3 } from './ai-3';
+import { AI_QUESTIONS_4 } from './ai-4';
 import { ALGORITHMS_QUESTIONS } from './algorithms';
 import { ALGORITHMS_QUESTIONS_2 } from './algorithms-2';
 import { ALGORITHMS_QUESTIONS_3 } from './algorithms-3';
@@ -90,6 +91,7 @@ export const QUESTIONS: Question[] = [
   ...AI_QUESTIONS,
   ...AI_QUESTIONS_2,
   ...AI_QUESTIONS_3,
+  ...AI_QUESTIONS_4,
   ...ALGORITHMS_QUESTIONS,
   ...ALGORITHMS_QUESTIONS_2,
   ...ALGORITHMS_QUESTIONS_3,

@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.28.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в «ИИ для разработчика», 4 проверяются запуском: косинусная близость, чанки с перекрытием, гибридный поиск, разбор SSE-потока, остановка генерации, проверка JSON от модели схемой, расчёт стоимости запроса, ограничения для агентов, избыточные полномочия инструментов, тесты от ИИ-ассистента.',
+        en: '10 new questions in “AI for developers”, 4 verified by running code: cosine similarity, overlapping chunks, hybrid search, parsing an SSE stream, stopping generation, validating model JSON with a schema, request cost, agent limits, excessive tool permissions, tests written by an AI assistant.',
+      },
+      { ru: 'Всего 665 вопросов.', en: '665 questions in total.' },
+    ],
+  },
+  {
     version: '1.27.0',
     date: '2026-10-15',
     changes: [
