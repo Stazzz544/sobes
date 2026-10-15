@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.53.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в «Алгоритмы», все проверяются запуском: скобки и стек, сортировка с localeCompare, бинарный поиск первой сломанной версии, группировка анаграмм, скользящее окно, префиксные суммы, поиск циклических зависимостей, наибольшая общая подпоследовательность, перестановки, LRU-кеш на Map.',
+        en: '10 new “Algorithms” questions, all verified by running code: brackets and a stack, sorting with localeCompare, binary search for the first broken version, grouping anagrams, a sliding window, prefix sums, detecting circular dependencies, the longest common subsequence, permutations, an LRU cache on Map.',
+      },
+      { ru: 'Всего 878 вопросов.', en: '878 questions in total.' },
+    ],
+  },
+  {
     version: '1.52.0',
     date: '2026-10-15',
     changes: [

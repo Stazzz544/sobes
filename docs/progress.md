@@ -584,4 +584,8 @@
 
 - `data/next-5.ts`, 10 вопросов на выбор, машинной проверки нет — каждое утверждение сверено с `nextjs.org/docs/….md` (обновления 2026): `loading.js` (Suspense, предзагрузка заглушки, прерываемый переход), `redirects()` с `permanent: true` → 308 и почему 307/308, `updateTag` только в Server Actions для read-your-own-writes против `revalidateTag(tag, "max")`, обёртка `"use client"` для сторонних компонентов, `"use server"` против `server-only`, `useOptimistic`, `bodySizeLimit` 1 МБ, `placeholder="blur"` и автоматический `blurDataURL` при статическом импорте, `useSearchParams` без `<Suspense>` ломает `next build`, запрос к базе прямо в серверном компоненте.
 
+## Наполнение до ~60: алгоритмы 50 → 60 (15.10.2026, версия 1.53.0)
+
+- `data/algorithms-5.ts`, 10 вопросов, все `js-output`; ответы сначала посчитаны запуском, потом сверены `verify-content`: проверка скобок стеком (`true false false true`), `sort()` против `localeCompare(…, "de")` для `Äpfel`, бинарный поиск первой сломанной версии из 100 (`37 7`), группировка анаграмм по отсортированному ключу, скользящее окно (`9`), префиксные суммы (`6 14`), поиск цикла DFS с тремя состояниями (`true false` — ромб не цикл), LCS (`4 4`), перестановки `abc`, LRU-кеш на `Map` (`a,c undefined`).
+
 Дальше — `docs/roadmap.md`.

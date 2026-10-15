@@ -7,6 +7,7 @@ import { ALGORITHMS_QUESTIONS } from './algorithms';
 import { ALGORITHMS_QUESTIONS_2 } from './algorithms-2';
 import { ALGORITHMS_QUESTIONS_3 } from './algorithms-3';
 import { ALGORITHMS_QUESTIONS_4 } from './algorithms-4';
+import { ALGORITHMS_QUESTIONS_5 } from './algorithms-5';
 import { CSS_QUESTIONS } from './css';
 import { CSS_QUESTIONS_2 } from './css-2';
 import { CSS_QUESTIONS_3 } from './css-3';
@@ -120,6 +121,7 @@ export const QUESTIONS: Question[] = [
   ...ALGORITHMS_QUESTIONS_2,
   ...ALGORITHMS_QUESTIONS_3,
   ...ALGORITHMS_QUESTIONS_4,
+  ...ALGORITHMS_QUESTIONS_5,
   ...HTML_QUESTIONS,
   ...HTML_QUESTIONS_2,
   ...HTML_QUESTIONS_3,
