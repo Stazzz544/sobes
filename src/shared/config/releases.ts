@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.25.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в «Стейт-менеджменте»: избыточное состояние, sort мутирует массив, удаление через filter, combineReducers, getSnapshot в useSyncExternalStore, атомы Jotai, зависимые запросы, пагинация без мигания, getAll в URLSearchParams, URL как источник правды.',
+        en: '10 new questions in “State management”: redundant state, sort mutates arrays, removing via filter, combineReducers, getSnapshot in useSyncExternalStore, Jotai atoms, dependent queries, flicker-free pagination, getAll in URLSearchParams, the URL as the source of truth.',
+      },
+      { ru: 'Всего 635 вопросов.', en: '635 questions in total.' },
+    ],
+  },
+  {
     version: '1.24.0',
     date: '2026-10-15',
     changes: [

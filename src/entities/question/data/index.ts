@@ -26,6 +26,7 @@ import { NODE_QUESTIONS_2 } from './node-2';
 import { NODE_QUESTIONS_3 } from './node-3';
 import { STATE_QUESTIONS } from './state';
 import { STATE_QUESTIONS_2 } from './state-2';
+import { STATE_QUESTIONS_3 } from './state-3';
 import { TESTING_QUESTIONS } from './testing';
 import { TESTING_QUESTIONS_2 } from './testing-2';
 import { TESTING_QUESTIONS_3 } from './testing-3';
@@ -98,6 +99,7 @@ export const QUESTIONS: Question[] = [
   ...TESTING_QUESTIONS_3,
   ...STATE_QUESTIONS,
   ...STATE_QUESTIONS_2,
+  ...STATE_QUESTIONS_3,
   ...NODE_QUESTIONS,
   ...NODE_QUESTIONS_2,
   ...NODE_QUESTIONS_3,

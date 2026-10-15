@@ -1,5 +1,10 @@
 # Что нового
 
+## 1.25.0
+
+- 10 новых вопросов в «Стейт-менеджменте»: избыточное состояние, sort мутирует массив, удаление через filter, combineReducers, getSnapshot в useSyncExternalStore, атомы Jotai, зависимые запросы, пагинация без мигания, getAll в URLSearchParams, URL как источник правды.
+- Всего 635 вопросов.
+
 ## 1.24.0
 
 - 9 новых вопросов в «HTML и доступности», 8 из них проверяются в Chrome: header внутри article, чекбоксы в FormData, maxlength, <template>, имя ссылки с картинкой, aria-hidden в кнопке-иконке, role="switch", inert, атрибут lang.
