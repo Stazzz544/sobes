@@ -1,5 +1,10 @@
 # Что нового
 
+## 1.56.0
+
+- 10 новых вопросов в CSS, 9 проверяются в Chrome: initial против inherit, currentColor у рамки, :empty и пробел, border-box с большим padding, gap во flex, grid-template-areas, ширина absolute без width, наследование line-height числом и в em, логические свойства в RTL, prefers-reduced-motion.
+- Всего 908 вопросов.
+
 ## 1.55.0
 
 - 10 новых вопросов в TypeScript, все проверены компилятором: never в проверке полноты switch, вывод дженерика из массива, Awaited и ReturnType, Extract для размеченного объединения, infer и распределение по объединению, фильтрация ключей через as, satisfies ловит лишний ключ, проверка лишних свойств у литерала, функция с типом never, const-параметры типа.

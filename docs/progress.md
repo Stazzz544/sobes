@@ -596,4 +596,9 @@
 
 - `data/typescript-7.ts`, 10 вопросов, все проверяет компилятор (`ts-type`, `ts-check` с `Equal`, `ts-error`); типы сначала сняты пробным скриптом на Compiler API: `never` в `default` после всех `case`, `string | number` из `first([1, "a"])`, `Awaited<ReturnType<…>>`, `Extract` по `kind`, `infer` + распределение (`string`), отбрасывание ключей через `as … never`, `satisfies` и TS2339 на `routes.contact`, лишнее свойство у свежего литерала (TS2353), `number | never` → `number`, `const T` → `readonly ["a", 1]`.
 
+## Наполнение до ~60: CSS 56 → 66 (15.10.2026, версия 1.56.0)
+
+- `data/css-6.ts`, 10 вопросов, 9 проверяются в Chrome (`css-computed`/`dom-probe`), все сошлись с первого прогона: `color: initial` обрывает наследование, рамка без цвета берёт `currentColor`, `:empty` не срабатывает на пробел (`false`), `border-box` с `padding` больше `width` (80px), `gap` + `flex: 1` (80px), `grid-template-areas` не зависит от порядка разметки, `position: absolute` сжимается под содержимое, `line-height: 1.5` против `1.5em` (30px и 15px), `margin-inline-start` в RTL → `margin-right`. Без проверки: `prefers-reduced-motion`.
+- В вариантах-коде кириллица запрещена — варианты с пояснениями переведены в текстовые.
+
 Дальше — `docs/roadmap.md`.

@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.56.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в CSS, 9 проверяются в Chrome: initial против inherit, currentColor у рамки, :empty и пробел, border-box с большим padding, gap во flex, grid-template-areas, ширина absolute без width, наследование line-height числом и в em, логические свойства в RTL, prefers-reduced-motion.',
+        en: '10 new CSS questions, 9 verified in Chrome: initial vs inherit, currentColor on borders, :empty and whitespace, border-box with large padding, gap in flex, grid-template-areas, the width of an absolute element without width, inheriting line-height as a number vs in em, logical properties in RTL, prefers-reduced-motion.',
+      },
+      { ru: 'Всего 908 вопросов.', en: '908 questions in total.' },
+    ],
+  },
+  {
     version: '1.55.0',
     date: '2026-10-15',
     changes: [
