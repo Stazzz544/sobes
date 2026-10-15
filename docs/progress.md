@@ -479,4 +479,9 @@
 
 - `data/html-4.ts`, 10 вопросов, все через `dom-probe` в Chrome, сошлись с первого прогона: `patternMismatch`, `FormData.getAll` для группы чекбоксов, `button.form` по атрибуту `form`, парсер закрывает внешний `<a>` перед вложенным, `&lt;b&gt;` в `textContent`, роль `searchbox`, `aria-label` важнее `<label>`, пустой `alt` в кнопке, фокус `disabled` против `aria-disabled` (`false true`), клик по `<summary>` открывает `<details>`.
 
+## R3-3, наполнение: «Стейт-менеджмент» 40 → 50 (15.10.2026, версия 1.35.0)
+
+- `data/state-4.ts`, 10 вопросов, 6 `js-output`: мутация через ту же ссылку и `Object.is`, поверхностный снимок ломает историю отмены, мини-redux-thunk (`12 2`), `shallowEqual` как в `useShallow`, `URLSearchParams` `set/append/delete`, кодирование `&` и пробела; разделение контекстов состояния и `dispatch`, инвалидация по префиксу ключа (сверено с гайдом TanStack), `prefetchQuery` + `dehydrate` + `HydrationBoundary`, тема в `localStorage`.
+- Проверка ссылок один раз упала на сетевых ошибках (`fetch failed` у whatwg и martinfowler), повтор — 824 ссылки без ошибок.
+
 Дальше — `docs/roadmap.md`.

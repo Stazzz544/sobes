@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.35.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в «Стейт-менеджменте», 6 проверяются запуском: мутация и Object.is, поверхностные снимки для отмены, redux-thunk, поверхностное сравнение, разделение контекстов состояния и dispatch, инвалидация по префиксу ключа, SSR с dehydrate, set/append/delete в URLSearchParams, кодирование параметров, где хранить тему.',
+        en: '10 new questions in “State management”, 6 verified by running code: mutation and Object.is, shallow undo snapshots, redux-thunk, shallow comparison, splitting state and dispatch contexts, prefix key invalidation, SSR with dehydrate, set/append/delete in URLSearchParams, parameter encoding, where to store the theme.',
+      },
+      { ru: 'Всего 738 вопросов.', en: '738 questions in total.' },
+    ],
+  },
+  {
     version: '1.34.0',
     date: '2026-10-15',
     changes: [
