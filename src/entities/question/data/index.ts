@@ -66,6 +66,7 @@ import { REACT_QUESTIONS_3 } from './react-3';
 import { REACT_QUESTIONS_4 } from './react-4';
 import { REACT_QUESTIONS_5 } from './react-5';
 import { REACT_QUESTIONS_6 } from './react-6';
+import { REACT_QUESTIONS_7 } from './react-7';
 import { TYPESCRIPT_QUESTIONS } from './typescript';
 import { TYPESCRIPT_QUESTIONS_2 } from './typescript-2';
 import { TYPESCRIPT_QUESTIONS_3 } from './typescript-3';
@@ -103,6 +104,7 @@ export const QUESTIONS: Question[] = [
   ...REACT_QUESTIONS_4,
   ...REACT_QUESTIONS_5,
   ...REACT_QUESTIONS_6,
+  ...REACT_QUESTIONS_7,
   ...WEB_QUESTIONS,
   ...WEB_QUESTIONS_2,
   ...WEB_QUESTIONS_3,

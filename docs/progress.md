@@ -601,4 +601,9 @@
 - `data/css-6.ts`, 10 вопросов, 9 проверяются в Chrome (`css-computed`/`dom-probe`), все сошлись с первого прогона: `color: initial` обрывает наследование, рамка без цвета берёт `currentColor`, `:empty` не срабатывает на пробел (`false`), `border-box` с `padding` больше `width` (80px), `gap` + `flex: 1` (80px), `grid-template-areas` не зависит от порядка разметки, `position: absolute` сжимается под содержимое, `line-height: 1.5` против `1.5em` (30px и 15px), `margin-inline-start` в RTL → `margin-right`. Без проверки: `prefers-reduced-motion`.
 - В вариантах-коде кириллица запрещена — варианты с пояснениями переведены в текстовые.
 
+## Наполнение до ~60: React 54 → 64 (15.10.2026, версия 1.57.0)
+
+- `data/react-7.ts`, 10 вопросов на выбор, машинной проверки нет (в проекте нет `react-dom`) — сверено с react.dev: `useReducer` против `useState`, `useId`, `useTransition` и `isPending`, ленивый инициализатор `useState(fn)`, `0 &&` рисует ноль, Error Boundary только классом (или react-error-boundary), значение по умолчанию у `createContext`, `key` на `<Fragment>`, `<Context value>` в React 19, `use(Context)` в условии.
+- На этом цикл ночной разработки остановлен по просьбе пользователя; сборка 1.57.0 выложена в GitHub Releases.
+
 Дальше — `docs/roadmap.md`.

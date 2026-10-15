@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.57.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в React: когда нужен useReducer, useId для связки label и input, useTransition, ленивое начальное состояние, ловушка с 0 в &&, Error Boundary в React 19, значение контекста без провайдера, key у Fragment, <Context> как провайдер в React 19, use(Context) внутри условия.',
+        en: '10 new React questions: when to use useReducer, useId for linking label and input, useTransition, lazy initial state, the 0 trap with &&, Error Boundaries in React 19, a context value without a provider, key on a Fragment, <Context> as a provider in React 19, use(Context) inside a condition.',
+      },
+      { ru: 'Всего 918 вопросов.', en: '918 questions in total.' },
+    ],
+  },
+  {
     version: '1.56.0',
     date: '2026-10-15',
     changes: [

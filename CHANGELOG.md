@@ -1,5 +1,10 @@
 # Что нового
 
+## 1.57.0
+
+- 10 новых вопросов в React: когда нужен useReducer, useId для связки label и input, useTransition, ленивое начальное состояние, ловушка с 0 в &&, Error Boundary в React 19, значение контекста без провайдера, key у Fragment, <Context> как провайдер в React 19, use(Context) внутри условия.
+- Всего 918 вопросов.
+
 ## 1.56.0
 
 - 10 новых вопросов в CSS, 9 проверяются в Chrome: initial против inherit, currentColor у рамки, :empty и пробел, border-box с большим padding, gap во flex, grid-template-areas, ширина absolute без width, наследование line-height числом и в em, логические свойства в RTL, prefers-reduced-motion.
