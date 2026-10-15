@@ -86,6 +86,7 @@ export const TOPIC_PATHS: Record<TopicId, readonly TagId[]> = {
   state: ['state-basics', 'state-immutability', 'state-redux', 'state-stores', 'state-server', 'state-url'],
   node: ['node-runtime', 'node-modules', 'node-event-loop', 'node-async', 'node-streams', 'node-http'],
   next: ['next-routing', 'next-components', 'next-rendering', 'next-data', 'next-actions', 'next-optimization'],
+  architecture: ['arch-principles', 'arch-patterns', 'arch-frontend', 'arch-dependencies', 'arch-data', 'arch-scale'],
   git: ['git-basics', 'git-branches', 'git-conflicts', 'git-remote', 'git-undo', 'git-rebase'],
   hr: ['self-presentation', 'star', 'tough-questions', 'motivation', 'questions-to-employer', 'hiring-process'],
 };

@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.15.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: 'Новая тема «Архитектура и паттерны»: SOLID и принципы, паттерны, архитектура фронтенда и FSD, зависимости и DI, слой данных, монорепо и микрофронтенды.',
+        en: 'New topic “Architecture & patterns”: SOLID and principles, patterns, frontend architecture and FSD, dependencies and DI, the data layer, monorepos and micro-frontends.',
+      },
+      { ru: '22 вопроса и 6 конспектов — всего 510 вопросов.', en: '22 questions and 6 lessons — 510 questions in total.' },
+    ],
+  },
+  {
     version: '1.14.0',
     date: '2026-10-14',
     changes: [

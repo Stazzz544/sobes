@@ -112,6 +112,16 @@ export const TOPICS: Record<TopicId, Topic> = {
       en: 'App Router and route files, rendering and hydration, Server and Client Components, data and caching, Server Actions, optimization',
     },
   },
+  architecture: {
+    id: 'architecture',
+    accent: 'architecture',
+    shortTitle: 'Arch',
+    title: { ru: 'Архитектура и паттерны', en: 'Architecture & patterns' },
+    description: {
+      ru: 'SOLID и принципы, паттерны, архитектура фронтенда и FSD, зависимости и DI, монорепо и микрофронтенды, слой данных',
+      en: 'SOLID and principles, patterns, frontend architecture and FSD, dependencies and DI, monorepos and micro-frontends, the data layer',
+    },
+  },
   git: {
     id: 'git',
     accent: 'git',

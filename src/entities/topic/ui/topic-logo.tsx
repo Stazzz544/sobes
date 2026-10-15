@@ -26,6 +26,8 @@ const LOGO_COLORS = {
   stateSlate: '#334155',
   stateMist: '#CBD5E1',
   nodeGreen: '#3D7A32',
+  archBrown: '#7A5230',
+  archSand: '#F1DCC4',
   hrCream: '#FDE68A',
   black: '#000000',
   white: '#FFFFFF',
@@ -104,6 +106,17 @@ const NextMark = ({ size }: { size: number }): JSX.Element => (
     <SvgText x={32} y={42} textAnchor="middle" fontSize={28} fontWeight="bold" fill={LOGO_COLORS.black}>
       N
     </SvgText>
+  </Svg>
+);
+
+const ArchitectureMark = ({ size }: { size: number }): JSX.Element => (
+  <Svg width={size} height={size} viewBox="0 0 64 64">
+    <Rect width={64} height={64} rx={12} fill={LOGO_COLORS.archBrown} />
+    <Path d="M32 10 L54 21 L32 32 L10 21 Z" fill={LOGO_COLORS.white} />
+    <G stroke={LOGO_COLORS.archSand} strokeWidth={4} fill="none" strokeLinecap="round" strokeLinejoin="round">
+      <Path d="M10 31 L32 42 L54 31" />
+      <Path d="M10 41 L32 52 L54 41" />
+    </G>
   </Svg>
 );
 
@@ -231,6 +244,9 @@ export const TopicLogo = ({ topic, size = 40 }: TopicLogoProps): JSX.Element => 
   }
   if (topic === 'next') {
     return <NextMark size={size} />;
+  }
+  if (topic === 'architecture') {
+    return <ArchitectureMark size={size} />;
   }
   if (topic === 'git') {
     return <GitMark size={size} />;
