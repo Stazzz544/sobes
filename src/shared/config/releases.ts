@@ -8,6 +8,20 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.19.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '8 новых вопросов в Next.js: notFound и 404, redirect внутри try/catch, метаданные, стриминг через Suspense, формы без JavaScript, контекст в App Router, React.cache, next/dynamic без SSR.',
+        en: '8 new Next.js questions: notFound and 404, redirect inside try/catch, metadata, streaming with Suspense, forms without JavaScript, context in the App Router, React.cache, next/dynamic without SSR.',
+      },
+      {
+        ru: '8 новых вопросов в «Архитектуре и паттернах»: Фабрика, Заместитель (Proxy), ISP, закон Деметры, общий код между фичами в FSD, обработка ошибок API, шина событий, фича-флаги. Всего 569 вопросов.',
+        en: '8 new questions in “Architecture & patterns”: Factory, Proxy, ISP, the Law of Demeter, shared code between FSD features, API error handling, event buses, feature flags. 569 questions in total.',
+      },
+    ],
+  },
+  {
     version: '1.18.0',
     date: '2026-10-15',
     changes: [
