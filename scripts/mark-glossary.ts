@@ -100,7 +100,7 @@ const TERM_PATTERNS: Record<string, TermPatterns> = {
   'test-double': { ru: `(?:тестов${W} двойник${W}|мок${W}|стаб${W})`, en: '(?:test doubles?|mocks?|stubs?)', topics: ['testing'] },
   'flaky-test': { ru: `(?:нестабильн${W} тест${W}|flaky)`, en: 'flaky(?: tests?)?' },
   normalization: { ru: `нормализ${W}`, en: 'normaliz(?:e|es|ed|ing|ation)', topics: ['state'] },
-  'single-source-of-truth': { ru: `(?:единств|един)${W} источник${W} истины`, en: 'single source of truth' },
+  'single-source-of-truth': { ru: `(?:(?:единств|един)${W}|один) источник${W} истины`, en: 'single source of truth' },
   coupling: { ru: `(?:связанност${W}|зацеплени${W})`, en: 'coupl(?:ing|ed)' },
   cohesion: { ru: `связност${W}`, en: 'cohesi(?:on|ve)' },
   'dependency-injection': { ru: `внедрени${W} зависимост${W}`, en: 'dependency injection' },

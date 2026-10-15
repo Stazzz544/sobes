@@ -500,8 +500,8 @@ function rename() {
       {
         type: 'text',
         text: {
-          ru: 'Это **подъём состояния** (lifting state up): у каждого значения должен быть один источник истины. Родитель хранит состояние и передаёт детям значение и обработчики.',
-          en: 'This is **lifting state up**: each value should have a single source of truth. The parent owns the state and passes the value and handlers to its children.',
+          ru: 'Это **подъём состояния** (lifting state up): у каждого значения должен быть [[single-source-of-truth|один источник истины]]. Родитель хранит состояние и передаёт детям значение и обработчики.',
+          en: 'This is **lifting state up**: each value should have a [[single-source-of-truth|single source of truth]]. The parent owns the state and passes the value and handlers to its children.',
         },
       },
       {

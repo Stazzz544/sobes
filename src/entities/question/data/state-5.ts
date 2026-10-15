@@ -256,8 +256,8 @@ console.log(calls, first === second);`,
       {
         type: 'text',
         text: {
-          ru: 'Это «подъём состояния»: общее состояние живёт в ближайшем общем родителе, вниз уходят значение и колбэк. Так у данных один источник истины, и компоненты не могут разойтись. Две копии с синхронизацией через эффекты дают лишние рендеры и рассинхрон, глобальный стор для двух соседей избыточен, а переменная модуля не вызывает перерисовку.',
-          en: 'This is “lifting state up”: shared state lives in the closest common parent, and the value plus a callback go down. The data then has a single source of truth, and the components can’t drift apart. Two copies synced through effects cause extra renders and mismatches, a global store is overkill for two siblings, and a module variable doesn’t trigger re-renders.',
+          ru: 'Это «подъём состояния»: общее состояние живёт в ближайшем общем родителе, вниз уходят значение и колбэк. Так у данных [[single-source-of-truth|один источник истины]], и компоненты не могут разойтись. Две копии с синхронизацией через эффекты дают лишние рендеры и рассинхрон, глобальный стор для двух соседей избыточен, а переменная модуля не вызывает перерисовку.',
+          en: 'This is “lifting state up”: shared state lives in the closest common parent, and the value plus a callback go down. The data then has a [[single-source-of-truth|single source of truth]], and the components can’t drift apart. Two copies synced through effects cause extra renders and mismatches, a global store is overkill for two siblings, and a module variable doesn’t trigger re-renders.',
         },
       },
     ],

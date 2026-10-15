@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.51.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в «Архитектура и паттерны», 4 проверяются запуском: стратегия вместо switch, цепочка валидаторов, pipe и compose, результат-объект вместо исключений, постепенная миграция (Strangler Fig), правило трёх, запуск только затронутых проектов в монорепозитории, разделение команд и запросов, слой фичи в FSD, peerDependencies в библиотеке компонентов.',
+        en: '10 new “Architecture & patterns” questions, 4 verified by running code: Strategy instead of switch, a validator chain, pipe and compose, result objects instead of exceptions, gradual migration (Strangler Fig), the rule of three, running only affected projects in a monorepo, command–query separation, the feature layer in FSD, peerDependencies in a component library.',
+      },
+      { ru: 'Всего 858 вопросов.', en: '858 questions in total.' },
+    ],
+  },
+  {
     version: '1.50.0',
     date: '2026-10-15',
     changes: [
