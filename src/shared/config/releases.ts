@@ -8,6 +8,17 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.48.0',
+    date: '2026-10-15',
+    changes: [
+      {
+        ru: '10 новых вопросов в Node.js, 5 проверяются запуском: setImmediate и setTimeout внутри ввода-вывода и в главном модуле, node:timers/promises, поле exports в package.json, ошибки async-обработчиков в Express 5, pipeline и ошибки потоков, модуль path, MaxListenersExceededWarning, uncaughtException, ERR_HTTP_HEADERS_SENT.',
+        en: '10 new Node.js questions, 5 verified by running code: setImmediate vs setTimeout inside I/O and in the main module, node:timers/promises, the exports field in package.json, async handler errors in Express 5, pipeline and stream errors, the path module, MaxListenersExceededWarning, uncaughtException, ERR_HTTP_HEADERS_SENT.',
+      },
+      { ru: 'Всего 828 вопросов.', en: '828 questions in total.' },
+    ],
+  },
+  {
     version: '1.47.0',
     date: '2026-10-15',
     changes: [

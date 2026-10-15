@@ -562,4 +562,8 @@
 - `data/git-5.ts`, 10 вопросов, все `shell-output` и все сошлись с первого прогона: `stash list` (стек, выбор из вариантов), `main..feature` / `main...feature` (`2 3`), `git diff` против `--cached` после `add`, `git describe` (`v1.0-2`), `log` и `reflog` после `reset --hard` (`1 3`), `pull --ff-only` при разошедшихся ветках (код 128, история не тронута), `log --follow` после `git mv` (`1 3`), `rebase --onto main topic feature`, `commit --fixup` + `rebase -i --autosquash` с `GIT_SEQUENCE_EDITOR=:`, `HEAD^1` / `HEAD^2` / `HEAD~2` у merge-коммита.
 - Git теперь 60 вопросов, из них 50 проверяются запуском.
 
+## Наполнение до ~60: Node.js 50 → 60 (15.10.2026, версия 1.48.0)
+
+- `data/node-5.ts`, 10 вопросов, 5 `js-output` (все сошлись с первого прогона): `setImmediate` раньше `setTimeout(0)` внутри колбэка `readFile`, `node:timers/promises` и порядок `Promise.all`, `pipeline` уничтожает источник при ошибке (`bad chunk true`), `path.posix` (`extname`, `basename`, `join`), `ERR_HTTP_HEADERS_SENT` на локальном сервере с `fetch`. Без запуска: недетерминированный порядок таймеров в главном модуле, `exports` в `package.json` (`ERR_PACKAGE_PATH_NOT_EXPORTED`), Express 5 передаёт отклонённые промисы в `next(err)` (сверено с гайдом миграции), `MaxListenersExceededWarning`, `uncaughtException` (сверено с документацией Node).
+
 Дальше — `docs/roadmap.md`.

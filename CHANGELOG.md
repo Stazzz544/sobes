@@ -1,5 +1,10 @@
 # Что нового
 
+## 1.48.0
+
+- 10 новых вопросов в Node.js, 5 проверяются запуском: setImmediate и setTimeout внутри ввода-вывода и в главном модуле, node:timers/promises, поле exports в package.json, ошибки async-обработчиков в Express 5, pipeline и ошибки потоков, модуль path, MaxListenersExceededWarning, uncaughtException, ERR_HTTP_HEADERS_SENT.
+- Всего 828 вопросов.
+
 ## 1.47.0
 
 - 10 новых вопросов в Git, все проверены запуском настоящего git: порядок записей в stash, две и три точки в диапазонах, git diff против --cached, git describe, reflog после reset, отказ pull --ff-only, log --follow, rebase --onto, fixup и autosquash, родители merge-коммита.
