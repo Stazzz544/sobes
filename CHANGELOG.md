@@ -1,5 +1,10 @@
 # Что нового
 
+## 1.34.0
+
+- 10 новых вопросов в «HTML и доступности», все проверяются в Chrome: pattern и validity, getAll для групп чекбоксов, атрибут form у кнопки вне формы, вложенные ссылки, символьные ссылки, роль searchbox, aria-label против label, пустой alt в кнопке, disabled против aria-disabled, details/summary.
+- Всего 728 вопросов.
+
 ## 1.33.0
 
 - 10 новых вопросов в Node.js, все проверяются запуском: readline и разорванные строки, write и backpressure, require.cache, timer.unref, beforeExit и exit, AsyncLocalStorage, sha256 через crypto, глубина console.log, Buffer в hex, process.argv.
