@@ -8,6 +8,20 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.59.0',
+    date: '2026-10-16',
+    changes: [
+      {
+        ru: 'Курс «Стейт-менеджмент»: пошаговыми стали уроки «Иммутабельность» и «Redux» — спред и общие ссылки, структурное разделение, мутирующие методы массивов, поток данных, срезы, middleware и селекторы со схемами и анимациями.',
+        en: 'State management course: the Immutability and Redux lessons are now step by step — spread and shared references, structural sharing, mutating array methods, the data flow, slices, middleware and selectors, with diagrams and animations.',
+      },
+      {
+        ru: 'При повторном прохождении теста урока вопросы идут в новом порядке, а кнопка «Ещё раз» теперь сразу под результатом.',
+        en: 'When you retake a lesson test, the questions come in a new order, and the Try again button now sits right under the result.',
+      },
+    ],
+  },
+  {
     version: '1.58.0',
     date: '2026-10-16',
     changes: [

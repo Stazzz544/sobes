@@ -10,7 +10,7 @@ import { DICTIONARIES, i18nModel, translate } from '@app/shared/i18n';
 import { createRandom, shuffle } from '@app/shared/lib';
 import { buildQueue } from '../lib/build-queue';
 import { estimateLevel } from '../lib/estimate-level';
-import type { AnswerResult, QuestionStats, TestFinished } from '@app/entities/progress';
+import type { AnswerResult, LearningProgress, QuestionStats, TestFinished } from '@app/entities/progress';
 import type { OptionId, Question, QuestionResponse, QuizMode } from '@app/entities/question';
 import type { AnalyticsEvent } from '@app/shared/analytics';
 import type { SessionParams } from '../lib/build-queue';
@@ -39,6 +39,13 @@ type PreparedSession = {
   params: SessionParams;
   seed: number;
   queue: string[];
+};
+
+type PrepareInput = {
+  params: SessionParams;
+  stats: QuestionStats;
+  learning: LearningProgress;
+  sessionLength: number;
 };
 
 type Transition = {
@@ -142,9 +149,9 @@ export const createQuizSessionModel = () => {
   const $remainingSeconds = createStore(0);
 
   const prepareSessionFx = createEffect(
-    ({ params, stats, sessionLength }: { params: SessionParams; stats: QuestionStats; sessionLength: number }): PreparedSession => {
+    ({ params, stats, learning, sessionLength }: PrepareInput): PreparedSession => {
       const seed = Date.now();
-      return { params, seed, queue: buildQueue(getQuestions(), stats, params, sessionLength, createRandom(seed), seed) };
+      return { params, seed, queue: buildQueue(getQuestions(), stats, learning, params, sessionLength, createRandom(seed), seed) };
     },
   );
 
@@ -173,8 +180,8 @@ export const createQuizSessionModel = () => {
 
   sample({
     clock: sessionStarted,
-    source: { stats: progressModel.$questionStats, settings: settingsModel.$settings },
-    fn: ({ stats, settings }, params) => ({ params, stats, sessionLength: settings.sessionLength }),
+    source: { stats: progressModel.$questionStats, learning: progressModel.$learning, settings: settingsModel.$settings },
+    fn: ({ stats, learning, settings }, params): PrepareInput => ({ params, stats, learning, sessionLength: settings.sessionLength }),
     target: prepareSessionFx,
   });
   sample({ clock: prepareSessionFx.doneData, fn: (session) => session.params, target: $params });

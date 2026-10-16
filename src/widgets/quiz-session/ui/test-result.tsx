@@ -21,6 +21,7 @@ type TestResultProps = {
   onNextLesson: (tag: TagId) => void;
   onCourseTest: (topic: TopicId) => void;
   onOpenPath: (topic: TopicId) => void;
+  onRestart: () => void;
 };
 
 type LessonScore = {
@@ -66,6 +67,7 @@ export const TestResult = ({
   onNextLesson,
   onCourseTest,
   onOpenPath,
+  onRestart,
 }: TestResultProps): JSX.Element => {
   const { colors } = useTheme();
   const { t, text } = useI18n();
@@ -129,6 +131,7 @@ export const TestResult = ({
         </View>
       ) : null}
 
+      {isPassed ? null : <Button title={t('quiz.again')} icon="refresh" onPress={onRestart} />}
       {isPassed && !isCourse && nextTag ? (
         <Button
           title={t('quiz.test.nextLesson', { tag: text(TAGS[nextTag].title) })}

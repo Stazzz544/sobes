@@ -82,7 +82,104 @@ const STATE_ID_VS_COPY: Illustration = {
   },
 };
 
+const IMM_SHARED_REFERENCE: Illustration = {
+  id: 'imm-shared-reference',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 210">
+<rect x="1" y="1" width="138" height="66" rx="11" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="2"/>
+<text x="70" y="30" font-size="15" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">state</text>
+<text x="70" y="52" font-size="12" text-anchor="middle" fill="{{color.textSecondary}}">{{label.original}}</text>
+<rect x="180" y="0" width="140" height="68" rx="12" fill="{{color.accentSoft}}"/>
+<text x="250" y="30" font-size="15" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">next</text>
+<text x="250" y="52" font-size="12" text-anchor="middle" fill="{{color.textSecondary}}">{ ...state }</text>
+<text x="160" y="40" font-size="14" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">!==</text>
+<line x1="75" y1="70" x2="124" y2="121" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="130,128 127.6,118 120.2,124.8" fill="{{color.textMuted}}"/>
+<line x1="245" y1="70" x2="196" y2="121" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="190,128 199.8,124.8 192.4,118" fill="{{color.textMuted}}"/>
+<text x="160" y="104" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">.user</text>
+<rect x="50" y="130" width="220" height="80" rx="12" fill="{{color.dangerSoft}}"/>
+<text x="160" y="154" font-size="15" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">user</text>
+<text x="160" y="176" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">{ name: 'Bob' }</text>
+<text x="160" y="198" font-size="12" text-anchor="middle" fill="{{color.danger}}">{{label.shared}}</text>
+</svg>`,
+  labels: {
+    original: { ru: 'оригинал', en: 'original' },
+    shared: { ru: 'один объект на двоих', en: 'one shared object' },
+  },
+  alt: {
+    ru: 'Два разных объекта, state и его копия next через спред, ссылаются на один и тот же вложенный объект user с именем Bob: изменение через next видно и в state.',
+    en: 'Two different objects, state and its spread copy next, point to the same nested user object with the name Bob: a change through next is visible in state too.',
+  },
+};
+
+const IMM_ARRAY_METHODS: Illustration = {
+  id: 'imm-array-methods',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 222">
+<rect x="0" y="0" width="154" height="222" rx="12" fill="{{color.dangerSoft}}"/>
+<text x="12" y="28" font-size="15" font-weight="bold" fill="{{color.danger}}">{{label.mutate}}</text>
+<text x="12" y="58" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">push · pop</text>
+<text x="12" y="82" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">shift · unshift</text>
+<text x="12" y="106" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">splice</text>
+<text x="12" y="130" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">sort · reverse</text>
+<text x="12" y="154" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">arr[i] = x</text>
+<text x="12" y="178" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">delete arr[i]</text>
+<text x="12" y="208" font-size="12" fill="{{color.danger}}">{{label.sameArray}}</text>
+<rect x="166" y="0" width="154" height="222" rx="12" fill="{{color.successSoft}}"/>
+<text x="178" y="28" font-size="15" font-weight="bold" fill="{{color.success}}">{{label.copy}}</text>
+<text x="178" y="58" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">[...arr, x]</text>
+<text x="178" y="82" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">filter · map</text>
+<text x="178" y="106" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">slice · concat</text>
+<text x="178" y="130" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">toSorted</text>
+<text x="178" y="154" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">toReversed</text>
+<text x="178" y="178" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">with(i, x)</text>
+<text x="178" y="208" font-size="12" fill="{{color.success}}">{{label.newArray}}</text>
+</svg>`,
+  labels: {
+    mutate: { ru: 'Мутируют', en: 'Mutate' },
+    sameArray: { ru: 'меняют сам массив', en: 'change the array' },
+    copy: { ru: 'Новый массив', en: 'New array' },
+    newArray: { ru: 'оригинал цел', en: 'original intact' },
+  },
+  alt: {
+    ru: 'Слева методы, которые меняют сам массив: push, pop, splice, sort, reverse, запись по индексу, delete, Object.assign. Справа способы получить новый массив: спред, filter, map, slice, concat, toSorted, toReversed, with.',
+    en: 'On the left, methods that change the array itself: push, pop, splice, sort, reverse, index assignment, delete, Object.assign. On the right, ways to get a new array: spread, filter, map, slice, concat, toSorted, toReversed, with.',
+  },
+};
+
+const REDUX_SELECTOR_NEW_ARRAY: Illustration = {
+  id: 'redux-selector-new-array',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 212">
+<rect x="0" y="0" width="320" height="100" rx="12" fill="{{color.dangerSoft}}"/>
+<text x="12" y="24" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">todos.filter(done)</text>
+<rect x="12" y="36" width="118" height="32" rx="8" fill="{{color.bgCard}}"/>
+<text x="71" y="57" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">[ t1, t3 ]</text>
+<text x="160" y="58" font-size="15" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.danger}}">!==</text>
+<rect x="190" y="36" width="118" height="32" rx="8" fill="{{color.bgCard}}"/>
+<text x="249" y="57" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">[ t1, t3 ]</text>
+<text x="12" y="88" font-size="12" fill="{{color.danger}}">{{label.always}}</text>
+<rect x="0" y="112" width="320" height="100" rx="12" fill="{{color.successSoft}}"/>
+<text x="12" y="136" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">createSelector(…)</text>
+<rect x="12" y="148" width="118" height="32" rx="8" fill="{{color.bgCard}}"/>
+<text x="71" y="169" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">[ t1, t3 ]</text>
+<text x="160" y="170" font-size="15" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.success}}">===</text>
+<rect x="190" y="148" width="118" height="32" rx="8" fill="{{color.bgCard}}"/>
+<text x="249" y="169" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">[ t1, t3 ]</text>
+<text x="12" y="200" font-size="12" fill="{{color.success}}">{{label.memo}}</text>
+</svg>`,
+  labels: {
+    always: { ru: 'рендер каждый раз', en: 'always re-renders' },
+    memo: { ru: 'рендера нет', en: 'no re-render' },
+  },
+  alt: {
+    ru: 'Сверху селектор с filter: после двух действий получаются два одинаковых по содержимому массива, но это разные ссылки, и компонент перерисовывается каждый раз. Снизу createSelector возвращает тот же массив, и перерисовки нет.',
+    en: 'At the top, a selector with filter: two actions give two arrays with equal contents but different references, so the component re-renders every time. At the bottom, createSelector returns the same array, so there is no re-render.',
+  },
+};
+
 export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'state-kinds': STATE_KINDS,
   'state-id-vs-copy': STATE_ID_VS_COPY,
+  'imm-shared-reference': IMM_SHARED_REFERENCE,
+  'imm-array-methods': IMM_ARRAY_METHODS,
+  'redux-selector-new-array': REDUX_SELECTOR_NEW_ARRAY,
 };

@@ -4,7 +4,7 @@ import { SvgXml } from 'react-native-svg';
 import { CARD_BORDER_RADIUS } from '@app/shared/config';
 import { useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
-import { AppText } from '@app/shared/ui';
+import { FormattedText } from '@app/shared/ui';
 import { readViewBox, renderIllustration } from '../lib/illustration';
 import type { Illustration } from '../model/types';
 
@@ -26,9 +26,9 @@ export const IllustrationView = ({ illustration, caption }: IllustrationViewProp
         <SvgXml xml={xml} width="100%" height="100%" />
       </View>
       {caption ? (
-        <AppText variant="caption" tone="secondary">
+        <FormattedText variant="caption" tone="secondary">
           {caption}
-        </AppText>
+        </FormattedText>
       ) : null}
     </View>
   );

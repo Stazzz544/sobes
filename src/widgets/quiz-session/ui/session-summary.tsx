@@ -131,6 +131,7 @@ export const SessionSummary = ({
               onNextLesson={onNextLesson}
               onCourseTest={onCourseTest}
               onOpenPath={onOpenPath}
+              onRestart={onRestart}
             />
           ) : null}
         </Card>

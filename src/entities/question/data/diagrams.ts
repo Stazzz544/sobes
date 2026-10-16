@@ -720,6 +720,198 @@ const STATE_PROP_DRILLING: Diagram = {
   ],
 };
 
+const IMM_STRUCTURAL_SHARING: Diagram = {
+  id: 'imm-structural-sharing',
+  layout: 'tree',
+  steps: [
+    {
+      caption: {
+        ru: 'Исходное состояние: объект, в нём массив `todos` и две задачи.',
+        en: 'The initial state: an object holding a `todos` array with two tasks.',
+      },
+      lanes: [
+        { id: 'state', title: 'state', tone: 'neutral', items: [] },
+        { id: 'todos', title: 'todos', tone: 'neutral', items: [], parent: 'state' },
+        { id: 'todo-1', title: 'todos[0]', tone: 'neutral', items: [code('done-1', 'done: false')], parent: 'todos' },
+        { id: 'todo-2', title: 'todos[1]', tone: 'neutral', items: [code('done-2', 'done: false')], parent: 'todos' },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Отмечаем вторую задачу. Новые объекты появляются только на пути к ней: состояние, массив и сама задача.',
+        en: 'We complete the second task. New objects appear only along the path to it: the state, the array and the task itself.',
+      },
+      lanes: [
+        { id: 'state', title: 'state', tone: 'success', items: [code('state-new', '{ ...state }')], isActive: true },
+        { id: 'todos', title: 'todos', tone: 'success', items: [code('todos-new', 'map(…)')], parent: 'state', isActive: true },
+        { id: 'todo-1', title: 'todos[0]', tone: 'neutral', items: [code('done-1', 'done: false')], parent: 'todos' },
+        { id: 'todo-2', title: 'todos[1]', tone: 'success', items: [code('done-2-new', 'done: true')], parent: 'todos', isActive: true },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Первая задача — та же ссылка. Её `memo`-компонент не перерисуется, а компонент второй — перерисуется.',
+        en: 'The first task is the same reference. Its `memo` component won’t re-render, while the second task’s component will.',
+      },
+      lanes: [
+        { id: 'state', title: 'state', tone: 'success', items: [code('state-new', '{ ...state }')] },
+        { id: 'todos', title: 'todos', tone: 'success', items: [code('todos-new', 'map(…)')], parent: 'state' },
+        {
+          id: 'todo-1',
+          title: 'todos[0]',
+          tone: 'accent',
+          items: [{ id: 'same-ref', label: { ru: 'та же ссылка', en: 'same reference' } }],
+          parent: 'todos',
+          isActive: true,
+        },
+        { id: 'todo-2', title: 'todos[1]', tone: 'success', items: [code('done-2-new', 'done: true')], parent: 'todos' },
+      ],
+    },
+  ],
+};
+
+const REDUX_DATA_FLOW: Diagram = {
+  id: 'redux-data-flow',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'component', title: { ru: 'Компонент', en: 'Component' }, tone: 'accent', items: [code('dispatch', 'dispatch(action)')] },
+      { id: 'middleware', title: 'Middleware', tone: 'warning', items: [code('thunk', 'thunk'), code('logger', 'logger')] },
+      { id: 'reducer', title: { ru: 'Редьюсер', en: 'Reducer' }, tone: 'accent', items: [code('reduce', '(state, action) => next')] },
+      { id: 'store', title: { ru: 'Стор', en: 'Store' }, tone: 'success', items: [{ id: 'notify', label: { ru: 'уведомляет подписчиков', en: 'notifies subscribers' } }] },
+      { id: 'ui', title: 'UI', tone: 'neutral', items: [code('selector', 'useSelector')] },
+    ],
+    [
+      {
+        activeId: 'component',
+        caption: {
+          ru: 'Компонент отправляет действие — объект, который описывает, что произошло: `{ type: \'todos/added\', payload }`.',
+          en: 'A component dispatches an action — an object describing what happened: `{ type: \'todos/added\', payload }`.',
+        },
+      },
+      {
+        activeId: 'middleware',
+        caption: {
+          ru: 'Middleware видят действие первыми: логируют, перехватывают функции-thunk, делают запросы.',
+          en: 'Middleware see the action first: they log it, intercept thunk functions, make requests.',
+        },
+      },
+      {
+        activeId: 'reducer',
+        caption: {
+          ru: 'Редьюсер по старому состоянию и действию вычисляет новое — без побочных эффектов.',
+          en: 'The reducer computes the new state from the old state and the action — with no side effects.',
+        },
+      },
+      {
+        activeId: 'store',
+        caption: {
+          ru: 'Стор сохраняет новое состояние и уведомляет всех подписчиков.',
+          en: 'The store saves the new state and notifies every subscriber.',
+        },
+      },
+      {
+        activeId: 'ui',
+        caption: {
+          ru: '`useSelector` перерисовывает только компоненты, у которых изменились выбранные данные.',
+          en: '`useSelector` re-renders only the components whose selected data changed.',
+        },
+      },
+    ],
+  ),
+};
+
+const REDUX_COMBINE: Diagram = {
+  id: 'redux-combine',
+  layout: 'tree',
+  steps: [
+    {
+      caption: {
+        ru: 'Корневой редьюсер получает действие `inc` и передаёт его **каждому** срезу вместе с его кусочком состояния.',
+        en: 'The root reducer receives the `inc` action and passes it to **every** slice along with that slice’s piece of state.',
+      },
+      lanes: [
+        { id: 'root', title: 'rootReducer', tone: 'warning', items: [code('action', "{ type: 'inc' }")], isActive: true },
+        { id: 'counter', title: 'counter', tone: 'neutral', items: [code('counter-in', '0')], parent: 'root', isActive: true },
+        { id: 'user', title: 'user', tone: 'neutral', items: [code('user-in', 'null')], parent: 'root', isActive: true },
+        { id: 'todos', title: 'todos', tone: 'neutral', items: [code('todos-in', '[]')], parent: 'root', isActive: true },
+      ],
+    },
+    {
+      caption: {
+        ru: '`counter` знает `inc` и возвращает 1. `user` и `todos` действие не знают и возвращают прежние значения.',
+        en: '`counter` knows `inc` and returns 1. `user` and `todos` don’t know the action and return their previous values.',
+      },
+      lanes: [
+        { id: 'root', title: 'rootReducer', tone: 'warning', items: [code('action', "{ type: 'inc' }")] },
+        { id: 'counter', title: 'counter', tone: 'success', items: [code('counter-out', '0 → 1')], parent: 'root', isActive: true },
+        { id: 'user', title: 'user', tone: 'neutral', items: [code('user-out', 'null → null')], parent: 'root' },
+        { id: 'todos', title: 'todos', tone: 'neutral', items: [code('todos-out', '[] → []')], parent: 'root' },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Из ответов срезов собирается новое состояние. Срез, вернувший `undefined`, затёр бы свои данные.',
+        en: 'The slices’ answers form the new state. A slice returning `undefined` would wipe its own data.',
+      },
+      lanes: [
+        { id: 'root', title: 'rootReducer', tone: 'success', items: [code('result', '{ counter: 1, user, todos }')], isActive: true },
+        { id: 'counter', title: 'counter', tone: 'success', items: [code('counter-out', '1')], parent: 'root' },
+        { id: 'user', title: 'user', tone: 'neutral', items: [code('user-out', 'null')], parent: 'root' },
+        { id: 'todos', title: 'todos', tone: 'neutral', items: [code('todos-out', '[]')], parent: 'root' },
+      ],
+    },
+  ],
+};
+
+const REDUX_MIDDLEWARE_ONION: Diagram = {
+  id: 'redux-middleware-onion',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'dispatch', title: 'dispatch(action)', tone: 'accent', items: [] },
+      { id: 'a', title: 'middleware a', tone: 'warning', items: [code('a-next', 'next(action)')] },
+      { id: 'b', title: 'middleware b', tone: 'warning', items: [code('b-next', 'next(action)')] },
+      { id: 'reducer', title: { ru: 'Редьюсер', en: 'Reducer' }, tone: 'success', items: [] },
+    ],
+    [
+      {
+        activeId: 'dispatch',
+        caption: {
+          ru: 'Middleware подключены в порядке `[a, b]`: `a` — внешний слой луковицы.',
+          en: 'Middleware are applied as `[a, b]`: `a` is the outer layer of the onion.',
+        },
+      },
+      {
+        activeId: 'a',
+        caption: { ru: '`a` печатает «a before» и вызывает `next(action)`.', en: '`a` logs “a before” and calls `next(action)`.' },
+      },
+      {
+        activeId: 'b',
+        caption: { ru: '`b` печатает «b before» и передаёт действие дальше.', en: '`b` logs “b before” and passes the action on.' },
+      },
+      {
+        activeId: 'reducer',
+        caption: { ru: 'Редьюсер обновляет состояние.', en: 'The reducer updates the state.' },
+      },
+      {
+        activeId: 'b',
+        caption: {
+          ru: 'Обратный путь: код после `next` выполняется изнутри наружу — сначала «b after»…',
+          en: 'The way back: code after `next` runs from the inside out — first “b after”…',
+        },
+      },
+      {
+        activeId: 'a',
+        caption: {
+          ru: '…потом «a after». Итог: a before, b before, reducer, b after, a after.',
+          en: '…then “a after”. Result: a before, b before, reducer, b after, a after.',
+        },
+      },
+    ],
+  ),
+};
+
 export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'event-loop-basic': EVENT_LOOP_BASIC,
   'event-loop-async': EVENT_LOOP_ASYNC,
@@ -734,4 +926,8 @@ export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'state-colocation': STATE_COLOCATION,
   'state-lifting': STATE_LIFTING,
   'state-prop-drilling': STATE_PROP_DRILLING,
+  'imm-structural-sharing': IMM_STRUCTURAL_SHARING,
+  'redux-data-flow': REDUX_DATA_FLOW,
+  'redux-combine': REDUX_COMBINE,
+  'redux-middleware-onion': REDUX_MIDDLEWARE_ONION,
 };

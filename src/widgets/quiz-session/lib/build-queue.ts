@@ -2,7 +2,7 @@ import { isDueForReview } from '@app/entities/progress';
 import { getCourse, getCourseTestIds, getLessonByTag, getLessonTestIds, isStepLesson } from '@app/entities/question';
 import { shuffle } from '@app/shared/lib';
 import type { Question, QuizMode, TagId } from '@app/entities/question';
-import type { QuestionStat, QuestionStats } from '@app/entities/progress';
+import type { LearningProgress, QuestionStat, QuestionStats } from '@app/entities/progress';
 import type { TopicSelection } from '@app/shared/config';
 import type { RandomSource } from '@app/shared/lib';
 
@@ -73,25 +73,30 @@ const orderByMode = (questions: Question[], mode: QuizMode, stats: QuestionStats
   return prioritize(questions, stats, random);
 };
 
-const getTestQueue = (params: SessionParams): string[] => {
+const getTestQueue = (params: SessionParams, learning: LearningProgress, random: RandomSource): string[] => {
   if (params.mode === 'lesson-test') {
     const lesson = params.tag ? getLessonByTag(params.tag) : undefined;
-    return isStepLesson(lesson) ? getLessonTestIds(lesson) : [];
+    const ids = isStepLesson(lesson) ? getLessonTestIds(lesson) : [];
+    const isRetake = Boolean(params.tag && learning.lessons[params.tag]?.test);
+    return isRetake ? shuffle(ids, random) : ids;
   }
   const course = params.topic === 'all' ? undefined : getCourse(params.topic);
-  return course ? getCourseTestIds(course) : [];
+  const ids = course ? getCourseTestIds(course) : [];
+  const isRetake = params.topic !== 'all' && Boolean(learning.courses[params.topic]);
+  return isRetake ? shuffle(ids, random) : ids;
 };
 
 export const buildQueue = (
   questions: readonly Question[],
   stats: QuestionStats,
+  learning: LearningProgress,
   params: SessionParams,
   sessionLength: number,
   random: RandomSource,
   now: number,
 ): string[] => {
   if (params.mode === 'lesson-test' || params.mode === 'course-test') {
-    return getTestQueue(params);
+    return getTestQueue(params, learning, random);
   }
   const pool = questions.filter(
     (question) =>

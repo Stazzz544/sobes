@@ -54,7 +54,11 @@ export type DiagramId =
   | 'recursion-stack'
   | 'state-colocation'
   | 'state-lifting'
-  | 'state-prop-drilling';
+  | 'state-prop-drilling'
+  | 'imm-structural-sharing'
+  | 'redux-data-flow'
+  | 'redux-combine'
+  | 'redux-middleware-onion';
 
 export type DiagramText = string | LocalizedText;
 
@@ -88,7 +92,12 @@ export type Diagram = {
   steps: DiagramStep[];
 };
 
-export type IllustrationId = 'state-kinds' | 'state-id-vs-copy';
+export type IllustrationId =
+  | 'state-kinds'
+  | 'state-id-vs-copy'
+  | 'imm-shared-reference'
+  | 'imm-array-methods'
+  | 'redux-selector-new-array';
 
 export type Illustration = {
   id: IllustrationId;
