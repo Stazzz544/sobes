@@ -8,6 +8,10 @@ export default function PathScreen(): JSX.Element {
   const topic = TOPIC_IDS.find((id) => id === params.topic) ?? 'javascript';
 
   return (
-    <TopicPathView topic={topic} onOpenLesson={(tag) => router.push({ pathname: '/lesson/[tag]', params: { tag } })} />
+    <TopicPathView
+      topic={topic}
+      onOpenLesson={(tag) => router.push({ pathname: '/lesson/[tag]', params: { tag } })}
+      onCourseTest={(courseTopic) => router.push({ pathname: '/quiz', params: { mode: 'course-test', topic: courseTopic } })}
+    />
   );
 }

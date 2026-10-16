@@ -8,13 +8,27 @@ import type { CodeLanguage } from '@app/shared/ui';
 import type { TagId } from '../config/tags';
 import type { GlossaryTerm } from '../glossary/glossary';
 import type { ContentBank } from '../model/content';
-import type { CodeSnippet, Diagram, ExplanationBlock, Lesson, OptionContent, Question, QuestionSource } from '../model/types';
+import type {
+  CodeSnippet,
+  Course,
+  Diagram,
+  ExplanationBlock,
+  Illustration,
+  InlineCheck,
+  Lesson,
+  LessonBlock,
+  LessonStep,
+  OptionContent,
+  Question,
+  QuestionSource,
+} from '../model/types';
 
 type UnknownRecord = Record<string, unknown>;
 
 const CODE_LANGUAGES: readonly CodeLanguage[] = ['js', 'jsx', 'ts', 'tsx', 'html', 'css', 'http', 'bash', 'text'];
 const LANE_TONES = ['accent', 'success', 'warning', 'neutral'];
 const MIN_QUESTION_SHARE = 0.5;
+const MAX_ILLUSTRATION_LENGTH = 16_384;
 
 const isRecord = (value: unknown): value is UnknownRecord => typeof value === 'object' && value !== null && !Array.isArray(value);
 
@@ -35,7 +49,7 @@ const isDiagramText = (value: unknown): boolean => typeof value === 'string' || 
 const isDiagram = (value: unknown): value is Diagram =>
   isRecord(value) &&
   typeof value.id === 'string' &&
-  (value.layout === 'columns' || value.layout === 'chain') &&
+  (value.layout === 'columns' || value.layout === 'chain' || value.layout === 'tree') &&
   Array.isArray(value.steps) &&
   value.steps.length > 0 &&
   value.steps.every(
@@ -49,6 +63,7 @@ const isDiagram = (value: unknown): value is Diagram =>
           typeof lane.id === 'string' &&
           isDiagramText(lane.title) &&
           LANE_TONES.includes(String(lane.tone)) &&
+          (lane.parent === undefined || typeof lane.parent === 'string') &&
           Array.isArray(lane.items) &&
           lane.items.every((item) => isRecord(item) && typeof item.id === 'string' && isDiagramText(item.label)),
       ),
@@ -114,16 +129,76 @@ const questionChecker = (diagrams: Readonly<Record<string, Diagram>>) => {
   };
 };
 
-const lessonChecker = (diagrams: Readonly<Record<string, Diagram>>) => {
-  const isBlock = blockChecker(diagrams);
-  return (value: unknown): value is Lesson =>
-    isRecord(value) &&
-    isTagId(value.tag) &&
-    isText(value.summary) &&
-    isArrayOf(value.blocks, isBlock) &&
-    isArrayOf(value.keyPoints, isText) &&
-    isArrayOf(value.sources, isSource);
+const isIllustration = (value: unknown): value is Illustration =>
+  isRecord(value) &&
+  typeof value.id === 'string' &&
+  typeof value.svg === 'string' &&
+  value.svg.startsWith('<svg') &&
+  value.svg.length <= MAX_ILLUSTRATION_LENGTH &&
+  isRecord(value.labels) &&
+  Object.values(value.labels).every(isText) &&
+  isText(value.alt);
+
+const isInlineCheck = (value: unknown): value is InlineCheck =>
+  isRecord(value) &&
+  typeof value.id === 'string' &&
+  isText(value.prompt) &&
+  isArrayOf(value.options, isOption) &&
+  value.options.length >= 2 &&
+  Number.isInteger(value.answer) &&
+  Number(value.answer) >= 0 &&
+  Number(value.answer) < value.options.length &&
+  isText(value.explanation);
+
+type LessonContext = {
+  diagrams: Readonly<Record<string, Diagram>>;
+  illustrations: Readonly<Record<string, Illustration>>;
+  questionIds: ReadonlySet<string>;
 };
+
+const lessonChecker = ({ diagrams, illustrations, questionIds }: LessonContext) => {
+  const isBlock = blockChecker(diagrams);
+  const isLessonBlock = (value: unknown): value is LessonBlock => {
+    if (isBlock(value)) {
+      return true;
+    }
+    if (!isRecord(value)) {
+      return false;
+    }
+    if (value.type === 'illustration') {
+      return typeof value.illustration === 'string' && value.illustration in illustrations && (value.caption === undefined || isText(value.caption));
+    }
+    return value.type === 'check' && isInlineCheck(value.check);
+  };
+  const isStep = (value: unknown): value is LessonStep =>
+    isRecord(value) &&
+    typeof value.id === 'string' &&
+    isText(value.title) &&
+    isArrayOf(value.blocks, isLessonBlock) &&
+    value.blocks.length > 0 &&
+    isArrayOf(value.test, (id): id is string => typeof id === 'string' && questionIds.has(id));
+  return (value: unknown): value is Lesson => {
+    if (!isRecord(value) || !isTagId(value.tag) || !isText(value.summary) || !isArrayOf(value.keyPoints, isText) || !isArrayOf(value.sources, isSource)) {
+      return false;
+    }
+    if (value.format === undefined) {
+      return isArrayOf(value.blocks, isBlock);
+    }
+    return value.format === 'steps' && isArrayOf(value.steps, isStep) && value.steps.length > 0;
+  };
+};
+
+const courseChecker =
+  (questionIds: ReadonlySet<string>) =>
+  (value: unknown): value is Course =>
+    isRecord(value) &&
+    TOPIC_IDS.some((topic) => topic === value.topic) &&
+    isArrayOf(
+      value.final,
+      (item): item is Course['final'][number] =>
+        isRecord(item) && typeof item.question === 'string' && questionIds.has(item.question) && isTagId(item.tag) && typeof item.step === 'string',
+    ) &&
+    value.final.length > 0;
 
 const isGlossaryTerm = (value: unknown): value is GlossaryTerm => isRecord(value) && isText(value.term) && isText(value.definition);
 
@@ -139,8 +214,8 @@ export const sanitizePack = (pack: unknown, appVersion: string, bundled: Content
     return null;
   }
   const diagrams = { ...bundled.diagrams, ...pickValid(pack.diagrams, isDiagram) };
+  const illustrations = { ...bundled.illustrations, ...pickValid(pack.illustrations, isIllustration) };
   const isQuestion = questionChecker(diagrams);
-  const isLesson = lessonChecker(diagrams);
   const seen = new Set<string>();
   const questions = pack.questions.filter((question): question is Question => {
     if (!isQuestion(question) || seen.has(question.id)) {
@@ -152,6 +227,8 @@ export const sanitizePack = (pack: unknown, appVersion: string, bundled: Content
   if (questions.length < bundled.questions.length * MIN_QUESTION_SHARE) {
     return null;
   }
+  const questionIds = new Set(questions.map((question) => question.id));
+  const isLesson = lessonChecker({ diagrams, illustrations, questionIds });
   const packLessons = isRecord(pack.lessons)
     ? Object.values(pack.lessons).flatMap((group) => (Array.isArray(group) ? group.filter(isLesson) : []))
     : [];
@@ -166,6 +243,8 @@ export const sanitizePack = (pack: unknown, appVersion: string, bundled: Content
     lessonsByTag,
     glossary: { ...bundled.glossary, ...pickValid(pack.glossary, isGlossaryTerm) },
     diagrams,
+    illustrations,
+    coursesByTopic: { ...bundled.coursesByTopic, ...pickValid(pack.courses, courseChecker(questionIds)) },
     packVersion,
     builtAt: typeof pack.builtAt === 'string' ? pack.builtAt : null,
   };

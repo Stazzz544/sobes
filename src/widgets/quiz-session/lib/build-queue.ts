@@ -1,4 +1,5 @@
 import { isDueForReview } from '@app/entities/progress';
+import { getCourse, getCourseTestIds, getLessonByTag, getLessonTestIds, isStepLesson } from '@app/entities/question';
 import { shuffle } from '@app/shared/lib';
 import type { Question, QuizMode, TagId } from '@app/entities/question';
 import type { QuestionStat, QuestionStats } from '@app/entities/progress';
@@ -72,6 +73,15 @@ const orderByMode = (questions: Question[], mode: QuizMode, stats: QuestionStats
   return prioritize(questions, stats, random);
 };
 
+const getTestQueue = (params: SessionParams): string[] => {
+  if (params.mode === 'lesson-test') {
+    const lesson = params.tag ? getLessonByTag(params.tag) : undefined;
+    return isStepLesson(lesson) ? getLessonTestIds(lesson) : [];
+  }
+  const course = params.topic === 'all' ? undefined : getCourse(params.topic);
+  return course ? getCourseTestIds(course) : [];
+};
+
 export const buildQueue = (
   questions: readonly Question[],
   stats: QuestionStats,
@@ -80,6 +90,9 @@ export const buildQueue = (
   random: RandomSource,
   now: number,
 ): string[] => {
+  if (params.mode === 'lesson-test' || params.mode === 'course-test') {
+    return getTestQueue(params);
+  }
   const pool = questions.filter(
     (question) =>
       (params.topic === 'all' || question.topic === params.topic) &&

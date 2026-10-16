@@ -1,16 +1,28 @@
 import { JSX } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { ExplanationBlocks, getLessonByTag, getQuestions, SourceList, TAGS } from '@app/entities/question';
+import { ExplanationBlocks, getLessonByTag, getQuestions, isStepLesson, SourceList, TAGS } from '@app/entities/question';
 import { useI18n } from '@app/shared/i18n';
 import { AppText, Button, Card, EmptyState, FormattedText, Screen } from '@app/shared/ui';
+import { LessonStepper } from './lesson-stepper';
 import type { TagId } from '@app/entities/question';
 
 type LessonViewProps = {
   tag: TagId | null;
+  initialStepId: string | null;
+  isFromTest: boolean;
   onPractice: (tag: TagId) => void;
+  onStartTest: (tag: TagId) => void;
+  onBackToTest: () => void;
 };
 
-export const LessonView = ({ tag, onPractice }: LessonViewProps): JSX.Element => {
+export const LessonView = ({
+  tag,
+  initialStepId,
+  isFromTest,
+  onPractice,
+  onStartTest,
+  onBackToTest,
+}: LessonViewProps): JSX.Element => {
   const { t, text, plural } = useI18n();
   const lesson = tag ? getLessonByTag(tag) : undefined;
 
@@ -19,6 +31,20 @@ export const LessonView = ({ tag, onPractice }: LessonViewProps): JSX.Element =>
       <Screen>
         <EmptyState icon="book-outline" title={t('lesson.notFound')} text={tag ?? ''} />
       </Screen>
+    );
+  }
+
+  if (isStepLesson(lesson)) {
+    return (
+      <LessonStepper
+        key={lesson.tag}
+        lesson={lesson}
+        initialStepId={initialStepId}
+        isFromTest={isFromTest}
+        onStartTest={onStartTest}
+        onPractice={onPractice}
+        onBackToTest={onBackToTest}
+      />
     );
   }
 

@@ -21,3 +21,41 @@ export type QuestionStat = {
 };
 
 export type QuestionStats = Record<string, QuestionStat>;
+
+export type TestRecord = {
+  attempts: number;
+  bestRatio: number;
+  lastRatio: number;
+  passedAt: number | null;
+  lastAt: number;
+};
+
+export type LessonRecord = {
+  seenSteps: string[];
+  lastStep: string | null;
+  finishedAt: number | null;
+  test: TestRecord | null;
+};
+
+export type LearningProgress = {
+  lessons: Record<string, LessonRecord>;
+  courses: Record<string, TestRecord>;
+};
+
+export type LessonStepViewed = {
+  tag: string;
+  stepId: string;
+};
+
+export type LessonFinished = {
+  tag: string;
+  at: number;
+};
+
+export type TestFinished = {
+  scope: 'lesson' | 'course';
+  id: string;
+  correct: number;
+  total: number;
+  at: number;
+};

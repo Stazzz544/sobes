@@ -612,6 +612,114 @@ const RECURSION_STACK: Diagram = {
   ],
 };
 
+const STATE_COLOCATION: Diagram = {
+  id: 'state-colocation',
+  layout: 'tree',
+  steps: [
+    {
+      caption: {
+        ru: 'Флаг `isOpen` положили в корень. Он нужен одной кнопке, но знают о нём все уровни — и все перерисовываются при каждом открытии.',
+        en: 'The `isOpen` flag lives at the root. Only one button needs it, yet every level knows about it — and re-renders on every open.',
+      },
+      lanes: [
+        { id: 'app', title: 'App', tone: 'warning', items: [code('is-open', 'isOpen')], isActive: true },
+        { id: 'page', title: 'ProductsPage', tone: 'warning', items: [code('is-open-prop', 'isOpen')], parent: 'app', isActive: true },
+        { id: 'list', title: 'ProductList', tone: 'neutral', items: [], parent: 'page' },
+        { id: 'button', title: 'DeleteButton', tone: 'warning', items: [code('is-open-use', 'isOpen')], parent: 'page', isActive: true },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Перенесли `isOpen` в `DeleteButton`: состояние живёт там, где используется, а остальным компонентам до него нет дела.',
+        en: 'We moved `isOpen` into `DeleteButton`: the state lives where it is used, and other components don’t care about it.',
+      },
+      lanes: [
+        { id: 'app', title: 'App', tone: 'neutral', items: [] },
+        { id: 'page', title: 'ProductsPage', tone: 'neutral', items: [], parent: 'app' },
+        { id: 'list', title: 'ProductList', tone: 'neutral', items: [], parent: 'page' },
+        { id: 'button', title: 'DeleteButton', tone: 'success', items: [code('is-open', 'useState(false)')], parent: 'page', isActive: true },
+      ],
+    },
+  ],
+};
+
+const STATE_LIFTING: Diagram = {
+  id: 'state-lifting',
+  layout: 'tree',
+  steps: [
+    {
+      caption: {
+        ru: 'Категория хранится в фильтре — список о ней не знает и показывает всё подряд.',
+        en: 'The category lives in the filter — the list doesn’t know about it and shows everything.',
+      },
+      lanes: [
+        { id: 'page', title: 'CatalogPage', tone: 'neutral', items: [] },
+        { id: 'filter', title: 'CategoryFilter', tone: 'accent', items: [code('category', 'category')], parent: 'page', isActive: true },
+        { id: 'list', title: 'ProductList', tone: 'neutral', items: [], parent: 'page' },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Завели копию в списке и синхронизируют через `useEffect`: два источника правды, лишние рендеры, рассинхрон.',
+        en: 'A copy in the list synced with `useEffect`: two sources of truth, extra renders, drift.',
+      },
+      lanes: [
+        { id: 'page', title: 'CatalogPage', tone: 'neutral', items: [] },
+        { id: 'filter', title: 'CategoryFilter', tone: 'warning', items: [code('category', 'category')], parent: 'page', isActive: true },
+        { id: 'list', title: 'ProductList', tone: 'warning', items: [{ id: 'category-copy', label: { ru: 'category (копия)', en: 'category (copy)' }, isCode: true }], parent: 'page', isActive: true },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Подняли в ближайший общий родитель: `CatalogPage` хранит `category`, фильтру уходят значение и `onChange`, списку — значение.',
+        en: 'Lifted into the closest common parent: `CatalogPage` holds `category`; the filter gets the value and `onChange`, the list gets the value.',
+      },
+      lanes: [
+        { id: 'page', title: 'CatalogPage', tone: 'success', items: [code('category', 'category')], isActive: true },
+        {
+          id: 'filter',
+          title: 'CategoryFilter',
+          tone: 'accent',
+          items: [code('category-prop', 'category'), code('on-change', 'onChange')],
+          parent: 'page',
+        },
+        { id: 'list', title: 'ProductList', tone: 'accent', items: [code('category-list', 'category')], parent: 'page' },
+      ],
+    },
+  ],
+};
+
+const STATE_PROP_DRILLING: Diagram = {
+  id: 'state-prop-drilling',
+  layout: 'tree',
+  steps: [
+    {
+      caption: {
+        ru: 'Проп-дриллинг: `user` идёт через `Layout` и `Sidebar`, которым он не нужен, — только чтобы дойти до `Avatar`.',
+        en: 'Prop drilling: `user` passes through `Layout` and `Sidebar`, which don’t need it, just to reach `Avatar`.',
+      },
+      lanes: [
+        { id: 'app', title: 'App', tone: 'accent', items: [code('user', 'user')] },
+        { id: 'layout', title: 'Layout', tone: 'warning', items: [code('user-layout', 'user')], parent: 'app', isActive: true },
+        { id: 'sidebar', title: 'Sidebar', tone: 'warning', items: [code('user-sidebar', 'user')], parent: 'layout', isActive: true },
+        { id: 'avatar', title: 'Avatar', tone: 'success', items: [code('user-avatar', 'user')], parent: 'sidebar' },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Композиция: `App` сам собирает `<Avatar user={user} />` и передаёт его как `children`. Промежуточные слои просто рендерят слот.',
+        en: 'Composition: `App` builds `<Avatar user={user} />` itself and passes it as `children`. The layers in between just render the slot.',
+      },
+      lanes: [
+        { id: 'app', title: 'App', tone: 'accent', items: [code('user', 'user')], isActive: true },
+        { id: 'layout', title: 'Layout', tone: 'neutral', items: [code('children-layout', 'children')], parent: 'app' },
+        { id: 'sidebar', title: 'Sidebar', tone: 'neutral', items: [code('children-sidebar', 'children')], parent: 'layout' },
+        { id: 'avatar', title: 'Avatar', tone: 'success', items: [code('user-avatar', 'user')], parent: 'sidebar', isActive: true },
+      ],
+    },
+  ],
+};
+
 export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'event-loop-basic': EVENT_LOOP_BASIC,
   'event-loop-async': EVENT_LOOP_ASYNC,
@@ -623,4 +731,7 @@ export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'binary-search': BINARY_SEARCH,
   'bfs-queue': BFS_QUEUE,
   'recursion-stack': RECURSION_STACK,
+  'state-colocation': STATE_COLOCATION,
+  'state-lifting': STATE_LIFTING,
+  'state-prop-drilling': STATE_PROP_DRILLING,
 };

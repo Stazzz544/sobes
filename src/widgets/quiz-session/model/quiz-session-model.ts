@@ -10,7 +10,7 @@ import { DICTIONARIES, i18nModel, translate } from '@app/shared/i18n';
 import { createRandom, shuffle } from '@app/shared/lib';
 import { buildQueue } from '../lib/build-queue';
 import { estimateLevel } from '../lib/estimate-level';
-import type { AnswerResult, QuestionStats } from '@app/entities/progress';
+import type { AnswerResult, QuestionStats, TestFinished } from '@app/entities/progress';
 import type { OptionId, Question, QuestionResponse, QuizMode } from '@app/entities/question';
 import type { AnalyticsEvent } from '@app/shared/analytics';
 import type { SessionParams } from '../lib/build-queue';
@@ -70,9 +70,13 @@ const getItemOrder = (question: Question | null, seed: number): number[] => {
   return order.every((itemIndex, position) => itemIndex === position) ? order.reverse() : order;
 };
 
-const isExamMode = (mode: QuizMode | undefined): boolean => mode === 'interview' || mode === 'placement';
+const isLevelMode = (mode: QuizMode | undefined): boolean => mode === 'interview' || mode === 'placement';
 
-const buildSummary = (answers: SessionAnswer[], queue: string[], isExam: boolean): SessionSummary => {
+const isExamMode = (mode: QuizMode | undefined): boolean => isLevelMode(mode) || mode === 'course-test';
+
+export const isTestMode = (mode: QuizMode | undefined): boolean => mode === 'lesson-test' || mode === 'course-test';
+
+const buildSummary = (answers: SessionAnswer[], queue: string[], withLevel: boolean): SessionSummary => {
   const questions = queue.map((id) => getQuestionById(id)).filter((question): question is Question => Boolean(question));
   return {
     total: queue.length,
@@ -80,7 +84,7 @@ const buildSummary = (answers: SessionAnswer[], queue: string[], isExam: boolean
     correct: answers.filter((answer) => answer.result === 'correct').length,
     wrong: answers.filter((answer) => answer.result === 'wrong').length,
     dontKnow: answers.filter((answer) => answer.result === 'dontKnow').length,
-    level: isExam
+    level: withLevel
       ? estimateLevel(
           answers.map((answer) => ({
             difficulty: getQuestionById(answer.questionId)?.difficulty ?? 1,
@@ -96,7 +100,7 @@ const getTagParam = (params: SessionParams): { tag?: string } => (params.tag ? {
 
 const toFinishedEvent = ({ params, queue, answers }: SessionSnapshot): AnalyticsEvent => {
   const mode = params?.mode ?? 'practice';
-  const summary = buildSummary(answers, queue, isExamMode(mode));
+  const summary = buildSummary(answers, queue, isLevelMode(mode));
   return {
     name: 'quiz_finished',
     params: {
@@ -162,7 +166,8 @@ export const createQuizSessionModel = () => {
   const $currentAnswer = combine($answers, $currentQuestion, (answers, question) =>
     question ? (answers.find((answer) => answer.questionId === question.id) ?? null) : null,
   );
-  const $summary = combine($answers, $queue, $isExam, buildSummary);
+  const $withLevel = $params.map((params) => isLevelMode(params?.mode));
+  const $summary = combine($answers, $queue, $withLevel, buildSummary);
 
   const timer = interval({ timeout: 1000, start: interviewStarted, stop: timerStopped });
 
@@ -311,6 +316,19 @@ export const createQuizSessionModel = () => {
     target: $phase,
   });
   sample({ clock: $phase.updates, filter: (phase) => phase === 'finished', target: timerStopped });
+  sample({
+    clock: $phase.updates,
+    source: { params: $params, summary: $summary },
+    filter: ({ params }, phase) => phase === 'finished' && isTestMode(params?.mode),
+    fn: ({ params, summary }): TestFinished => ({
+      scope: params?.mode === 'course-test' ? 'course' : 'lesson',
+      id: params?.mode === 'course-test' ? String(params.topic) : String(params?.tag),
+      correct: summary.correct,
+      total: summary.total,
+      at: Date.now(),
+    }),
+    target: progressModel.testFinished,
+  });
   sample({
     clock: $phase.updates,
     source: { params: $params, queue: $queue, answers: $answers },

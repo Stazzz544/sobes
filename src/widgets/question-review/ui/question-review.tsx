@@ -21,7 +21,7 @@ import type { Question, TagId } from '@app/entities/question';
 
 type QuestionReviewProps = {
   questionId: string;
-  onOpenLesson: (tag: TagId) => void;
+  onOpenLesson: (tag: TagId, stepId?: string) => void;
 };
 
 type CorrectAnswerProps = {

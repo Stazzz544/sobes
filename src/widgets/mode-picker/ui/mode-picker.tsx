@@ -8,13 +8,15 @@ import { AppText, Card } from '@app/shared/ui';
 import type { QuizMode } from '@app/entities/question';
 import type { IconName } from '@app/shared/ui';
 
-type PickerMode = Exclude<QuizMode, 'review' | 'placement'>;
+type PickerMode = Exclude<QuizMode, 'review' | 'placement' | 'lesson-test' | 'course-test'>;
+
+const HIDDEN_MODES: readonly QuizMode[] = ['review', 'placement', 'lesson-test', 'course-test'];
 
 type ModePickerProps = {
   onSelect: (mode: PickerMode) => void;
 };
 
-const PICKER_MODES = QUIZ_MODES.filter((mode): mode is PickerMode => mode !== 'review' && mode !== 'placement');
+const PICKER_MODES = QUIZ_MODES.filter((mode): mode is PickerMode => !HIDDEN_MODES.includes(mode));
 
 const MODE_ICONS: Record<PickerMode, IconName> = {
   practice: 'school-outline',

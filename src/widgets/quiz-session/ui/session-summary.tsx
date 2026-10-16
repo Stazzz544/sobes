@@ -8,7 +8,9 @@ import { useI18n } from '@app/shared/i18n';
 import { toPlainText } from '@app/shared/lib';
 import { useTheme } from '@app/shared/theme';
 import { AppText, Button, Card, Pill, ProgressBar, Screen } from '@app/shared/ui';
+import { isTestMode } from '../model/quiz-session-model';
 import { ShareResultButton } from './share-result-button';
+import { TestResult } from './test-result';
 import type { AnswerResult } from '@app/entities/progress';
 import type { QuizMode, TagId } from '@app/entities/question';
 import type { TopicId, TopicSelection } from '@app/shared/config';
@@ -20,11 +22,14 @@ type SessionSummaryProps = {
   summary: Summary;
   mode: QuizMode;
   topic: TopicSelection;
+  tag: TagId | null;
   queue: string[];
   answers: SessionAnswer[];
   placementTopic: TopicId | null;
   onOpenQuestion: (questionId: string) => void;
-  onOpenLesson: (tag: TagId) => void;
+  onOpenLesson: (tag: TagId, stepId?: string) => void;
+  onNextLesson: (tag: TagId) => void;
+  onCourseTest: (topic: TopicId) => void;
   onOpenPath: (topic: TopicId) => void;
   onRestart: () => void;
   onDone: () => void;
@@ -55,11 +60,14 @@ export const SessionSummary = ({
   summary,
   mode,
   topic,
+  tag,
   queue,
   answers,
   placementTopic,
   onOpenQuestion,
   onOpenLesson,
+  onNextLesson,
+  onCourseTest,
   onOpenPath,
   onRestart,
   onDone,
@@ -70,7 +78,8 @@ export const SessionSummary = ({
   const missedTags = queue
     .filter((questionId) => answers.find((answer) => answer.questionId === questionId)?.result !== 'correct')
     .flatMap((questionId) => getQuestionById(questionId)?.tags ?? []);
-  const lessonTags = [...new Set(missedTags)].filter((tag) => getLessonByTag(tag)).slice(0, MAX_LESSON_LINKS);
+  const isTest = isTestMode(mode);
+  const lessonTags = isTest ? [] : [...new Set(missedTags)].filter((missedTag) => getLessonByTag(missedTag)).slice(0, MAX_LESSON_LINKS);
   const startTag = placementTopic ? (TOPIC_PATHS[placementTopic].find((tag) => missedTags.includes(tag)) ?? null) : null;
 
   return (
@@ -109,6 +118,20 @@ export const SessionSummary = ({
               </AppText>
               <Button title={t('placement.openPath')} icon="map-outline" onPress={() => onOpenPath(placementTopic)} />
             </View>
+          ) : null}
+          {isTest ? (
+            <TestResult
+              isCourse={mode === 'course-test'}
+              topic={topic}
+              tag={tag}
+              summary={summary}
+              queue={queue}
+              answers={answers}
+              onOpenLesson={onOpenLesson}
+              onNextLesson={onNextLesson}
+              onCourseTest={onCourseTest}
+              onOpenPath={onOpenPath}
+            />
           ) : null}
         </Card>
       </Animated.View>
@@ -154,14 +177,14 @@ export const SessionSummary = ({
           <AppText variant="label" tone="muted">
             {t('quiz.lessonsTitle')}
           </AppText>
-          {lessonTags.map((tag) => (
+          {lessonTags.map((lessonTag) => (
             <Button
-              key={tag}
-              title={t('lesson.open', { tag: text(TAGS[tag].title) })}
+              key={lessonTag}
+              title={t('lesson.open', { tag: text(TAGS[lessonTag].title) })}
               icon="book-outline"
               variant="secondary"
               size="compact"
-              onPress={() => onOpenLesson(tag)}
+              onPress={() => onOpenLesson(lessonTag)}
             />
           ))}
         </View>

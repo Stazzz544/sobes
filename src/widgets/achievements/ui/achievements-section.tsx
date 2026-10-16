@@ -47,13 +47,14 @@ const AchievementRow = ({ achievement }: AchievementRowProps): JSX.Element => {
 
 export const AchievementsSection = (): JSX.Element => {
   const { t } = useI18n();
-  const { stats, log, settings } = useUnit({
+  const { stats, log, learning, settings } = useUnit({
     stats: progressModel.$questionStats,
     log: progressModel.$answerLog,
+    learning: progressModel.$learning,
     settings: settingsModel.$settings,
   });
   const now = useNow();
-  const achievements = getAchievements({ stats, log, dailyGoal: settings.dailyGoal, now });
+  const achievements = getAchievements({ stats, log, learning, dailyGoal: settings.dailyGoal, now });
   const done = achievements.filter((achievement) => achievement.current >= achievement.target).length;
 
   return (

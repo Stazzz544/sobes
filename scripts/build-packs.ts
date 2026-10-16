@@ -4,8 +4,10 @@ import path from 'node:path';
 import { PACK_ID, PACK_SCHEMA } from '../src/entities/question/config/content-pack';
 import { QUESTIONS } from '../src/entities/question/data';
 import { DIAGRAMS } from '../src/entities/question/data/diagrams';
+import { ILLUSTRATIONS } from '../src/entities/question/data/illustrations';
 import { GLOSSARY } from '../src/entities/question/glossary/glossary';
 import { LESSON_GROUPS } from '../src/entities/question/lessons';
+import { COURSES } from '../src/entities/question/lessons/courses';
 
 const outFlag = process.argv.indexOf('--out');
 const outDir = path.resolve(outFlag >= 0 ? (process.argv[outFlag + 1] ?? '') : 'site/packs/v1');
@@ -24,6 +26,8 @@ const pack = JSON.stringify({
   lessons: LESSON_GROUPS,
   glossary: GLOSSARY,
   diagrams: DIAGRAMS,
+  illustrations: ILLUSTRATIONS,
+  courses: COURSES,
 });
 const file = `${PACK_ID}.json`;
 const manifest = {

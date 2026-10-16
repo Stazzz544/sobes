@@ -3,9 +3,28 @@ import type { LocalizedText } from '@app/shared/i18n';
 import type { CodeLanguage } from '@app/shared/ui';
 import type { TagId } from '../config/tags';
 
-export type QuizMode = 'practice' | 'popular' | 'hard' | 'interview' | 'mistakes' | 'review' | 'placement';
+export type QuizMode =
+  | 'practice'
+  | 'popular'
+  | 'hard'
+  | 'interview'
+  | 'mistakes'
+  | 'review'
+  | 'placement'
+  | 'lesson-test'
+  | 'course-test';
 
-export const QUIZ_MODES: readonly QuizMode[] = ['practice', 'popular', 'hard', 'interview', 'mistakes', 'review', 'placement'];
+export const QUIZ_MODES: readonly QuizMode[] = [
+  'practice',
+  'popular',
+  'hard',
+  'interview',
+  'mistakes',
+  'review',
+  'placement',
+  'lesson-test',
+  'course-test',
+];
 
 export type OptionId = 'a' | 'b' | 'c' | 'd' | 'e';
 
@@ -32,7 +51,10 @@ export type DiagramId =
   | 'http-revalidation'
   | 'binary-search'
   | 'bfs-queue'
-  | 'recursion-stack';
+  | 'recursion-stack'
+  | 'state-colocation'
+  | 'state-lifting'
+  | 'state-prop-drilling';
 
 export type DiagramText = string | LocalizedText;
 
@@ -50,6 +72,7 @@ export type DiagramLane = {
   tone: DiagramLaneTone;
   items: DiagramItem[];
   isActive?: boolean;
+  parent?: string;
 };
 
 export type DiagramStep = {
@@ -57,10 +80,21 @@ export type DiagramStep = {
   lanes: DiagramLane[];
 };
 
+export type DiagramLayout = 'columns' | 'chain' | 'tree';
+
 export type Diagram = {
   id: DiagramId;
-  layout: 'columns' | 'chain';
+  layout: DiagramLayout;
   steps: DiagramStep[];
+};
+
+export type IllustrationId = 'state-kinds' | 'state-id-vs-copy';
+
+export type Illustration = {
+  id: IllustrationId;
+  svg: string;
+  labels: Readonly<Record<string, LocalizedText>>;
+  alt: LocalizedText;
 };
 
 export type ExplanationBlock =
@@ -156,10 +190,52 @@ export type QuestionResponse =
   | { kind: 'bug-line'; line: number }
   | { kind: 'output'; text: string };
 
-export type Lesson = {
+export type InlineCheck = {
+  id: string;
+  prompt: LocalizedText;
+  options: OptionContent[];
+  answer: number;
+  explanation: LocalizedText;
+};
+
+export type LessonBlock =
+  | ExplanationBlock
+  | { type: 'illustration'; illustration: IllustrationId; caption?: LocalizedText }
+  | { type: 'check'; check: InlineCheck };
+
+export type LessonStep = {
+  id: string;
+  title: LocalizedText;
+  blocks: LessonBlock[];
+  test: string[];
+};
+
+type LessonBase = {
   tag: TagId;
   summary: LocalizedText;
-  blocks: ExplanationBlock[];
   keyPoints: LocalizedText[];
   sources: QuestionSource[];
+};
+
+export type ClassicLesson = LessonBase & {
+  format?: undefined;
+  blocks: ExplanationBlock[];
+};
+
+export type StepLesson = LessonBase & {
+  format: 'steps';
+  steps: LessonStep[];
+};
+
+export type Lesson = ClassicLesson | StepLesson;
+
+export type CourseFinalItem = {
+  question: string;
+  tag: TagId;
+  step: string;
+};
+
+export type Course = {
+  topic: TopicId;
+  final: CourseFinalItem[];
 };

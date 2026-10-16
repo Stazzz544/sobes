@@ -18,10 +18,15 @@ const $isProgressReady = combine(
   settingsModel.$isLoaded,
   (isProgressLoaded, isSettingsLoaded) => isProgressLoaded && isSettingsLoaded,
 );
-const $unlocked = combine(progressModel.$questionStats, progressModel.$answerLog, settingsModel.$settings, (stats, log, settings) =>
-  getAchievements({ stats, log, dailyGoal: settings.dailyGoal, now: Date.now() }).filter(
-    (achievement) => achievement.current >= achievement.target,
-  ),
+const $unlocked = combine(
+  progressModel.$questionStats,
+  progressModel.$answerLog,
+  progressModel.$learning,
+  settingsModel.$settings,
+  (stats, log, learning, settings) =>
+    getAchievements({ stats, log, learning, dailyGoal: settings.dailyGoal, now: Date.now() }).filter(
+      (achievement) => achievement.current >= achievement.target,
+    ),
 );
 const $current = combine(
   $unlocked,

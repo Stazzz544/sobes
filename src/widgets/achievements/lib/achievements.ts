@@ -2,7 +2,7 @@ import { getBestStreak } from '@app/entities/progress';
 import { getQuestions } from '@app/entities/question';
 import { getPathProgress } from '@app/features/learning-path';
 import { TOPIC_IDS } from '@app/shared/config';
-import type { AnswerRecord, QuestionStats } from '@app/entities/progress';
+import type { AnswerRecord, LearningProgress, QuestionStats } from '@app/entities/progress';
 import type { IconName } from '@app/shared/ui';
 
 export type AchievementId =
@@ -27,17 +27,18 @@ export type Achievement = {
 type AchievementInput = {
   stats: QuestionStats;
   log: AnswerRecord[];
+  learning: LearningProgress;
   dailyGoal: number;
   now: number;
 };
 
 const REVIEW_STEP_FOR_MEMORY = 2;
 
-export const getAchievements = ({ stats, log, dailyGoal, now }: AchievementInput): Achievement[] => {
+export const getAchievements = ({ stats, log, learning, dailyGoal, now }: AchievementInput): Achievement[] => {
   const statList = Object.values(stats);
   const answers = statList.reduce((sum, stat) => sum + stat.attempts, 0);
   const bestStreak = getBestStreak(log, dailyGoal, now);
-  const paths = TOPIC_IDS.map((topic) => getPathProgress(topic, stats));
+  const paths = TOPIC_IDS.map((topic) => getPathProgress(topic, stats, learning));
   const doneUnits = paths.reduce((sum, path) => sum + path.doneCount, 0);
   const donePaths = paths.filter((path) => path.doneCount === path.units.length).length;
   const touchedTopics = TOPIC_IDS.filter((topic) =>

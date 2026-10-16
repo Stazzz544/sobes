@@ -27,6 +27,8 @@ type LanePalette = {
 };
 
 const AUTOPLAY_STEP_MS = 2600;
+const TREE_ELBOW_WIDTH = 18;
+const TREE_STEP = 30;
 
 const resolveText = (value: DiagramText, locale: Locale): string => (typeof value === 'string' ? value : value[locale]);
 
@@ -78,6 +80,14 @@ const ColumnLane = ({ lane }: { lane: DiagramLane }): JSX.Element => {
   );
 };
 
+const getDepths = (lanes: DiagramLane[]): Map<string, number> => {
+  const depths = new Map<string, number>();
+  for (const lane of lanes) {
+    depths.set(lane.id, lane.parent ? (depths.get(lane.parent) ?? -1) + 1 : 0);
+  }
+  return depths;
+};
+
 const ChainNode = ({ lane }: { lane: DiagramLane }): JSX.Element => {
   const { colors } = useTheme();
   const { locale } = useI18n();
@@ -110,6 +120,33 @@ const ChainNode = ({ lane }: { lane: DiagramLane }): JSX.Element => {
         </View>
       ) : null}
     </Animated.View>
+  );
+};
+
+const TreeView = ({ lanes }: { lanes: DiagramLane[] }): JSX.Element => {
+  const { colors } = useTheme();
+  const depths = getDepths(lanes);
+
+  return (
+    <View style={styles.tree}>
+      {lanes.map((lane) => {
+        const depth = depths.get(lane.id) ?? 0;
+        return (
+          <Animated.View
+            key={lane.id}
+            entering={FadeIn.duration(260)}
+            exiting={FadeOut.duration(160)}
+            layout={LinearTransition.duration(260)}
+            style={[styles.treeRow, { paddingLeft: Math.max(depth - 1, 0) * TREE_STEP }]}
+          >
+            {depth > 0 ? <View style={[styles.treeElbow, { borderColor: colors.textMuted }]} /> : null}
+            <View style={styles.treeNode}>
+              <ChainNode lane={lane} />
+            </View>
+          </Animated.View>
+        );
+      })}
+    </View>
   );
 };
 
@@ -163,13 +200,15 @@ export const DiagramPlayer = ({ diagram }: DiagramPlayerProps): JSX.Element => {
         </AppText>
       </View>
 
+      {diagram.layout === 'tree' ? <TreeView lanes={step.lanes} /> : null}
       {diagram.layout === 'columns' ? (
         <View style={styles.columns}>
           {step.lanes.map((lane) => (
             <ColumnLane key={lane.id} lane={lane} />
           ))}
         </View>
-      ) : (
+      ) : null}
+      {diagram.layout === 'chain' ? (
         <View style={styles.chain}>
           {step.lanes.map((lane, index) => (
             <View key={lane.id} style={styles.chainItem}>
@@ -178,7 +217,7 @@ export const DiagramPlayer = ({ diagram }: DiagramPlayerProps): JSX.Element => {
             </View>
           ))}
         </View>
-      )}
+      ) : null}
 
       <Animated.View key={stepIndex} entering={FadeIn.duration(260)} accessibilityLiveRegion="polite" style={styles.caption}>
         <FormattedText>{text(step.caption)}</FormattedText>
@@ -288,6 +327,25 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 6,
+  },
+  tree: {
+    gap: 6,
+  },
+  treeRow: {
+    flexDirection: 'row',
+  },
+  treeElbow: {
+    width: TREE_ELBOW_WIDTH,
+    height: 22,
+    marginLeft: 8,
+    borderLeftWidth: 2,
+    borderBottomWidth: 2,
+    borderBottomLeftRadius: 8,
+  },
+  treeNode: {
+    flex: 1,
+    minWidth: 0,
+    marginLeft: 4,
   },
   caption: {
     minHeight: 66,

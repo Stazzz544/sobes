@@ -8,6 +8,24 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.58.0',
+    date: '2026-10-16',
+    changes: [
+      {
+        ru: 'Курсы вместо конспектов, начинаем со «Стейт-менеджмента»: урок «Где хранить состояние» теперь пошаговый — короткие шаги с иллюстрациями, анимированными схемами и вопросами «Проверь себя».',
+        en: 'Courses instead of summaries, starting with State management: the “Where state lives” lesson is now step by step — short steps with illustrations, animated diagrams and “Check yourself” questions.',
+      },
+      {
+        ru: 'После урока — тест ровно по прочитанному. Урок пройден, когда тест сдан на 80%, а при ошибке приложение подскажет, какой шаг перечитать.',
+        en: 'After the lesson comes a test on exactly what you read. The lesson is complete once you score 80%, and after a mistake the app tells you which step to reread.',
+      },
+      {
+        ru: 'Экран темы стал экраном курса: статус каждого урока и шаг, на котором вы остановились, а на главной — кнопка «Продолжить».',
+        en: 'The topic screen became a course screen: the status of each lesson and the step where you stopped, plus a Continue button on the home screen.',
+      },
+    ],
+  },
+  {
     version: '1.57.0',
     date: '2026-10-15',
     changes: [

@@ -7,15 +7,35 @@ import ts from 'typescript';
 import { TAGS } from '../src/entities/question/config/tags';
 import { QUESTIONS } from '../src/entities/question/data';
 import { DIAGRAMS } from '../src/entities/question/data/diagrams';
+import { ILLUSTRATIONS } from '../src/entities/question/data/illustrations';
 import { GLOSSARY } from '../src/entities/question/glossary/glossary';
 import { LESSON_GROUPS } from '../src/entities/question/lessons';
+import { COURSES } from '../src/entities/question/lessons/courses';
 import { TOPIC_PATHS } from '../src/entities/question/config/paths';
+import {
+  COLOR_TOKEN,
+  ILLUSTRATION_COLORS,
+  ILLUSTRATION_TEXT_COLORS,
+  LABEL_TOKEN,
+  readViewBox,
+  renderIllustration,
+} from '../src/entities/question/lib/illustration';
 import { OPTION_IDS } from '../src/entities/question/model/types';
 import { DIRECTIONS } from '../src/entities/topic/config/directions';
 import { RELEASES } from '../src/shared/config/releases';
 import { DIRECTION_IDS, TOPIC_IDS } from '../src/shared/config/topics';
 import { ACCENT_COLORS, BASE_COLORS } from '../src/shared/theme/colors';
-import type { ChoiceQuestion, JsTestsVerification, OptionContent, Question, QuestionVerification } from '../src/entities/question/model/types';
+import type {
+  ChoiceQuestion,
+  Illustration,
+  JsTestsVerification,
+  Lesson,
+  LessonBlock,
+  OptionContent,
+  Question,
+  QuestionVerification,
+  StepLesson,
+} from '../src/entities/question/model/types';
 
 type CssComputedVerification = Extract<QuestionVerification, { kind: 'css-computed' | 'dom-probe' }>;
 
@@ -572,8 +592,116 @@ const checkContrast = (): void => {
 
 const LESSONS = Object.values(LESSON_GROUPS).flatMap((lessons) => lessons ?? []);
 
+const STEP_LESSON_LIMITS = { minSteps: 4, maxSteps: 8, maxBlocks: 3, minTest: 5, maxTest: 8, maxStepTest: 2, maxChecks: 2, maxStepText: 600, maxCodeLines: 14 };
+const KEBAB_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const QUESTIONS_BY_ID = new Map(QUESTIONS.map((question) => [question.id, question]));
+
+const lessonBlocks = (lesson: Lesson): LessonBlock[] => (lesson.format === 'steps' ? lesson.steps.flatMap((step) => step.blocks) : lesson.blocks);
+
+const checkBlockTexts = (blocks: readonly LessonBlock[], lessonError: (message: string) => void): void => {
+  for (const locale of LOCALES) {
+    for (const block of blocks) {
+      if (block.type === 'text' && !block.text[locale].trim()) {
+        lessonError(`пустой текстовый блок (${locale})`);
+      }
+      if ((block.type === 'code' || block.type === 'illustration') && block.caption && !block.caption[locale].trim()) {
+        lessonError(`пустая подпись (${locale})`);
+      }
+      if (block.type === 'check' && (!block.check.prompt[locale].trim() || !block.check.explanation[locale].trim())) {
+        lessonError(`«Проверь себя» ${block.check.id}: пустой вопрос или пояснение (${locale})`);
+      }
+    }
+  }
+  for (const block of blocks) {
+    if (block.type === 'code' && /[а-яё]/i.test(block.code.source)) {
+      lessonError('кириллица в коде — комментарии в коде только на английском');
+    }
+  }
+};
+
+const checkStepLesson = (lesson: StepLesson, lessonError: (message: string) => void, testOwners: Map<string, string>): void => {
+  const limits = STEP_LESSON_LIMITS;
+  if (lesson.steps.length < limits.minSteps || lesson.steps.length > limits.maxSteps) {
+    lessonError(`шагов должно быть ${limits.minSteps}–${limits.maxSteps}, сейчас ${lesson.steps.length}`);
+  }
+  const stepIds = lesson.steps.map((step) => step.id);
+  if (new Set(stepIds).size !== stepIds.length || stepIds.some((id) => !KEBAB_ID.test(id))) {
+    lessonError('id шагов должны быть уникальными и в kebab-case');
+  }
+  const checks = lesson.steps.flatMap((step) => step.blocks.flatMap((block) => (block.type === 'check' ? [block.check] : [])));
+  if (checks.length < 1 || checks.length > limits.maxChecks) {
+    lessonError(`«Проверь себя» нужно 1–${limits.maxChecks} на урок, сейчас ${checks.length}`);
+  }
+  if (new Set(checks.map((check) => check.id)).size !== checks.length) {
+    lessonError('повторяются id «Проверь себя»');
+  }
+  for (const check of checks) {
+    if (check.options.length < 2 || check.options.length > 4 || check.answer < 0 || check.answer >= check.options.length) {
+      lessonError(`«Проверь себя» ${check.id}: нужно 2–4 варианта и верный индекс ответа`);
+    }
+    if (check.options.some((option) => 'code' in option && /[а-яё]/i.test(option.code))) {
+      lessonError(`«Проверь себя» ${check.id}: кириллица в варианте-коде`);
+    }
+  }
+  const testIds = lesson.steps.flatMap((step) => step.test);
+  if (testIds.length < limits.minTest || testIds.length > limits.maxTest) {
+    lessonError(`в тесте урока должно быть ${limits.minTest}–${limits.maxTest} вопросов, сейчас ${testIds.length}`);
+  }
+  for (const step of lesson.steps) {
+    const stepError = (message: string): void => lessonError(`шаг ${step.id}: ${message}`);
+    if (step.blocks.length < 1 || step.blocks.length > limits.maxBlocks) {
+      stepError(`блоков должно быть 1–${limits.maxBlocks}`);
+    }
+    if (step.blocks.filter((block) => block.type === 'check').length > 1) {
+      stepError('больше одного «Проверь себя»');
+    }
+    const hasExplanation = step.blocks.some(
+      (block) => block.type === 'text' || ((block.type === 'code' || block.type === 'illustration') && block.caption !== undefined),
+    );
+    if (!hasExplanation) {
+      stepError('нужен текст или подпись к коду / иллюстрации');
+    }
+    for (const locale of LOCALES) {
+      if (!step.title[locale].trim()) {
+        stepError(`пустой заголовок (${locale})`);
+      }
+      const textLength = step.blocks.reduce((sum, block) => sum + (block.type === 'text' ? block.text[locale].length : 0), 0);
+      if (textLength > limits.maxStepText) {
+        stepError(`текст длиннее ${limits.maxStepText} символов (${locale}: ${textLength})`);
+      }
+    }
+    for (const block of step.blocks) {
+      if (block.type === 'code' && block.code.source.split('\n').length > limits.maxCodeLines) {
+        warnings.push(`урок ${lesson.tag}, шаг ${step.id}: код длиннее ${limits.maxCodeLines} строк`);
+      }
+      if (block.type === 'illustration' && !(block.illustration in ILLUSTRATIONS)) {
+        stepError(`нет иллюстрации ${block.illustration}`);
+      }
+    }
+    if (step.test.length < 1 || step.test.length > limits.maxStepTest) {
+      stepError(`к шагу нужно привязать 1–${limits.maxStepTest} вопроса теста`);
+    }
+    for (const questionId of step.test) {
+      const question = QUESTIONS_BY_ID.get(questionId);
+      if (!question) {
+        stepError(`вопроса ${questionId} нет в банке`);
+        continue;
+      }
+      if (!question.tags.includes(lesson.tag)) {
+        stepError(`у вопроса ${questionId} нет тега урока`);
+      }
+      const owner = testOwners.get(questionId);
+      if (owner) {
+        stepError(`вопрос ${questionId} уже в тесте урока ${owner}`);
+      }
+      testOwners.set(questionId, lesson.tag);
+    }
+  }
+};
+
 const checkLessons = (): void => {
   const seenTags = new Set<string>();
+  const testOwners = new Map<string, string>();
   for (const [topic, lessons] of Object.entries(LESSON_GROUPS)) {
     for (const lesson of lessons ?? []) {
       const lessonError = (message: string): void => {
@@ -589,7 +717,9 @@ const checkLessons = (): void => {
       if (lesson.keyPoints.length < 3 || lesson.keyPoints.length > 5) {
         lessonError(`в «Запомнить» нужно 3–5 пунктов, сейчас ${lesson.keyPoints.length}`);
       }
-      if (!lesson.blocks.some((block) => block.type === 'text')) {
+      if (lesson.format === 'steps') {
+        checkStepLesson(lesson, lessonError, testOwners);
+      } else if (!lesson.blocks.some((block) => block.type === 'text')) {
         lessonError('нет текста');
       }
       if (lesson.sources.length === 0) {
@@ -607,25 +737,162 @@ const checkLessons = (): void => {
         if (lesson.keyPoints.some((point) => !point[locale].trim())) {
           lessonError(`пустой пункт «Запомнить» (${locale})`);
         }
-        for (const block of lesson.blocks) {
-          if (block.type === 'text' && !block.text[locale].trim()) {
-            lessonError(`пустой текстовый блок (${locale})`);
-          }
-          if (block.type === 'code' && block.caption && !block.caption[locale].trim()) {
-            lessonError(`пустая подпись к коду (${locale})`);
-          }
-        }
       }
-      for (const block of lesson.blocks) {
-        if (block.type === 'code' && /[а-яё]/i.test(block.code.source)) {
-          lessonError('кириллица в коде — комментарии в коде только на английском');
-        }
-      }
+      checkBlockTexts(lessonBlocks(lesson), lessonError);
     }
   }
   for (const tag of Object.keys(TAGS)) {
     if (!seenTags.has(tag)) {
       errors.push(`нет конспекта для тега ${tag}`);
+    }
+  }
+};
+
+const COURSE_FINAL_LIMITS = { min: 10, max: 15 };
+
+const checkCourses = (): void => {
+  const lessonTestIds = new Set(LESSONS.flatMap((lesson) => (lesson.format === 'steps' ? lesson.steps.flatMap((step) => step.test) : [])));
+  for (const [topic, course] of Object.entries(COURSES)) {
+    const courseError = (message: string): void => {
+      errors.push(`курс ${topic}: ${message}`);
+    };
+    if (!course) {
+      continue;
+    }
+    if (course.topic !== topic) {
+      courseError(`лежит под ключом ${topic}, а в поле topic — ${course.topic}`);
+    }
+    if (course.final.length < COURSE_FINAL_LIMITS.min || course.final.length > COURSE_FINAL_LIMITS.max) {
+      courseError(`в итоговом тесте должно быть ${COURSE_FINAL_LIMITS.min}–${COURSE_FINAL_LIMITS.max} вопросов, сейчас ${course.final.length}`);
+    }
+    const ids = course.final.map((item) => item.question);
+    if (new Set(ids).size !== ids.length) {
+      courseError('вопросы итогового теста повторяются');
+    }
+    const uncovered = TOPIC_PATHS[course.topic].filter((tag) => !course.final.some((item) => item.tag === tag));
+    if (uncovered.length > 0) {
+      courseError(`итоговый тест не покрывает уроки ${uncovered.join(', ')}`);
+    }
+    for (const item of course.final) {
+      const question = QUESTIONS_BY_ID.get(item.question);
+      if (!question) {
+        courseError(`вопроса ${item.question} нет в банке`);
+        continue;
+      }
+      if (!question.tags.includes(item.tag)) {
+        courseError(`у вопроса ${item.question} нет тега ${item.tag}`);
+      }
+      const lesson = LESSONS.find((candidate) => candidate.tag === item.tag);
+      if (lesson?.format !== 'steps' || !lesson.steps.some((step) => step.id === item.step)) {
+        courseError(`вопрос ${item.question}: в уроке ${item.tag} нет шага ${item.step}`);
+      }
+      if (lessonTestIds.has(item.question)) {
+        warnings.push(`курс ${topic}: вопрос ${item.question} уже есть в тесте урока`);
+      }
+    }
+  }
+};
+
+const ILLUSTRATION_TAGS = new Set(['svg', 'g', 'rect', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'path', 'text', 'tspan', 'defs', 'marker']);
+const ILLUSTRATION_LIMITS = { minWidth: 280, maxWidth: 360, maxLength: 8192, minFontSize: 11, longLabel: 20 };
+const SAMPLE_COLORS = Object.fromEntries(ILLUSTRATION_COLORS.map((name) => [name, '#000000'])) as Record<(typeof ILLUSTRATION_COLORS)[number], string>;
+
+const checkIllustrations = (): void => {
+  const used = new Set(LESSONS.flatMap((lesson) => lessonBlocks(lesson).flatMap((block) => (block.type === 'illustration' ? [block.illustration] : []))));
+  for (const [id, illustration] of Object.entries<Illustration>(ILLUSTRATIONS)) {
+    const illustrationError = (message: string): void => {
+      errors.push(`иллюстрация ${id}: ${message}`);
+    };
+    const { svg } = illustration;
+    if (illustration.id !== id) {
+      illustrationError(`id в объекте — ${illustration.id}`);
+    }
+    if (svg.length > ILLUSTRATION_LIMITS.maxLength) {
+      illustrationError(`SVG длиннее ${ILLUSTRATION_LIMITS.maxLength} символов`);
+    }
+    const viewBox = readViewBox(svg);
+    if (!svg.startsWith('<svg') || !viewBox || viewBox.width < ILLUSTRATION_LIMITS.minWidth || viewBox.width > ILLUSTRATION_LIMITS.maxWidth) {
+      illustrationError(`корень <svg> с viewBox="0 0 W H", W от ${ILLUSTRATION_LIMITS.minWidth} до ${ILLUSTRATION_LIMITS.maxWidth}`);
+    }
+    if (/^<svg[^>]*\s(width|height)=/.test(svg)) {
+      illustrationError('у корня не должно быть width/height — размер задаёт контейнер');
+    }
+    const stack: string[] = [];
+    for (const match of svg.matchAll(/<(\/?)([a-zA-Z]+)([^>]*?)(\/?)>/g)) {
+      const [, closing, tag = '', attributes = '', selfClosing] = match;
+      if (!ILLUSTRATION_TAGS.has(tag)) {
+        illustrationError(`тег <${tag}> не разрешён`);
+      }
+      if (/\s(style|class|href|xlink:href|on[a-z]+)=/i.test(attributes)) {
+        illustrationError(`запрещённый атрибут в <${tag}>`);
+      }
+      if (closing) {
+        if (stack.pop() !== tag) {
+          illustrationError(`несбалансированный тег </${tag}>`);
+        }
+      } else if (!selfClosing) {
+        stack.push(tag);
+      }
+      if (tag === 'text' && !closing) {
+        const fill = /\sfill="\{\{color\.([a-zA-Z]+)\}\}"/.exec(attributes)?.[1];
+        if (!fill || !ILLUSTRATION_TEXT_COLORS.some((color) => color === fill)) {
+          illustrationError(`у <text> fill должен быть из ${ILLUSTRATION_TEXT_COLORS.join(', ')}`);
+        }
+      }
+    }
+    if (stack.length > 0) {
+      illustrationError(`не закрыты теги ${stack.join(', ')}`);
+    }
+    for (const match of svg.matchAll(/\s(fill|stroke)="([^"]*)"/g)) {
+      const value = match[2] ?? '';
+      if (value !== 'none' && !/^\{\{color\.[a-zA-Z]+\}\}$/.test(value)) {
+        illustrationError(`цвет «${value}» — только токены {{color.X}} или none`);
+      }
+    }
+    if (/#[0-9a-fA-F]{3,8}\b|rgba?\(|hsla?\(/.test(svg)) {
+      illustrationError('голые цвета в SVG — только токены {{color.X}}');
+    }
+    for (const match of svg.matchAll(COLOR_TOKEN)) {
+      if (!ILLUSTRATION_COLORS.some((color) => color === match[1])) {
+        illustrationError(`неизвестный цвет {{color.${match[1]}}}`);
+      }
+    }
+    const labelKeys = new Set([...svg.matchAll(LABEL_TOKEN)].map((match) => match[1] ?? ''));
+    const declared = Object.keys(illustration.labels);
+    if (declared.length !== labelKeys.size || declared.some((key) => !labelKeys.has(key))) {
+      illustrationError(`подписи в SVG (${[...labelKeys].join(', ')}) не совпадают с labels (${declared.join(', ')})`);
+    }
+    for (const [key, label] of Object.entries(illustration.labels)) {
+      for (const locale of LOCALES) {
+        if (!label[locale].trim()) {
+          illustrationError(`пустая подпись ${key} (${locale})`);
+        }
+        if (/\[\[|\*\*|`/.test(label[locale])) {
+          illustrationError(`разметка в подписи ${key} (${locale})`);
+        }
+        if (label[locale].length > ILLUSTRATION_LIMITS.longLabel) {
+          warnings.push(`иллюстрация ${id}: длинная подпись ${key} (${locale}) — может не влезть`);
+        }
+      }
+    }
+    if (/[а-яё]/i.test(svg)) {
+      illustrationError('кириллица в SVG — текст только через {{label.*}}');
+    }
+    for (const match of svg.matchAll(/font-size="(\d+(?:\.\d+)?)"/g)) {
+      if (Number(match[1]) < ILLUSTRATION_LIMITS.minFontSize) {
+        illustrationError(`font-size ${match[1]} меньше ${ILLUSTRATION_LIMITS.minFontSize}`);
+      }
+    }
+    for (const locale of LOCALES) {
+      if (!illustration.alt[locale].trim()) {
+        illustrationError(`пустой alt (${locale})`);
+      }
+      if (renderIllustration(illustration, SAMPLE_COLORS, locale).includes('{{')) {
+        illustrationError(`после подстановки остались токены (${locale})`);
+      }
+    }
+    if (!used.has(illustration.id)) {
+      warnings.push(`иллюстрация ${id} не используется ни в одном уроке`);
     }
   }
 };
@@ -734,28 +1001,53 @@ const checkLinks = async (): Promise<void> => {
   console.log(`Проверено ссылок: ${urls.length}`);
 };
 
+const TREE_LIMITS = { maxDepth: 4, maxNodes: 7 };
+
 const checkDiagrams = (): void => {
-  const used = new Set(
-    QUESTIONS.flatMap((question) =>
-      question.explanation.flatMap((block) => (block.type === 'diagram' ? [block.diagram] : [])),
-    ),
-  );
+  const used = new Set([
+    ...QUESTIONS.flatMap((question) => question.explanation.flatMap((block) => (block.type === 'diagram' ? [block.diagram] : []))),
+    ...LESSONS.flatMap((lesson) => lessonBlocks(lesson).flatMap((block) => (block.type === 'diagram' ? [block.diagram] : []))),
+  ]);
   for (const diagram of Object.values(DIAGRAMS)) {
     if (diagram.steps.length < 2) {
       errors.push(`схема ${diagram.id}: меньше двух шагов`);
     }
     if (!used.has(diagram.id)) {
-      warnings.push(`схема ${diagram.id} не используется ни в одном вопросе`);
+      warnings.push(`схема ${diagram.id} не используется ни в одном вопросе и уроке`);
     }
     diagram.steps.forEach((step, index) => {
+      const stepError = (message: string): void => {
+        errors.push(`схема ${diagram.id}, шаг ${index + 1}: ${message}`);
+      };
       for (const locale of LOCALES) {
         if (!step.caption[locale].trim()) {
-          errors.push(`схема ${diagram.id}, шаг ${index + 1}: пустая подпись (${locale})`);
+          stepError(`пустая подпись (${locale})`);
         }
       }
       const itemIds = step.lanes.flatMap((lane) => lane.items.map((item) => item.id));
       if (new Set(itemIds).size !== itemIds.length) {
-        errors.push(`схема ${diagram.id}, шаг ${index + 1}: повторяющиеся id элементов`);
+        stepError('повторяющиеся id элементов');
+      }
+      if (diagram.layout !== 'tree') {
+        if (step.lanes.some((lane) => lane.parent !== undefined)) {
+          stepError('parent есть только у схем tree');
+        }
+        return;
+      }
+      if (step.lanes.length > TREE_LIMITS.maxNodes) {
+        stepError(`в дереве больше ${TREE_LIMITS.maxNodes} узлов`);
+      }
+      const depthById = new Map<string, number>();
+      for (const lane of step.lanes) {
+        const parentDepth = lane.parent === undefined ? 0 : depthById.get(lane.parent);
+        if (parentDepth === undefined) {
+          stepError(`узел ${lane.id}: родитель ${lane.parent} должен идти раньше`);
+          continue;
+        }
+        depthById.set(lane.id, parentDepth + 1);
+        if (parentDepth + 1 > TREE_LIMITS.maxDepth) {
+          stepError(`узел ${lane.id}: глубина больше ${TREE_LIMITS.maxDepth}`);
+        }
       }
     });
   }
@@ -868,7 +1160,9 @@ const main = async (): Promise<void> => {
   }
   checkContrast();
   checkDiagrams();
+  checkIllustrations();
   checkLessons();
+  checkCourses();
   checkPaths();
   checkDirections();
   checkGlossary();

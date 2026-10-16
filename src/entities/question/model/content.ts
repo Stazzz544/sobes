@@ -1,10 +1,13 @@
 import { QUESTIONS, QUESTIONS_BY_ID } from '../data';
 import { DIAGRAMS } from '../data/diagrams';
+import { ILLUSTRATIONS } from '../data/illustrations';
 import { GLOSSARY } from '../glossary/glossary';
 import { LESSONS_BY_TAG } from '../lessons';
+import { COURSES } from '../lessons/courses';
+import type { TopicId } from '@app/shared/config';
 import type { TagId } from '../config/tags';
 import type { GlossaryTerm } from '../glossary/glossary';
-import type { Diagram, Lesson, Question } from './types';
+import type { Course, Diagram, Illustration, Lesson, Question } from './types';
 
 export type ContentBank = {
   questions: readonly Question[];
@@ -12,6 +15,8 @@ export type ContentBank = {
   lessonsByTag: Partial<Record<TagId, Lesson>>;
   glossary: Readonly<Record<string, GlossaryTerm>>;
   diagrams: Readonly<Record<string, Diagram>>;
+  illustrations: Readonly<Record<string, Illustration>>;
+  coursesByTopic: Partial<Record<TopicId, Course>>;
   packVersion: string | null;
   builtAt: string | null;
 };
@@ -22,6 +27,8 @@ export const BUNDLED_CONTENT: ContentBank = {
   lessonsByTag: LESSONS_BY_TAG,
   glossary: GLOSSARY,
   diagrams: DIAGRAMS,
+  illustrations: ILLUSTRATIONS,
+  coursesByTopic: COURSES,
   packVersion: null,
   builtAt: null,
 };
@@ -44,5 +51,9 @@ export const getLessonByTag = (tag: TagId): Lesson | undefined => current.lesson
 export const getGlossaryTerm = (id: string): GlossaryTerm | undefined => current.glossary[id];
 
 export const getDiagram = (id: string): Diagram | undefined => current.diagrams[id];
+
+export const getIllustration = (id: string): Illustration | undefined => current.illustrations[id];
+
+export const getCourse = (topic: TopicId): Course | undefined => current.coursesByTopic[topic];
 
 export const getContentBank = (): ContentBank => current;

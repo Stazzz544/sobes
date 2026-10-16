@@ -6,14 +6,18 @@ import { useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
 import { AppText, Button, CodeBlock, FormattedText } from '@app/shared/ui';
 import { TAGS } from '../config/tags';
-import { getDiagram, getLessonByTag } from '../model/content';
+import { findQuestionStep, isStepLesson } from '../lib/lesson';
+import { getDiagram, getIllustration, getLessonByTag } from '../model/content';
 import { DiagramPlayer } from './diagram-player';
 import { GlossarySheet } from './glossary-sheet';
+import { IllustrationView } from './illustration-view';
+import { InlineCheckView } from './inline-check';
 import type { TagId } from '../config/tags';
-import type { ExplanationBlock, Question, QuestionSource } from '../model/types';
+import type { LessonBlock, Question, QuestionSource } from '../model/types';
 
 type ExplanationBlocksProps = {
-  blocks: ExplanationBlock[];
+  blocks: readonly LessonBlock[];
+  onCheckAnswer?: (checkId: string, isCorrect: boolean) => void;
 };
 
 type SourceListProps = {
@@ -22,10 +26,10 @@ type SourceListProps = {
 
 type ExplanationViewProps = {
   question: Question;
-  onOpenLesson?: (tag: TagId) => void;
+  onOpenLesson?: (tag: TagId, stepId?: string) => void;
 };
 
-export const ExplanationBlocks = ({ blocks }: ExplanationBlocksProps): JSX.Element => {
+export const ExplanationBlocks = ({ blocks, onCheckAnswer }: ExplanationBlocksProps): JSX.Element => {
   const { text } = useI18n();
   const [termId, setTermId] = useState<string | null>(null);
   const [isTermOpen, setIsTermOpen] = useState(false);
@@ -41,6 +45,21 @@ export const ExplanationBlocks = ({ blocks }: ExplanationBlocksProps): JSX.Eleme
         if (block.type === 'diagram') {
           const diagram = getDiagram(block.diagram);
           return diagram ? <DiagramPlayer key={index} diagram={diagram} /> : null;
+        }
+        if (block.type === 'illustration') {
+          const illustration = getIllustration(block.illustration);
+          return illustration ? (
+            <IllustrationView key={index} illustration={illustration} caption={block.caption ? text(block.caption) : undefined} />
+          ) : null;
+        }
+        if (block.type === 'check') {
+          return (
+            <InlineCheckView
+              key={block.check.id}
+              check={block.check}
+              onAnswer={(isCorrect) => onCheckAnswer?.(block.check.id, isCorrect)}
+            />
+          );
         }
         if (block.type === 'code') {
           return (
@@ -91,7 +110,8 @@ export const SourceList = ({ sources }: SourceListProps): JSX.Element => {
 
 export const ExplanationView = ({ question, onOpenLesson }: ExplanationViewProps): JSX.Element => {
   const { t, text } = useI18n();
-  const lessonTags = onOpenLesson ? question.tags.filter((tag) => getLessonByTag(tag)) : [];
+  const stepRef = onOpenLesson ? findQuestionStep(question.id) : null;
+  const lessonTags = onOpenLesson ? question.tags.filter((tag) => getLessonByTag(tag) && tag !== stepRef?.tag) : [];
 
   return (
     <View style={styles.container}>
@@ -99,10 +119,19 @@ export const ExplanationView = ({ question, onOpenLesson }: ExplanationViewProps
         {t('quiz.explanation')}
       </AppText>
       <ExplanationBlocks blocks={question.explanation} />
+      {stepRef ? (
+        <Button
+          title={t('lesson.openStep', { tag: text(TAGS[stepRef.tag].title), step: stepRef.index + 1 })}
+          icon="book-outline"
+          variant="secondary"
+          size="compact"
+          onPress={() => onOpenLesson?.(stepRef.tag, stepRef.stepId)}
+        />
+      ) : null}
       {lessonTags.map((tag) => (
         <Button
           key={tag}
-          title={t('lesson.open', { tag: text(TAGS[tag].title) })}
+          title={t(isStepLesson(getLessonByTag(tag)) ? 'lesson.openLesson' : 'lesson.open', { tag: text(TAGS[tag].title) })}
           icon="book-outline"
           variant="secondary"
           size="compact"

@@ -4,8 +4,10 @@ export { TOPIC_PATHS } from './config/paths';
 export {
   BUNDLED_CONTENT,
   getContentBank,
+  getCourse,
   getDiagram,
   getGlossaryTerm,
+  getIllustration,
   getLessonByTag,
   getQuestionById,
   getQuestions,
@@ -19,6 +21,16 @@ export { sanitizePack } from './lib/sanitize-pack';
 export { OPTION_LETTERS, getOption, getOptionText } from './lib/options';
 export { isQuizMode, isTagId } from './lib/guards';
 export {
+  findQuestionStep,
+  getCourseTestIds,
+  getLessonPosition,
+  getLessonTestIds,
+  getStepIndex,
+  isCourseTopic,
+  isStepLesson,
+} from './lib/lesson';
+export type { QuestionStepRef } from './lib/lesson';
+export {
   describeResponse,
   getQuestionKind,
   isChoiceQuestion,
@@ -30,9 +42,14 @@ export type {
   BugLineQuestion,
   ChoiceQuestion,
   CodeSnippet,
+  Course,
+  CourseFinalItem,
   Difficulty,
   ExplanationBlock,
+  InlineCheck,
   Lesson,
+  LessonBlock,
+  LessonStep,
   OptionContent,
   OptionId,
   OrderQuestion,
@@ -42,11 +59,14 @@ export type {
   QuestionResponse,
   QuestionSource,
   QuizMode,
+  StepLesson,
 } from './model/types';
 export type { TagId } from './config/tags';
 export { OptionButton } from './ui/option-button';
 export { QuestionView } from './ui/question-view';
 export { ExplanationBlocks, ExplanationView, SourceList } from './ui/explanation-view';
+export { IllustrationView } from './ui/illustration-view';
+export { InlineCheckView } from './ui/inline-check';
 export type { OptionState } from './ui/option-button';
 export { OrderAnswer } from './ui/order-answer';
 export { BugLineAnswer } from './ui/bug-line-answer';

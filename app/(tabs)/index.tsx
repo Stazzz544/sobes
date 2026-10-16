@@ -30,7 +30,11 @@ export default function HomeScreen(): JSX.Element {
             topic={topic}
             onStart={() => router.push({ pathname: '/quiz', params: { mode: 'placement', topic } })}
           />
-          <TopicPathCard topic={topic} onOpen={() => router.push({ pathname: '/path/[topic]', params: { topic } })} />
+          <TopicPathCard
+            topic={topic}
+            onOpen={() => router.push({ pathname: '/path/[topic]', params: { topic } })}
+            onContinue={(tag) => router.push({ pathname: '/lesson/[tag]', params: { tag } })}
+          />
         </>
       )}
       <AppText variant="label" tone="muted">

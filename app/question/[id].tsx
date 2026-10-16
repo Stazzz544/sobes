@@ -8,7 +8,7 @@ export default function QuestionScreen(): JSX.Element {
   return (
     <QuestionReview
       questionId={id ?? ''}
-      onOpenLesson={(tag) => router.push({ pathname: '/lesson/[tag]', params: { tag } })}
+      onOpenLesson={(tag, step) => router.push({ pathname: '/lesson/[tag]', params: { tag, ...(step ? { step } : {}) } })}
     />
   );
 }

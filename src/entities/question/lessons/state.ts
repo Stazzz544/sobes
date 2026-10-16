@@ -8,33 +8,179 @@ const MDN = 'https://developer.mozilla.org/en-US/docs';
 export const STATE_LESSONS: Lesson[] = [
   {
     tag: 'state-basics',
+    format: 'steps',
     summary: {
       ru: 'Состояние бывает локальным, общим, серверным и в URL. Главный вопрос — не «какую библиотеку взять», а где у каждого кусочка данных источник правды.',
       en: 'State can be local, shared, server or in the URL. The main question isn’t “which library” but where each piece of data has its source of truth.',
     },
-    blocks: [
+    steps: [
       {
-        type: 'text',
-        text: {
-          ru: '**Локальное** состояние (открыта ли модалка, текст в поле) живёт в компоненте. **Общее клиентское** (тема, корзина, авторизация) — в контексте или сторе. **Серверное** (списки, профиль) — копия данных с сервера: её нужно кэшировать, обновлять и инвалидировать, это работа для TanStack Query и аналогов, а не для глобального стора. **URL** хранит то, чем хочется делиться ссылкой: фильтры, страницу, вкладку.',
-          en: '**Local** state (is the modal open, input text) lives in a component. **Shared client** state (theme, cart, auth) goes in context or a store. **Server** state (lists, profile) is a copy of server data: it must be cached, refreshed and invalidated — a job for TanStack Query and similar, not a global store. The **URL** holds what you want to share as a link: filters, page, tab.',
-        },
+        id: 'kinds',
+        title: { ru: 'Четыре вида состояния', en: 'Four kinds of state' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: '**Локальное** нужно одному компоненту: открыта ли модалка, текст в поле. **Общее клиентское** — тема, корзина, авторизация — держат в контексте или сторе. **Серверное** — списки и профиль из API — лишь копия данных сервера: она устаревает, её кэшируют и обновляют через TanStack Query, а не в глобальном сторе. **URL** хранит то, чем делятся ссылкой: фильтры, страницу. Личную настройку вроде темы сохраняют в `localStorage` и читают при старте: `sessionStorage` живёт лишь до закрытия вкладки.',
+              en: '**Local** state belongs to one component: is the modal open, the input text. **Shared client** state — theme, cart, auth — goes in context or a store. **Server** state — lists and profile from the API — is only a copy of server data: it goes stale, so it is cached and refreshed with TanStack Query, not kept in a global store. The **URL** holds what you share as a link: filters, the page. A personal setting like the theme is saved in `localStorage` and read on start: `sessionStorage` lives only until the tab closes.',
+            },
+          },
+          {
+            type: 'illustration',
+            illustration: 'state-kinds',
+            caption: { ru: 'У каждого вида свой источник правды', en: 'Each kind has its own source of truth' },
+          },
+        ],
+        test: ['state-basics-001'],
       },
       {
-        type: 'text',
-        text: {
-          ru: 'Не дублируйте данные: храните `selectedId`, а не копию выбранного объекта, — иначе после обновления списка копия устареет. Всё, что вычисляется из других данных, вычисляют при рендере, а не хранят.',
-          en: 'Don’t duplicate data: store `selectedId`, not a copy of the selected object — otherwise the copy goes stale after the list updates. Anything computable from other data is computed during render, not stored.',
-        },
+        id: 'colocation',
+        title: { ru: 'Держите состояние рядом', en: 'Keep state close' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'Состояние держат как можно ближе к месту, где оно используется. Флаг «открыто ли окно удаления» нужен одной кнопке — значит, это `useState` в ней. Положите его в глобальный стор — получите лишний шаблонный код и свяжете части приложения, которым незачем знать друг о друге. Поднимать состояние выше стоит, только когда оно понадобилось кому-то ещё.',
+              en: 'Keep state as close as possible to where it is used. The “is the delete dialog open” flag is needed by one button — so it is a `useState` inside it. Put it in a global store and you get extra boilerplate and couple parts of the app that have no reason to know about each other. Lift state higher only when someone else needs it.',
+            },
+          },
+          { type: 'diagram', diagram: 'state-colocation' },
+        ],
+        test: ['state-basics-002'],
+      },
+      {
+        id: 'lifting',
+        title: { ru: 'Подъём состояния', en: 'Lifting state up' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'Фильтру и списку по соседству нужна выбранная категория. Состояние поднимают в **ближайший общий родитель**: он хранит `category` и передаёт вниз значение и функцию изменения. Так у данных [[single-source-of-truth|один источник правды]]. Две копии, которые синхронизируют через `useEffect`, дают лишние рендеры и рано или поздно расходятся. Глобальный стор для двух соседей избыточен, а переменная модуля не вызовет перерисовку.',
+              en: 'A filter and a list next to it both need the selected category. Lift the state into the **closest common parent**: it holds `category` and passes down the value and a setter. The data then has [[single-source-of-truth|one source of truth]]. Two copies synced with `useEffect` cause extra renders and sooner or later drift apart. A global store is overkill for two siblings, and a module variable won’t trigger a re-render.',
+            },
+          },
+          { type: 'diagram', diagram: 'state-lifting' },
+          {
+            type: 'check',
+            check: {
+              id: 'module-variable',
+              prompt: {
+                ru: 'Почему общую категорию нельзя хранить в переменной модуля `let category`?',
+                en: 'Why can’t the shared category live in a module variable `let category`?',
+              },
+              options: [
+                { text: { ru: 'React запрещает переменные на уровне модуля', en: 'React forbids module-level variables' } },
+                { text: { ru: 'Её изменение не вызывает перерисовку компонентов', en: 'Changing it doesn’t re-render components' } },
+                { text: { ru: 'Переменная модуля медленнее `useState`', en: 'A module variable is slower than `useState`' } },
+              ],
+              answer: 1,
+              explanation: {
+                ru: 'React перерисовывает компонент, когда меняются его состояние, пропсы или контекст. Присваивание переменной модуля он не замечает — на экране останется старая категория.',
+                en: 'React re-renders a component when its state, props or context change. It doesn’t notice an assignment to a module variable — the screen keeps showing the old category.',
+              },
+            },
+          },
+        ],
+        test: ['state-basics-009'],
+      },
+      {
+        id: 'prop-drilling',
+        title: { ru: 'Проп-дриллинг и композиция', en: 'Prop drilling and composition' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: '[[prop-drilling|Проп-дриллинг]] — когда проп идёт через компоненты, которым он не нужен, лишь бы добраться до глубокого потомка. Первое лекарство — **композиция**: родитель, у которого есть данные, сам собирает `<Avatar user={user} />` и передаёт его вниз через `children` или проп-слот. Промежуточные компоненты просто рендерят слот. Контекст нужен, когда данные читают многие компоненты на разной глубине, а стор — когда состояние сложное и часто меняется.',
+              en: '[[prop-drilling|Prop drilling]] is when a prop passes through components that don’t need it just to reach a deep child. The first cure is **composition**: the parent that has the data builds `<Avatar user={user} />` itself and passes it down via `children` or a slot prop. The components in between just render the slot. Context is for data read by many components at different depths; a store is for complex, frequently changing state.',
+            },
+          },
+          { type: 'diagram', diagram: 'state-prop-drilling' },
+          {
+            type: 'code',
+            code: {
+              lang: 'tsx',
+              source: 'function App() {\n  const user = useUser();\n  return (\n    <Layout>\n      <Sidebar>\n        <Avatar user={user} />\n      </Sidebar>\n    </Layout>\n  );\n}',
+            },
+            caption: { ru: '`Layout` и `Sidebar` ничего не знают о `user`', en: '`Layout` and `Sidebar` know nothing about `user`' },
+          },
+        ],
+        test: ['state-basics-004'],
+      },
+      {
+        id: 'single-source',
+        title: { ru: 'Id вместо копии', en: 'An id, not a copy' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'Список товаров приходит с сервера, пользователь выбирает один. Храните `selectedId`, а сам товар находите в списке. Копия объекта — дублирование: список обновится, цена изменится, а копия останется старой. Индекс сломается при сортировке или удалении, а название не уникально. На том же стоит [[normalization|нормализация]]: сущности лежат таблицей `{ byId, allIds }`, у каждой одна копия — её обновляют в одном месте и находят по id за O(1).',
+              en: 'The product list comes from the server, and the user picks one. Store `selectedId` and look the product up in the list. An object copy is duplication: the list refreshes, the price changes, and the copy stays stale. An index breaks on sorting or deletion, and a name isn’t unique. [[normalization|Normalization]] rests on the same idea: entities live in a `{ byId, allIds }` table, each stored once — updated in one place and found by id in O(1).',
+            },
+          },
+          {
+            type: 'illustration',
+            illustration: 'state-id-vs-copy',
+            caption: { ru: 'Копия устаревает, id — нет', en: 'A copy goes stale, an id doesn’t' },
+          },
+          {
+            type: 'check',
+            check: {
+              id: 'index-after-sort',
+              prompt: {
+                ru: 'Выбор хранится как индекс `selectedIndex`. Список отсортировали по цене. Что произойдёт?',
+                en: 'The selection is stored as an index, `selectedIndex`. The list gets sorted by price. What happens?',
+              },
+              options: [
+                { text: { ru: 'Выбранным останется тот же товар', en: 'The same product stays selected' } },
+                { text: { ru: 'React выбросит ошибку', en: 'React throws an error' } },
+                { text: { ru: 'Выбранным окажется другой товар', en: 'A different product becomes selected' } },
+              ],
+              answer: 2,
+              explanation: {
+                ru: 'Индекс — это позиция, а не товар. После сортировки на той же позиции стоит уже другой товар, и выбор незаметно «переедет». `id` от позиции не зависит.',
+                en: 'An index is a position, not a product. After sorting, that position holds a different product, and the selection silently moves. An `id` doesn’t depend on position.',
+              },
+            },
+          },
+        ],
+        test: ['state-basics-003'],
+      },
+      {
+        id: 'derived',
+        title: { ru: 'Производное не храните', en: 'Don’t store derived values' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'Всё, что вычисляется из имеющегося состояния, хранить не нужно. Полное имя — это `firstName` и `lastName`, сумма корзины — это `items`. Отдельное поле — второй источник правды: добавили товар, забыли обновить сумму — и данные разошлись. Синхронизация через `useEffect` ещё и даёт лишний рендер со старым значением. Считайте при рендере, а дорогие вычисления кешируйте через `useMemo`, а не через отдельный стейт.',
+              en: 'Anything computable from existing state doesn’t need storing. A full name is `firstName` plus `lastName`; a cart total comes from `items`. A separate field is a second source of truth: add an item, forget to update the total — and the data drifts apart. Syncing with `useEffect` also costs an extra render with the stale value. Compute during render, and cache expensive work with `useMemo`, not with extra state.',
+            },
+          },
+          {
+            type: 'code',
+            code: {
+              lang: 'js',
+              source: 'let cart = { items: [5], count: 1 };\ncart = { ...cart, items: [5, 7] };\n\nconsole.log(cart.count); // 1 — stale\nconsole.log(cart.items.length); // 2',
+            },
+            caption: {
+              ru: 'Поле `count` забыли обновить, вычисленное значение верно',
+              en: 'The `count` field was not updated; the computed value is right',
+            },
+          },
+        ],
+        test: ['state-basics-008', 'state-basics-006'],
       },
     ],
     keyPoints: [
-      { ru: 'Локальное → в компоненте, общее → в контексте/сторе.', en: 'Local → in the component, shared → in context/a store.' },
+      { ru: 'Локальное — в компоненте; общее — в ближайшем родителе, контексте или сторе.', en: 'Local state stays in the component; shared state goes to the closest parent, context or a store.' },
       { ru: 'Серверное состояние — кэш, а не глобальный стор.', en: 'Server state is a cache, not a global store.' },
-      { ru: 'Один источник правды: id вместо копии объекта.', en: 'One source of truth: an id instead of an object copy.' },
+      { ru: 'Проп-дриллинг сначала лечат композицией через `children`.', en: 'Try composition via `children` before anything else for prop drilling.' },
+      { ru: 'Один источник правды: id вместо копии, производное — вычислять.', en: 'One source of truth: an id instead of a copy, derived values are computed.' },
     ],
     sources: [
       { title: 'React — Choosing the State Structure', url: `${REACT}/choosing-the-state-structure` },
+      { title: 'React — Sharing State Between Components', url: `${REACT}/sharing-state-between-components` },
+      { title: 'React — Passing Data Deeply with Context', url: `${REACT}/passing-data-deeply-with-context` },
       { title: 'TanStack Query — Important Defaults', url: `${QUERY}/important-defaults` },
     ],
   },
