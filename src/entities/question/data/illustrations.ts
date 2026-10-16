@@ -176,10 +176,151 @@ const REDUX_SELECTOR_NEW_ARRAY: Illustration = {
   },
 };
 
+const STORES_ATOMS: Illustration = {
+  id: 'stores-atoms',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200">
+<rect x="0" y="0" width="150" height="48" rx="10" fill="{{color.bgSecondary}}"/>
+<text x="75" y="21" font-size="13" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">cartAtom</text>
+<text x="75" y="39" font-size="12" text-anchor="middle" fill="{{color.textSecondary}}">{{label.same}}</text>
+<rect x="170" y="0" width="150" height="48" rx="10" fill="{{color.warningSoft}}"/>
+<text x="245" y="21" font-size="13" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">userAtom</text>
+<text x="245" y="39" font-size="12" text-anchor="middle" fill="{{color.textPrimary}}">{{label.changed}}</text>
+<line x1="75" y1="50" x2="75" y2="66" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="70,66 80,66 75,74" fill="{{color.textMuted}}"/>
+<rect x="0" y="76" width="150" height="48" rx="10" fill="{{color.bgSecondary}}"/>
+<text x="75" y="97" font-size="13" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">totalAtom</text>
+<text x="75" y="115" font-size="12" text-anchor="middle" fill="{{color.textSecondary}}">{{label.derived}}</text>
+<line x1="75" y1="126" x2="75" y2="142" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="70,142 80,142 75,150" fill="{{color.textMuted}}"/>
+<line x1="245" y1="50" x2="245" y2="142" stroke="{{color.success}}" stroke-width="2"/>
+<polygon points="240,142 250,142 245,150" fill="{{color.success}}"/>
+<rect x="0" y="152" width="150" height="48" rx="10" fill="{{color.bgSecondary}}"/>
+<text x="75" y="173" font-size="13" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">Total</text>
+<text x="75" y="191" font-size="12" text-anchor="middle" fill="{{color.textSecondary}}">{{label.skip}}</text>
+<rect x="170" y="152" width="150" height="48" rx="10" fill="{{color.successSoft}}"/>
+<text x="245" y="173" font-size="13" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">Avatar</text>
+<text x="245" y="191" font-size="12" text-anchor="middle" fill="{{color.success}}">{{label.render}}</text>
+</svg>`,
+  labels: {
+    same: { ru: 'не менялся', en: 'unchanged' },
+    changed: { ru: 'изменился', en: 'changed' },
+    derived: { ru: 'производный', en: 'derived' },
+    skip: { ru: 'без рендера', en: 'no re-render' },
+    render: { ru: 'перерисовка', en: 're-renders' },
+  },
+  alt: {
+    ru: 'Атомы cartAtom и userAtom. Производный totalAtom читает cartAtom, его читает компонент Total. Компонент Avatar читает userAtom. Изменился userAtom — перерисовался только Avatar, а Total и totalAtom не тронуты.',
+    en: 'Atoms cartAtom and userAtom. The derived totalAtom reads cartAtom, and the Total component reads it. The Avatar component reads userAtom. userAtom changed — only Avatar re-rendered, while Total and totalAtom were untouched.',
+  },
+};
+
+const SERVER_QUERY_LIFECYCLE: Illustration = {
+  id: 'server-query-lifecycle',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 156">
+<text x="50" y="16" font-size="13" font-weight="bold" text-anchor="middle" fill="{{color.success}}">{{label.fresh}}</text>
+<text x="160" y="16" font-size="13" font-weight="bold" text-anchor="middle" fill="{{color.textPrimary}}">{{label.stale}}</text>
+<text x="270" y="16" font-size="13" font-weight="bold" text-anchor="middle" fill="{{color.textSecondary}}">{{label.unused}}</text>
+<rect x="0" y="28" width="100" height="28" rx="8" fill="{{color.successSoft}}"/>
+<rect x="102" y="28" width="116" height="28" rx="8" fill="{{color.warningSoft}}"/>
+<rect x="220" y="28" width="100" height="28" rx="8" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="1"/>
+<line x1="101" y1="22" x2="101" y2="72" stroke="{{color.textMuted}}" stroke-width="2" stroke-dasharray="3 3"/>
+<text x="101" y="86" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">staleTime</text>
+<line x1="319" y1="22" x2="319" y2="72" stroke="{{color.danger}}" stroke-width="2" stroke-dasharray="3 3"/>
+<text x="316" y="86" font-size="11" font-family="monospace" text-anchor="end" fill="{{color.danger}}">gcTime</text>
+<text x="50" y="114" font-size="12" text-anchor="middle" fill="{{color.textSecondary}}">{{label.freshNote}}</text>
+<text x="50" y="132" font-size="12" text-anchor="middle" fill="{{color.textSecondary}}">{{label.freshNote2}}</text>
+<text x="160" y="114" font-size="12" text-anchor="middle" fill="{{color.textSecondary}}">{{label.staleNote}}</text>
+<text x="160" y="132" font-size="12" text-anchor="middle" fill="{{color.textSecondary}}">{{label.staleNote2}}</text>
+<text x="270" y="114" font-size="12" text-anchor="middle" fill="{{color.textSecondary}}">{{label.unusedNote}}</text>
+<text x="270" y="132" font-size="12" text-anchor="middle" fill="{{color.textSecondary}}">{{label.unusedNote2}}</text>
+</svg>`,
+  labels: {
+    fresh: { ru: 'свежие', en: 'fresh' },
+    stale: { ru: 'устаревшие', en: 'stale' },
+    unused: { ru: 'не нужны', en: 'unused' },
+    freshNote: { ru: 'отдаются', en: 'served from' },
+    freshNote2: { ru: 'из кеша', en: 'the cache' },
+    staleNote: { ru: 'кеш + запрос', en: 'cache + a' },
+    staleNote2: { ru: 'в фоне', en: 'background fetch' },
+    unusedNote: { ru: 'в памяти', en: 'in memory' },
+    unusedNote2: { ru: 'до gcTime', en: 'until gcTime' },
+  },
+  alt: {
+    ru: 'Шкала жизни данных запроса: сначала свежие — отдаются из кеша без запроса; после staleTime устаревшие — показывается кеш и в фоне идёт запрос; когда подписчиков нет, данные лежат в памяти и удаляются по истечении gcTime.',
+    en: 'A query data timeline: first fresh — served from the cache without a request; after staleTime, stale — the cache is shown while a background fetch runs; with no subscribers, the data stays in memory and is removed when gcTime runs out.',
+  },
+};
+
+const SERVER_RACE: Illustration = {
+  id: 'server-race',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 168">
+<text x="0" y="30" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">'re'</text>
+<rect x="60" y="16" width="200" height="20" rx="6" fill="{{color.warningSoft}}"/>
+<circle cx="260" cy="26" r="7" fill="{{color.danger}}"/>
+<text x="250" y="54" font-size="11" text-anchor="end" fill="{{color.danger}}">{{label.last}}</text>
+<text x="0" y="86" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">'react'</text>
+<rect x="80" y="72" width="60" height="20" rx="6" fill="{{color.successSoft}}"/>
+<circle cx="140" cy="82" r="7" fill="{{color.success}}"/>
+<text x="150" y="87" font-size="11" fill="{{color.success}}">{{label.first}}</text>
+<line x1="60" y1="110" x2="318" y2="110" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="310,105 318,110 310,115" fill="{{color.textMuted}}"/>
+<text x="318" y="128" font-size="11" text-anchor="end" fill="{{color.textSecondary}}">{{label.time}}</text>
+<rect x="0" y="136" width="320" height="32" rx="8" fill="{{color.dangerSoft}}"/>
+<text x="12" y="157" font-size="13" fill="{{color.textPrimary}}">{{label.screen}}</text>
+<text x="308" y="157" font-size="13" font-weight="bold" font-family="monospace" text-anchor="end" fill="{{color.danger}}">'re'</text>
+</svg>`,
+  labels: {
+    last: { ru: 'пришёл последним', en: 'arrived last' },
+    first: { ru: 'пришёл первым', en: 'arrived first' },
+    time: { ru: 'время', en: 'time' },
+    screen: { ru: 'На экране', en: 'On screen' },
+  },
+  alt: {
+    ru: 'Два запроса поиска: «re» отправлен первым, но идёт долго; «react» отправлен позже и пришёл первым. Последним пришёл ответ на «re», и на экране остались устаревшие результаты для «re».',
+    en: 'Two search requests: “re” is sent first but takes long; “react” is sent later and arrives first. The “re” response arrives last, so the screen is left with stale results for “re”.',
+  },
+};
+
+const URL_ANATOMY: Illustration = {
+  id: 'url-anatomy',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 146">
+<rect x="0" y="0" width="160" height="30" rx="8" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="10" y="20" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">https://shop.example</text>
+<text x="172" y="13" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">origin</text>
+<text x="172" y="28" font-size="11" fill="{{color.textSecondary}}">{{label.origin}}</text>
+<rect x="0" y="38" width="160" height="30" rx="8" fill="{{color.accentSoft}}"/>
+<text x="10" y="58" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">/catalog</text>
+<text x="172" y="51" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.accentText}}">pathname</text>
+<text x="172" y="66" font-size="11" fill="{{color.textSecondary}}">{{label.path}}</text>
+<rect x="0" y="76" width="160" height="30" rx="8" fill="{{color.successSoft}}"/>
+<text x="10" y="96" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">?page=2</text>
+<text x="172" y="89" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.success}}">search</text>
+<text x="172" y="104" font-size="11" fill="{{color.textSecondary}}">{{label.search}}</text>
+<rect x="0" y="114" width="160" height="30" rx="8" fill="{{color.warningSoft}}"/>
+<text x="10" y="134" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">#reviews</text>
+<text x="172" y="127" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">hash</text>
+<text x="172" y="142" font-size="11" fill="{{color.textSecondary}}">{{label.hash}}</text>
+</svg>`,
+  labels: {
+    origin: { ru: 'протокол и хост', en: 'protocol and host' },
+    path: { ru: 'какая страница', en: 'which page' },
+    search: { ru: 'состояние экрана', en: 'screen state' },
+    hash: { ru: 'не уходит на сервер', en: 'not sent to server' },
+  },
+  alt: {
+    ru: 'Адрес https://shop.example/catalog?page=2#reviews по частям: origin — протокол и хост, pathname — путь к странице, search — параметры с состоянием экрана, hash — якорь, который не отправляется на сервер.',
+    en: 'The address https://shop.example/catalog?page=2#reviews in parts: origin is the protocol and host, pathname is the page path, search holds parameters with screen state, and hash is an anchor not sent to the server.',
+  },
+};
+
 export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'state-kinds': STATE_KINDS,
   'state-id-vs-copy': STATE_ID_VS_COPY,
   'imm-shared-reference': IMM_SHARED_REFERENCE,
   'imm-array-methods': IMM_ARRAY_METHODS,
   'redux-selector-new-array': REDUX_SELECTOR_NEW_ARRAY,
+  'stores-atoms': STORES_ATOMS,
+  'server-query-lifecycle': SERVER_QUERY_LIFECYCLE,
+  'server-race': SERVER_RACE,
+  'url-anatomy': URL_ANATOMY,
 };

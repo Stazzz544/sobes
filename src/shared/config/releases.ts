@@ -8,6 +8,24 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.60.0',
+    date: '2026-10-16',
+    changes: [
+      {
+        ru: 'Курс «Стейт-менеджмент» готов целиком: пошаговыми стали уроки «Сторы и селекторы», «Серверное состояние» и «Состояние в URL» — контекст и подписки, атомы и сигналы, кеш запросов, инвалидация, гонки запросов, анатомия адреса и история браузера.',
+        en: 'The State management course is complete: the Stores & selectors, Server state and State in the URL lessons are now step by step — context and subscriptions, atoms and signals, the query cache, invalidation, request races, address anatomy and browser history.',
+      },
+      {
+        ru: 'Итоговый тест курса: 12 вопросов по всем урокам, как на экзамене — без подсказок по ходу, а в конце итог по каждому уроку и шаги, которые стоит перечитать.',
+        en: 'A final course test: 12 questions across all lessons, exam style — no hints along the way, and at the end a score per lesson and the steps worth rereading.',
+      },
+      {
+        ru: '4 новых вопроса о состоянии в URL. Всего 922 вопроса.',
+        en: '4 new questions on state in the URL. 922 questions in total.',
+      },
+    ],
+  },
+  {
     version: '1.59.0',
     date: '2026-10-16',
     changes: [

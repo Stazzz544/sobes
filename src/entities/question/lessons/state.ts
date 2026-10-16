@@ -531,99 +531,508 @@ export const STATE_LESSONS: Lesson[] = [
   },
   {
     tag: 'state-stores',
+    format: 'steps',
     summary: {
-      ru: 'Лёгкие сторы (Zustand, Effector, MobX) решают ту же задачу проще Redux. Производительность зависит от того, на какую часть стора подписан компонент.',
-      en: 'Lightweight stores (Zustand, Effector, MobX) solve the same problem more simply than Redux. Performance depends on which part of the store a component subscribes to.',
+      ru: 'Общее клиентское состояние живёт в контексте или сторе. Главное — подписываться точечно: контекст перерисовывает всех потребителей, а стор с селекторами — только тех, чьи данные изменились.',
+      en: 'Shared client state lives in context or a store. The key is precise subscriptions: context re-renders every consumer, while a store with selectors re-renders only those whose data changed.',
     },
-    blocks: [
+    steps: [
       {
-        type: 'text',
-        text: {
-          ru: 'Глобальный стор нужен, когда одни данные читают и меняют компоненты в разных частях дерева: передавать их пропсами через пять уровней неудобно, а контекст перерисовывает всех потребителей при любом изменении значения.',
-          en: 'A global store is needed when components in different parts of the tree read and change the same data: passing it through five levels of props is awkward, and context re-renders every consumer on any value change.',
-        },
+        id: 'when-store',
+        title: { ru: 'Когда нужен стор', en: 'When you need a store' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'Глобальный стор оправдан, когда одни и те же клиентские данные читают и меняют **далёкие** друг от друга компоненты: корзину — шапка, карточки каталога и страница оформления. Тянуть данные пропсами через промежуточные уровни неудобно, а контекст, как увидим дальше, перерисует всех потребителей. Остальное в стор не кладут: локальное остаётся в компоненте, а ответы API — в кэше запросов вроде TanStack Query.',
+              en: 'A global store is justified when the same client data is read and changed by components **far apart**: the cart by the header, the catalog cards and the checkout page. Passing it as props through the levels in between is awkward, and context, as we’ll see, re-renders every consumer. Nothing else goes in the store: local state stays in the component, and API responses stay in a query cache like TanStack Query.',
+            },
+          },
+          { type: 'diagram', diagram: 'stores-distant-consumers' },
+        ],
+        test: ['state-stores-002'],
       },
       {
-        type: 'text',
-        text: {
-          ru: 'Подписывайтесь **селектором** на нужный кусок: `useStore((s) => s.count)` перерисует компонент только при смене `count`, а `useStore()` без селектора — при любом изменении стора. Селектор, возвращающий новый объект или массив, для этого сравнивают поверхностно (`useShallow`) или [[memoization|мемоизируют]].',
-          en: 'Subscribe with a **selector** to the piece you need: `useStore((s) => s.count)` re-renders only when `count` changes, while `useStore()` without a selector re-renders on any store change. A selector returning a new object or array is compared shallowly (`useShallow`) or [[memoization|memoized]].',
-        },
+        id: 'context',
+        title: { ru: 'Контекст перерисовывает всех', en: 'Context re-renders every consumer' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'Когда меняется `value` провайдера, React перерисовывает **всех** потребителей контекста — даже тех, кому нужна только часть значения. Если в одном контексте лежит `{ cart, dispatch }`, кнопкам «В корзину» прилетает каждое изменение корзины, хотя им нужен лишь `dispatch`. Решение из документации React — разделить контексты: состояние в одном, `dispatch` в другом. `dispatch` из `useReducer` стабилен между рендерами, поэтому его подписчики не перерисовываются.',
+              en: 'When a provider’s `value` changes, React re-renders **every** consumer of the context — even those that need only part of the value. If one context holds `{ cart, dispatch }`, the “Add to cart” buttons get every cart change, though they need only `dispatch`. The fix from the React docs is to split contexts: state in one, `dispatch` in another. `dispatch` from `useReducer` is stable between renders, so its subscribers don’t re-render.',
+            },
+          },
+          { type: 'diagram', diagram: 'stores-context-rerender' },
+          {
+            type: 'check',
+            check: {
+              id: 'context-partial-read',
+              prompt: {
+                ru: 'В контексте лежит `{ theme, user }`, поменялся `user`. Перерисуется ли компонент, который берёт из контекста только `theme`?',
+                en: 'A context holds `{ theme, user }`, and `user` changed. Will a component that takes only `theme` from it re-render?',
+              },
+              options: [
+                { text: { ru: 'Нет, он читает только `theme`', en: 'No, it reads only `theme`' } },
+                { text: { ru: 'Только если `theme` тоже изменилась', en: 'Only if `theme` changed too' } },
+                { text: { ru: 'Да: при новом `value` перерисовываются все потребители', en: 'Yes: a new `value` re-renders every consumer' } },
+              ],
+              answer: 2,
+              explanation: {
+                ru: '`useContext` подписывает на весь `value`, а не на поля, которые компонент из него достаёт. Новый объект `{ theme, user }` — значит, рендер у всех.',
+                en: '`useContext` subscribes to the whole `value`, not to the fields the component picks from it. A new `{ theme, user }` object means a render for everyone.',
+              },
+            },
+          },
+        ],
+        test: ['state-stores-009'],
+      },
+      {
+        id: 'selector-subscription',
+        title: { ru: 'Подписка селектором', en: 'Subscribing with a selector' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'Сторы вроде Zustand решают это селекторами: `useStore((state) => state.count)` подписывает компонент только на `count`, и он перерисуется лишь при его изменении. `useStore()` без селектора подписан на весь стор, и рендер вызовет любое поле — деструктуризация `const { count } = useStore()` этого не меняет. А `useStore.getState()` читает значение один раз и вообще не подписывается: компонент не узнает об изменениях.',
+              en: 'Stores like Zustand solve this with selectors: `useStore((state) => state.count)` subscribes the component only to `count`, so it re-renders only when that changes. `useStore()` without a selector subscribes to the whole store, and any field triggers a render — destructuring `const { count } = useStore()` doesn’t change that. And `useStore.getState()` reads the value once and doesn’t subscribe at all: the component never learns about changes.',
+            },
+          },
+          { type: 'diagram', diagram: 'stores-selector-subscription' },
+        ],
+        test: ['state-stores-001'],
+      },
+      {
+        id: 'shallow',
+        title: { ru: 'Новый объект из селектора', en: 'A new object from a selector' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'Результат селектора сравнивают **по ссылке**. Селектор, который собирает `{ count, increment }`, каждый раз возвращает новый объект: в Zustand v5 это бесконечные перерисовки и «Maximum update depth exceeded». Выходы — отдельный селектор на каждое значение или `useShallow`: [[shallow-copy|поверхностное]] сравнение ключей верхнего уровня через `Object.is`. Так же работает `shallowEqual` в react-redux. А мемоизированный селектор пересчитывает результат, только когда вход изменился по ссылке.',
+              en: 'A selector’s result is compared **by reference**. A selector that builds `{ count, increment }` returns a new object every time: in Zustand v5 that means endless re-renders and “Maximum update depth exceeded”. The way out is a separate selector per value or `useShallow`: a [[shallow-copy|shallow]] comparison of top-level keys with `Object.is`. `shallowEqual` in react-redux works the same way. And a memoized selector recomputes only when its input changes by reference.',
+            },
+          },
+          {
+            type: 'code',
+            code: {
+              lang: 'js',
+              source: 'const { count, increment } = useStore(\n  useShallow((state) => ({\n    count: state.count,\n    increment: state.increment,\n  })),\n);',
+            },
+            caption: { ru: '`useShallow` сравнивает поля, а не сам объект', en: '`useShallow` compares fields, not the object itself' },
+          },
+        ],
+        test: ['state-stores-003', 'state-stores-008'],
+      },
+      {
+        id: 'external-store',
+        title: { ru: 'Свой стор и слияние', en: 'Your own store and merging' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'Внешний стор подключают к React через `useSyncExternalStore(subscribe, getSnapshot)`. Результат `getSnapshot` React сравнивает через `Object.is`, поэтому, пока стор не менялся, функция обязана возвращать **то же** значение. Спред `{ ...store.getState().user }` создаёт новый объект на каждый вызов — и рендеры не заканчиваются. Ещё ловушка: `set` в Zustand сливает значение только на верхнем уровне. `set({ user: { name } })` заменит `user` целиком, и другие его поля пропадут.',
+              en: 'An external store is connected to React with `useSyncExternalStore(subscribe, getSnapshot)`. React compares `getSnapshot` results with `Object.is`, so while the store is unchanged the function must return **the same** value. A spread like `{ ...store.getState().user }` creates a new object on every call — and the renders never stop. Another trap: Zustand’s `set` merges only the top level. `set({ user: { name } })` replaces `user` entirely, and its other fields are lost.',
+            },
+          },
+          {
+            type: 'code',
+            code: {
+              lang: 'js',
+              source: "set((state) => ({\n  user: { ...state.user, name: 'Bob' },\n}));",
+            },
+            caption: { ru: 'Вложенное обновляют явно', en: 'Nested data is updated explicitly' },
+          },
+        ],
+        test: ['state-stores-006'],
+      },
+      {
+        id: 'atoms-signals',
+        title: { ru: 'Атомы и сигналы', en: 'Atoms and signals' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'Jotai и похожие библиотеки дробят состояние на **атомы**. Производный атом вычисляется из других и пересчитывается, только когда меняются атомы, которые он читает. Компонент перерисовывается лишь из-за атомов, которые использует, — без селекторов и мемоизации. **Сигналы** в Angular, Preact и Solid идут дальше: сигнал сам знает, кто его читает, и при изменении обновляет только зависимые вычисления и места в DOM. В React же `useState` перерисовывает компонент целиком с потомками.',
+              en: 'Jotai and similar libraries split state into **atoms**. A derived atom is computed from others and recomputes only when the atoms it reads change. A component re-renders only because of the atoms it uses — no selectors or memoization needed. **Signals** in Angular, Preact and Solid go further: a signal knows who reads it and, on change, updates only the dependent computations and spots in the DOM. In React, `useState` re-renders the whole component with its children.',
+            },
+          },
+          {
+            type: 'illustration',
+            illustration: 'stores-atoms',
+            caption: { ru: 'Изменился `userAtom` — обновился только `Avatar`', en: '`userAtom` changed — only `Avatar` updated' },
+          },
+          {
+            type: 'check',
+            check: {
+              id: 'derived-atom',
+              prompt: {
+                ru: 'Производный `totalAtom` читает только `cartAtom`. Что с ним будет, когда изменится `userAtom`?',
+                en: 'The derived `totalAtom` reads only `cartAtom`. What happens to it when `userAtom` changes?',
+              },
+              options: [
+                { text: { ru: 'Пересчитается вместе со всеми атомами', en: 'It recomputes along with every atom' } },
+                { text: { ru: 'Ничего: от `userAtom` он не зависит', en: 'Nothing: it doesn’t depend on `userAtom`' } },
+                { text: { ru: 'Пересчитается, если его читает компонент', en: 'It recomputes if a component reads it' } },
+              ],
+              answer: 1,
+              explanation: {
+                ru: 'Атомы отслеживают зависимости: `totalAtom` подписан только на `cartAtom`. Изменение `userAtom` его не касается — и компоненты, которые читают `totalAtom`, тоже не перерисуются.',
+                en: 'Atoms track dependencies: `totalAtom` subscribes only to `cartAtom`. A change in `userAtom` doesn’t touch it — nor the components that read `totalAtom`.',
+              },
+            },
+          },
+        ],
+        test: ['state-stores-007', 'state-stores-005'],
       },
     ],
     keyPoints: [
-      { ru: 'Стор — когда одни данные нужны далёким компонентам.', en: 'A store — when distant components need the same data.' },
-      { ru: 'Подписка селектором на нужный кусок.', en: 'Subscribe with a selector to the needed piece.' },
-      { ru: 'Новый объект из селектора — `useShallow` или мемоизация.', en: 'A new object from a selector — `useShallow` or memoization.' },
+      { ru: 'Стор — для клиентских данных, которые нужны далёким компонентам.', en: 'A store is for client data that distant components need.' },
+      { ru: 'Контекст перерисовывает всех потребителей — разделяйте состояние и `dispatch`.', en: 'Context re-renders every consumer — split state and `dispatch`.' },
+      { ru: 'Подписывайтесь селектором, а объект из селектора — через `useShallow`.', en: 'Subscribe with a selector; return objects via `useShallow`.' },
+      { ru: '`getSnapshot` возвращает ту же ссылку, пока стор не изменился.', en: '`getSnapshot` returns the same reference until the store changes.' },
+      { ru: 'Атомы и сигналы обновляют только зависимых.', en: 'Atoms and signals update only their dependents.' },
     ],
     sources: [
+      { title: 'React — Scaling Up with Reducer and Context', url: `${REACT}/scaling-up-with-reducer-and-context` },
+      { title: 'React — useSyncExternalStore', url: 'https://react.dev/reference/react/useSyncExternalStore' },
       { title: 'Zustand — documentation', url: 'https://zustand.docs.pmnd.rs/' },
+      { title: 'Jotai — Core concepts', url: 'https://jotai.org/docs/core/atom' },
       { title: 'Effector — Core concepts', url: 'https://effector.dev/en/introduction/core-concepts/' },
-      { title: 'React — Sharing State Between Components', url: `${REACT}/sharing-state-between-components` },
     ],
   },
   {
     tag: 'state-server',
+    format: 'steps',
     summary: {
-      ru: 'Серверное состояние — кэш данных, которые принадлежат серверу. TanStack Query (React Query) берёт на себя загрузку, кэш, дедупликацию, фоновое обновление и инвалидацию.',
-      en: 'Server state is a cache of data owned by the server. TanStack Query (React Query) handles loading, caching, deduplication, background refresh and invalidation.',
+      ru: 'Данные с сервера — это кеш, а не обычное состояние: их загружают по ключу, обновляют в фоне и помечают устаревшими после изменений. Эту работу берут на себя TanStack Query, SWR и RTK Query.',
+      en: 'Server data is a cache, not ordinary state: it’s loaded by key, refreshed in the background and marked stale after changes. TanStack Query, SWR and RTK Query take care of this.',
     },
-    blocks: [
+    steps: [
       {
-        type: 'text',
-        text: {
-          ru: 'Данные хранятся по **ключу запроса**: `[\'todos\', { status }]` — у каждого фильтра свой кэш. Два компонента с одним ключом получат один запрос. По умолчанию данные сразу считаются **устаревшими** (`staleTime: 0`) и тихо обновляются при монтировании, фокусе окна и восстановлении сети, а неиспользуемый кэш удаляется через 5 минут (`gcTime`).',
-          en: 'Data is stored by **query key**: `[\'todos\', { status }]` — each filter gets its own cache. Two components with the same key share one request. By default data is **stale** immediately (`staleTime: 0`) and refetched quietly on mount, window focus and reconnect, while unused cache is removed after 5 minutes (`gcTime`).',
-        },
+        id: 'cache',
+        title: { ru: 'Кеш, а не стор', en: 'A cache, not a store' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'Список заказов на клиенте — лишь копия данных сервера, и она устаревает. Таким данным нужны статус загрузки, ошибки, повторы, обновление в фоне и после изменений. Руками в сторе это пишут в каждом месте заново, поэтому берут библиотеку: TanStack Query, SWR или RTK Query. Пока запрос с ключом в полёте, повторный вызов получает **тот же** промис: десять компонентов с одним ключом — один сетевой запрос. Поэтому данные запрашивают прямо там, где они нужны.',
+              en: 'An order list on the client is just a copy of server data, and it goes stale. Such data needs loading status, errors, retries, background refreshes and refreshes after changes. Writing that by hand in a store means repeating it everywhere, so you use a library: TanStack Query, SWR or RTK Query. While a request with a key is in flight, a repeated call gets **the same** promise: ten components with one key make one network request. So data is fetched right where it’s needed.',
+            },
+          },
+          { type: 'diagram', diagram: 'server-dedupe' },
+        ],
+        test: ['state-server-011'],
       },
       {
-        type: 'text',
-        text: {
-          ru: 'После изменения данных (мутации) соответствующие запросы **инвалидируют**: `queryClient.invalidateQueries({ queryKey: [\'todos\'] })` — и активные списки перезапросятся. Класть такие данные в Redux вручную — значит самому писать кэш, флаги загрузки и обновления.',
-          en: 'After data changes (a mutation), **invalidate** the related queries: `queryClient.invalidateQueries({ queryKey: [\'todos\'] })` — active lists refetch. Putting this data in Redux by hand means writing the cache, loading flags and refreshing yourself.',
-        },
+        id: 'keys',
+        title: { ru: 'Ключ запроса', en: 'The query key' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'Ключ должен включать **все параметры**, от которых зависит запрос: `[\'todos\', { status }]`. Тогда у каждого фильтра свой кеш, а смена статуса запускает новый запрос. Без `status` все фильтры делят одну запись и показывают чужие данные. Ключи строят иерархически, от общего к частному, потому что фильтры запросов сравнивают их **по префиксу**: `[\'todos\']` совпадёт со всеми ключами, которые с него начинаются, но не с `[\'user\']`. Ровно один запрос выбирают через `exact: true`.',
+              en: 'The key must include **every parameter** the request depends on: `[\'todos\', { status }]`. Then each filter has its own cache, and changing the status starts a new request. Without `status`, all filters share one entry and show each other’s data. Keys are built hierarchically, from general to specific, because query filters compare them **by prefix**: `[\'todos\']` matches every key that starts with it, but not `[\'user\']`. To target exactly one query, use `exact: true`.',
+            },
+          },
+          {
+            type: 'code',
+            code: {
+              lang: 'js',
+              source: "useQuery({\n  queryKey: ['todos', { status }],\n  queryFn: () => fetchTodos(status),\n});",
+            },
+          },
+        ],
+        test: ['state-server-001', 'state-server-009'],
+      },
+      {
+        id: 'freshness',
+        title: { ru: 'staleTime и gcTime', en: 'staleTime and gcTime' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: '`staleTime` — сколько данные считаются свежими. По умолчанию это 0: данные устаревают сразу, и при монтировании, возвращении на вкладку (`refetchOnWindowFocus`) и восстановлении сети их тихо перезапрашивают, показывая кеш. `gcTime`, по умолчанию 5 минут, — сколько хранить данные запроса, на который никто не подписан, прежде чем удалить. Для редко меняющихся справочников поднимают `staleTime`, а не `gcTime`.',
+              en: '`staleTime` is how long data counts as fresh. The default is 0: data goes stale at once, and on mount, when you return to the tab (`refetchOnWindowFocus`) and when the network comes back it’s quietly refetched while the cache is shown. `gcTime`, 5 minutes by default, is how long to keep data of a query nobody subscribes to before removing it. For rarely changing reference data you raise `staleTime`, not `gcTime`.',
+            },
+          },
+          {
+            type: 'illustration',
+            illustration: 'server-query-lifecycle',
+          },
+          {
+            type: 'check',
+            check: {
+              id: 'fresh-on-focus',
+              prompt: {
+                ru: 'У запроса `staleTime: 60_000`. Пользователь вернулся на вкладку через 10 секунд после загрузки. Будет запрос?',
+                en: 'A query has `staleTime: 60_000`. The user returns to the tab 10 seconds after loading. Will it refetch?',
+              },
+              options: [
+                { text: { ru: 'Да, при фокусе запросы обновляются всегда', en: 'Yes, queries always refetch on focus' } },
+                { text: { ru: 'Только если истёк `gcTime`', en: 'Only if `gcTime` has run out' } },
+                { text: { ru: 'Нет: данные ещё свежие', en: 'No: the data is still fresh' } },
+              ],
+              answer: 2,
+              explanation: {
+                ru: 'Фоновые обновления касаются только устаревших данных. Через 10 секунд они ещё свежие — минута не прошла, — и кеш отдаётся без запроса.',
+                en: 'Background refetches apply only to stale data. After 10 seconds it’s still fresh — a minute hasn’t passed — so the cache is served without a request.',
+              },
+            },
+          },
+        ],
+        test: ['state-server-003', 'state-server-005'],
+      },
+      {
+        id: 'mutations',
+        title: { ru: 'Мутации и инвалидация', en: 'Mutations and invalidation' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'После успешной мутации кеш списка устарел. `queryClient.invalidateQueries({ queryKey: [\'todos\'] })` помечает подходящие запросы устаревшими и сразу перезапрашивает активные. Если ответ мутации уже содержит данные, кеш можно обновить без запроса через `setQueryData`. Так же реагируют на события из WebSocket. **Оптимистичное** обновление: отменить идущие запросы, сохранить снимок, записать ожидаемый результат, при ошибке вернуть снимок, а в конце всё равно инвалидировать.',
+              en: 'After a successful mutation, the list cache is stale. `queryClient.invalidateQueries({ queryKey: [\'todos\'] })` marks matching queries stale and refetches the active ones right away. If the mutation response already has the data, update the cache without a request via `setQueryData`. WebSocket events are handled the same way. An **optimistic** update: cancel in-flight queries, save a snapshot, write the expected result, restore the snapshot on error, and invalidate at the end anyway.',
+            },
+          },
+          { type: 'diagram', diagram: 'server-invalidation' },
+        ],
+        test: ['state-server-002'],
+      },
+      {
+        id: 'dependent',
+        title: { ru: 'Зависимые запросы и страницы', en: 'Dependent queries and pages' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'Заказы можно загрузить, только когда известен `userId`? Это **зависимый** запрос: `enabled: false`, пока значения нет, и запрос стартует сам, когда оно появится. `userId` входит в ключ. Хук внутри `if` нарушает правила хуков, а повторы при ошибке — не способ ждать данные. При листании страниц у каждой свой ключ, и новая грузится «с нуля». `placeholderData: keepPreviousData` показывает прошлую страницу, пока не придёт новая, а `isPlaceholderData` помогает её приглушить.',
+              en: 'Can orders load only once `userId` is known? That’s a **dependent** query: `enabled: false` while the value is missing, and the query starts by itself once it appears. `userId` goes into the key. A hook inside `if` breaks the rules of hooks, and retries on error are no way to wait for data. When paging, each page has its own key, and a new one loads from scratch. `placeholderData: keepPreviousData` shows the previous page until the new one arrives, and `isPlaceholderData` helps dim it.',
+            },
+          },
+          {
+            type: 'code',
+            code: {
+              lang: 'js',
+              source: "useQuery({\n  queryKey: ['orders', userId],\n  queryFn: () => fetchOrders(userId),\n  enabled: Boolean(userId),\n});",
+            },
+          },
+        ],
+        test: ['state-server-007'],
+      },
+      {
+        id: 'races',
+        title: { ru: 'Гонки запросов', en: 'Request races' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'Пользователь быстро ввёл «re», потом «react». Ответы приходят в любом порядке: если запрос «re» шёл дольше, его ответ придёт последним и перезапишет свежий результат. Это **гонка запросов**. Лекарства: отменить прошлый запрос через `AbortController`, в эффекте игнорировать устаревший ответ флагом из функции очистки или взять кеш запросов — у каждого запроса свой ключ, и экран показывает данные по актуальному.',
+              en: 'The user quickly types “re”, then “react”. Responses arrive in any order: if the “re” request took longer, its response comes last and overwrites the fresh result. That’s a **request race**. The cures: cancel the previous request with `AbortController`, ignore a stale response in an effect with a flag set in the cleanup function, or use a query cache — each request has its own key, and the screen shows data for the current one.',
+            },
+          },
+          {
+            type: 'illustration',
+            illustration: 'server-race',
+            caption: { ru: 'Медленный старый ответ затёр новый', en: 'A slow old response overwrote the new one' },
+          },
+          {
+            type: 'check',
+            check: {
+              id: 'ignore-stale-response',
+              prompt: {
+                ru: 'Эффект загружает результаты поиска через `fetch`. Как не дать старому ответу перезаписать новый?',
+                en: 'An effect loads search results with `fetch`. How do you stop an old response from overwriting a new one?',
+              },
+              options: [
+                { text: { ru: 'Флагом `ignore`, который выставляет функция очистки эффекта', en: 'With an `ignore` flag set by the effect’s cleanup' } },
+                { text: { ru: 'Добавить `await` перед `setResults`', en: 'Add `await` before `setResults`' } },
+                { text: { ru: 'Увеличить таймаут запроса', en: 'Increase the request timeout' } },
+              ],
+              answer: 0,
+              explanation: {
+                ru: 'Перед новым запуском React вызывает очистку прошлого эффекта: она выставляет `ignore = true`, и запоздавший ответ уже не попадёт в состояние.',
+                en: 'Before running again, React calls the previous effect’s cleanup: it sets `ignore = true`, so a late response never reaches the state.',
+              },
+            },
+          },
+        ],
+        test: ['state-server-006'],
       },
     ],
     keyPoints: [
-      { ru: 'Ключ запроса включает все параметры.', en: 'The query key includes all parameters.' },
-      { ru: 'Одинаковый ключ — один запрос и общий кэш.', en: 'Same key — one request and a shared cache.' },
-      { ru: 'По умолчанию `staleTime: 0` — фоновое обновление.', en: 'Default `staleTime: 0` — background refetching.' },
-      { ru: 'После мутации — `invalidateQueries`.', en: 'After a mutation — `invalidateQueries`.' },
+      { ru: 'Серверные данные — кеш: один ключ — один запрос на всех.', en: 'Server data is a cache: one key, one request for everyone.' },
+      { ru: 'В ключе — все параметры запроса; фильтры сравнивают его по префиксу.', en: 'The key holds every request parameter; filters match it by prefix.' },
+      { ru: '`staleTime` — сколько данные свежие, `gcTime` — сколько хранить ненужные.', en: '`staleTime` is how long data stays fresh; `gcTime` is how long to keep unused data.' },
+      { ru: 'После мутации — `invalidateQueries` или `setQueryData`.', en: 'After a mutation — `invalidateQueries` or `setQueryData`.' },
+      { ru: 'Гонки лечат отменой, флагом в очистке или кешем по ключу.', en: 'Races are cured by cancellation, a cleanup flag or a keyed cache.' },
     ],
     sources: [
       { title: 'TanStack Query — Important Defaults', url: `${QUERY}/important-defaults` },
       { title: 'TanStack Query — Query Keys', url: `${QUERY}/query-keys` },
       { title: 'TanStack Query — Query Invalidation', url: `${QUERY}/query-invalidation` },
+      { title: 'TanStack Query — Optimistic Updates', url: `${QUERY}/optimistic-updates` },
+      { title: 'React — Fetching data with Effects', url: 'https://react.dev/learn/synchronizing-with-effects#fetching-data' },
     ],
   },
   {
     tag: 'state-url',
+    format: 'steps',
     summary: {
       ru: 'URL — тоже хранилище состояния: фильтры, страница и вкладка в адресе переживают перезагрузку, работают с кнопкой «Назад» и отправляются ссылкой.',
-      en: 'The URL is state storage too: filters, page and tab in the address survive reloads, work with the Back button and can be shared as a link.',
+      en: 'The URL is state storage too: filters, page and tab in the address survive a reload, work with the Back button and travel as a link.',
     },
-    blocks: [
+    steps: [
       {
-        type: 'text',
-        text: {
-          ru: '`URLSearchParams` разбирает и собирает строку запроса: `get` возвращает первое значение параметра, `getAll` — все (`?tag=js&tag=ts`), `set` заменяет значение, `toString()` собирает строку обратно с правильным кодированием.',
-          en: '`URLSearchParams` parses and builds the query string: `get` returns a parameter’s first value, `getAll` — all of them (`?tag=js&tag=ts`), `set` replaces a value, `toString()` builds the string back with proper encoding.',
-        },
+        id: 'what-in-url',
+        title: { ru: 'Что хранить в URL', en: 'What goes in the URL' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'В URL кладут то, что пользователь ожидает сохранить и передать: фильтры, сортировку, номер страницы, вкладку, строку поиска. Такое состояние видно в адресе, восстанавливается после перезагрузки, отправляется ссылкой и работает с кнопкой «Назад». Не кладут временное UI-состояние — открыт ли выпадающий список. И никогда не кладут секреты и личные данные: адрес оседает в истории браузера, в логах серверов и уходит другим сайтам в заголовке `Referer`.',
+              en: 'The URL holds what users expect to keep and share: filters, sorting, page number, tab, search query. Such state is visible in the address, restored after a reload, shared as a link and works with the Back button. Temporary UI state — is a dropdown open — stays out. And secrets or personal data never go in: the address lands in browser history and server logs and is sent to other sites in the `Referer` header.',
+            },
+          },
+        ],
+        test: ['state-url-002', 'state-url-009'],
       },
       {
-        type: 'text',
-        text: {
-          ru: '`history.pushState` добавляет запись в историю — «Назад» вернёт прежнее состояние. `replaceState` меняет текущую запись: так обновляют параметр поиска при вводе, чтобы не засорять историю десятками шагов. Роутеры (`useSearchParams` в React Router и аналоги) работают поверх этого API.',
-          en: '`history.pushState` adds a history entry — Back returns the previous state. `replaceState` changes the current entry: use it to update a search parameter while typing so history isn’t flooded with dozens of steps. Routers (`useSearchParams` in React Router and similar) build on this API.',
-        },
+        id: 'anatomy',
+        title: { ru: 'Из чего состоит адрес', en: 'What an address is made of' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: '`new URL(адрес)` разбирает адрес на части: `origin` — протокол и хост, `pathname` — путь к странице, `search` — строка запроса **вместе с** `?`, `hash` — якорь вместе с `#`. Состояние экрана живёт в `search`; удобнее читать его через `url.searchParams` — готовый `URLSearchParams`. Якорь браузер на сервер не отправляет: он остаётся на клиенте.',
+              en: '`new URL(address)` splits an address into parts: `origin` is the protocol and host, `pathname` the page path, `search` the query string **including** `?`, and `hash` the anchor including `#`. Screen state lives in `search`; it’s easiest to read via `url.searchParams`, a ready `URLSearchParams`. The browser doesn’t send the hash to the server: it stays on the client.',
+            },
+          },
+          { type: 'illustration', illustration: 'url-anatomy' },
+        ],
+        test: ['state-url-008'],
+      },
+      {
+        id: 'source-of-truth',
+        title: { ru: 'URL — источник правды', en: 'The URL is the source of truth' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: 'Если фильтры живут в URL, ссылка воспроизводит ровно тот экран, который видел её автор. Состояние **читают** из URL и изменения **пишут** в URL — роутерный `useSearchParams` и аналоги. Ошибка — держать фильтры одновременно в URL и в `useState` и синхронизировать эффектами в обе стороны: появятся гонки и циклы обновлений. А `localStorage` подходит для настроек вида, а не для того, чем делятся ссылкой.',
+              en: 'If filters live in the URL, a link reproduces exactly the screen its sender saw. State is **read** from the URL and changes are **written** to the URL — the router’s `useSearchParams` and the like. The mistake is keeping filters both in the URL and in `useState` and syncing them with effects both ways: races and update loops follow. And `localStorage` suits view preferences, not things shared as links.',
+            },
+          },
+          { type: 'diagram', diagram: 'url-source-of-truth' },
+          {
+            type: 'check',
+            check: {
+              id: 'two-way-sync',
+              prompt: {
+                ru: 'Фильтры хранятся и в URL, и в `useState`, а эффекты синхронизируют их в обе стороны. Чем это плохо?',
+                en: 'Filters live both in the URL and in `useState`, and effects sync them both ways. What’s wrong with that?',
+              },
+              options: [
+                { text: { ru: 'Ничем — две копии надёжнее', en: 'Nothing — two copies are safer' } },
+                { text: { ru: 'Два источника правды: гонки и циклы обновлений', en: 'Two sources of truth: races and update loops' } },
+                { text: { ru: 'Из URL нельзя читать в React', en: 'React can’t read from the URL' } },
+              ],
+              answer: 1,
+              explanation: {
+                ru: 'Каждое изменение запускает синхронизацию в другую сторону, и копии то расходятся, то перезаписывают друг друга. Достаточно одного источника — URL — и чтения из него при рендере.',
+                en: 'Every change triggers a sync the other way, and the copies keep drifting or overwriting each other. One source — the URL — read during render is enough.',
+              },
+            },
+          },
+        ],
+        test: ['state-url-005'],
+      },
+      {
+        id: 'search-params',
+        title: { ru: 'URLSearchParams', en: 'URLSearchParams' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: '`URLSearchParams` разбирает и собирает строку запроса. Ключ может повторяться: `get` вернёт **первое** значение, `getAll` — все (`?tag=js&tag=ts`). `set` заменяет все значения ключа одним, `append` добавляет ещё одно, `delete` убирает ключ целиком, а порядок остальных пар сохраняется. `toString()` собирает строку **без** ведущего `?`. Для массивов фильтров выбирают один формат — повторяющиеся ключи или `tag=js,ts` — и держат его везде.',
+              en: '`URLSearchParams` parses and builds the query string. A key can repeat: `get` returns the **first** value, `getAll` all of them (`?tag=js&tag=ts`). `set` replaces all of a key’s values with one, `append` adds another, `delete` removes the key entirely, and the other pairs keep their order. `toString()` builds the string **without** a leading `?`. For filter arrays, pick one format — repeated keys or `tag=js,ts` — and stick to it.',
+            },
+          },
+          {
+            type: 'code',
+            code: {
+              lang: 'js',
+              source: "const params = new URLSearchParams(\n  '?tag=js&tag=ts',\n);\nparams.get('tag'); // 'js'\nparams.getAll('tag'); // ['js', 'ts']\nparams.set('tag', 'css');\nparams.toString(); // 'tag=css'",
+            },
+          },
+        ],
+        test: ['state-url-001'],
+      },
+      {
+        id: 'encoding-parsing',
+        title: { ru: 'Кодирование и числа', en: 'Encoding and numbers' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: '`URLSearchParams` кодирует значения сам: `&` превращается в `%26`, иначе он разорвал бы параметр, а пробел — в `+`. Собирать строку шаблоном `?q=${query}` опасно: `&` внутри сломает адрес. Значения из URL — всегда строки или `null`, если ключа нет, а `Number(null)` — это `0`. Значение по умолчанию подставляют **до** преобразования и проверяют результат: пользователь может вписать в адрес что угодно. При смене фильтра номер страницы сбрасывают.',
+              en: '`URLSearchParams` encodes values itself: `&` becomes `%26`, or it would split the parameter, and a space becomes `+`. Building the string with a template like `?q=${query}` is risky: an `&` inside breaks the address. URL values are always strings, or `null` if the key is missing, and `Number(null)` is `0`. Apply the default **before** conversion and validate the result: users can type anything into the address. When a filter changes, reset the page number.',
+            },
+          },
+          {
+            type: 'code',
+            code: {
+              lang: 'js',
+              source: "const raw = Number(params.get('page') ?? 1);\nconst page = Number.isInteger(raw) && raw > 0\n  ? raw\n  : 1;",
+            },
+            caption: { ru: 'Номер страницы из URL с проверкой', en: 'A validated page number from the URL' },
+          },
+        ],
+        test: ['state-url-007', 'state-url-011'],
+      },
+      {
+        id: 'history',
+        title: { ru: 'push или replace', en: 'push or replace' },
+        blocks: [
+          {
+            type: 'text',
+            text: {
+              ru: '`history.pushState` добавляет запись в историю — «Назад» вернёт прежнее состояние. `replaceState` меняет текущую запись, не добавляя новую. Поиск, который пишет запрос в `?q=` на каждый символ, обновляет адрес через `replaceState`, иначе история превратится в двадцать шагов «Назад» по буквам. А переключение вкладок или фильтров, к которым хочется вернуться, — через `pushState`. Роутеры дают то же опцией `replace`; `location.href` же перезагрузит страницу.',
+              en: '`history.pushState` adds a history entry — “Back” returns to the previous state. `replaceState` changes the current entry without adding one. A search that writes `?q=` on every keystroke updates the address with `replaceState`, or history turns into twenty letter-by-letter “Back” steps. Switching tabs or filters you want to return to goes through `pushState`. Routers offer the same via a `replace` option, while `location.href` reloads the page.',
+            },
+          },
+          { type: 'diagram', diagram: 'url-push-replace' },
+          {
+            type: 'check',
+            check: {
+              id: 'tabs-push',
+              prompt: {
+                ru: 'На странице товара вкладки «Описание» и «Отзывы». Кнопка «Назад» должна возвращать на прошлую вкладку. Как менять адрес?',
+                en: 'A product page has Description and Reviews tabs. “Back” should return to the previous tab. How should the address change?',
+              },
+              options: [
+                { text: { ru: 'Через `replaceState`', en: 'With `replaceState`' } },
+                { text: { ru: 'Через `pushState`', en: 'With `pushState`' } },
+                { text: { ru: 'Через `location.reload()`', en: 'With `location.reload()`' } },
+              ],
+              answer: 1,
+              explanation: {
+                ru: 'Каждое переключение вкладки должно стать отдельной записью истории — это `pushState`. `replaceState` перезапишет текущую запись, и «Назад» уведёт со страницы товара.',
+                en: 'Each tab switch should become its own history entry — that’s `pushState`. `replaceState` overwrites the current entry, and “Back” would leave the product page.',
+              },
+            },
+          },
+        ],
+        test: ['state-url-003'],
       },
     ],
     keyPoints: [
-      { ru: 'В URL — то, чем делятся ссылкой: фильтры, страница, вкладка.', en: 'In the URL — what’s shared as a link: filters, page, tab.' },
-      { ru: '`get` — первое значение, `getAll` — все.', en: '`get` — first value, `getAll` — all.' },
-      { ru: '`pushState` — новый шаг истории, `replaceState` — без него.', en: '`pushState` — a new history step, `replaceState` — none.' },
+      { ru: 'В URL — то, чем делятся ссылкой; секреты и личные данные — никогда.', en: 'The URL holds what’s shared as a link; never secrets or personal data.' },
+      { ru: 'URL — источник правды: читаем из него и пишем в него.', en: 'The URL is the source of truth: read from it, write to it.' },
+      { ru: '`get` — первое значение, `getAll` — все, значения — строки или `null`.', en: '`get` gives the first value, `getAll` all; values are strings or `null`.' },
+      { ru: 'Ввод с клавиатуры — `replaceState`, переходы, к которым возвращаются, — `pushState`.', en: 'Typing uses `replaceState`; steps you go back to use `pushState`.' },
     ],
     sources: [
+      { title: 'MDN — URL', url: `${MDN}/Web/API/URL` },
       { title: 'MDN — URLSearchParams', url: `${MDN}/Web/API/URLSearchParams` },
       { title: 'MDN — History API', url: `${MDN}/Web/API/History_API` },
     ],

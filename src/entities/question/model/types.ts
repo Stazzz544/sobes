@@ -58,7 +58,14 @@ export type DiagramId =
   | 'imm-structural-sharing'
   | 'redux-data-flow'
   | 'redux-combine'
-  | 'redux-middleware-onion';
+  | 'redux-middleware-onion'
+  | 'stores-distant-consumers'
+  | 'stores-context-rerender'
+  | 'stores-selector-subscription'
+  | 'server-dedupe'
+  | 'server-invalidation'
+  | 'url-source-of-truth'
+  | 'url-push-replace';
 
 export type DiagramText = string | LocalizedText;
 
@@ -97,7 +104,11 @@ export type IllustrationId =
   | 'state-id-vs-copy'
   | 'imm-shared-reference'
   | 'imm-array-methods'
-  | 'redux-selector-new-array';
+  | 'redux-selector-new-array'
+  | 'stores-atoms'
+  | 'server-query-lifecycle'
+  | 'server-race'
+  | 'url-anatomy';
 
 export type Illustration = {
   id: IllustrationId;

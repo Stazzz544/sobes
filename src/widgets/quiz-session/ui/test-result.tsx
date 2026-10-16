@@ -35,9 +35,10 @@ const getStepsToReread = (queue: string[], answers: SessionAnswer[]): QuestionSt
     .filter((questionId) => answers.find((answer) => answer.questionId === questionId)?.result !== 'correct')
     .map((questionId) => findQuestionStep(questionId))
     .filter((ref): ref is QuestionStepRef => ref !== null);
-  return refs.filter(
-    (ref, index) => refs.findIndex((other) => other.tag === ref.tag && other.stepId === ref.stepId) === index,
-  );
+  const getLessonIndex = (tag: TagId): number => TOPIC_PATHS[TAGS[tag].topic].indexOf(tag);
+  return refs
+    .filter((ref, index) => refs.findIndex((other) => other.tag === ref.tag && other.stepId === ref.stepId) === index)
+    .sort((first, second) => getLessonIndex(first.tag) - getLessonIndex(second.tag) || first.index - second.index);
 };
 
 const getLessonScores = (topic: TopicId, answers: SessionAnswer[]): LessonScore[] => {
@@ -115,19 +116,20 @@ export const TestResult = ({
           <AppText variant="label" tone="muted">
             {t('quiz.test.reread')}
           </AppText>
-          {steps.map((step) => {
-            const stepTitle = t('quiz.test.rereadStep', { step: step.index + 1, title: text(step.title) });
-            return (
-              <Button
-                key={`${step.tag}:${step.stepId}`}
-                title={isCourse ? `${text(TAGS[step.tag].title)} · ${stepTitle}` : stepTitle}
-                icon="book-outline"
-                variant="secondary"
-                size="compact"
-                onPress={() => onOpenLesson(step.tag, step.stepId)}
-              />
-            );
-          })}
+          {steps.map((step) => (
+            <Button
+              key={`${step.tag}:${step.stepId}`}
+              title={
+                isCourse
+                  ? t('quiz.test.rereadLessonStep', { tag: text(TAGS[step.tag].title), step: step.index + 1 })
+                  : t('quiz.test.rereadStep', { step: step.index + 1, title: text(step.title) })
+              }
+              icon="book-outline"
+              variant="secondary"
+              size="compact"
+              onPress={() => onOpenLesson(step.tag, step.stepId)}
+            />
+          ))}
         </View>
       ) : null}
 

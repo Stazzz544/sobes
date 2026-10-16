@@ -115,6 +115,7 @@ export const en: Dictionary = {
       failed: 'You need {percent}% to pass',
       reread: 'Read again',
       rereadStep: 'Step {step}. {title}',
+      rereadLessonStep: '{tag} · step {step}',
       byLesson: 'By lesson',
       lessonScore: '{correct} of {total}',
       nextLesson: 'Next: {tag}',

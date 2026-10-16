@@ -9,6 +9,7 @@ import { SCREEN_PADDING } from '@app/shared/config';
 import { useI18n } from '@app/shared/i18n';
 import { useTheme } from '@app/shared/theme';
 import { AppText, Button, Card, FormattedText, ProgressBar } from '@app/shared/ui';
+import { lessonAnalyticsModel } from '../model/lesson-analytics';
 import type { LessonRecord } from '@app/entities/progress';
 import type { StepLesson, TagId } from '@app/entities/question';
 
@@ -124,8 +125,17 @@ export const LessonStepper = ({
   const total = lesson.steps.length;
   const step = lesson.steps[index];
   const isFinal = index >= total;
+  const furthestIndex = useRef(index);
 
   useEffect(() => {
+    lessonAnalyticsModel.lessonOpened({ tag: lesson.tag, step: furthestIndex.current + 1, steps: total });
+    return () => {
+      lessonAnalyticsModel.lessonClosed({ tag: lesson.tag, step: furthestIndex.current + 1, steps: total });
+    };
+  }, [lesson.tag, total]);
+
+  useEffect(() => {
+    furthestIndex.current = Math.max(furthestIndex.current, index);
     scrollRef.current?.scrollTo({ y: 0, animated: false });
     const current = lesson.steps[index];
     if (current) {
@@ -158,7 +168,10 @@ export const LessonStepper = ({
             <>
               {index === 0 ? <AppText tone="secondary">{text(lesson.summary)}</AppText> : null}
               <AppText variant="title">{text(step.title)}</AppText>
-              <ExplanationBlocks blocks={step.blocks} />
+              <ExplanationBlocks
+                blocks={step.blocks}
+                onCheckAnswer={(checkId, isCorrect) => lessonAnalyticsModel.checkAnswered({ tag: lesson.tag, checkId, isCorrect })}
+              />
             </>
           ) : (
             <FinalScreen

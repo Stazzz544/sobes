@@ -912,6 +912,304 @@ const REDUX_MIDDLEWARE_ONION: Diagram = {
   ),
 };
 
+const STORES_DISTANT_CONSUMERS: Diagram = {
+  id: 'stores-distant-consumers',
+  layout: 'tree',
+  steps: [
+    {
+      caption: {
+        ru: 'Корзину читают и меняют три далёких друг от друга компонента: иконка в шапке, кнопка на карточке и оформление заказа.',
+        en: 'Three components far apart read and change the cart: the header icon, the card button and the checkout.',
+      },
+      lanes: [
+        { id: 'app', title: 'App', tone: 'neutral', items: [] },
+        { id: 'header', title: 'Header', tone: 'neutral', items: [], parent: 'app' },
+        { id: 'icon', title: 'CartIcon', tone: 'accent', items: [code('cart-icon', 'cart')], parent: 'header', isActive: true },
+        { id: 'catalog', title: 'Catalog', tone: 'neutral', items: [], parent: 'app' },
+        { id: 'card', title: 'ProductCard', tone: 'neutral', items: [], parent: 'catalog' },
+        { id: 'button', title: 'AddButton', tone: 'accent', items: [code('cart-button', 'cart')], parent: 'card', isActive: true },
+        { id: 'checkout', title: 'Checkout', tone: 'accent', items: [code('cart-checkout', 'cart')], parent: 'app', isActive: true },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Через пропсы `cart` пришлось бы тянуть через `Header`, `Catalog` и `ProductCard`, которым корзина не нужна.',
+        en: 'With props, `cart` would have to pass through `Header`, `Catalog` and `ProductCard`, which don’t need it.',
+      },
+      lanes: [
+        { id: 'app', title: 'App', tone: 'accent', items: [code('cart-app', 'cart')] },
+        { id: 'header', title: 'Header', tone: 'warning', items: [code('cart-header', 'cart')], parent: 'app', isActive: true },
+        { id: 'icon', title: 'CartIcon', tone: 'accent', items: [code('cart-icon', 'cart')], parent: 'header' },
+        { id: 'catalog', title: 'Catalog', tone: 'warning', items: [code('cart-catalog', 'cart')], parent: 'app', isActive: true },
+        { id: 'card', title: 'ProductCard', tone: 'warning', items: [code('cart-card', 'cart')], parent: 'catalog', isActive: true },
+        { id: 'button', title: 'AddButton', tone: 'accent', items: [code('cart-button', 'cart')], parent: 'card' },
+        { id: 'checkout', title: 'Checkout', tone: 'accent', items: [code('cart-checkout', 'cart')], parent: 'app' },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Со стором каждый, кому нужна корзина, подписывается напрямую, а промежуточные компоненты о ней не знают.',
+        en: 'With a store, everyone who needs the cart subscribes directly, and the components in between know nothing about it.',
+      },
+      lanes: [
+        { id: 'app', title: 'App', tone: 'neutral', items: [] },
+        { id: 'header', title: 'Header', tone: 'neutral', items: [], parent: 'app' },
+        { id: 'icon', title: 'CartIcon', tone: 'success', items: [code('use-icon', 'useCart()')], parent: 'header', isActive: true },
+        { id: 'catalog', title: 'Catalog', tone: 'neutral', items: [], parent: 'app' },
+        { id: 'card', title: 'ProductCard', tone: 'neutral', items: [], parent: 'catalog' },
+        { id: 'button', title: 'AddButton', tone: 'success', items: [code('use-button', 'useCart()')], parent: 'card', isActive: true },
+        { id: 'checkout', title: 'Checkout', tone: 'success', items: [code('use-checkout', 'useCart()')], parent: 'app', isActive: true },
+      ],
+    },
+  ],
+};
+
+const STORES_CONTEXT_RERENDER: Diagram = {
+  id: 'stores-context-rerender',
+  layout: 'tree',
+  steps: [
+    {
+      caption: {
+        ru: 'Один контекст `{ cart, dispatch }`. Корзина изменилась — новый `value`, и перерисовываются **все** потребители, даже кнопки, которым нужен только `dispatch`.',
+        en: 'One context, `{ cart, dispatch }`. The cart changed — a new `value`, so **every** consumer re-renders, even the buttons that only need `dispatch`.',
+      },
+      lanes: [
+        { id: 'provider', title: 'CartProvider', tone: 'warning', items: [code('value', '{ cart, dispatch }')], isActive: true },
+        { id: 'icon', title: 'CartIcon', tone: 'warning', items: [code('icon-cart', 'cart')], parent: 'provider', isActive: true },
+        { id: 'list', title: 'ProductList', tone: 'neutral', items: [], parent: 'provider' },
+        { id: 'button-1', title: 'AddButton', tone: 'warning', items: [code('button-1-dispatch', 'dispatch')], parent: 'list', isActive: true },
+        { id: 'button-2', title: 'AddButton', tone: 'warning', items: [code('button-2-dispatch', 'dispatch')], parent: 'list', isActive: true },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Два контекста: состояние отдельно, `dispatch` отдельно. `dispatch` стабилен, поэтому кнопки не перерисовываются — только иконка корзины.',
+        en: 'Two contexts: state separately, `dispatch` separately. `dispatch` is stable, so the buttons don’t re-render — only the cart icon does.',
+      },
+      lanes: [
+        { id: 'provider', title: 'CartProvider', tone: 'accent', items: [code('cart-context', 'CartContext'), code('dispatch-context', 'DispatchContext')] },
+        { id: 'icon', title: 'CartIcon', tone: 'warning', items: [code('icon-cart', 'cart')], parent: 'provider', isActive: true },
+        { id: 'list', title: 'ProductList', tone: 'neutral', items: [], parent: 'provider' },
+        { id: 'button-1', title: 'AddButton', tone: 'success', items: [code('button-1-dispatch', 'dispatch')], parent: 'list' },
+        { id: 'button-2', title: 'AddButton', tone: 'success', items: [code('button-2-dispatch', 'dispatch')], parent: 'list' },
+      ],
+    },
+  ],
+};
+
+const STORES_SELECTOR_SUBSCRIPTION: Diagram = {
+  id: 'stores-selector-subscription',
+  layout: 'tree',
+  steps: [
+    {
+      caption: {
+        ru: 'Три компонента читают один стор: два через селекторы, один целиком через `useStore()`.',
+        en: 'Three components read one store: two via selectors, one as a whole via `useStore()`.',
+      },
+      lanes: [
+        { id: 'store', title: 'useStore', tone: 'accent', items: [code('fields', '{ count, user }')] },
+        { id: 'counter', title: 'Counter', tone: 'neutral', items: [code('select-count', 'state => state.count')], parent: 'store' },
+        { id: 'profile', title: 'Profile', tone: 'neutral', items: [code('select-user', 'state => state.user')], parent: 'store' },
+        { id: 'toolbar', title: 'Toolbar', tone: 'neutral', items: [code('select-all', 'useStore()')], parent: 'store' },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Изменился `user`. Стор сообщает подписчикам и сравнивает результат каждого селектора с прошлым.',
+        en: '`user` changed. The store notifies subscribers and compares each selector’s result with the previous one.',
+      },
+      lanes: [
+        { id: 'store', title: 'useStore', tone: 'warning', items: [code('fields', '{ count, user }')], isActive: true },
+        { id: 'counter', title: 'Counter', tone: 'neutral', items: [code('select-count', 'state => state.count')], parent: 'store' },
+        { id: 'profile', title: 'Profile', tone: 'neutral', items: [code('select-user', 'state => state.user')], parent: 'store' },
+        { id: 'toolbar', title: 'Toolbar', tone: 'neutral', items: [code('select-all', 'useStore()')], parent: 'store' },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Перерисовались `Profile` — он выбрал `user` — и `Toolbar`, подписанный на весь стор. `Counter` выбрал `count`, и его не тронули.',
+        en: '`Profile` re-rendered because it selected `user`, and so did `Toolbar`, subscribed to the whole store. `Counter` selected `count` and stayed put.',
+      },
+      lanes: [
+        { id: 'store', title: 'useStore', tone: 'warning', items: [code('fields', '{ count, user }')] },
+        { id: 'counter', title: 'Counter', tone: 'success', items: [code('select-count', 'state => state.count')], parent: 'store' },
+        { id: 'profile', title: 'Profile', tone: 'warning', items: [code('select-user', 'state => state.user')], parent: 'store', isActive: true },
+        { id: 'toolbar', title: 'Toolbar', tone: 'warning', items: [code('select-all', 'useStore()')], parent: 'store', isActive: true },
+      ],
+    },
+  ],
+};
+
+const SERVER_DEDUPE: Diagram = {
+  id: 'server-dedupe',
+  layout: 'columns',
+  steps: [
+    {
+      caption: {
+        ru: '`Header` монтируется и запрашивает пользователя по ключу `[\'user\', 1]`. В кеше такого ключа нет — уходит запрос.',
+        en: '`Header` mounts and asks for the user by the key `[\'user\', 1]`. The cache has no such key, so a request goes out.',
+      },
+      lanes: [
+        { id: 'components', title: { ru: 'Компоненты', en: 'Components' }, tone: 'accent', items: [code('header', 'Header')] },
+        { id: 'cache', title: { ru: 'Кеш', en: 'Cache' }, tone: 'success', items: [code('key', "['user', 1]")] },
+        { id: 'network', title: { ru: 'Сеть', en: 'Network' }, tone: 'warning', items: [code('request', 'GET /user/1')] },
+      ],
+    },
+    {
+      caption: {
+        ru: '`Menu` просит тот же ключ, пока запрос ещё в полёте. Он получает **тот же** промис — второго запроса нет.',
+        en: '`Menu` asks for the same key while the request is still in flight. It gets **the same** promise — no second request.',
+      },
+      lanes: [
+        { id: 'components', title: { ru: 'Компоненты', en: 'Components' }, tone: 'accent', items: [code('header', 'Header'), code('menu', 'Menu')] },
+        { id: 'cache', title: { ru: 'Кеш', en: 'Cache' }, tone: 'success', items: [code('key', "['user', 1]")] },
+        { id: 'network', title: { ru: 'Сеть', en: 'Network' }, tone: 'warning', items: [code('request', 'GET /user/1')] },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Ответ пришёл: кеш сохранил данные, и оба компонента получили их из одного запроса.',
+        en: 'The response arrived: the cache stored the data, and both components got it from a single request.',
+      },
+      lanes: [
+        { id: 'components', title: { ru: 'Компоненты', en: 'Components' }, tone: 'accent', items: [code('header', 'Header'), code('menu', 'Menu')] },
+        { id: 'cache', title: { ru: 'Кеш', en: 'Cache' }, tone: 'success', items: [code('key', "['user', 1]"), code('data', "{ name: 'Ann' }")] },
+        { id: 'network', title: { ru: 'Сеть', en: 'Network' }, tone: 'warning', items: [] },
+      ],
+    },
+  ],
+};
+
+const SERVER_INVALIDATION: Diagram = {
+  id: 'server-invalidation',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'mutation', title: 'useMutation', tone: 'accent', items: [code('mutate', 'addTodo.mutate(todo)')] },
+      { id: 'server', title: { ru: 'Сервер', en: 'Server' }, tone: 'neutral', items: [code('post', 'POST /todos')] },
+      { id: 'invalidate', title: 'onSuccess', tone: 'warning', items: [code('call', "invalidateQueries(['todos'])")] },
+      { id: 'refetch', title: { ru: 'Активные запросы', en: 'Active queries' }, tone: 'success', items: [code('list', "['todos']"), code('filtered', "['todos', { status }]")] },
+      { id: 'ui', title: 'UI', tone: 'neutral', items: [{ id: 'fresh', label: { ru: 'новая задача в списке', en: 'the new task is listed' } }] },
+    ],
+    [
+      {
+        activeId: 'mutation',
+        caption: { ru: 'Пользователь добавляет задачу — запускается мутация.', en: 'The user adds a task — the mutation runs.' },
+      },
+      {
+        activeId: 'server',
+        caption: {
+          ru: 'Сервер сохранил задачу, но кеш списка об этом не знает: там старые данные.',
+          en: 'The server saved the task, but the list cache doesn’t know: it still holds old data.',
+        },
+      },
+      {
+        activeId: 'invalidate',
+        caption: {
+          ru: 'В `onSuccess` помечаем списки устаревшими. Ключ сравнивается по префиксу — подходят все варианты `todos`.',
+          en: 'In `onSuccess` we mark the lists stale. Keys match by prefix — every `todos` variant qualifies.',
+        },
+      },
+      {
+        activeId: 'refetch',
+        caption: {
+          ru: 'Активные запросы с этими ключами сразу перезапрашиваются, неактивные обновятся при следующем использовании.',
+          en: 'Active queries with these keys refetch right away; inactive ones refresh the next time they’re used.',
+        },
+      },
+      {
+        activeId: 'ui',
+        caption: { ru: 'Список подтянул новую задачу — без перезагрузки и ручного копирования.', en: 'The list picked up the new task — no reload, no manual copying.' },
+      },
+    ],
+  ),
+};
+
+const URL_SOURCE_OF_TRUTH: Diagram = {
+  id: 'url-source-of-truth',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'click', title: { ru: 'Выбор фильтра', en: 'Picking a filter' }, tone: 'accent', items: [code('category', "category: 'games'")] },
+      { id: 'write', title: { ru: 'Запись в URL', en: 'Writing the URL' }, tone: 'warning', items: [code('set', 'setSearchParams(…)')] },
+      { id: 'url', title: 'URL', tone: 'success', items: [code('query', '?category=games')] },
+      { id: 'read', title: { ru: 'Чтение из URL', en: 'Reading the URL' }, tone: 'accent', items: [code('get', "params.get('category')")] },
+      { id: 'render', title: { ru: 'Рендер', en: 'Render' }, tone: 'neutral', items: [{ id: 'list', label: { ru: 'список игр', en: 'the games list' } }] },
+    ],
+    [
+      {
+        activeId: 'click',
+        caption: { ru: 'Пользователь выбирает категорию «Игры».', en: 'The user picks the Games category.' },
+      },
+      {
+        activeId: 'write',
+        caption: {
+          ru: 'Обработчик не кладёт значение в `useState`, а записывает его в URL.',
+          en: 'The handler doesn’t put the value into `useState`; it writes it to the URL.',
+        },
+      },
+      {
+        activeId: 'url',
+        caption: {
+          ru: 'Адрес изменился: теперь его можно отправить ссылкой, и он переживёт перезагрузку.',
+          en: 'The address changed: it can now be shared as a link and survives a reload.',
+        },
+      },
+      {
+        activeId: 'read',
+        caption: {
+          ru: 'Компонент читает фильтр из URL — это единственный источник правды.',
+          en: 'The component reads the filter from the URL — the only source of truth.',
+        },
+      },
+      {
+        activeId: 'render',
+        caption: {
+          ru: 'Список рисуется по URL. «Назад» вернёт прошлый адрес — и прошлые фильтры сами.',
+          en: 'The list renders from the URL. “Back” restores the previous address — and the previous filters with it.',
+        },
+      },
+    ],
+  ),
+};
+
+const URL_PUSH_REPLACE: Diagram = {
+  id: 'url-push-replace',
+  layout: 'columns',
+  steps: [
+    {
+      caption: {
+        ru: 'Пользователь начал вводить запрос: «r». В истории две записи в обоих случаях.',
+        en: 'The user starts typing the query: “r”. History holds two entries in both cases.',
+      },
+      lanes: [
+        { id: 'push', title: 'pushState', tone: 'warning', items: [code('push-home', '/'), code('q-1', '?q=r')] },
+        { id: 'replace', title: 'replaceState', tone: 'success', items: [code('replace-home', '/'), code('current', '?q=r')] },
+      ],
+    },
+    {
+      caption: {
+        ru: '«re», «rea»… `pushState` добавляет запись на каждую букву, `replaceState` меняет текущую.',
+        en: '“re”, “rea”… `pushState` adds an entry per letter, `replaceState` changes the current one.',
+      },
+      lanes: [
+        { id: 'push', title: 'pushState', tone: 'warning', items: [code('push-home', '/'), code('q-1', '?q=r'), code('q-2', '?q=re'), code('q-3', '?q=rea')] },
+        { id: 'replace', title: 'replaceState', tone: 'success', items: [code('replace-home', '/'), code('current', '?q=rea')] },
+      ],
+    },
+    {
+      caption: {
+        ru: '«Назад» после `pushState` вернёт на прошлую букву, после `replaceState` — уведёт со страницы поиска.',
+        en: '“Back” after `pushState` returns to the previous letter; after `replaceState` it leaves the search page.',
+      },
+      lanes: [
+        { id: 'push', title: 'pushState', tone: 'warning', items: [code('push-home', '/'), code('q-1', '?q=r'), code('q-2', '?q=re')] },
+        { id: 'replace', title: 'replaceState', tone: 'success', items: [code('replace-home', '/')] },
+      ],
+    },
+  ],
+};
+
 export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'event-loop-basic': EVENT_LOOP_BASIC,
   'event-loop-async': EVENT_LOOP_ASYNC,
@@ -930,4 +1228,11 @@ export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'redux-data-flow': REDUX_DATA_FLOW,
   'redux-combine': REDUX_COMBINE,
   'redux-middleware-onion': REDUX_MIDDLEWARE_ONION,
+  'stores-distant-consumers': STORES_DISTANT_CONSUMERS,
+  'stores-context-rerender': STORES_CONTEXT_RERENDER,
+  'stores-selector-subscription': STORES_SELECTOR_SUBSCRIPTION,
+  'server-dedupe': SERVER_DEDUPE,
+  'server-invalidation': SERVER_INVALIDATION,
+  'url-source-of-truth': URL_SOURCE_OF_TRUTH,
+  'url-push-replace': URL_PUSH_REPLACE,
 };

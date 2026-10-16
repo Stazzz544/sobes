@@ -54,6 +54,22 @@ type AnalyticsEventParams = {
     topic: string;
     score_percent: number;
   };
+  lesson_opened: {
+    tag: string;
+    step: number;
+    steps: number;
+  };
+  lesson_closed: {
+    tag: string;
+    step_reached: number;
+    steps: number;
+    finished: boolean;
+  };
+  lesson_check_answered: {
+    tag: string;
+    check_id: string;
+    result: string;
+  };
 };
 
 export type AnalyticsEventName = keyof AnalyticsEventParams;

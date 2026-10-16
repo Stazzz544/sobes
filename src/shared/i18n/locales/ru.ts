@@ -113,6 +113,7 @@ export const ru = {
       failed: 'Для зачёта нужно {percent}%',
       reread: 'Перечитайте',
       rereadStep: 'Шаг {step}. {title}',
+      rereadLessonStep: '{tag} · шаг {step}',
       byLesson: 'По урокам',
       lessonScore: '{correct} из {total}',
       nextLesson: 'Дальше: {tag}',

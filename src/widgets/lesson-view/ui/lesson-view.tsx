@@ -37,7 +37,7 @@ export const LessonView = ({
   if (isStepLesson(lesson)) {
     return (
       <LessonStepper
-        key={lesson.tag}
+        key={`${lesson.tag}:${initialStepId ?? ''}`}
         lesson={lesson}
         initialStepId={initialStepId}
         isFromTest={isFromTest}
