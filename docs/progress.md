@@ -687,4 +687,12 @@
 - `COURSES.typescript`: 11 вопросов, все уроки покрыты.
 - Все фрагменты кода из уроков проверены `tsc --strict`: ожидаемые типы — через `Equal`, ожидаемые ошибки — через `@ts-expect-error`.
 
+## Курсы: «CSS» (19.10.2026, версия 1.68.0)
+
+- Все 10 уроков пошаговые (4–5 шагов, тесты по 5–8 вопросов): `selectors`, `cascade`, `box-model`, `flexbox`, `css-grid`, `positioning`, `css-units`, `responsive`, `animations`, `modern-css`.
+- Новые вопросы `css-pos-006` и `css-anim-006` (`data/css-7.ts`): в уроках позиционирования и анимаций не хватало вопроса на итоговый тест. Всего 929 вопросов.
+- Иллюстрации `css-box-layers`, `css-flex-axes`, `css-grid-fr`; схемы `css-cascade-order`, `css-render-pipeline`.
+- `COURSES.css`: 10 вопросов, все уроки покрыты.
+- `summary` урока рендерится через `FormattedText` (пошаговый и классический урок): раньше `` ` `` и `[[термин]]` во вводном тексте показывались как есть.
+
 Дальше — `docs/roadmap.md`.

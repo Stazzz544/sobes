@@ -166,7 +166,7 @@ export const LessonStepper = ({
         <Animated.View key={index} entering={FadeIn.duration(220)} style={styles.stepBody}>
           {step ? (
             <>
-              {index === 0 ? <AppText tone="secondary">{text(lesson.summary)}</AppText> : null}
+              {index === 0 ? <FormattedText tone="secondary">{text(lesson.summary)}</FormattedText> : null}
               <AppText variant="title">{text(step.title)}</AppText>
               <ExplanationBlocks
                 blocks={step.blocks}

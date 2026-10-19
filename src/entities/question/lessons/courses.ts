@@ -137,6 +137,22 @@ const TYPESCRIPT_COURSE: Course = {
   ],
 };
 
+const CSS_COURSE: Course = {
+  topic: 'css',
+  final: [
+    { question: 'css-selectors-005', tag: 'selectors', step: 'nth-child' },
+    { question: 'css-cascade-010', tag: 'cascade', step: 'keywords' },
+    { question: 'css-box-005', tag: 'box-model', step: 'outline-flow-root' },
+    { question: 'css-flex-008', tag: 'flexbox', step: 'basis' },
+    { question: 'css-grid-004', tag: 'css-grid', step: 'fr' },
+    { question: 'css-pos-005', tag: 'positioning', step: 'absolute' },
+    { question: 'css-units-output-001', tag: 'css-units', step: 'em-rem' },
+    { question: 'css-modern-006', tag: 'responsive', step: 'fluid' },
+    { question: 'css-anim-005', tag: 'animations', step: 'performance-a11y' },
+    { question: 'css-cascade-007', tag: 'modern-css', step: 'layers' },
+  ],
+};
+
 export const COURSES: Partial<Record<TopicId, Course>> = {
   state: STATE_COURSE,
   git: GIT_COURSE,
@@ -146,4 +162,5 @@ export const COURSES: Partial<Record<TopicId, Course>> = {
   next: NEXT_COURSE,
   architecture: ARCHITECTURE_COURSE,
   typescript: TYPESCRIPT_COURSE,
+  css: CSS_COURSE,
 };

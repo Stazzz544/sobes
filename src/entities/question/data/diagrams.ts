@@ -1986,6 +1986,100 @@ const TS_DISTRIBUTION: Diagram = {
   ),
 };
 
+const CSS_CASCADE_ORDER: Diagram = {
+  id: 'css-cascade-order',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'importance', title: { ru: 'Важность', en: 'Importance' }, tone: 'warning', items: [code('important', '!important')] },
+      { id: 'inline', title: { ru: 'Инлайн-стиль', en: 'Inline style' }, tone: 'warning', items: [code('style-attr', 'style="…"')] },
+      { id: 'layers', title: { ru: 'Слои', en: 'Layers' }, tone: 'accent', items: [code('layer', '@layer')] },
+      { id: 'specificity', title: { ru: 'Специфичность', en: 'Specificity' }, tone: 'accent', items: [code('digits', '(ID, class, type)')] },
+      { id: 'order', title: { ru: 'Порядок в коде', en: 'Source order' }, tone: 'success', items: [{ id: 'last-wins', label: { ru: 'нижнее побеждает', en: 'the later one wins' } }] },
+    ],
+    [
+      {
+        activeId: 'importance',
+        caption: {
+          ru: 'Сначала важность: объявление с `!important` сильнее любого обычного — даже инлайн-стиля.',
+          en: 'Importance comes first: a declaration with `!important` beats any normal one — even an inline style.',
+        },
+      },
+      {
+        activeId: 'inline',
+        caption: {
+          ru: 'Среди равных по важности атрибут `style` сильнее любого селектора из таблицы стилей.',
+          en: 'Among equally important declarations, the `style` attribute beats any selector from a stylesheet.',
+        },
+      },
+      {
+        activeId: 'layers',
+        caption: {
+          ru: 'Потом слои `@layer`: поздний слой побеждает ранний, а стили вне слоёв — все слои.',
+          en: 'Then `@layer` layers: a later layer beats an earlier one, and unlayered styles beat every layer.',
+        },
+      },
+      {
+        activeId: 'specificity',
+        caption: {
+          ru: 'Внутри одного слоя — специфичность: разряды сравниваются слева направо.',
+          en: 'Within one layer — specificity: the digits are compared left to right.',
+        },
+      },
+      {
+        activeId: 'order',
+        caption: {
+          ru: 'Если всё равно — побеждает правило, которое стоит ниже по коду. Сравнение останавливается на первом различии.',
+          en: 'If everything is equal, the rule that comes later in the code wins. Comparison stops at the first difference.',
+        },
+      },
+    ],
+  ),
+};
+
+const CSS_RENDER_PIPELINE: Diagram = {
+  id: 'css-render-pipeline',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'style', title: 'Style', tone: 'neutral', items: [{ id: 'style-note', label: { ru: 'пересчёт стилей', en: 'recalculate styles' } }] },
+      { id: 'layout', title: 'Layout', tone: 'warning', items: [code('layout-props', 'width, top, margin')] },
+      { id: 'paint', title: 'Paint', tone: 'warning', items: [code('paint-props', 'color, background')] },
+      { id: 'composite', title: 'Composite', tone: 'success', items: [code('composite-props', 'transform, opacity')] },
+    ],
+    [
+      {
+        activeId: 'style',
+        caption: {
+          ru: 'Анимация меняет свойство на каждом кадре — браузер пересчитывает стили.',
+          en: 'An animation changes a property on every frame — the browser recalculates styles.',
+        },
+      },
+      {
+        activeId: 'layout',
+        caption: {
+          ru: '`width`, `top` и `margin` двигают соседей, поэтому заново считается раскладка…',
+          en: '`width`, `top` and `margin` move neighbors, so layout is recalculated…',
+        },
+      },
+      {
+        activeId: 'paint',
+        caption: {
+          ru: '…и перерисовываются пиксели. Всё это — на каждом кадре, в главном потоке.',
+          en: '…and pixels are repainted. All of that on every frame, on the main thread.',
+        },
+      },
+      {
+        activeId: 'composite',
+        caption: {
+          ru: '`transform` и `opacity` пропускают раскладку и отрисовку: слой элемента сдвигает композитор, часто на GPU.',
+          en: '`transform` and `opacity` skip layout and paint: the compositor moves the element’s layer, often on the GPU.',
+        },
+      },
+    ],
+  ),
+};
+
 export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'event-loop-basic': EVENT_LOOP_BASIC,
   'event-loop-async': EVENT_LOOP_ASYNC,
@@ -2028,4 +2122,6 @@ export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'arch-strangler': ARCH_STRANGLER,
   'ts-narrowing-flow': TS_NARROWING_FLOW,
   'ts-distribution': TS_DISTRIBUTION,
+  'css-cascade-order': CSS_CASCADE_ORDER,
+  'css-render-pipeline': CSS_RENDER_PIPELINE,
 };

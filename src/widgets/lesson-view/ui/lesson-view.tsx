@@ -54,7 +54,7 @@ export const LessonView = ({
     <Screen withBottomInset>
       <View style={styles.heading}>
         <AppText variant="title">{text(TAGS[tag].title)}</AppText>
-        <AppText tone="secondary">{text(lesson.summary)}</AppText>
+        <FormattedText tone="secondary">{text(lesson.summary)}</FormattedText>
       </View>
       <ExplanationBlocks blocks={lesson.blocks} />
       <Card style={styles.keyPoints}>

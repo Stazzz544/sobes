@@ -82,7 +82,9 @@ export type DiagramId =
   | 'arch-data-boundary'
   | 'arch-strangler'
   | 'ts-narrowing-flow'
-  | 'ts-distribution';
+  | 'ts-distribution'
+  | 'css-cascade-order'
+  | 'css-render-pipeline';
 
 export type DiagramText = string | LocalizedText;
 
@@ -153,7 +155,10 @@ export type IllustrationId =
   | 'arch-offset-cursor'
   | 'arch-affected-graph'
   | 'ts-type-sets'
-  | 'ts-utility-fields';
+  | 'ts-utility-fields'
+  | 'css-box-layers'
+  | 'css-flex-axes'
+  | 'css-grid-fr';
 
 export type Illustration = {
   id: IllustrationId;

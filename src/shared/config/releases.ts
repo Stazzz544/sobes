@@ -8,6 +8,20 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.68.0',
+    date: '2026-10-19',
+    changes: [
+      {
+        ru: 'Курс «CSS»: все 10 уроков стали пошаговыми — селекторы, каскад, блочная модель, Flexbox, Grid, позиционирование, единицы, адаптивность, анимации и современный CSS. Картинки блочной модели, осей Flexbox и долей `fr`, схемы порядка каскада и конвейера отрисовки, «Проверь себя», тест по каждому уроку и итоговый тест курса. Два новых вопроса: `position: sticky` и какие свойства анимировать дёшево.',
+        en: 'The CSS course: all 10 lessons are now step by step — selectors, the cascade, the box model, Flexbox, Grid, positioning, units, responsive design, animations and modern CSS. Pictures of the box model, Flexbox axes and `fr` fractions, diagrams of cascade order and the rendering pipeline, “Check yourself”, a test per lesson and a final course test. Two new questions: `position: sticky` and which properties are cheap to animate.',
+      },
+      {
+        ru: 'Вводный текст урока теперь показывает код и выделение так же, как остальной текст, — без лишних обратных кавычек.',
+        en: 'A lesson’s intro text now shows code and emphasis like the rest of the text — no stray backticks.',
+      },
+    ],
+  },
+  {
     version: '1.67.0',
     date: '2026-10-19',
     changes: [

@@ -1357,6 +1357,95 @@ const TS_UTILITY_FIELDS: Illustration = {
   },
 };
 
+const CSS_BOX_LAYERS: Illustration = {
+  id: 'css-box-layers',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 204">
+<rect x="1" y="1" width="318" height="148" rx="6" fill="none" stroke="{{color.textMuted}}" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text x="8" y="13" font-size="11" font-family="monospace" fill="{{color.textSecondary}}">margin</text>
+<rect x="15" y="17" width="290" height="120" rx="4" fill="{{color.warningSoft}}" stroke="{{color.warning}}" stroke-width="2"/>
+<text x="22" y="30" font-size="11" font-family="monospace" fill="{{color.textSecondary}}">border</text>
+<rect x="33" y="34" width="254" height="86" rx="2" fill="{{color.successSoft}}"/>
+<text x="40" y="48" font-size="11" font-family="monospace" fill="{{color.success}}">padding</text>
+<rect x="70" y="56" width="180" height="42" rx="2" fill="{{color.bgCard}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="160" y="81" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">content</text>
+<line x1="70" y1="160" x2="250" y2="160" stroke="{{color.accentText}}" stroke-width="2"/>
+<line x1="70" y1="154" x2="70" y2="166" stroke="{{color.accentText}}" stroke-width="2"/>
+<line x1="250" y1="154" x2="250" y2="166" stroke="{{color.accentText}}" stroke-width="2"/>
+<text x="160" y="176" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">width: content-box</text>
+<line x1="15" y1="186" x2="305" y2="186" stroke="{{color.success}}" stroke-width="2"/>
+<line x1="15" y1="180" x2="15" y2="192" stroke="{{color.success}}" stroke-width="2"/>
+<line x1="305" y1="180" x2="305" y2="192" stroke="{{color.success}}" stroke-width="2"/>
+<text x="160" y="202" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.success}}">width: border-box</text>
+</svg>`,
+  labels: {},
+  alt: {
+    ru: 'Слои бокса изнутри наружу: content, padding, border и внешний margin. При box-sizing: content-box ширина width — это только content. При border-box в width входят и padding, и border. margin не входит ни в одном режиме.',
+    en: 'Box layers from the inside out: content, padding, border and the outer margin. With box-sizing: content-box, width is just the content. With border-box, width includes padding and border too. margin is never included.',
+  },
+};
+
+const CSS_FLEX_AXES: Illustration = {
+  id: 'css-flex-axes',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+<text x="76" y="13" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">row</text>
+<rect x="0" y="20" width="152" height="120" rx="8" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="1"/>
+<rect x="14" y="36" width="30" height="56" rx="4" fill="{{color.accentSoft}}"/>
+<rect x="50" y="36" width="30" height="56" rx="4" fill="{{color.accentSoft}}"/>
+<rect x="86" y="36" width="30" height="56" rx="4" fill="{{color.accentSoft}}"/>
+<line x1="12" y1="112" x2="119" y2="112" stroke="{{color.accentText}}" stroke-width="2"/>
+<polygon points="118,107 118,117 126,112" fill="{{color.accentText}}"/>
+<line x1="138" y1="30" x2="138" y2="121" stroke="{{color.success}}" stroke-width="2"/>
+<polygon points="133,120 143,120 138,128" fill="{{color.success}}"/>
+<text x="244" y="13" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">column</text>
+<rect x="168" y="20" width="152" height="120" rx="8" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="1"/>
+<rect x="184" y="30" width="60" height="24" rx="4" fill="{{color.accentSoft}}"/>
+<rect x="184" y="60" width="60" height="24" rx="4" fill="{{color.accentSoft}}"/>
+<rect x="184" y="90" width="60" height="24" rx="4" fill="{{color.accentSoft}}"/>
+<line x1="300" y1="30" x2="300" y2="117" stroke="{{color.accentText}}" stroke-width="2"/>
+<polygon points="295,116 305,116 300,124" fill="{{color.accentText}}"/>
+<line x1="180" y1="129" x2="275" y2="129" stroke="{{color.success}}" stroke-width="2"/>
+<polygon points="274,124 274,134 282,129" fill="{{color.success}}"/>
+<line x1="0" y1="157" x2="18" y2="157" stroke="{{color.accentText}}" stroke-width="3"/>
+<text x="24" y="161" font-size="11" fill="{{color.textSecondary}}">{{label.main}}</text>
+<text x="24" y="176" font-size="11" font-family="monospace" fill="{{color.accentText}}">justify-content</text>
+<line x1="168" y1="157" x2="186" y2="157" stroke="{{color.success}}" stroke-width="3"/>
+<text x="192" y="161" font-size="11" fill="{{color.textSecondary}}">{{label.cross}}</text>
+<text x="192" y="176" font-size="11" font-family="monospace" fill="{{color.success}}">align-items</text>
+</svg>`,
+  labels: {
+    main: { ru: 'главная ось', en: 'main axis' },
+    cross: { ru: 'поперечная ось', en: 'cross axis' },
+  },
+  alt: {
+    ru: 'При flex-direction: row главная ось идёт слева направо, поперечная — сверху вниз. При column наоборот: главная ось вертикальная, поперечная — горизонтальная. justify-content работает вдоль главной оси, align-items — вдоль поперечной.',
+    en: 'With flex-direction: row the main axis runs left to right and the cross axis top to bottom. With column it’s reversed: the main axis is vertical and the cross axis horizontal. justify-content works along the main axis, align-items along the cross axis.',
+  },
+};
+
+const CSS_GRID_FR: Illustration = {
+  id: 'css-grid-fr',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 120">
+<text x="160" y="13" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">400px: 80px 1fr 2fr; gap: 16px</text>
+<rect x="0" y="24" width="64" height="50" rx="4" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="32" y="53" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">80px</text>
+<rect x="64" y="24" width="12.8" height="50" fill="{{color.warningSoft}}"/>
+<rect x="76.8" y="24" width="76.8" height="50" rx="4" fill="{{color.accentSoft}}"/>
+<text x="115.2" y="46" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">1fr</text>
+<text x="115.2" y="63" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">96px</text>
+<rect x="153.6" y="24" width="12.8" height="50" fill="{{color.warningSoft}}"/>
+<rect x="166.4" y="24" width="153.6" height="50" rx="4" fill="{{color.accentSoft}}"/>
+<text x="243.2" y="46" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">2fr</text>
+<text x="243.2" y="63" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">192px</text>
+<text x="160" y="96" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">400 − 80 − 2 × 16 = 288</text>
+<text x="160" y="113" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">1fr = 288 / 3 = 96px</text>
+</svg>`,
+  labels: {},
+  alt: {
+    ru: 'Сетка шириной 400px с колонками 80px, 1fr и 2fr и промежутками по 16px. Из 400 вычитают фиксированную колонку и два промежутка — остаётся 288px. Это три доли: 1fr = 96px, 2fr = 192px.',
+    en: 'A 400px grid with columns 80px, 1fr and 2fr and 16px gaps. Subtract the fixed column and two gaps from 400 — 288px remain. That’s three fractions: 1fr = 96px, 2fr = 192px.',
+  },
+};
+
 export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'state-kinds': STATE_KINDS,
   'state-id-vs-copy': STATE_ID_VS_COPY,
@@ -1395,4 +1484,7 @@ export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'arch-affected-graph': ARCH_AFFECTED_GRAPH,
   'ts-type-sets': TS_TYPE_SETS,
   'ts-utility-fields': TS_UTILITY_FIELDS,
+  'css-box-layers': CSS_BOX_LAYERS,
+  'css-flex-axes': CSS_FLEX_AXES,
+  'css-grid-fr': CSS_GRID_FR,
 };
