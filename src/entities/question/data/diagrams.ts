@@ -1475,6 +1475,140 @@ const TDD_CYCLE: Diagram = {
   ),
 };
 
+const NODE_MODULE_RESOLUTION: Diagram = {
+  id: 'node-module-resolution',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'utils', title: '/app/src/utils/node_modules', tone: 'neutral', items: [{ id: 'utils-miss', label: { ru: 'нет папки', en: 'no folder' } }] },
+      { id: 'src', title: '/app/src/node_modules', tone: 'neutral', items: [{ id: 'src-miss', label: { ru: 'нет lodash', en: 'no lodash' } }] },
+      { id: 'app', title: '/app/node_modules', tone: 'success', items: [code('found', 'lodash/')] },
+      { id: 'entry', title: 'package.json', tone: 'accent', items: [code('exports', '"exports" / "main"')] },
+    ],
+    [
+      {
+        activeId: 'utils',
+        caption: {
+          ru: '`require(\'lodash\')` в файле `/app/src/utils/date.js`. Голое имя пакета Node ищет в `node_modules` рядом с файлом…',
+          en: '`require(\'lodash\')` in `/app/src/utils/date.js`. Node looks for a bare package name in `node_modules` next to the file…',
+        },
+      },
+      {
+        activeId: 'src',
+        caption: { ru: '…потом поднимается на папку выше…', en: '…then goes one folder up…' },
+      },
+      {
+        activeId: 'app',
+        caption: {
+          ru: '…и так до корня, пока не найдёт первый подходящий `node_modules`. Здесь — в корне проекта.',
+          en: '…and so on up to the root until the first matching `node_modules`. Here it’s at the project root.',
+        },
+      },
+      {
+        activeId: 'entry',
+        caption: {
+          ru: 'Точку входа пакета задают `exports` или `main` в его `package.json`. Всё, чего нет в `exports`, снаружи недоступно.',
+          en: 'The package entry point comes from `exports` or `main` in its `package.json`. Anything missing from `exports` is off limits from outside.',
+        },
+      },
+    ],
+  ),
+};
+
+const NODE_LOOP_PHASES: Diagram = {
+  id: 'node-loop-phases',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'timers', title: 'timers', tone: 'warning', items: [code('timeout', 'setTimeout'), code('interval', 'setInterval')] },
+      { id: 'poll', title: 'poll', tone: 'accent', items: [{ id: 'io', label: { ru: 'колбэки ввода-вывода', en: 'I/O callbacks' } }] },
+      { id: 'check', title: 'check', tone: 'success', items: [code('immediate', 'setImmediate')] },
+      { id: 'close', title: 'close', tone: 'neutral', items: [code('close-cb', "socket.on('close')")] },
+    ],
+    [
+      {
+        activeId: 'timers',
+        caption: {
+          ru: 'Фаза **timers**: выполняются колбэки таймеров, чей срок истёк. Между любыми двумя колбэками Node опустошает очереди `nextTick` и промисов.',
+          en: 'The **timers** phase runs callbacks of expired timers. Between any two callbacks Node drains the `nextTick` and promise queues.',
+        },
+      },
+      {
+        activeId: 'poll',
+        caption: {
+          ru: 'Фаза **poll**: колбэки ввода-вывода — прочитанный файл, пришедший запрос. Если дел нет, цикл ждёт здесь новых событий.',
+          en: 'The **poll** phase: I/O callbacks — a file was read, a request arrived. With nothing else to do, the loop waits here for events.',
+        },
+      },
+      {
+        activeId: 'check',
+        caption: {
+          ru: 'Фаза **check**: колбэки `setImmediate`. Она идёт сразу после poll — поэтому внутри колбэка ввода-вывода `setImmediate` всегда раньше `setTimeout(…, 0)`.',
+          en: 'The **check** phase: `setImmediate` callbacks. It follows poll directly — so inside an I/O callback `setImmediate` always beats `setTimeout(…, 0)`.',
+        },
+      },
+      {
+        activeId: 'close',
+        caption: {
+          ru: 'Фаза **close**: обработчики закрытия сокетов и потоков. Затем новый круг — снова timers.',
+          en: 'The **close** phase: close handlers for sockets and streams. Then a new round — timers again.',
+        },
+      },
+    ],
+  ),
+};
+
+const EXPRESS_MIDDLEWARE_CHAIN: Diagram = {
+  id: 'express-middleware-chain',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'logger', title: 'logger', tone: 'neutral', items: [code('logger-next', 'next()')] },
+      { id: 'json', title: 'express.json()', tone: 'accent', items: [code('body', 'req.body')] },
+      { id: 'auth', title: 'requireAuth', tone: 'warning', items: [code('auth-next', 'next() / 401')] },
+      { id: 'route', title: "app.get('/admin')", tone: 'success', items: [code('send', 'res.send()')] },
+      { id: 'errors', title: '(err, req, res, next)', tone: 'warning', items: [code('status', '500')] },
+    ],
+    [
+      {
+        activeId: 'logger',
+        caption: {
+          ru: 'Запрос проходит middleware в порядке регистрации. Логгер записал строку и вызвал `next()` — без него запрос повис бы.',
+          en: 'A request passes middleware in registration order. The logger wrote a line and called `next()` — without it the request would hang.',
+        },
+      },
+      {
+        activeId: 'json',
+        caption: {
+          ru: '`express.json()` прочитал тело и положил разобранный JSON в `req.body`.',
+          en: '`express.json()` read the body and put the parsed JSON into `req.body`.',
+        },
+      },
+      {
+        activeId: 'auth',
+        caption: {
+          ru: 'Проверка входа стоит **до** защищённых маршрутов: нет сессии — ответ 401, есть — `next()`.',
+          en: 'The auth check sits **before** protected routes: no session — a 401 reply, otherwise `next()`.',
+        },
+      },
+      {
+        activeId: 'route',
+        caption: {
+          ru: 'Маршрут отвечает через `res.send()`. После ответа менять заголовки уже нельзя.',
+          en: 'The route replies with `res.send()`. After the reply, headers can’t be changed.',
+        },
+      },
+      {
+        activeId: 'errors',
+        caption: {
+          ru: 'Если кто-то бросил ошибку или вызвал `next(err)`, управление прыгает в обработчик с четырьмя параметрами — он подключён последним.',
+          en: 'If anyone throws or calls `next(err)`, control jumps to the four-parameter handler — it’s registered last.',
+        },
+      },
+    ],
+  ),
+};
+
 export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'event-loop-basic': EVENT_LOOP_BASIC,
   'event-loop-async': EVENT_LOOP_ASYNC,
@@ -1506,4 +1640,7 @@ export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'mocks-fake-timers': MOCKS_FAKE_TIMERS,
   'e2e-actionability': E2E_ACTIONABILITY,
   'tdd-cycle': TDD_CYCLE,
+  'node-module-resolution': NODE_MODULE_RESOLUTION,
+  'node-loop-phases': NODE_LOOP_PHASES,
+  'express-middleware-chain': EXPRESS_MIDDLEWARE_CHAIN,
 };

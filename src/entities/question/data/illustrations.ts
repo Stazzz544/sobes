@@ -634,7 +634,7 @@ const HTML_FORMDATA: Illustration = {
     missing: { ru: 'нет в данных', en: 'not in data' },
     noName: { ru: 'без name', en: 'no name' },
     unchecked: { ru: 'чекбокс не отмечен', en: 'unchecked box' },
-    checked: { ru: 'отмечен без value: on', en: 'checked no value: on' },
+    checked: { ru: 'отмечен: value «on»', en: 'checked: value “on”' },
   },
   alt: {
     ru: 'Что попадёт в FormData: поле с name и readonly-поле отправятся; disabled-поле, поле без name и неотмеченный чекбокс в данных отсутствуют; отмеченный чекбокс без value отправляет строку on.',
@@ -774,6 +774,79 @@ const TESTING_QUERY_VARIANTS: Illustration = {
   },
 };
 
+const NODE_THREADS: Illustration = {
+  id: 'node-threads',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 214">
+<rect x="0" y="0" width="320" height="58" rx="10" fill="{{color.accentSoft}}"/>
+<text x="12" y="22" font-size="13" font-weight="bold" fill="{{color.accentText}}">{{label.main}}</text>
+<text x="12" y="44" font-size="11" fill="{{color.textSecondary}}">{{label.mainNote}}</text>
+<line x1="80" y1="60" x2="80" y2="82" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="75,80 85,80 80,88" fill="{{color.textMuted}}"/>
+<line x1="240" y1="60" x2="240" y2="82" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="235,80 245,80 240,88" fill="{{color.textMuted}}"/>
+<rect x="0" y="90" width="154" height="74" rx="10" fill="{{color.warningSoft}}"/>
+<text x="12" y="110" font-size="12" font-weight="bold" fill="{{color.textPrimary}}">{{label.pool}}</text>
+<text x="12" y="130" font-size="11" font-family="monospace" fill="{{color.textPrimary}}">fs · dns.lookup</text>
+<text x="12" y="150" font-size="11" font-family="monospace" fill="{{color.textPrimary}}">zlib · crypto</text>
+<rect x="166" y="90" width="154" height="74" rx="10" fill="{{color.successSoft}}"/>
+<text x="178" y="110" font-size="12" font-weight="bold" fill="{{color.success}}">{{label.os}}</text>
+<text x="178" y="130" font-size="11" font-family="monospace" fill="{{color.textPrimary}}">TCP · HTTP</text>
+<text x="178" y="150" font-size="11" fill="{{color.textSecondary}}">{{label.osNote}}</text>
+<rect x="1" y="174" width="318" height="38" rx="10" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="2"/>
+<text x="12" y="198" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">worker_threads</text>
+<text x="308" y="198" font-size="11" text-anchor="end" fill="{{color.textSecondary}}">{{label.worker}}</text>
+</svg>`,
+  labels: {
+    main: { ru: 'Главный поток JS', en: 'Main JS thread' },
+    mainNote: { ru: 'ваш код и колбэки', en: 'your code, callbacks' },
+    pool: { ru: 'Пул потоков libuv', en: 'libuv thread pool' },
+    os: { ru: 'Ядро ОС', en: 'OS kernel' },
+    osNote: { ru: 'без потоков', en: 'no threads' },
+    worker: { ru: 'свой JS и цикл', en: 'own JS and loop' },
+  },
+  alt: {
+    ru: 'Главный поток JavaScript выполняет ваш код и все колбэки. Файловые операции, dns.lookup, zlib и crypto уходят в пул потоков libuv, сетевой ввод-вывод — в ядро ОС без отдельных потоков. worker_threads запускают отдельный JavaScript со своим циклом событий.',
+    en: 'The main JavaScript thread runs your code and every callback. File operations, dns.lookup, zlib and crypto go to the libuv thread pool; network I/O goes to the OS kernel without extra threads. worker_threads run separate JavaScript with its own event loop.',
+  },
+};
+
+const NODE_STREAM_MEMORY: Illustration = {
+  id: 'node-stream-memory',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 176">
+<text x="0" y="14" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">readFile</text>
+<rect x="0" y="22" width="60" height="44" rx="8" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="2"/>
+<text x="30" y="49" font-size="12" text-anchor="middle" fill="{{color.textPrimary}}">2 GB</text>
+<line x1="64" y1="44" x2="96" y2="44" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="94,39 94,49 102,44" fill="{{color.textMuted}}"/>
+<rect x="104" y="22" width="216" height="44" rx="8" fill="{{color.dangerSoft}}"/>
+<text x="212" y="42" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.danger}}">{{label.memoryAll}}</text>
+<text x="212" y="58" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.tenUsers}}</text>
+<text x="0" y="98" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">createReadStream</text>
+<rect x="0" y="106" width="60" height="44" rx="8" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="2"/>
+<text x="30" y="133" font-size="12" text-anchor="middle" fill="{{color.textPrimary}}">2 GB</text>
+<rect x="72" y="118" width="22" height="20" rx="4" fill="{{color.successSoft}}"/>
+<rect x="100" y="118" width="22" height="20" rx="4" fill="{{color.successSoft}}"/>
+<rect x="128" y="118" width="22" height="20" rx="4" fill="{{color.successSoft}}"/>
+<line x1="156" y1="128" x2="196" y2="128" stroke="{{color.success}}" stroke-width="2"/>
+<polygon points="194,123 194,133 202,128" fill="{{color.success}}"/>
+<rect x="204" y="106" width="116" height="44" rx="8" fill="{{color.successSoft}}"/>
+<text x="262" y="126" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.success}}">{{label.client}}</text>
+<text x="262" y="142" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.chunks}}</text>
+<text x="0" y="172" font-size="11" fill="{{color.textSecondary}}">{{label.note}}</text>
+</svg>`,
+  labels: {
+    memoryAll: { ru: 'весь файл в памяти', en: 'whole file in memory' },
+    tenUsers: { ru: '10 клиентов — 20 ГБ', en: '10 clients — 20 GB' },
+    client: { ru: 'клиент', en: 'client' },
+    chunks: { ru: 'по 64 КБ', en: '64 KB at a time' },
+    note: { ru: 'память не растёт', en: 'memory stays flat' },
+  },
+  alt: {
+    ru: 'Сверху readFile читает файл на 2 ГБ в память целиком: десять одновременных скачиваний — 20 ГБ. Снизу createReadStream отдаёт файл клиенту кусками по 64 КБ, и память не растёт с размером файла.',
+    en: 'Top: readFile loads a 2 GB file into memory entirely — ten simultaneous downloads take 20 GB. Bottom: createReadStream sends the file to the client in 64 KB chunks, and memory doesn’t grow with the file size.',
+  },
+};
+
 export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'state-kinds': STATE_KINDS,
   'state-id-vs-copy': STATE_ID_VS_COPY,
@@ -797,4 +870,6 @@ export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'a11y-hidden-vs-inert': A11Y_HIDDEN_VS_INERT,
   'testing-pyramid-trophy': TESTING_PYRAMID_TROPHY,
   'testing-query-variants': TESTING_QUERY_VARIANTS,
+  'node-threads': NODE_THREADS,
+  'node-stream-memory': NODE_STREAM_MEMORY,
 };

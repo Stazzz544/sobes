@@ -69,9 +69,26 @@ const TESTING_COURSE: Course = {
   ],
 };
 
+const NODE_COURSE: Course = {
+  topic: 'node',
+  final: [
+    { question: 'node-runtime-env-file-001', tag: 'node-runtime', step: 'process' },
+    { question: 'node-runtime-inspect-depth-001', tag: 'node-runtime', step: 'builtins' },
+    { question: 'node-modules-require-cache-001', tag: 'node-modules', step: 'cache' },
+    { question: 'node-modules-require-esm-001', tag: 'node-modules', step: 'esm' },
+    { question: 'node-runtime-exit-events-001', tag: 'node-event-loop', step: 'keep-alive' },
+    { question: 'node-async-max-listeners-001', tag: 'node-async', step: 'emitter' },
+    { question: 'node-async-local-storage-001', tag: 'node-async', step: 'parallel' },
+    { question: 'node-streams-hex-001', tag: 'node-streams', step: 'buffers' },
+    { question: 'node-streams-readline-001', tag: 'node-streams', step: 'iteration' },
+    { question: 'node-http-express5-async-001', tag: 'node-http', step: 'errors' },
+  ],
+};
+
 export const COURSES: Partial<Record<TopicId, Course>> = {
   state: STATE_COURSE,
   git: GIT_COURSE,
   html: HTML_COURSE,
   testing: TESTING_COURSE,
+  node: NODE_COURSE,
 };

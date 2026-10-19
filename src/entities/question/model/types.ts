@@ -71,7 +71,10 @@ export type DiagramId =
   | 'a11y-tab-order'
   | 'mocks-fake-timers'
   | 'e2e-actionability'
-  | 'tdd-cycle';
+  | 'tdd-cycle'
+  | 'node-module-resolution'
+  | 'node-loop-phases'
+  | 'express-middleware-chain';
 
 export type DiagramText = string | LocalizedText;
 
@@ -127,7 +130,9 @@ export type IllustrationId =
   | 'a11y-name-priority'
   | 'a11y-hidden-vs-inert'
   | 'testing-pyramid-trophy'
-  | 'testing-query-variants';
+  | 'testing-query-variants'
+  | 'node-threads'
+  | 'node-stream-memory';
 
 export type Illustration = {
   id: IllustrationId;

@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.64.0',
+    date: '2026-10-19',
+    changes: [
+      {
+        ru: 'Курс «Node.js»: все 6 уроков стали пошаговыми — рантайм и потоки, модули и npm, event loop, асинхронность и ошибки, буферы и потоки, HTTP и Express. Схемы фаз цикла событий и цепочки middleware, «Проверь себя», тест по каждому уроку и итоговый тест курса.',
+        en: 'The Node.js course: all 6 lessons are now step by step — runtime and threads, modules and npm, the event loop, async code and errors, buffers and streams, HTTP and Express. Diagrams of event loop phases and the middleware chain, “Check yourself”, a test per lesson and a final course test.',
+      },
+    ],
+  },
+  {
     version: '1.63.0',
     date: '2026-10-19',
     changes: [
