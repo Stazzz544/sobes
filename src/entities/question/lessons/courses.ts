@@ -85,10 +85,28 @@ const NODE_COURSE: Course = {
   ],
 };
 
+const NEXT_COURSE: Course = {
+  topic: 'next',
+  final: [
+    { question: 'next-routing-dynamic-001', tag: 'next-routing', step: 'files' },
+    { question: 'next-routing-global-error-001', tag: 'next-routing', step: 'special-files' },
+    { question: 'next-components-use-server-001', tag: 'next-components', step: 'boundaries' },
+    { question: 'next-rendering-static-shell-001', tag: 'next-rendering', step: 'streaming' },
+    { question: 'next-rendering-static-export-001', tag: 'next-rendering', step: 'build-time' },
+    { question: 'next-data-update-tag-001', tag: 'next-data', step: 'revalidate' },
+    { question: 'next-routing-router-refresh-001', tag: 'next-data', step: 'revalidate' },
+    { question: 'next-actions-body-limit-001', tag: 'next-actions', step: 'cookies-limits' },
+    { question: 'next-routing-redirect-001', tag: 'next-actions', step: 'server-actions' },
+    { question: 'next-optimization-remote-images-001', tag: 'next-optimization', step: 'images' },
+    { question: 'next-optimization-blur-001', tag: 'next-optimization', step: 'images' },
+  ],
+};
+
 export const COURSES: Partial<Record<TopicId, Course>> = {
   state: STATE_COURSE,
   git: GIT_COURSE,
   html: HTML_COURSE,
   testing: TESTING_COURSE,
   node: NODE_COURSE,
+  next: NEXT_COURSE,
 };

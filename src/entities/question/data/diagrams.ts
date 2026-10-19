@@ -1609,6 +1609,134 @@ const EXPRESS_MIDDLEWARE_CHAIN: Diagram = {
   ),
 };
 
+const NEXT_CLIENT_BOUNDARY: Diagram = {
+  id: 'next-client-boundary',
+  layout: 'tree',
+  steps: [
+    {
+      caption: {
+        ru: 'По умолчанию всё дерево серверное: компоненты рендерятся на сервере, их код в браузер не попадает.',
+        en: 'By default the whole tree is server-side: components render on the server, and their code never reaches the browser.',
+      },
+      lanes: [
+        { id: 'page', title: 'Page', tone: 'success', items: [{ id: 'page-server', label: { ru: 'сервер', en: 'server' } }] },
+        { id: 'modal', title: 'Modal', tone: 'success', items: [{ id: 'modal-server', label: { ru: 'сервер', en: 'server' } }], parent: 'page' },
+        { id: 'cart', title: 'Cart', tone: 'success', items: [{ id: 'cart-server', label: { ru: 'сервер', en: 'server' } }], parent: 'modal' },
+      ],
+    },
+    {
+      caption: {
+        ru: '`Modal` нужно состояние — в его файле `"use client"`. Если `Modal` **импортирует** `Cart`, тот тоже станет клиентским и не сможет читать базу.',
+        en: '`Modal` needs state — its file gets `"use client"`. If `Modal` **imports** `Cart`, that becomes client code too and can’t read the database.',
+      },
+      lanes: [
+        { id: 'page', title: 'Page', tone: 'success', items: [{ id: 'page-server', label: { ru: 'сервер', en: 'server' } }] },
+        { id: 'modal', title: 'Modal', tone: 'accent', items: [code('use-client', '"use client"')], parent: 'page', isActive: true },
+        { id: 'cart', title: 'Cart', tone: 'warning', items: [code('cart-import', 'import Cart')], parent: 'modal', isActive: true },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Решение: серверная `Page` рендерит `<Modal><Cart /></Modal>`. `Cart` — серверный и приходит в `Modal` готовым результатом через `children`.',
+        en: 'The fix: the server `Page` renders `<Modal><Cart /></Modal>`. `Cart` stays on the server and arrives in `Modal` as a ready result through `children`.',
+      },
+      lanes: [
+        { id: 'page', title: 'Page', tone: 'success', items: [{ id: 'page-server', label: { ru: 'сервер', en: 'server' } }] },
+        { id: 'modal', title: 'Modal', tone: 'accent', items: [code('use-client', '"use client"')], parent: 'page' },
+        { id: 'cart', title: 'Cart', tone: 'success', items: [code('children', 'children')], parent: 'modal', isActive: true },
+      ],
+    },
+  ],
+};
+
+const NEXT_DATA_WATERFALL: Diagram = {
+  id: 'next-data-waterfall',
+  layout: 'columns',
+  steps: [
+    {
+      caption: {
+        ru: 'Два `await` подряд: `getOrders()` стартует, только когда закончился `getUser()`.',
+        en: 'Two `await`s in a row: `getOrders()` starts only after `getUser()` finishes.',
+      },
+      lanes: [
+        { id: 'serial', title: { ru: 'Подряд', en: 'Sequential' }, tone: 'warning', items: [code('user-1', 'getUser 300 ms')] },
+        { id: 'parallel', title: 'Promise.all', tone: 'success', items: [code('user-2', 'getUser 300 ms'), code('orders-2', 'getOrders 400 ms')] },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Слева второй запрос только начался, а справа оба уже идут одновременно.',
+        en: 'On the left the second request has just started; on the right both are already running together.',
+      },
+      lanes: [
+        { id: 'serial', title: { ru: 'Подряд', en: 'Sequential' }, tone: 'warning', items: [code('user-1', 'getUser 300 ms'), code('orders-1', 'getOrders 400 ms')] },
+        { id: 'parallel', title: 'Promise.all', tone: 'success', items: [code('user-2', 'getUser 300 ms'), code('orders-2', 'getOrders 400 ms')] },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Итог: водопад ждёт сумму — 700 мс, параллельная загрузка — самый долгий запрос, 400 мс.',
+        en: 'Result: the waterfall waits for the sum — 700 ms; parallel loading waits for the slowest request — 400 ms.',
+      },
+      lanes: [
+        { id: 'serial', title: { ru: 'Подряд', en: 'Sequential' }, tone: 'warning', items: [code('total-1', '= 700 ms')] },
+        { id: 'parallel', title: 'Promise.all', tone: 'success', items: [code('total-2', '= 400 ms')] },
+      ],
+    },
+  ],
+};
+
+const NEXT_ACTION_FLOW: Diagram = {
+  id: 'next-action-flow',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'form', title: '<form action={createPost}>', tone: 'accent', items: [] },
+      { id: 'post', title: 'POST', tone: 'neutral', items: [{ id: 'network', label: { ru: 'запрос по сети', en: 'a network request' } }] },
+      { id: 'action', title: "'use server'", tone: 'warning', items: [code('session', 'getSession()'), code('write', 'db.post.create')] },
+      { id: 'revalidate', title: 'revalidatePath', tone: 'success', items: [code('path', "'/posts'")] },
+      { id: 'redirect', title: 'redirect', tone: 'success', items: [code('to', '/posts/42')] },
+    ],
+    [
+      {
+        activeId: 'form',
+        caption: {
+          ru: 'Форма передаёт Server Action в `action`. Без JavaScript браузер отправит её обычным POST — прогрессивное улучшение.',
+          en: 'The form passes a Server Action to `action`. Without JavaScript the browser sends a plain POST — progressive enhancement.',
+        },
+      },
+      {
+        activeId: 'post',
+        caption: {
+          ru: 'Вызов action — это POST-запрос к публичному эндпоинту. Отправить его можно и в обход интерфейса.',
+          en: 'Calling an action is a POST to a public endpoint. It can be sent bypassing the UI too.',
+        },
+      },
+      {
+        activeId: 'action',
+        caption: {
+          ru: 'Поэтому первым делом action проверяет сессию и права, валидирует данные и только потом пишет в базу.',
+          en: 'So the action first checks the session and permissions, validates the data and only then writes to the database.',
+        },
+      },
+      {
+        activeId: 'revalidate',
+        caption: {
+          ru: 'Сбрасывает кеш страниц, которые показывают изменённые данные.',
+          en: 'It invalidates the cache of pages that show the changed data.',
+        },
+      },
+      {
+        activeId: 'redirect',
+        caption: {
+          ru: 'И перенаправляет на новый пост. `redirect` бросает служебную ошибку, поэтому его вызывают **после** `try/catch`.',
+          en: 'Then it redirects to the new post. `redirect` throws an internal error, so it’s called **after** `try/catch`.',
+        },
+      },
+    ],
+  ),
+};
+
 export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'event-loop-basic': EVENT_LOOP_BASIC,
   'event-loop-async': EVENT_LOOP_ASYNC,
@@ -1643,4 +1771,7 @@ export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'node-module-resolution': NODE_MODULE_RESOLUTION,
   'node-loop-phases': NODE_LOOP_PHASES,
   'express-middleware-chain': EXPRESS_MIDDLEWARE_CHAIN,
+  'next-client-boundary': NEXT_CLIENT_BOUNDARY,
+  'next-data-waterfall': NEXT_DATA_WATERFALL,
+  'next-action-flow': NEXT_ACTION_FLOW,
 };

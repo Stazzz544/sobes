@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.65.0',
+    date: '2026-10-19',
+    changes: [
+      {
+        ru: 'Курс «Next.js»: все 6 уроков стали пошаговыми — маршруты App Router, серверные и клиентские компоненты, рендеринг и гидрация, данные и кеш, Server Actions и API, оптимизация. Схемы вложенности файлов, границы клиента, водопада запросов и пути Server Action, «Проверь себя», тест по каждому уроку и итоговый тест курса.',
+        en: 'The Next.js course: all 6 lessons are now step by step — App Router routes, server and client components, rendering and hydration, data and cache, Server Actions and APIs, optimization. Diagrams of file nesting, the client boundary, a request waterfall and a Server Action’s path, “Check yourself”, a test per lesson and a final course test.',
+      },
+    ],
+  },
+  {
     version: '1.64.0',
     date: '2026-10-19',
     changes: [

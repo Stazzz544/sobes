@@ -847,6 +847,94 @@ const NODE_STREAM_MEMORY: Illustration = {
   },
 };
 
+const NEXT_FILE_NESTING: Illustration = {
+  id: 'next-file-nesting',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 216">
+<rect x="1" y="1" width="318" height="214" rx="12" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="2"/>
+<text x="12" y="20" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">layout.tsx</text>
+<rect x="12" y="28" width="296" height="178" rx="10" fill="{{color.bgCard}}"/>
+<text x="22" y="46" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.textSecondary}}">template.tsx</text>
+<rect x="22" y="54" width="276" height="144" rx="10" fill="{{color.dangerSoft}}"/>
+<text x="32" y="72" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.danger}}">error.tsx</text>
+<rect x="32" y="80" width="256" height="110" rx="10" fill="{{color.warningSoft}}"/>
+<text x="42" y="98" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">loading.tsx</text>
+<rect x="42" y="106" width="236" height="76" rx="10" fill="{{color.accentSoft}}"/>
+<text x="52" y="124" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.accentText}}">not-found.tsx</text>
+<rect x="52" y="132" width="216" height="42" rx="8" fill="{{color.successSoft}}"/>
+<text x="160" y="158" font-size="13" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.success}}">page.tsx</text>
+</svg>`,
+  labels: {},
+  alt: {
+    ru: 'Вложенность специальных файлов одного сегмента снаружи внутрь: layout, template, error, loading, not-found и в самом центре page.',
+    en: 'Nesting of one segment’s special files from outside in: layout, template, error, loading, not-found and page at the very center.',
+  },
+};
+
+const NEXT_STATIC_SHELL: Illustration = {
+  id: 'next-static-shell',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200">
+<rect x="1" y="1" width="318" height="198" rx="12" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="2"/>
+<rect x="12" y="12" width="296" height="34" rx="8" fill="{{color.successSoft}}"/>
+<text x="22" y="34" font-size="12" font-weight="bold" fill="{{color.success}}">{{label.header}}</text>
+<text x="298" y="34" font-size="11" text-anchor="end" fill="{{color.textSecondary}}">{{label.fromCdn}}</text>
+<rect x="12" y="54" width="296" height="34" rx="8" fill="{{color.successSoft}}"/>
+<text x="22" y="76" font-size="12" font-weight="bold" fill="{{color.success}}">{{label.title}}</text>
+<text x="298" y="76" font-size="11" text-anchor="end" fill="{{color.textSecondary}}">{{label.fromCdn}}</text>
+<rect x="13" y="97" width="294" height="62" rx="8" fill="{{color.bgCard}}" stroke="{{color.accent}}" stroke-width="2" stroke-dasharray="6 4"/>
+<text x="22" y="118" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.accentText}}">Suspense</text>
+<text x="22" y="138" font-size="12" fill="{{color.textSecondary}}">{{label.fallback}}</text>
+<text x="298" y="150" font-size="11" text-anchor="end" fill="{{color.accentText}}">{{label.streamed}}</text>
+<rect x="12" y="166" width="296" height="24" rx="6" fill="{{color.successSoft}}"/>
+<text x="22" y="182" font-size="11" font-weight="bold" fill="{{color.success}}">{{label.footer}}</text>
+</svg>`,
+  labels: {
+    header: { ru: 'Шапка', en: 'Header' },
+    title: { ru: 'Заголовок статьи', en: 'Article title' },
+    fromCdn: { ru: 'сразу из кеша', en: 'instantly cached' },
+    fallback: { ru: 'заглушка «Загрузка…»', en: 'fallback “Loading…”' },
+    streamed: { ru: 'придёт потоком', en: 'streamed later' },
+    footer: { ru: 'Подвал', en: 'Footer' },
+  },
+  alt: {
+    ru: 'Страница со статической оболочкой: шапка, заголовок и подвал отдаются сразу из кеша, а на месте границы Suspense стоит заглушка «Загрузка…», и содержимое этого блока придёт потоком во время запроса.',
+    en: 'A page with a static shell: the header, title and footer are served instantly from cache, while a Suspense boundary shows a “Loading…” fallback, and that block’s content streams in during the request.',
+  },
+};
+
+const NEXT_IMAGE_CLS: Illustration = {
+  id: 'next-image-cls',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 196">
+<text x="76" y="14" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.danger}}">{{label.without}}</text>
+<rect x="0" y="24" width="152" height="10" rx="4" fill="{{color.textMuted}}"/>
+<rect x="0" y="40" width="120" height="10" rx="4" fill="{{color.textMuted}}"/>
+<rect x="0" y="62" width="152" height="70" rx="8" fill="{{color.dangerSoft}}"/>
+<text x="76" y="101" font-size="11" text-anchor="middle" fill="{{color.danger}}">{{label.loaded}}</text>
+<rect x="0" y="140" width="152" height="10" rx="4" fill="{{color.textMuted}}"/>
+<rect x="0" y="156" width="110" height="10" rx="4" fill="{{color.textMuted}}"/>
+<text x="76" y="190" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.jump}}</text>
+<text x="244" y="14" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.success}}">{{label.with}}</text>
+<rect x="168" y="24" width="152" height="10" rx="4" fill="{{color.textMuted}}"/>
+<rect x="168" y="40" width="120" height="10" rx="4" fill="{{color.textMuted}}"/>
+<rect x="169" y="63" width="150" height="68" rx="8" fill="{{color.successSoft}}" stroke="{{color.success}}" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="244" y="101" font-size="11" text-anchor="middle" fill="{{color.success}}">{{label.reserved}}</text>
+<rect x="168" y="140" width="152" height="10" rx="4" fill="{{color.textMuted}}"/>
+<rect x="168" y="156" width="110" height="10" rx="4" fill="{{color.textMuted}}"/>
+<text x="244" y="190" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.stays}}</text>
+</svg>`,
+  labels: {
+    without: { ru: 'Без размеров', en: 'No dimensions' },
+    with: { ru: 'width и height', en: 'width and height' },
+    loaded: { ru: 'картинка догрузилась', en: 'image arrived late' },
+    reserved: { ru: 'место занято заранее', en: 'space reserved' },
+    jump: { ru: 'текст прыгнул вниз', en: 'text jumped down' },
+    stays: { ru: 'текст на месте', en: 'text stays put' },
+  },
+  alt: {
+    ru: 'Слева картинка без размеров: она догрузилась и сдвинула текст вниз — это сдвиг макета. Справа у картинки заданы width и height: место зарезервировано заранее, и текст остаётся на месте.',
+    en: 'Left: an image without dimensions arrived late and pushed the text down — a layout shift. Right: the image has width and height: space is reserved in advance, and the text stays put.',
+  },
+};
+
 export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'state-kinds': STATE_KINDS,
   'state-id-vs-copy': STATE_ID_VS_COPY,
@@ -872,4 +960,7 @@ export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'testing-query-variants': TESTING_QUERY_VARIANTS,
   'node-threads': NODE_THREADS,
   'node-stream-memory': NODE_STREAM_MEMORY,
+  'next-file-nesting': NEXT_FILE_NESTING,
+  'next-static-shell': NEXT_STATIC_SHELL,
+  'next-image-cls': NEXT_IMAGE_CLS,
 };

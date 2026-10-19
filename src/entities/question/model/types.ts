@@ -74,7 +74,10 @@ export type DiagramId =
   | 'tdd-cycle'
   | 'node-module-resolution'
   | 'node-loop-phases'
-  | 'express-middleware-chain';
+  | 'express-middleware-chain'
+  | 'next-client-boundary'
+  | 'next-data-waterfall'
+  | 'next-action-flow';
 
 export type DiagramText = string | LocalizedText;
 
@@ -132,7 +135,10 @@ export type IllustrationId =
   | 'testing-pyramid-trophy'
   | 'testing-query-variants'
   | 'node-threads'
-  | 'node-stream-memory';
+  | 'node-stream-memory'
+  | 'next-file-nesting'
+  | 'next-static-shell'
+  | 'next-image-cls';
 
 export type Illustration = {
   id: IllustrationId;
