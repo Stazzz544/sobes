@@ -19,6 +19,24 @@ const STATE_COURSE: Course = {
   ],
 };
 
+const GIT_COURSE: Course = {
+  topic: 'git',
+  final: [
+    { question: 'git-basics-001', tag: 'git-basics', step: 'status' },
+    { question: 'git-basics-010', tag: 'git-basics', step: 'gitignore' },
+    { question: 'git-branches-008', tag: 'git-branches', step: 'pointers' },
+    { question: 'git-branches-011', tag: 'git-branches', step: 'ranges' },
+    { question: 'git-conflicts-005', tag: 'git-conflicts', step: 'origin' },
+    { question: 'git-remote-002', tag: 'git-remote', step: 'fetch-pull' },
+    { question: 'git-remote-007', tag: 'git-remote', step: 'diverged' },
+    { question: 'git-undo-002', tag: 'git-undo', step: 'reset-modes' },
+    { question: 'git-undo-012', tag: 'git-undo', step: 'reflog' },
+    { question: 'git-rebase-006', tag: 'git-rebase', step: 'cherry-pick' },
+    { question: 'git-rebase-008', tag: 'git-rebase', step: 'interactive' },
+  ],
+};
+
 export const COURSES: Partial<Record<TopicId, Course>> = {
   state: STATE_COURSE,
+  git: GIT_COURSE,
 };

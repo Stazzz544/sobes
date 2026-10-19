@@ -1210,6 +1210,54 @@ const URL_PUSH_REPLACE: Diagram = {
   ],
 };
 
+const remoteLanes = (server: string[], tracking: string[], local: string[]): DiagramLane[] => [
+  { id: 'server', title: { ru: 'Сервер', en: 'Server' }, tone: 'warning', items: server.map((label) => code(`s-${label}`, label)) },
+  { id: 'tracking', title: 'origin/main', tone: 'accent', items: tracking.map((label) => code(`t-${label}`, label)) },
+  { id: 'local', title: 'main', tone: 'success', items: local.map((label) => code(`l-${label}`, label)) },
+];
+
+const GIT_REMOTE_SYNC: Diagram = {
+  id: 'git-remote-sync',
+  layout: 'columns',
+  steps: [
+    {
+      caption: {
+        ru: 'После `push` всё совпадает: на сервере, в `origin/main` и в `main` одни и те же коммиты.',
+        en: 'After `push` everything matches: the server, `origin/main` and `main` hold the same commits.',
+      },
+      lanes: remoteLanes(['A', 'B'], ['A', 'B'], ['A', 'B']),
+    },
+    {
+      caption: {
+        ru: 'Вы сделали коммит C. Ваша `main` впереди копии сервера: `[ahead 1]`.',
+        en: 'You made commit C. Your `main` is ahead of the server copy: `[ahead 1]`.',
+      },
+      lanes: remoteLanes(['A', 'B'], ['A', 'B'], ['A', 'B', 'C']),
+    },
+    {
+      caption: {
+        ru: 'Коллега отправил на сервер коммит D. У вас ничего не изменилось: `origin/main` обновляется только при обмене.',
+        en: 'A colleague pushed commit D. Nothing changed on your side: `origin/main` updates only on exchange.',
+      },
+      lanes: remoteLanes(['A', 'B', 'D'], ['A', 'B'], ['A', 'B', 'C']),
+    },
+    {
+      caption: {
+        ru: '`git fetch` скачал D и сдвинул `origin/main`, но `main` не тронул. Ветки разошлись: `[ahead 1, behind 1]`.',
+        en: '`git fetch` downloaded D and moved `origin/main` but left `main` alone. The branches diverged: `[ahead 1, behind 1]`.',
+      },
+      lanes: remoteLanes(['A', 'B', 'D'], ['A', 'B', 'D'], ['A', 'B', 'C']),
+    },
+    {
+      caption: {
+        ru: '`git pull --rebase` пересоздал ваш C поверх D как C′. История прямая, осталось `git push`.',
+        en: '`git pull --rebase` recreated your C on top of D as C′. History is linear; all that’s left is `git push`.',
+      },
+      lanes: remoteLanes(['A', 'B', 'D'], ['A', 'B', 'D'], ['A', 'B', 'D', 'C′']),
+    },
+  ],
+};
+
 export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'event-loop-basic': EVENT_LOOP_BASIC,
   'event-loop-async': EVENT_LOOP_ASYNC,
@@ -1235,4 +1283,5 @@ export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'server-invalidation': SERVER_INVALIDATION,
   'url-source-of-truth': URL_SOURCE_OF_TRUTH,
   'url-push-replace': URL_PUSH_REPLACE,
+  'git-remote-sync': GIT_REMOTE_SYNC,
 };

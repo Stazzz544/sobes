@@ -313,6 +313,267 @@ const URL_ANATOMY: Illustration = {
   },
 };
 
+const GIT_THREE_AREAS: Illustration = {
+  id: 'git-three-areas',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 192">
+<rect x="79" y="1" width="140" height="44" rx="10" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="2"/>
+<text x="149" y="20" font-size="13" font-weight="bold" text-anchor="middle" fill="{{color.textPrimary}}">{{label.work}}</text>
+<text x="149" y="37" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.workNote}}</text>
+<rect x="78" y="74" width="142" height="46" rx="10" fill="{{color.accentSoft}}"/>
+<text x="149" y="94" font-size="13" font-weight="bold" text-anchor="middle" fill="{{color.accentText}}">{{label.index}}</text>
+<text x="149" y="111" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.indexNote}}</text>
+<rect x="78" y="146" width="142" height="46" rx="10" fill="{{color.successSoft}}"/>
+<text x="149" y="166" font-size="13" font-weight="bold" text-anchor="middle" fill="{{color.success}}">{{label.repo}}</text>
+<text x="149" y="183" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.repoNote}}</text>
+<line x1="64" y1="40" x2="64" y2="70" stroke="{{color.accentText}}" stroke-width="2"/>
+<polygon points="59,68 69,68 64,76" fill="{{color.accentText}}"/>
+<text x="56" y="62" font-size="11" font-family="monospace" text-anchor="end" fill="{{color.accentText}}">add</text>
+<line x1="64" y1="114" x2="64" y2="142" stroke="{{color.success}}" stroke-width="2"/>
+<polygon points="59,140 69,140 64,148" fill="{{color.success}}"/>
+<text x="56" y="136" font-size="11" font-family="monospace" text-anchor="end" fill="{{color.success}}">commit</text>
+<line x1="234" y1="76" x2="234" y2="48" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="229,50 239,50 234,42" fill="{{color.textMuted}}"/>
+<text x="242" y="64" font-size="11" font-family="monospace" fill="{{color.textSecondary}}">restore</text>
+<line x1="234" y1="148" x2="234" y2="122" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="229,124 239,124 234,116" fill="{{color.textMuted}}"/>
+<text x="242" y="138" font-size="11" font-family="monospace" fill="{{color.textSecondary}}">restore -S</text>
+</svg>`,
+  labels: {
+    work: { ru: 'Рабочая папка', en: 'Working tree' },
+    workNote: { ru: 'то, что в редакторе', en: 'what you see' },
+    index: { ru: 'Индекс', en: 'Index' },
+    indexNote: { ru: 'черновик коммита', en: 'draft of the commit' },
+    repo: { ru: 'Коммиты', en: 'Commits' },
+    repoNote: { ru: 'история в .git', en: 'history in .git' },
+  },
+  alt: {
+    ru: 'Три зоны Git сверху вниз: рабочая папка, индекс — черновик следующего коммита, и коммиты в .git. git add переносит изменения из папки в индекс, git commit — из индекса в историю. git restore возвращает файл из индекса в папку, git restore -S — из коммита в индекс.',
+    en: 'Git’s three areas from top to bottom: the working tree, the index — a draft of the next commit — and commits in .git. git add moves changes from the folder to the index, git commit from the index to history. git restore brings a file back from the index to the folder, git restore -S from the commit to the index.',
+  },
+};
+
+const GIT_STATUS_COLUMNS: Illustration = {
+  id: 'git-status-columns',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 168">
+<rect x="12" y="0" width="40" height="42" rx="8" fill="{{color.accentSoft}}"/>
+<text x="32" y="29" font-size="22" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">M</text>
+<rect x="59" y="1" width="38" height="40" rx="8" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="2"/>
+<text x="78" y="29" font-size="22" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">M</text>
+<text x="112" y="29" font-size="20" font-family="monospace" fill="{{color.textPrimary}}">a.txt</text>
+<rect x="12" y="56" width="14" height="14" rx="3" fill="{{color.accentSoft}}"/>
+<text x="34" y="68" font-size="12" fill="{{color.textPrimary}}">{{label.first}}</text>
+<rect x="13" y="79" width="12" height="12" rx="3" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="2"/>
+<text x="34" y="90" font-size="12" fill="{{color.textPrimary}}">{{label.second}}</text>
+<line x1="12" y1="106" x2="308" y2="106" stroke="{{color.border}}" stroke-width="1"/>
+<text x="12" y="132" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">A</text>
+<text x="40" y="132" font-size="12" fill="{{color.textSecondary}}">{{label.added}}</text>
+<text x="166" y="132" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">??</text>
+<text x="194" y="132" font-size="12" fill="{{color.textSecondary}}">{{label.untracked}}</text>
+<text x="12" y="158" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">D</text>
+<text x="40" y="158" font-size="12" fill="{{color.textSecondary}}">{{label.deleted}}</text>
+<text x="166" y="158" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">R</text>
+<text x="194" y="158" font-size="12" fill="{{color.textSecondary}}">{{label.renamed}}</text>
+</svg>`,
+  labels: {
+    first: { ru: 'индекс против HEAD', en: 'index vs HEAD' },
+    second: { ru: 'папка против индекса', en: 'folder vs index' },
+    added: { ru: 'новый в индексе', en: 'new in the index' },
+    untracked: { ru: 'не отслеживается', en: 'untracked' },
+    deleted: { ru: 'удалён', en: 'deleted' },
+    renamed: { ru: 'переименован', en: 'renamed' },
+  },
+  alt: {
+    ru: 'Строка статуса MM a.txt: первая колонка сравнивает индекс с последним коммитом, вторая — рабочую папку с индексом. Ниже коды: A — новый в индексе, ?? — не отслеживается, D — удалён, R — переименован.',
+    en: 'The status line MM a.txt: the first column compares the index with the last commit, the second the working tree with the index. Below are the codes: A — new in the index, ?? — untracked, D — deleted, R — renamed.',
+  },
+};
+
+const GIT_BRANCH_POINTERS: Illustration = {
+  id: 'git-branch-pointers',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 128">
+<line x1="24" y1="96" x2="164" y2="96" stroke="{{color.textMuted}}" stroke-width="3"/>
+<line x1="94" y1="96" x2="164" y2="32" stroke="{{color.textMuted}}" stroke-width="3"/>
+<circle cx="24" cy="96" r="14" fill="{{color.bgSecondary}}" stroke="{{color.textMuted}}" stroke-width="2"/>
+<text x="24" y="101" font-size="13" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">A</text>
+<circle cx="94" cy="96" r="14" fill="{{color.bgSecondary}}" stroke="{{color.textMuted}}" stroke-width="2"/>
+<text x="94" y="101" font-size="13" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">B</text>
+<circle cx="164" cy="96" r="14" fill="{{color.successSoft}}" stroke="{{color.success}}" stroke-width="2"/>
+<text x="164" y="101" font-size="13" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">C</text>
+<circle cx="164" cy="32" r="14" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="2"/>
+<text x="164" y="37" font-size="13" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">D</text>
+<line x1="180" y1="96" x2="196" y2="96" stroke="{{color.success}}" stroke-width="2"/>
+<rect x="196" y="84" width="52" height="24" rx="6" fill="{{color.successSoft}}"/>
+<text x="222" y="101" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.success}}">main</text>
+<line x1="180" y1="32" x2="196" y2="32" stroke="{{color.accentText}}" stroke-width="2"/>
+<rect x="196" y="20" width="70" height="24" rx="6" fill="{{color.accentSoft}}"/>
+<text x="231" y="37" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">feature</text>
+<line x1="270" y1="96" x2="250" y2="96" stroke="{{color.textPrimary}}" stroke-width="2"/>
+<polygon points="256,91 256,101 248,96" fill="{{color.textPrimary}}"/>
+<rect x="270" y="84" width="48" height="24" rx="6" fill="{{color.warningSoft}}"/>
+<text x="294" y="101" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">HEAD</text>
+</svg>`,
+  labels: {},
+  alt: {
+    ru: 'Граф коммитов: A, B и C идут подряд, от B ответвляется D. Ветка main указывает на C, ветка feature — на D, а HEAD указывает на ветку main.',
+    en: 'A commit graph: A, B and C in a row, with D branching off B. The main branch points to C, the feature branch to D, and HEAD points to the main branch.',
+  },
+};
+
+const GIT_FF_VS_MERGE: Illustration = {
+  id: 'git-ff-vs-merge',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 196">
+<text x="0" y="14" font-size="12" font-weight="bold" fill="{{color.textPrimary}}">{{label.ff}}</text>
+<line x1="20" y1="44" x2="170" y2="44" stroke="{{color.textMuted}}" stroke-width="3"/>
+<circle cx="20" cy="44" r="11" fill="{{color.bgSecondary}}" stroke="{{color.textMuted}}" stroke-width="2"/>
+<text x="20" y="48" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">A</text>
+<circle cx="70" cy="44" r="11" fill="{{color.bgSecondary}}" stroke="{{color.textMuted}}" stroke-width="2"/>
+<text x="70" y="48" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">B</text>
+<circle cx="120" cy="44" r="11" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="2"/>
+<text x="120" y="48" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">C</text>
+<circle cx="170" cy="44" r="11" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="2"/>
+<text x="170" y="48" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">D</text>
+<rect x="194" y="32" width="50" height="24" rx="6" fill="{{color.successSoft}}"/>
+<text x="219" y="49" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.success}}">main</text>
+<text x="0" y="80" font-size="11" fill="{{color.textSecondary}}">{{label.ffNote}}</text>
+<line x1="0" y1="96" x2="320" y2="96" stroke="{{color.border}}" stroke-width="1"/>
+<text x="0" y="116" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">--no-ff</text>
+<line x1="20" y1="170" x2="220" y2="170" stroke="{{color.textMuted}}" stroke-width="3"/>
+<line x1="70" y1="170" x2="120" y2="136" stroke="{{color.textMuted}}" stroke-width="3"/>
+<line x1="120" y1="136" x2="170" y2="136" stroke="{{color.textMuted}}" stroke-width="3"/>
+<line x1="170" y1="136" x2="220" y2="170" stroke="{{color.textMuted}}" stroke-width="3"/>
+<circle cx="20" cy="170" r="11" fill="{{color.bgSecondary}}" stroke="{{color.textMuted}}" stroke-width="2"/>
+<text x="20" y="174" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">A</text>
+<circle cx="70" cy="170" r="11" fill="{{color.bgSecondary}}" stroke="{{color.textMuted}}" stroke-width="2"/>
+<text x="70" y="174" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">B</text>
+<circle cx="120" cy="136" r="11" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="2"/>
+<text x="120" y="140" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">C</text>
+<circle cx="170" cy="136" r="11" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="2"/>
+<text x="170" y="140" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">D</text>
+<circle cx="220" cy="170" r="13" fill="{{color.successSoft}}" stroke="{{color.success}}" stroke-width="2"/>
+<text x="220" y="174" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">M</text>
+<rect x="244" y="158" width="50" height="24" rx="6" fill="{{color.successSoft}}"/>
+<text x="269" y="175" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.success}}">main</text>
+<text x="0" y="194" font-size="11" fill="{{color.textSecondary}}">{{label.mergeNote}}</text>
+</svg>`,
+  labels: {
+    ff: { ru: 'Fast-forward', en: 'Fast-forward' },
+    ffNote: { ru: 'main сдвинулся на D', en: 'main moved to D' },
+    mergeNote: { ru: 'M — коммит слияния', en: 'M is a merge commit' },
+  },
+  alt: {
+    ru: 'Сверху fast-forward: коммиты A, B, C, D в одну линию, main просто сдвинулся на D без нового коммита. Снизу --no-ff: ветка C, D отходит от B и возвращается в коммит слияния M с двумя родителями, на него указывает main.',
+    en: 'Top, fast-forward: commits A, B, C, D in one line; main simply moved to D without a new commit. Bottom, --no-ff: the C, D branch leaves B and returns into a merge commit M with two parents, which main points to.',
+  },
+};
+
+const GIT_CONFLICT_ORIGIN: Illustration = {
+  id: 'git-conflict-origin',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 166">
+<line x1="160" y1="40" x2="70" y2="64" stroke="{{color.textMuted}}" stroke-width="2"/>
+<line x1="160" y1="40" x2="250" y2="64" stroke="{{color.textMuted}}" stroke-width="2"/>
+<line x1="70" y1="104" x2="160" y2="126" stroke="{{color.textMuted}}" stroke-width="2"/>
+<line x1="250" y1="104" x2="160" y2="126" stroke="{{color.textMuted}}" stroke-width="2"/>
+<rect x="85" y="0" width="150" height="42" rx="8" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="2"/>
+<text x="160" y="15" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">base</text>
+<text x="160" y="33" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">timeout = 1000</text>
+<rect x="0" y="62" width="140" height="42" rx="8" fill="{{color.successSoft}}"/>
+<text x="70" y="77" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.success}}">main</text>
+<text x="70" y="95" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">timeout = 3000</text>
+<rect x="180" y="62" width="140" height="42" rx="8" fill="{{color.accentSoft}}"/>
+<text x="250" y="77" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">feature</text>
+<text x="250" y="95" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">timeout = 5000</text>
+<rect x="50" y="124" width="220" height="42" rx="8" fill="{{color.dangerSoft}}"/>
+<text x="160" y="140" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.danger}}">{{label.conflict}}</text>
+<text x="160" y="158" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">UU config.js</text>
+</svg>`,
+  labels: {
+    conflict: { ru: 'конфликт в строке', en: 'conflict on one line' },
+  },
+  alt: {
+    ru: 'В базовой версии timeout = 1000. Ветка main поменяла строку на 3000, ветка feature — на 5000. При слиянии Git не может выбрать сам: конфликт, статус UU config.js.',
+    en: 'In the base version timeout = 1000. The main branch changed the line to 3000, the feature branch to 5000. On merge Git can’t choose by itself: a conflict, status UU config.js.',
+  },
+};
+
+const GIT_RESET_MODES: Illustration = {
+  id: 'git-reset-modes',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 146">
+<text x="144" y="16" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.textPrimary}}">{{label.index}}</text>
+<text x="264" y="16" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.textPrimary}}">{{label.files}}</text>
+<text x="0" y="52" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">--soft</text>
+<rect x="88" y="28" width="112" height="34" rx="8" fill="{{color.successSoft}}"/>
+<text x="144" y="50" font-size="12" text-anchor="middle" fill="{{color.success}}">{{label.kept}}</text>
+<rect x="208" y="28" width="112" height="34" rx="8" fill="{{color.successSoft}}"/>
+<text x="264" y="50" font-size="12" text-anchor="middle" fill="{{color.success}}">{{label.kept}}</text>
+<text x="0" y="92" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">--mixed</text>
+<rect x="88" y="68" width="112" height="34" rx="8" fill="{{color.dangerSoft}}"/>
+<text x="144" y="90" font-size="12" text-anchor="middle" fill="{{color.danger}}">{{label.reset}}</text>
+<rect x="208" y="68" width="112" height="34" rx="8" fill="{{color.successSoft}}"/>
+<text x="264" y="90" font-size="12" text-anchor="middle" fill="{{color.success}}">{{label.kept}}</text>
+<text x="0" y="132" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">--hard</text>
+<rect x="88" y="108" width="112" height="34" rx="8" fill="{{color.dangerSoft}}"/>
+<text x="144" y="130" font-size="12" text-anchor="middle" fill="{{color.danger}}">{{label.reset}}</text>
+<rect x="208" y="108" width="112" height="34" rx="8" fill="{{color.dangerSoft}}"/>
+<text x="264" y="130" font-size="12" text-anchor="middle" fill="{{color.danger}}">{{label.reset}}</text>
+</svg>`,
+  labels: {
+    index: { ru: 'Индекс', en: 'Index' },
+    files: { ru: 'Файлы', en: 'Files' },
+    kept: { ru: 'сохранён', en: 'kept' },
+    reset: { ru: 'сброшен', en: 'reset' },
+  },
+  alt: {
+    ru: 'Таблица режимов git reset. --soft: индекс и файлы сохранены. --mixed: индекс сброшен, файлы сохранены. --hard: сброшены и индекс, и файлы.',
+    en: 'A table of git reset modes. --soft: index and files kept. --mixed: index reset, files kept. --hard: both index and files reset.',
+  },
+};
+
+const GIT_REBASE_REPLAY: Illustration = {
+  id: 'git-rebase-replay',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 178">
+<text x="0" y="12" font-size="12" font-weight="bold" fill="{{color.textSecondary}}">{{label.before}}</text>
+<line x1="20" y1="62" x2="120" y2="62" stroke="{{color.textMuted}}" stroke-width="3"/>
+<line x1="70" y1="62" x2="120" y2="30" stroke="{{color.textMuted}}" stroke-width="3"/>
+<circle cx="20" cy="62" r="11" fill="{{color.bgSecondary}}" stroke="{{color.textMuted}}" stroke-width="2"/>
+<text x="20" y="66" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">A</text>
+<circle cx="70" cy="62" r="11" fill="{{color.bgSecondary}}" stroke="{{color.textMuted}}" stroke-width="2"/>
+<text x="70" y="66" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">B</text>
+<circle cx="120" cy="62" r="11" fill="{{color.successSoft}}" stroke="{{color.success}}" stroke-width="2"/>
+<text x="120" y="66" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">M</text>
+<circle cx="120" cy="30" r="11" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="2"/>
+<text x="120" y="34" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">F</text>
+<rect x="142" y="50" width="50" height="24" rx="6" fill="{{color.successSoft}}"/>
+<text x="167" y="67" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.success}}">main</text>
+<rect x="142" y="18" width="70" height="24" rx="6" fill="{{color.accentSoft}}"/>
+<text x="177" y="35" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">feature</text>
+<line x1="0" y1="88" x2="320" y2="88" stroke="{{color.border}}" stroke-width="1"/>
+<text x="0" y="108" font-size="12" font-weight="bold" fill="{{color.textSecondary}}">{{label.after}}</text>
+<line x1="20" y1="140" x2="170" y2="140" stroke="{{color.textMuted}}" stroke-width="3"/>
+<circle cx="20" cy="140" r="11" fill="{{color.bgSecondary}}" stroke="{{color.textMuted}}" stroke-width="2"/>
+<text x="20" y="144" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">A</text>
+<circle cx="70" cy="140" r="11" fill="{{color.bgSecondary}}" stroke="{{color.textMuted}}" stroke-width="2"/>
+<text x="70" y="144" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">B</text>
+<circle cx="120" cy="140" r="11" fill="{{color.successSoft}}" stroke="{{color.success}}" stroke-width="2"/>
+<text x="120" y="144" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">M</text>
+<circle cx="170" cy="140" r="12" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="2"/>
+<text x="170" y="144" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">F′</text>
+<rect x="96" y="114" width="50" height="16" rx="5" fill="{{color.successSoft}}"/>
+<text x="121" y="126" font-size="11" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.success}}">main</text>
+<rect x="192" y="128" width="70" height="24" rx="6" fill="{{color.accentSoft}}"/>
+<text x="227" y="145" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">feature</text>
+<text x="0" y="174" font-size="11" fill="{{color.textSecondary}}">{{label.newHash}}</text>
+</svg>`,
+  labels: {
+    before: { ru: 'До rebase', en: 'Before rebase' },
+    after: { ru: 'После rebase', en: 'After rebase' },
+    newHash: { ru: 'F′ — новый хеш', en: 'F′ has a new hash' },
+  },
+  alt: {
+    ru: 'До rebase: ветка feature с коммитом F отходит от B, а main ушла вперёд на коммит M. После git rebase main история прямая: A, B, M и F′ — копия F с новым хешем, на неё указывает feature.',
+    en: 'Before rebase: the feature branch with commit F leaves B, while main moved on to commit M. After git rebase main the history is linear: A, B, M and F′ — a copy of F with a new hash, which feature points to.',
+  },
+};
+
 export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'state-kinds': STATE_KINDS,
   'state-id-vs-copy': STATE_ID_VS_COPY,
@@ -323,4 +584,11 @@ export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'server-query-lifecycle': SERVER_QUERY_LIFECYCLE,
   'server-race': SERVER_RACE,
   'url-anatomy': URL_ANATOMY,
+  'git-three-areas': GIT_THREE_AREAS,
+  'git-status-columns': GIT_STATUS_COLUMNS,
+  'git-branch-pointers': GIT_BRANCH_POINTERS,
+  'git-ff-vs-merge': GIT_FF_VS_MERGE,
+  'git-conflict-origin': GIT_CONFLICT_ORIGIN,
+  'git-reset-modes': GIT_RESET_MODES,
+  'git-rebase-replay': GIT_REBASE_REPLAY,
 };

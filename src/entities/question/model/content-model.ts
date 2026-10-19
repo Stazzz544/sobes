@@ -1,6 +1,6 @@
 import { createEffect, createEvent, createStore, sample } from 'effector';
 import { Directory, File, Paths } from 'expo-file-system';
-import { APP_VERSION } from '@app/shared/config';
+import { APP_VERSION, isTopicVisible } from '@app/shared/config';
 import { PACK_ID } from '../config/content-pack';
 import { sanitizePack } from '../lib/sanitize-pack';
 import { BUNDLED_CONTENT, setContentBank } from './content';
@@ -21,7 +21,7 @@ export const ensurePackDirectory = (): void => {
 };
 
 const toInfo = (bank: ContentBank): ContentInfo => ({
-  questions: bank.questions.length,
+  questions: bank.questions.filter((question) => isTopicVisible(question.topic)).length,
   packVersion: bank.packVersion,
   builtAt: bank.builtAt,
 });

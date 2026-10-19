@@ -8,6 +8,20 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.61.0',
+    date: '2026-10-19',
+    changes: [
+      {
+        ru: 'Курс «Git»: все 6 уроков стали пошаговыми — индекс и статус, ветки и слияние, конфликты, удалённые репозитории, отмена изменений, rebase. Графы коммитов, схемы и «Проверь себя» в каждом уроке, тест по прочитанному и итоговый тест курса.',
+        en: 'The Git course: all 6 lessons are now step by step — the index and status, branches and merging, conflicts, remotes, undoing changes, rebase. Commit graphs, diagrams and “Check yourself” in every lesson, a test on what you read and a final course test.',
+      },
+      {
+        ru: 'Исправлено: счётчик вопросов в настройках больше не учитывает скрытую тему.',
+        en: 'Fixed: the question count in settings no longer includes the hidden topic.',
+      },
+    ],
+  },
+  {
     version: '1.60.1',
     date: '2026-10-19',
     changes: [

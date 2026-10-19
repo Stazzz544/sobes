@@ -870,6 +870,9 @@ const checkIllustrations = (): void => {
         if (/\[\[|\*\*|`/.test(label[locale])) {
           illustrationError(`разметка в подписи ${key} (${locale})`);
         }
+        if (/[<>&"]/.test(label[locale])) {
+          illustrationError(`символы < > & " в подписи ${key} (${locale}) — SvgXml не раскодирует сущности`);
+        }
         if (label[locale].length > ILLUSTRATION_LIMITS.longLabel) {
           warnings.push(`иллюстрация ${id}: длинная подпись ${key} (${locale}) — может не влезть`);
         }
@@ -877,6 +880,9 @@ const checkIllustrations = (): void => {
     }
     if (/[а-яё]/i.test(svg)) {
       illustrationError('кириллица в SVG — текст только через {{label.*}}');
+    }
+    if (/&/.test(svg)) {
+      illustrationError('& в SVG — SvgXml не раскодирует сущности, пишите текст без них');
     }
     for (const match of svg.matchAll(/font-size="(\d+(?:\.\d+)?)"/g)) {
       if (Number(match[1]) < ILLUSTRATION_LIMITS.minFontSize) {
