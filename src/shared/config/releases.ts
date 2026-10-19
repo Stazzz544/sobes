@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.72.0',
+    date: '2026-10-19',
+    changes: [
+      {
+        ru: 'Курс «React»: все 12 уроков стали пошаговыми — рендер, состояние, ключи, эффекты, правила хуков, рефы, формы, контекст, мемоизация, Suspense, React 19 и серверные компоненты. Схемы рендера и коммита, перерисовок от контекста и границы `"use client"`, «Проверь себя», тест по каждому уроку и итоговый тест курса. 13 новых вопросов: ключи, правила хуков, контекст, рефы, Suspense, формы и серверные компоненты.',
+        en: 'The React course: all 12 lessons are now step by step — rendering, state, keys, effects, rules of hooks, refs, forms, context, memoization, Suspense, React 19 and Server Components. Diagrams of render and commit, context re-renders and the `"use client"` boundary, “Check yourself”, a test per lesson and a final course test. 13 new questions: keys, rules of hooks, context, refs, Suspense, forms and Server Components.',
+      },
+    ],
+  },
+  {
     version: '1.71.0',
     date: '2026-10-19',
     changes: [

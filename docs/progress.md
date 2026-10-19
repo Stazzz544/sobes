@@ -718,4 +718,11 @@
 - `COURSES.javascript`: 14 вопросов, по одному на урок.
 - Фрагменты кода из уроков прогнаны в Node.
 
+## Курсы: «React» (19.10.2026, версия 1.72.0)
+
+- Все 12 уроков пошаговые (по 4 шага, тесты по 5–8 вопросов): `rendering`, `state`, `keys`, `effects`, `hooks-rules`, `refs`, `forms`, `context`, `memoization`, `suspense`, `react-19`, `server-components`. Файл `lessons/react.ts` собран заново.
+- 13 новых вопросов (`data/react-8.ts`) — без них урокам `keys`, `hooks-rules`, `context`, `refs`, `suspense`, `forms` и `server-components` не хватало вопросов на тест и итоговый тест. Всего 969 вопросов.
+- Переиспользованы схемы `react-render-commit`, `stores-context-rerender` (из курса по состоянию) и `next-client-boundary` (из курса по Next.js).
+- `COURSES.react`: 12 вопросов, по одному на урок.
+
 Дальше — `docs/roadmap.md`.

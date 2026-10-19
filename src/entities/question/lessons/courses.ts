@@ -205,6 +205,24 @@ const JAVASCRIPT_COURSE: Course = {
   ],
 };
 
+const REACT_COURSE: Course = {
+  topic: 'react',
+  final: [
+    { question: 'react-portal-001', tag: 'rendering', step: 'jsx-traps' },
+    { question: 'react-state-007', tag: 'state', step: 'structure' },
+    { question: 'react-keys-005', tag: 'keys', step: 'index-keys' },
+    { question: 'react-effects-004', tag: 'effects', step: 'pitfalls' },
+    { question: 'react-19-use-context-001', tag: 'hooks-rules', step: 'top-level' },
+    { question: 'react-refs-callback-cleanup-001', tag: 'refs', step: 'ref-prop' },
+    { question: 'react-19-form-status-001', tag: 'forms', step: 'actions' },
+    { question: 'react-context-005', tag: 'context', step: 'value-identity' },
+    { question: 'react-state-008', tag: 'memoization', step: 'lazy-deferred' },
+    { question: 'react-suspense-003', tag: 'suspense', step: 'error-boundaries' },
+    { question: 'react-effects-event-001', tag: 'react-19', step: 'compiler' },
+    { question: 'react-rsc-005', tag: 'server-components', step: 'bundle-secrets' },
+  ],
+};
+
 export const COURSES: Partial<Record<TopicId, Course>> = {
   state: STATE_COURSE,
   git: GIT_COURSE,
@@ -218,4 +236,5 @@ export const COURSES: Partial<Record<TopicId, Course>> = {
   ai: AI_COURSE,
   algorithms: ALGORITHMS_COURSE,
   javascript: JAVASCRIPT_COURSE,
+  react: REACT_COURSE,
 };
