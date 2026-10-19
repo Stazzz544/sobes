@@ -13,7 +13,7 @@ import { getSelectionAccent, topicModel } from '@app/entities/topic';
 import { contentUpdateModel } from '@app/features/content-update';
 import { reminderModel, useReviewReminderTap } from '@app/features/daily-reminder';
 import { reportErrorFx } from '@app/shared/analytics';
-import { TOPIC_IDS } from '@app/shared/config';
+import { VISIBLE_TOPIC_IDS } from '@app/shared/config';
 import { useI18n } from '@app/shared/i18n';
 import { BASE_COLORS, ThemeProvider, useTheme } from '@app/shared/theme';
 import { AchievementToast } from '@app/widgets/achievements';
@@ -38,7 +38,7 @@ const getLessonTitle = ({ route }: RouteWithParams, t: I18n['t']): string => {
 };
 
 const getPathTitle = ({ route }: RouteWithParams, t: I18n['t']): string => {
-  const topic = TOPIC_IDS.find((id) => id === readParam(route.params, 'topic'));
+  const topic = VISIBLE_TOPIC_IDS.find((id) => id === readParam(route.params, 'topic'));
   return topic && isCourseTopic(topic) ? t('path.courseTitle') : t('path.title');
 };
 

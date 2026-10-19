@@ -1,6 +1,6 @@
 import { JSX } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { DIRECTION_IDS } from '@app/shared/config';
+import { DIRECTION_IDS, isTopicVisible } from '@app/shared/config';
 import { useI18n } from '@app/shared/i18n';
 import { AppText } from '@app/shared/ui';
 import { DIRECTIONS } from '../config/directions';
@@ -35,7 +35,7 @@ export const TopicCardList = ({ value, onChange, onSelectedLayout }: TopicCardLi
         <AppText key={directionId} variant="subtitle" accessibilityRole="header" style={styles.direction}>
           {text(DIRECTIONS[directionId].title)}
         </AppText>,
-        ...DIRECTIONS[directionId].topics.map(renderCard),
+        ...DIRECTIONS[directionId].topics.filter(isTopicVisible).map(renderCard),
       ])}
       {renderCard('all')}
     </View>

@@ -4,6 +4,7 @@ import { ILLUSTRATIONS } from '../data/illustrations';
 import { GLOSSARY } from '../glossary/glossary';
 import { LESSONS_BY_TAG } from '../lessons';
 import { COURSES } from '../lessons/courses';
+import { isTopicVisible } from '@app/shared/config';
 import type { TopicId } from '@app/shared/config';
 import type { TagId } from '../config/tags';
 import type { GlossaryTerm } from '../glossary/glossary';
@@ -33,11 +34,16 @@ export const BUNDLED_CONTENT: ContentBank = {
   builtAt: null,
 };
 
+const withVisibleQuestions = (bank: ContentBank): ContentBank => {
+  const questions = bank.questions.filter((question) => isTopicVisible(question.topic));
+  return { ...bank, questions, questionsById: Object.fromEntries(questions.map((question) => [question.id, question])) };
+};
+
 // банк меняется только при холодном старте, до первого рендера, поэтому хватает модуля, а не стора
-let current = BUNDLED_CONTENT;
+let current = withVisibleQuestions(BUNDLED_CONTENT);
 
 export const setContentBank = (bank: ContentBank): void => {
-  current = bank;
+  current = withVisibleQuestions(bank);
 };
 
 export const getQuestions = (): readonly Question[] => current.questions;

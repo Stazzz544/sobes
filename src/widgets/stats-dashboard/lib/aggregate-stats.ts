@@ -1,5 +1,5 @@
 import { getGoalProgress } from '@app/entities/progress';
-import { TOPIC_IDS } from '@app/shared/config';
+import { VISIBLE_TOPIC_IDS } from '@app/shared/config';
 import { addDays, toDayKey } from '@app/shared/lib';
 import type { AnswerRecord, QuestionStats } from '@app/entities/progress';
 import type { Difficulty, Question, TagId } from '@app/entities/question';
@@ -99,7 +99,7 @@ export const aggregateStats = ({
   const correct = scoped.filter((record) => record.result === 'correct').length;
   const dontKnow = scoped.filter((record) => record.result === 'dontKnow').length;
 
-  const topics = TOPIC_IDS.map((topic): TopicOverview => {
+  const topics = VISIBLE_TOPIC_IDS.map((topic): TopicOverview => {
     const topicRecords = resolved.filter((record) => record.question.topic === topic);
     const topicQuestions = questions.filter((question) => question.topic === topic);
     return {

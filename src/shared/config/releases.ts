@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.60.1',
+    date: '2026-10-19',
+    changes: [
+      {
+        ru: 'Тема «HR и поведенческое интервью» временно скрыта: её нет в списке тем, в статистике и в тренировках по всем темам.',
+        en: 'The “HR & behavioral interview” topic is hidden for now: it’s gone from the topic list, statistics and all-topics sessions.',
+      },
+    ],
+  },
+  {
     version: '1.60.0',
     date: '2026-10-16',
     changes: [
