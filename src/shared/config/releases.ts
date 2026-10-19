@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.70.0',
+    date: '2026-10-19',
+    changes: [
+      {
+        ru: 'Курс «Алгоритмы»: все 9 уроков стали пошаговыми — Big-O, структуры данных, поиск, сортировка, хэширование, два указателя, рекурсия, деревья и графы, динамическое программирование. График роста сложностей, пошаговый бинарный поиск, обходы дерева документа в глубину и в ширину, дерево вызовов с мемоизацией, «Проверь себя», тест по каждому уроку и итоговый тест курса.',
+        en: 'The Algorithms course: all 9 lessons are now step by step — Big-O, data structures, searching, sorting, hashing, two pointers, recursion, trees and graphs, dynamic programming. A complexity growth chart, step-by-step binary search, depth-first and breadth-first walks of a document tree, a call tree with memoization, “Check yourself”, a test per lesson and a final course test.',
+      },
+    ],
+  },
+  {
     version: '1.69.0',
     date: '2026-10-19',
     changes: [

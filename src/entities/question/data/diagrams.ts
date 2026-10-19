@@ -2181,6 +2181,132 @@ const AI_AGENT_LOOP: Diagram = {
   ),
 };
 
+const bisectLanes = (discarded: string[], range: string[]): DiagramLane[] => [
+  { id: 'range', title: { ru: 'Ищем здесь', en: 'Searching here' }, tone: 'accent', items: range.map((value) => code(`v${value.split(' ')[0]}`, value)) },
+  { id: 'discarded', title: { ru: 'Отброшено', en: 'Discarded' }, tone: 'neutral', items: discarded.map((value) => code(`v${value.split(' ')[0]}`, value)) },
+];
+
+const ALGO_BINARY_SEARCH: Diagram = {
+  id: 'algo-binary-search',
+  layout: 'columns',
+  steps: [
+    {
+      caption: {
+        ru: 'Ищем 20 в отсортированном массиве из 7 чисел. `low = 0`, `high = 6`, середина — индекс 3, там 14.',
+        en: 'Searching for 20 in a sorted array of 7 numbers. `low = 0`, `high = 6`, the middle is index 3, holding 14.',
+      },
+      lanes: bisectLanes([], ['2', '5', '9', '14 ← mid', '20', '27', '33']),
+    },
+    {
+      caption: {
+        ru: '14 < 20, значит всё до середины включительно меньше искомого: `low = mid + 1`. Новая середина — 27.',
+        en: '14 < 20, so everything up to and including the middle is smaller: `low = mid + 1`. The new middle is 27.',
+      },
+      lanes: bisectLanes(['2', '5', '9', '14'], ['20', '27 ← mid', '33']),
+    },
+    {
+      caption: {
+        ru: '27 > 20 — правая часть тоже не подходит: `high = mid - 1`. Остался один элемент.',
+        en: '27 > 20 — the right part doesn’t fit either: `high = mid - 1`. One element is left.',
+      },
+      lanes: bisectLanes(['2', '5', '9', '14', '27', '33'], ['20 ← mid']),
+    },
+    {
+      caption: {
+        ru: 'Совпадение на третьем сравнении. Каждое сравнение отбрасывает половину — для миллиона элементов хватит 20 шагов.',
+        en: 'A match on the third comparison. Each comparison discards half — a million elements need only 20 steps.',
+      },
+      lanes: bisectLanes(['2', '5', '9', '14', '27', '33'], ['20 ✓']),
+    },
+  ],
+};
+
+const ALGO_DOM_TRAVERSAL: Diagram = {
+  id: 'algo-dom-traversal',
+  layout: 'tree',
+  steps: [
+    {
+      caption: {
+        ru: 'Дерево документа: у `html` два ребёнка, у `head` и `body` — свои.',
+        en: 'A document tree: `html` has two children, and `head` and `body` have their own.',
+      },
+      lanes: [
+        { id: 'html', title: 'html', tone: 'neutral', items: [] },
+        { id: 'head', title: 'head', tone: 'neutral', items: [], parent: 'html' },
+        { id: 'title', title: 'title', tone: 'neutral', items: [], parent: 'head' },
+        { id: 'body', title: 'body', tone: 'neutral', items: [], parent: 'html' },
+        { id: 'header', title: 'header', tone: 'neutral', items: [], parent: 'body' },
+        { id: 'main', title: 'main', tone: 'neutral', items: [], parent: 'body' },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Обход в глубину (стек или рекурсия): спуститься по ветке до конца, потом к соседу — `html, head, title, body, header, main`.',
+        en: 'Depth-first (a stack or recursion): go down a branch to the end, then to the sibling — `html, head, title, body, header, main`.',
+      },
+      lanes: [
+        { id: 'html', title: 'html', tone: 'accent', items: [code('dfs-html', '1')] },
+        { id: 'head', title: 'head', tone: 'accent', items: [code('dfs-head', '2')], parent: 'html' },
+        { id: 'title', title: 'title', tone: 'accent', items: [code('dfs-title', '3')], parent: 'head' },
+        { id: 'body', title: 'body', tone: 'accent', items: [code('dfs-body', '4')], parent: 'html' },
+        { id: 'header', title: 'header', tone: 'accent', items: [code('dfs-header', '5')], parent: 'body' },
+        { id: 'main', title: 'main', tone: 'accent', items: [code('dfs-main', '6')], parent: 'body' },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Обход в ширину (очередь): сначала весь уровень, потом следующий — `html, head, body, title, header, main`.',
+        en: 'Breadth-first (a queue): a whole level first, then the next — `html, head, body, title, header, main`.',
+      },
+      lanes: [
+        { id: 'html', title: 'html', tone: 'success', items: [code('bfs-html', '1')] },
+        { id: 'head', title: 'head', tone: 'success', items: [code('bfs-head', '2')], parent: 'html' },
+        { id: 'title', title: 'title', tone: 'success', items: [code('bfs-title', '4')], parent: 'head' },
+        { id: 'body', title: 'body', tone: 'success', items: [code('bfs-body', '3')], parent: 'html' },
+        { id: 'header', title: 'header', tone: 'success', items: [code('bfs-header', '5')], parent: 'body' },
+        { id: 'main', title: 'main', tone: 'success', items: [code('bfs-main', '6')], parent: 'body' },
+      ],
+    },
+  ],
+};
+
+const ALGO_FIB_MEMO: Diagram = {
+  id: 'algo-fib-memo',
+  layout: 'tree',
+  steps: [
+    {
+      caption: {
+        ru: 'Наивная рекурсия: `fib(5)` вызывает `fib(4)` и `fib(3)`, а `fib(4)` снова считает `fib(3)` и `fib(2)`. Одинаковые поддеревья считаются заново.',
+        en: 'Naive recursion: `fib(5)` calls `fib(4)` and `fib(3)`, and `fib(4)` computes `fib(3)` and `fib(2)` again. Identical subtrees are recomputed.',
+      },
+      lanes: [
+        { id: 'f5', title: 'fib(5)', tone: 'neutral', items: [] },
+        { id: 'f4', title: 'fib(4)', tone: 'neutral', items: [], parent: 'f5' },
+        { id: 'f3l', title: 'fib(3)', tone: 'neutral', items: [], parent: 'f4' },
+        { id: 'f2l', title: 'fib(2)', tone: 'neutral', items: [], parent: 'f3l' },
+        { id: 'f1', title: 'fib(1)', tone: 'neutral', items: [], parent: 'f3l' },
+        { id: 'f2r', title: 'fib(2)', tone: 'warning', items: [{ id: 'f2r-repeat', label: { ru: 'повтор', en: 'repeat' } }], parent: 'f4', isActive: true },
+        { id: 'f3r', title: 'fib(3)', tone: 'warning', items: [{ id: 'f3r-repeat', label: { ru: 'повтор со всем поддеревом', en: 'repeat with its whole subtree' } }], parent: 'f5', isActive: true },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Мемоизация: результат каждого `fib(n)` кладут в кэш. Повторные вызовы возвращают готовое значение сразу — число вызовов растёт линейно, а не экспоненциально.',
+        en: 'Memoization: each `fib(n)` result goes into a cache. Repeated calls return the ready value at once — the number of calls grows linearly, not exponentially.',
+      },
+      lanes: [
+        { id: 'f5', title: 'fib(5)', tone: 'neutral', items: [] },
+        { id: 'f4', title: 'fib(4)', tone: 'neutral', items: [], parent: 'f5' },
+        { id: 'f3l', title: 'fib(3)', tone: 'neutral', items: [], parent: 'f4' },
+        { id: 'f2l', title: 'fib(2)', tone: 'neutral', items: [], parent: 'f3l' },
+        { id: 'f1', title: 'fib(1)', tone: 'neutral', items: [], parent: 'f3l' },
+        { id: 'f2r', title: 'fib(2)', tone: 'success', items: [{ id: 'f2r-cache', label: { ru: 'из кэша', en: 'from cache' } }], parent: 'f4', isActive: true },
+        { id: 'f3r', title: 'fib(3)', tone: 'success', items: [{ id: 'f3r-cache', label: { ru: 'из кэша', en: 'from cache' } }], parent: 'f5', isActive: true },
+      ],
+    },
+  ],
+};
+
 export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'event-loop-basic': EVENT_LOOP_BASIC,
   'event-loop-async': EVENT_LOOP_ASYNC,
@@ -2227,4 +2353,7 @@ export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'css-render-pipeline': CSS_RENDER_PIPELINE,
   'ai-rag-pipeline': AI_RAG_PIPELINE,
   'ai-agent-loop': AI_AGENT_LOOP,
+  'algo-binary-search': ALGO_BINARY_SEARCH,
+  'algo-dom-traversal': ALGO_DOM_TRAVERSAL,
+  'algo-fib-memo': ALGO_FIB_MEMO,
 };

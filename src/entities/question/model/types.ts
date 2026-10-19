@@ -86,7 +86,10 @@ export type DiagramId =
   | 'css-cascade-order'
   | 'css-render-pipeline'
   | 'ai-rag-pipeline'
-  | 'ai-agent-loop';
+  | 'ai-agent-loop'
+  | 'algo-binary-search'
+  | 'algo-dom-traversal'
+  | 'algo-fib-memo';
 
 export type DiagramText = string | LocalizedText;
 
@@ -162,7 +165,8 @@ export type IllustrationId =
   | 'css-flex-axes'
   | 'css-grid-fr'
   | 'ai-tokens'
-  | 'ai-temperature';
+  | 'ai-temperature'
+  | 'algo-growth';
 
 export type Illustration = {
   id: IllustrationId;

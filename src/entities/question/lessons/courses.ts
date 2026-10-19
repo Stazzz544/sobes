@@ -169,6 +169,22 @@ const AI_COURSE: Course = {
   ],
 };
 
+const ALGORITHMS_COURSE: Course = {
+  topic: 'algorithms',
+  final: [
+    { question: 'algo-big-o-amortized-001', tag: 'big-o', step: 'arrays-lists' },
+    { question: 'algo-ds-brackets-001', tag: 'data-structures', step: 'brackets' },
+    { question: 'algo-search-lower-bound-001', tag: 'searching', step: 'first-true' },
+    { question: 'algo-tp-004', tag: 'sorting', step: 'merge-quick' },
+    { question: 'algo-hash-anagram-001', tag: 'hashing', step: 'counting' },
+    { question: 'algo-tp-sliding-window-001', tag: 'two-pointers', step: 'sliding-window' },
+    { question: 'algo-rec-permutations-001', tag: 'recursion', step: 'combinatorics' },
+    { question: 'algo-graph-dijkstra-001', tag: 'trees-graphs', step: 'shortest-path' },
+    { question: 'algo-graph-cycle-001', tag: 'trees-graphs', step: 'dependencies' },
+    { question: 'algo-dp-lcs-001', tag: 'dynamic-programming', step: 'tables' },
+  ],
+};
+
 export const COURSES: Partial<Record<TopicId, Course>> = {
   state: STATE_COURSE,
   git: GIT_COURSE,
@@ -180,4 +196,5 @@ export const COURSES: Partial<Record<TopicId, Course>> = {
   typescript: TYPESCRIPT_COURSE,
   css: CSS_COURSE,
   ai: AI_COURSE,
+  algorithms: ALGORITHMS_COURSE,
 };

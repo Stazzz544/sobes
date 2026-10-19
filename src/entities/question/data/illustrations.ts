@@ -1521,6 +1521,33 @@ const AI_TEMPERATURE: Illustration = {
   },
 };
 
+const ALGO_GROWTH: Illustration = {
+  id: 'algo-growth',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200">
+<line x1="30" y1="180" x2="312" y2="180" stroke="{{color.border}}" stroke-width="1.5"/>
+<line x1="30" y1="180" x2="30" y2="8" stroke="{{color.border}}" stroke-width="1.5"/>
+<polyline points="30,169.8 44,169.8 58,169.8 72,169.8 86,169.8 100,169.8 114,169.8 128,169.8 142,169.8 156,169.8 170,169.8 184,169.8 198,169.8 212,169.8 226,169.8 240,169.8 254,169.8 268,169.8 282,169.8 296,169.8 310,169.8" fill="none" stroke="{{color.success}}" stroke-width="2.5"/>
+<polyline points="30,180 44,173.2 58,169.2 72,166.4 86,164.2 100,162.4 114,160.9 128,159.6 142,158.4 156,157.4 170,156.5 184,155.6 198,154.8 212,154.1 226,153.4 240,152.8 254,152.2 268,151.6 282,151.1 296,150.6 310,150.1" fill="none" stroke="{{color.success}}" stroke-width="2.5"/>
+<polyline points="30,180 44,176.6 58,173.2 72,169.8 86,166.4 100,163 114,159.6 128,156.2 142,152.8 156,149.4 170,146 184,142.6 198,139.2 212,135.8 226,132.4 240,129 254,125.6 268,122.2 282,118.8 296,115.4 310,112" fill="none" stroke="{{color.accentText}}" stroke-width="2.5"/>
+<polyline points="30,180 44,178.3 58,174.6 72,169.8 86,164.2 100,158 114,151.4 128,144.3 142,136.9 156,129.2 170,121.2 184,113 198,104.5 212,95.9 226,87 240,78 254,68.8 268,59.5 282,50 296,40.4 310,30.7" fill="none" stroke="{{color.textSecondary}}" stroke-width="2.5"/>
+<polyline points="30,180 44,179.2 58,176.6 72,172.4 86,166.4 100,158.8 114,149.4 128,138.4 142,125.6 156,111.2 170,95 184,77.2 198,57.6 212,36.3 226,13.4" fill="none" stroke="{{color.danger}}" stroke-width="2.5"/>
+<text x="306" y="163.8" font-size="11" font-family="monospace" text-anchor="end" fill="{{color.success}}">O(1)</text>
+<text x="306" y="144.1" font-size="11" font-family="monospace" text-anchor="end" fill="{{color.success}}">O(log n)</text>
+<text x="306" y="106" font-size="11" font-family="monospace" text-anchor="end" fill="{{color.accentText}}">O(n)</text>
+<text x="306" y="24.7" font-size="11" font-family="monospace" text-anchor="end" fill="{{color.textSecondary}}">O(n log n)</text>
+<text x="218" y="23.4" font-size="11" font-family="monospace" text-anchor="end" fill="{{color.danger}}">O(n²)</text>
+<text x="312" y="196" font-size="11" font-family="monospace" text-anchor="end" fill="{{color.textSecondary}}">n</text>
+<text x="26" y="16" font-size="11" text-anchor="end" fill="{{color.textSecondary}}">{{label.time}}</text>
+</svg>`,
+  labels: {
+    time: { ru: 'шаги', en: 'steps' },
+  },
+  alt: {
+    ru: 'Рост числа шагов при увеличении n: O(1) — горизонтальная линия, O(log n) растёт очень медленно, O(n) — прямая, O(n log n) — чуть круче, O(n²) быстро уходит вверх.',
+    en: 'How the number of steps grows with n: O(1) is a flat line, O(log n) grows very slowly, O(n) is a straight line, O(n log n) is a bit steeper, O(n²) shoots up quickly.',
+  },
+};
+
 export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'state-kinds': STATE_KINDS,
   'state-id-vs-copy': STATE_ID_VS_COPY,
@@ -1564,4 +1591,5 @@ export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'css-grid-fr': CSS_GRID_FR,
   'ai-tokens': AI_TOKENS,
   'ai-temperature': AI_TEMPERATURE,
+  'algo-growth': ALGO_GROWTH,
 };
