@@ -91,7 +91,10 @@ export type DiagramId =
   | 'algo-dom-traversal'
   | 'algo-fib-memo'
   | 'js-loop-queues'
-  | 'js-scope-chain';
+  | 'js-scope-chain'
+  | 'web-url-to-page'
+  | 'web-cors-preflight'
+  | 'web-atomic-deploy';
 
 export type DiagramText = string | LocalizedText;
 
@@ -168,7 +171,8 @@ export type IllustrationId =
   | 'css-grid-fr'
   | 'ai-tokens'
   | 'ai-temperature'
-  | 'algo-growth';
+  | 'algo-growth'
+  | 'web-debounce-throttle';
 
 export type Illustration = {
   id: IllustrationId;

@@ -2396,6 +2396,159 @@ const JS_SCOPE_CHAIN: Diagram = {
   ],
 };
 
+const WEB_URL_TO_PAGE: Diagram = {
+  id: 'web-url-to-page',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'dns', title: 'DNS', tone: 'accent', items: [code('lookup', 'example.com → 93.184.215.14')] },
+      { id: 'tcp', title: 'TCP', tone: 'accent', items: [code('handshake', 'SYN → SYN-ACK → ACK')] },
+      { id: 'tls', title: 'TLS', tone: 'warning', items: [code('cert', 'certificate + session keys')] },
+      { id: 'http', title: 'HTTP', tone: 'success', items: [code('get', 'GET / → 200 text/html')] },
+      { id: 'render', title: { ru: 'Рендеринг', en: 'Rendering' }, tone: 'neutral', items: [code('parse', 'HTML → DOM → pixels')] },
+    ],
+    [
+      {
+        activeId: 'dns',
+        caption: {
+          ru: 'DNS превращает имя домена в IP-адрес. Ответ кэшируется в браузере, системе и у провайдера — повторный визит обходится без этого шага.',
+          en: 'DNS turns the domain name into an IP address. The answer is cached by the browser, the OS and the provider — a repeat visit skips this step.',
+        },
+      },
+      {
+        activeId: 'tcp',
+        caption: {
+          ru: 'По IP браузер открывает TCP-соединение. Рукопожатие — целый круг до сервера и обратно.',
+          en: 'Using the IP, the browser opens a TCP connection. The handshake costs a full round trip to the server and back.',
+        },
+      },
+      {
+        activeId: 'tls',
+        caption: {
+          ru: 'Для HTTPS поверх TCP идёт TLS-рукопожатие: сервер предъявляет сертификат, стороны договариваются о ключах шифрования.',
+          en: 'For HTTPS a TLS handshake runs on top of TCP: the server presents a certificate, and both sides agree on encryption keys.',
+        },
+      },
+      {
+        activeId: 'http',
+        caption: {
+          ru: 'Только теперь уходит HTTP-запрос, и сервер возвращает HTML.',
+          en: 'Only now does the HTTP request go out, and the server returns HTML.',
+        },
+      },
+      {
+        activeId: 'render',
+        caption: {
+          ru: 'Браузер разбирает HTML и загружает CSS, скрипты и картинки. Для каждого нового домена цепочка DNS → TCP → TLS повторяется.',
+          en: 'The browser parses the HTML and loads CSS, scripts and images. For every new domain the DNS → TCP → TLS chain repeats.',
+        },
+      },
+    ],
+  ),
+};
+
+const WEB_CORS_PREFLIGHT: Diagram = {
+  id: 'web-cors-preflight',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'page', title: 'app.example.com', tone: 'accent', items: [code('method', 'PUT + application/json')] },
+      { id: 'preflight', title: 'OPTIONS', tone: 'warning', items: [code('ask', 'Access-Control-Request-Method')] },
+      { id: 'server', title: 'api.example.com', tone: 'neutral', items: [code('allow', 'Access-Control-Allow-Methods')] },
+      { id: 'request', title: 'PUT', tone: 'success', items: [code('body', '{ "title": "..." }')] },
+      { id: 'read', title: { ru: 'Чтение ответа', en: 'Reading the response' }, tone: 'accent', items: [code('origin', 'Access-Control-Allow-Origin')] },
+    ],
+    [
+      {
+        activeId: 'page',
+        caption: {
+          ru: 'Страница отправляет `PUT` с JSON на другой origin. Такой запрос не «простой».',
+          en: 'The page sends a `PUT` with JSON to another origin. Such a request isn’t “simple”.',
+        },
+      },
+      {
+        activeId: 'preflight',
+        caption: {
+          ru: 'Браузер сам отправляет `OPTIONS` и спрашивает: можно ли такой метод и такие заголовки?',
+          en: 'The browser itself sends `OPTIONS` asking: are this method and these headers allowed?',
+        },
+      },
+      {
+        activeId: 'server',
+        caption: {
+          ru: 'Сервер отвечает заголовками `Access-Control-Allow-*`. Не разрешил — настоящий запрос не уйдёт.',
+          en: 'The server answers with `Access-Control-Allow-*` headers. If it doesn’t allow it, the real request never goes out.',
+        },
+      },
+      {
+        activeId: 'request',
+        caption: {
+          ru: 'Разрешил — браузер отправляет сам `PUT`.',
+          en: 'If allowed, the browser sends the actual `PUT`.',
+        },
+      },
+      {
+        activeId: 'read',
+        caption: {
+          ru: 'Код страницы получит ответ, только если в нём есть подходящий `Access-Control-Allow-Origin`.',
+          en: 'The page’s code gets the response only if it carries a matching `Access-Control-Allow-Origin`.',
+        },
+      },
+    ],
+  ),
+};
+
+const releaseLanes = (live: '41' | '42', hasNext: boolean): DiagramLane[] => [
+  {
+    id: 'r41',
+    title: 'release 41',
+    tone: live === '41' ? 'success' : 'neutral',
+    items: [code('r41-html', 'index.html'), code('r41-js', 'app.3f9a2c.js')],
+  },
+  {
+    id: 'r42',
+    title: 'release 42',
+    tone: live === '42' ? 'success' : 'warning',
+    items: hasNext ? [code('r42-html', 'index.html'), code('r42-js', 'app.8b1d0e.js')] : [],
+  },
+  { id: 'traffic', title: { ru: 'Трафик', en: 'Traffic' }, tone: 'accent', items: [code('target', `→ ${live}`)] },
+];
+
+const WEB_ATOMIC_DEPLOY: Diagram = {
+  id: 'web-atomic-deploy',
+  layout: 'columns',
+  steps: [
+    {
+      caption: {
+        ru: 'Пользователи получают сборку 41: её `index.html` ссылается на её же чанки.',
+        en: 'Users get build 41: its `index.html` references its own chunks.',
+      },
+      lanes: releaseLanes('41', false),
+    },
+    {
+      caption: {
+        ru: 'Сборка 42 выкладывается рядом целиком. Трафик пока идёт на 41 — смеси версий никто не видит.',
+        en: 'Build 42 is uploaded whole next to it. Traffic still goes to 41 — nobody sees a mix of versions.',
+      },
+      lanes: releaseLanes('41', true),
+    },
+    {
+      caption: {
+        ru: 'Выкладка — одно переключение: трафик идёт на 42.',
+        en: 'Going live is a single switch: traffic goes to 42.',
+      },
+      lanes: releaseLanes('42', true),
+    },
+    {
+      caption: {
+        ru: 'Нашли баг — переключаем обратно на 41 за секунды. Старая сборка не тронута, пересобирать ничего не нужно.',
+        en: 'Found a bug — switch back to 41 in seconds. The old build is untouched; nothing needs rebuilding.',
+      },
+      lanes: releaseLanes('41', true),
+    },
+  ],
+};
+
 export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'event-loop-basic': EVENT_LOOP_BASIC,
   'event-loop-async': EVENT_LOOP_ASYNC,
@@ -2447,4 +2600,7 @@ export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'algo-fib-memo': ALGO_FIB_MEMO,
   'js-loop-queues': JS_LOOP_QUEUES,
   'js-scope-chain': JS_SCOPE_CHAIN,
+  'web-url-to-page': WEB_URL_TO_PAGE,
+  'web-cors-preflight': WEB_CORS_PREFLIGHT,
+  'web-atomic-deploy': WEB_ATOMIC_DEPLOY,
 };

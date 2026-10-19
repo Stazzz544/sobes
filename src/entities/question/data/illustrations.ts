@@ -1548,6 +1548,51 @@ const ALGO_GROWTH: Illustration = {
   },
 };
 
+const WEB_DEBOUNCE_THROTTLE: Illustration = {
+  id: 'web-debounce-throttle',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 176">
+<text x="0" y="13" font-size="11" fill="{{color.textSecondary}}">{{label.events}}</text>
+<line x1="0" y1="42" x2="320" y2="42" stroke="{{color.border}}" stroke-width="1"/>
+<line x1="10" y1="26" x2="10" y2="42" stroke="{{color.textMuted}}" stroke-width="2"/>
+<line x1="22" y1="26" x2="22" y2="42" stroke="{{color.textMuted}}" stroke-width="2"/>
+<line x1="34" y1="26" x2="34" y2="42" stroke="{{color.textMuted}}" stroke-width="2"/>
+<line x1="46" y1="26" x2="46" y2="42" stroke="{{color.textMuted}}" stroke-width="2"/>
+<line x1="58" y1="26" x2="58" y2="42" stroke="{{color.textMuted}}" stroke-width="2"/>
+<line x1="70" y1="26" x2="70" y2="42" stroke="{{color.textMuted}}" stroke-width="2"/>
+<line x1="82" y1="26" x2="82" y2="42" stroke="{{color.textMuted}}" stroke-width="2"/>
+<line x1="94" y1="26" x2="94" y2="42" stroke="{{color.textMuted}}" stroke-width="2"/>
+<line x1="106" y1="26" x2="106" y2="42" stroke="{{color.textMuted}}" stroke-width="2"/>
+<line x1="118" y1="26" x2="118" y2="42" stroke="{{color.textMuted}}" stroke-width="2"/>
+<line x1="200" y1="26" x2="200" y2="42" stroke="{{color.textMuted}}" stroke-width="2"/>
+<line x1="212" y1="26" x2="212" y2="42" stroke="{{color.textMuted}}" stroke-width="2"/>
+<line x1="224" y1="26" x2="224" y2="42" stroke="{{color.textMuted}}" stroke-width="2"/>
+<line x1="236" y1="26" x2="236" y2="42" stroke="{{color.textMuted}}" stroke-width="2"/>
+<text x="159" y="37" font-size="11" text-anchor="middle" fill="{{color.textMuted}}">{{label.pause}}</text>
+<text x="0" y="66" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">debounce</text>
+<line x1="0" y1="92" x2="320" y2="92" stroke="{{color.border}}" stroke-width="1"/>
+<line x1="118" y1="84" x2="162" y2="84" stroke="{{color.success}}" stroke-width="1" stroke-dasharray="3 3"/>
+<line x1="236" y1="84" x2="280" y2="84" stroke="{{color.success}}" stroke-width="1" stroke-dasharray="3 3"/>
+<circle cx="168" cy="92" r="6" fill="{{color.success}}"/>
+<circle cx="286" cy="92" r="6" fill="{{color.success}}"/>
+<text x="0" y="118" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">throttle</text>
+<line x1="0" y1="144" x2="320" y2="144" stroke="{{color.border}}" stroke-width="1"/>
+<circle cx="10" cy="144" r="6" fill="{{color.accentText}}"/>
+<circle cx="58" cy="144" r="6" fill="{{color.accentText}}"/>
+<circle cx="106" cy="144" r="6" fill="{{color.accentText}}"/>
+<circle cx="200" cy="144" r="6" fill="{{color.accentText}}"/>
+<text x="0" y="172" font-size="11" fill="{{color.textSecondary}}">{{label.note}}</text>
+</svg>`,
+  labels: {
+    events: { ru: 'события ввода', en: 'input events' },
+    pause: { ru: 'пауза', en: 'pause' },
+    note: { ru: 'кружок — вызов fn', en: 'dot = a call of fn' },
+  },
+  alt: {
+    ru: 'Две пачки событий ввода с паузой между ними. debounce ждёт затишья и вызывает функцию один раз после каждой пачки — всего два вызова. throttle вызывает её не чаще раза в интервал, пока события идут, — четыре вызова.',
+    en: 'Two bursts of input events with a pause between them. debounce waits for quiet and calls the function once after each burst — two calls in total. throttle calls it at most once per interval while events keep coming — four calls.',
+  },
+};
+
 export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'state-kinds': STATE_KINDS,
   'state-id-vs-copy': STATE_ID_VS_COPY,
@@ -1592,4 +1637,5 @@ export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'ai-tokens': AI_TOKENS,
   'ai-temperature': AI_TEMPERATURE,
   'algo-growth': ALGO_GROWTH,
+  'web-debounce-throttle': WEB_DEBOUNCE_THROTTLE,
 };

@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.73.0',
+    date: '2026-10-19',
+    changes: [
+      {
+        ru: 'Курс «Общие знания»: все 12 уроков стали пошаговыми — HTTP, сеть, кэширование, рендеринг в браузере, HTML и доступность, CSS, хранилища, безопасность, производительность, инструменты, Git и деплой. Новые схемы пути от адреса до страницы, preflight-запроса CORS и атомарного деплоя, иллюстрация debounce и throttle, «Проверь себя», тест по каждому уроку и итоговый тест курса. 11 новых вопросов: Git, деплой, lock-файл, source maps и `localStorage`. Теперь курсами стали все темы.',
+        en: 'The General web course: all 12 lessons are now step by step — HTTP, networking, caching, browser rendering, HTML and accessibility, CSS, storage, security, performance, tooling, Git and deployment. New diagrams of the road from address to page, a CORS preflight and an atomic deploy, a debounce vs throttle illustration, “Check yourself”, a test per lesson and a final course test. 11 new questions: Git, deployment, the lock file, source maps and `localStorage`. Every topic is now a course.',
+      },
+    ],
+  },
+  {
     version: '1.72.0',
     date: '2026-10-19',
     changes: [

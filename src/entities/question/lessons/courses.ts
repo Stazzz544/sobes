@@ -223,6 +223,24 @@ const REACT_COURSE: Course = {
   ],
 };
 
+const WEB_COURSE: Course = {
+  topic: 'web',
+  final: [
+    { question: 'web-redirect-001', tag: 'http', step: 'statuses' },
+    { question: 'web-network-001', tag: 'networking', step: 'url-to-page' },
+    { question: 'web-http-003', tag: 'caching', step: 'revalidation' },
+    { question: 'web-render-004', tag: 'browser-rendering', step: 'frames' },
+    { question: 'web-perf-003', tag: 'html-a11y', step: 'links-hints' },
+    { question: 'web-css-007', tag: 'css', step: 'box-model' },
+    { question: 'web-sec-token-storage-001', tag: 'storage', step: 'cookies' },
+    { question: 'web-sec-cors-credentials-001', tag: 'security', step: 'origin-cors' },
+    { question: 'web-perf-throttle-001', tag: 'performance', step: 'events-lists' },
+    { question: 'web-sec-supply-chain-001', tag: 'tooling', step: 'lock-file' },
+    { question: 'web-git-003', tag: 'git', step: 'undo' },
+    { question: 'web-deploy-005', tag: 'deploy', step: 'hashed-assets' },
+  ],
+};
+
 export const COURSES: Partial<Record<TopicId, Course>> = {
   state: STATE_COURSE,
   git: GIT_COURSE,
@@ -237,4 +255,5 @@ export const COURSES: Partial<Record<TopicId, Course>> = {
   algorithms: ALGORITHMS_COURSE,
   javascript: JAVASCRIPT_COURSE,
   react: REACT_COURSE,
+  web: WEB_COURSE,
 };

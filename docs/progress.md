@@ -725,4 +725,11 @@
 - Переиспользованы схемы `react-render-commit`, `stores-context-rerender` (из курса по состоянию) и `next-client-boundary` (из курса по Next.js).
 - `COURSES.react`: 12 вопросов, по одному на урок.
 
+## Курсы: «Общие знания» (19.10.2026, версия 1.73.0)
+
+- Все 12 уроков пошаговые (по 4 шага, тесты по 5–8 вопросов): `http`, `networking`, `caching`, `browser-rendering`, `html-a11y`, `css`, `storage`, `security`, `performance`, `tooling`, `git`, `deploy`. Файл `lessons/web.ts` собран заново.
+- 11 новых вопросов (`data/web-9.ts`): `web-git-003…006`, `web-deploy-004…006`, `web-tooling-002…004`, `web-storage-002` — без них урокам `git`, `deploy`, `tooling` и `storage` не хватало вопросов на тест и итоговый тест. Всего 980 вопросов.
+- Новые схемы `web-url-to-page`, `web-cors-preflight`, `web-atomic-deploy` и иллюстрация `web-debounce-throttle`; переиспользованы `critical-rendering-path`, `http-revalidation`, `css-cascade-order`, `css-box-layers`, `html-landmarks`, `git-remote-sync`, `git-rebase-replay`.
+- `COURSES.web`: 12 вопросов, по одному на урок. Курсами стали все темы, кроме скрытой HR.
+
 Дальше — `docs/roadmap.md`.
