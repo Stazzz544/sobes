@@ -1258,6 +1258,97 @@ const GIT_REMOTE_SYNC: Diagram = {
   ],
 };
 
+const HTML_PARSE_P_DIV: Diagram = {
+  id: 'html-parse-p-div',
+  layout: 'tree',
+  steps: [
+    {
+      caption: {
+        ru: 'Разбираем `<p>a<div>b</div>c</p>`. Парсер открыл абзац и положил в него текст `a`.',
+        en: 'Parsing `<p>a<div>b</div>c</p>`. The parser opened a paragraph and put the text `a` in it.',
+      },
+      lanes: [
+        { id: 'body', title: 'body', tone: 'neutral', items: [] },
+        { id: 'p1', title: 'p', tone: 'accent', items: [code('a', '"a"')], parent: 'body', isActive: true },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Встретился `<div>`. Внутри `<p>` блоку не место, поэтому парсер **закрывает абзац** и кладёт `<div>` рядом.',
+        en: 'A `<div>` arrives. A block can’t live inside `<p>`, so the parser **closes the paragraph** and puts the `<div>` next to it.',
+      },
+      lanes: [
+        { id: 'body', title: 'body', tone: 'neutral', items: [] },
+        { id: 'p1', title: 'p', tone: 'neutral', items: [code('a', '"a"')], parent: 'body' },
+        { id: 'div', title: 'div', tone: 'accent', items: [code('b', '"b"')], parent: 'body', isActive: true },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Текст `c` после `</div>` попадает прямо в `<body>`: абзац уже закрыт.',
+        en: 'The text `c` after `</div>` goes straight into `<body>`: the paragraph is already closed.',
+      },
+      lanes: [
+        { id: 'body', title: 'body', tone: 'accent', items: [code('c', '"c"')], isActive: true },
+        { id: 'p1', title: 'p', tone: 'neutral', items: [code('a', '"a"')], parent: 'body' },
+        { id: 'div', title: 'div', tone: 'neutral', items: [code('b', '"b"')], parent: 'body' },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Лишний `</p>` без открытого абзаца по правилам превращается в пустой `<p></p>`. В DOM два абзаца.',
+        en: 'The stray `</p>` with no open paragraph becomes an empty `<p></p>` by the rules. The DOM has two paragraphs.',
+      },
+      lanes: [
+        { id: 'body', title: 'body', tone: 'neutral', items: [code('c', '"c"')] },
+        { id: 'p1', title: 'p', tone: 'neutral', items: [code('a', '"a"')], parent: 'body' },
+        { id: 'div', title: 'div', tone: 'neutral', items: [code('b', '"b"')], parent: 'body' },
+        { id: 'p2', title: 'p', tone: 'warning', items: [{ id: 'empty', label: { ru: 'пустой', en: 'empty' } }], parent: 'body', isActive: true },
+      ],
+    },
+  ],
+};
+
+const A11Y_TAB_ORDER: Diagram = {
+  id: 'a11y-tab-order',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'c', title: { ru: 'Кнопка C', en: 'Button C' }, tone: 'warning', items: [code('c-index', 'tabindex="1"')] },
+      { id: 'b', title: { ru: 'Кнопка B', en: 'Button B' }, tone: 'warning', items: [code('b-index', 'tabindex="2"')] },
+      { id: 'a', title: { ru: 'Кнопка A', en: 'Button A' }, tone: 'neutral', items: [{ id: 'a-native', label: { ru: 'без tabindex', en: 'no tabindex' } }] },
+      { id: 'd', title: { ru: 'Кнопка D', en: 'Button D' }, tone: 'neutral', items: [{ id: 'd-native', label: { ru: 'без tabindex', en: 'no tabindex' } }] },
+    ],
+    [
+      {
+        activeId: 'c',
+        caption: {
+          ru: 'В разметке порядок A, B, C, D. Первый Tab попадает на C: элементы с положительным `tabindex` идут раньше всех, по возрастанию.',
+          en: 'The markup order is A, B, C, D. The first Tab lands on C: elements with a positive `tabindex` come first, in ascending order.',
+        },
+      },
+      {
+        activeId: 'b',
+        caption: { ru: 'Следом `tabindex="2"` — кнопка B.', en: 'Next is `tabindex="2"` — button B.' },
+      },
+      {
+        activeId: 'a',
+        caption: {
+          ru: 'Потом все остальные в порядке DOM: сначала A…',
+          en: 'Then everything else in DOM order: first A…',
+        },
+      },
+      {
+        activeId: 'd',
+        caption: {
+          ru: '…и D. Порядок фокуса разошёлся с порядком на экране — поэтому положительный `tabindex` не используют.',
+          en: '…and D. Focus order no longer matches the visual order — that’s why positive `tabindex` is avoided.',
+        },
+      },
+    ],
+  ),
+};
+
 export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'event-loop-basic': EVENT_LOOP_BASIC,
   'event-loop-async': EVENT_LOOP_ASYNC,
@@ -1284,4 +1375,6 @@ export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'url-source-of-truth': URL_SOURCE_OF_TRUTH,
   'url-push-replace': URL_PUSH_REPLACE,
   'git-remote-sync': GIT_REMOTE_SYNC,
+  'html-parse-p-div': HTML_PARSE_P_DIV,
+  'a11y-tab-order': A11Y_TAB_ORDER,
 };

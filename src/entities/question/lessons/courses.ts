@@ -36,7 +36,25 @@ const GIT_COURSE: Course = {
   ],
 };
 
+const HTML_COURSE: Course = {
+  topic: 'html',
+  final: [
+    { question: 'html-semantics-006', tag: 'html-semantics', step: 'landmarks' },
+    { question: 'html-semantics-008', tag: 'html-semantics', step: 'controls' },
+    { question: 'html-parsing-011', tag: 'html-parsing', step: 'void-elements' },
+    { question: 'html-parsing-008', tag: 'html-parsing', step: 'nesting' },
+    { question: 'html-forms-011', tag: 'html-forms', step: 'button-type' },
+    { question: 'html-forms-007', tag: 'html-forms', step: 'checkboxes' },
+    { question: 'html-a11y-names-009', tag: 'a11y-names', step: 'priority' },
+    { question: 'html-a11y-names-012', tag: 'a11y-names', step: 'groups' },
+    { question: 'html-a11y-aria-006', tag: 'a11y-aria', step: 'states' },
+    { question: 'html-a11y-keyboard-002', tag: 'a11y-keyboard', step: 'tab-order' },
+    { question: 'html-a11y-keyboard-005', tag: 'a11y-keyboard', step: 'modals' },
+  ],
+};
+
 export const COURSES: Partial<Record<TopicId, Course>> = {
   state: STATE_COURSE,
   git: GIT_COURSE,
+  html: HTML_COURSE,
 };

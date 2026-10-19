@@ -592,7 +592,7 @@ const checkContrast = (): void => {
 
 const LESSONS = Object.values(LESSON_GROUPS).flatMap((lessons) => lessons ?? []);
 
-const STEP_LESSON_LIMITS = { minSteps: 4, maxSteps: 8, maxBlocks: 3, minTest: 5, maxTest: 8, maxStepTest: 2, maxChecks: 2, maxStepText: 600, maxCodeLines: 14 };
+const STEP_LESSON_LIMITS = { minSteps: 4, maxSteps: 8, maxBlocks: 3, minTest: 5, maxTest: 8, maxStepTest: 2, maxChecks: 2, maxStepText: 600, maxCodeLines: 14, maxCodeWidth: 40 };
 const KEBAB_ID = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const QUESTIONS_BY_ID = new Map(QUESTIONS.map((question) => [question.id, question]));
 
@@ -673,6 +673,9 @@ const checkStepLesson = (lesson: StepLesson, lessonError: (message: string) => v
     for (const block of step.blocks) {
       if (block.type === 'code' && block.code.source.split('\n').length > limits.maxCodeLines) {
         warnings.push(`урок ${lesson.tag}, шаг ${step.id}: код длиннее ${limits.maxCodeLines} строк`);
+      }
+      if (block.type === 'code' && block.code.source.split('\n').some((line) => line.length > limits.maxCodeWidth)) {
+        warnings.push(`урок ${lesson.tag}, шаг ${step.id}: строка кода шире ${limits.maxCodeWidth} символов — на 360dp появится прокрутка`);
       }
       if (block.type === 'illustration' && !(block.illustration in ILLUSTRATIONS)) {
         stepError(`нет иллюстрации ${block.illustration}`);

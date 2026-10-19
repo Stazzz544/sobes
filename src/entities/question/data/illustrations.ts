@@ -574,6 +574,132 @@ const GIT_REBASE_REPLAY: Illustration = {
   },
 };
 
+const HTML_LANDMARKS: Illustration = {
+  id: 'html-landmarks',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 236">
+<rect x="0" y="0" width="320" height="40" rx="8" fill="{{color.accentSoft}}"/>
+<text x="12" y="25" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">header</text>
+<text x="308" y="25" font-size="12" font-family="monospace" text-anchor="end" fill="{{color.accentText}}">banner</text>
+<rect x="0" y="48" width="320" height="32" rx="8" fill="{{color.warningSoft}}"/>
+<text x="12" y="69" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">nav</text>
+<text x="308" y="69" font-size="12" font-family="monospace" text-anchor="end" fill="{{color.textPrimary}}">navigation</text>
+<rect x="0" y="88" width="208" height="100" rx="8" fill="{{color.successSoft}}"/>
+<text x="12" y="110" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">main</text>
+<text x="196" y="110" font-size="12" font-family="monospace" text-anchor="end" fill="{{color.success}}">main</text>
+<rect x="12" y="122" width="184" height="54" rx="6" fill="{{color.bgCard}}"/>
+<text x="22" y="142" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">article</text>
+<text x="22" y="164" font-size="11" fill="{{color.textSecondary}}">{{label.article}}</text>
+<rect x="216" y="88" width="104" height="100" rx="8" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="2"/>
+<text x="228" y="110" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">aside</text>
+<text x="228" y="132" font-size="11" font-family="monospace" fill="{{color.textSecondary}}">complem-</text>
+<text x="228" y="148" font-size="11" font-family="monospace" fill="{{color.textSecondary}}">entary</text>
+<rect x="0" y="196" width="320" height="40" rx="8" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="2"/>
+<text x="12" y="221" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">footer</text>
+<text x="308" y="221" font-size="12" font-family="monospace" text-anchor="end" fill="{{color.textSecondary}}">contentinfo</text>
+</svg>`,
+  labels: {
+    article: { ru: 'запись, карточка', en: 'a post, a card' },
+  },
+  alt: {
+    ru: 'Схема страницы: header — ориентир banner, nav — navigation, main — main с article внутри, aside — complementary, footer — contentinfo.',
+    en: 'A page layout: header is the banner landmark, nav is navigation, main is main with an article inside, aside is complementary, footer is contentinfo.',
+  },
+};
+
+const HTML_FORMDATA: Illustration = {
+  id: 'html-formdata',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 214">
+<text x="0" y="14" font-size="12" font-weight="bold" fill="{{color.textSecondary}}">{{label.field}}</text>
+<text x="320" y="14" font-size="12" font-weight="bold" text-anchor="end" fill="{{color.textSecondary}}">FormData</text>
+<rect x="0" y="24" width="320" height="30" rx="6" fill="{{color.successSoft}}"/>
+<text x="10" y="44" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">name="city"</text>
+<text x="310" y="44" font-size="12" font-family="monospace" text-anchor="end" fill="{{color.success}}">city=Tver</text>
+<rect x="0" y="60" width="320" height="30" rx="6" fill="{{color.successSoft}}"/>
+<text x="10" y="80" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">readonly</text>
+<text x="310" y="80" font-size="12" font-family="monospace" text-anchor="end" fill="{{color.success}}">{{label.sent}}</text>
+<rect x="0" y="96" width="320" height="30" rx="6" fill="{{color.dangerSoft}}"/>
+<text x="10" y="116" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">disabled</text>
+<text x="310" y="116" font-size="12" text-anchor="end" fill="{{color.danger}}">{{label.missing}}</text>
+<rect x="0" y="132" width="320" height="30" rx="6" fill="{{color.dangerSoft}}"/>
+<text x="10" y="152" font-size="12" fill="{{color.textPrimary}}">{{label.noName}}</text>
+<text x="310" y="152" font-size="12" text-anchor="end" fill="{{color.danger}}">{{label.missing}}</text>
+<rect x="0" y="168" width="320" height="30" rx="6" fill="{{color.dangerSoft}}"/>
+<text x="10" y="188" font-size="12" fill="{{color.textPrimary}}">{{label.unchecked}}</text>
+<text x="310" y="188" font-size="12" text-anchor="end" fill="{{color.danger}}">{{label.missing}}</text>
+<text x="0" y="212" font-size="11" fill="{{color.textSecondary}}">{{label.checked}}</text>
+</svg>`,
+  labels: {
+    field: { ru: 'Поле', en: 'Field' },
+    sent: { ru: 'отправится', en: 'sent' },
+    missing: { ru: 'нет в данных', en: 'not in data' },
+    noName: { ru: 'без name', en: 'no name' },
+    unchecked: { ru: 'чекбокс не отмечен', en: 'unchecked box' },
+    checked: { ru: 'отмечен без value: on', en: 'checked no value: on' },
+  },
+  alt: {
+    ru: 'Что попадёт в FormData: поле с name и readonly-поле отправятся; disabled-поле, поле без name и неотмеченный чекбокс в данных отсутствуют; отмеченный чекбокс без value отправляет строку on.',
+    en: 'What ends up in FormData: a named field and a readonly field are sent; a disabled field, a field without a name and an unchecked checkbox are missing; a checked checkbox without a value sends the string on.',
+  },
+};
+
+const A11Y_NAME_PRIORITY: Illustration = {
+  id: 'a11y-name-priority',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 196">
+<rect x="0" y="0" width="320" height="40" rx="8" fill="{{color.accentSoft}}"/>
+<text x="14" y="26" font-size="16" font-weight="bold" fill="{{color.accentText}}">1</text>
+<text x="40" y="25" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">aria-labelledby</text>
+<rect x="12" y="48" width="308" height="40" rx="8" fill="{{color.accentSoft}}"/>
+<text x="26" y="74" font-size="16" font-weight="bold" fill="{{color.accentText}}">2</text>
+<text x="52" y="73" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">aria-label</text>
+<rect x="24" y="96" width="296" height="48" rx="8" fill="{{color.successSoft}}"/>
+<text x="38" y="126" font-size="16" font-weight="bold" fill="{{color.success}}">3</text>
+<text x="64" y="116" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">label · alt · legend</text>
+<text x="64" y="134" font-size="11" fill="{{color.textSecondary}}">{{label.content}}</text>
+<rect x="36" y="152" width="284" height="40" rx="8" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="2"/>
+<text x="50" y="178" font-size="16" font-weight="bold" fill="{{color.textSecondary}}">4</text>
+<text x="76" y="177" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textSecondary}}">title · placeholder</text>
+</svg>`,
+  labels: {
+    content: { ru: 'или текст внутри', en: 'or the text inside' },
+  },
+  alt: {
+    ru: 'Приоритет источников доступного имени сверху вниз: 1 — aria-labelledby, 2 — aria-label, 3 — label, alt, legend или текст содержимого, 4 — title и placeholder как запасной вариант.',
+    en: 'Accessible name sources by priority, top to bottom: 1 — aria-labelledby, 2 — aria-label, 3 — label, alt, legend or the text content, 4 — title and placeholder as a fallback.',
+  },
+};
+
+const A11Y_HIDDEN_VS_INERT: Illustration = {
+  id: 'a11y-hidden-vs-inert',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 150">
+<text x="176" y="14" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.textPrimary}}">{{label.reader}}</text>
+<text x="272" y="14" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.textPrimary}}">Tab</text>
+<text x="0" y="46" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">aria-hidden</text>
+<rect x="128" y="26" width="96" height="30" rx="8" fill="{{color.successSoft}}"/>
+<text x="176" y="46" font-size="12" text-anchor="middle" fill="{{color.success}}">{{label.hidden}}</text>
+<rect x="232" y="26" width="88" height="30" rx="8" fill="{{color.dangerSoft}}"/>
+<text x="276" y="46" font-size="12" text-anchor="middle" fill="{{color.danger}}">{{label.reachable}}</text>
+<text x="0" y="86" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">inert</text>
+<rect x="128" y="66" width="96" height="30" rx="8" fill="{{color.successSoft}}"/>
+<text x="176" y="86" font-size="12" text-anchor="middle" fill="{{color.success}}">{{label.hidden}}</text>
+<rect x="232" y="66" width="88" height="30" rx="8" fill="{{color.successSoft}}"/>
+<text x="276" y="86" font-size="12" text-anchor="middle" fill="{{color.success}}">{{label.blocked}}</text>
+<text x="0" y="126" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">showModal()</text>
+<rect x="128" y="106" width="192" height="30" rx="8" fill="{{color.accentSoft}}"/>
+<text x="224" y="126" font-size="12" text-anchor="middle" fill="{{color.accentText}}">{{label.modal}}</text>
+</svg>`,
+  labels: {
+    reader: { ru: 'Диктор', en: 'Screen reader' },
+    hidden: { ru: 'не видит', en: 'can’t see' },
+    reachable: { ru: 'доходит', en: 'reaches' },
+    blocked: { ru: 'не доходит', en: 'blocked' },
+    modal: { ru: 'фон инертен сам', en: 'background inert' },
+  },
+  alt: {
+    ru: 'Сравнение: aria-hidden прячет элементы от диктора, но Tab до них доходит. inert прячет и от диктора, и от Tab. dialog.showModal() делает фон инертным автоматически.',
+    en: 'Comparison: aria-hidden hides elements from the screen reader, but Tab still reaches them. inert hides them from both the screen reader and Tab. dialog.showModal() makes the background inert automatically.',
+  },
+};
+
 export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'state-kinds': STATE_KINDS,
   'state-id-vs-copy': STATE_ID_VS_COPY,
@@ -591,4 +717,8 @@ export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'git-conflict-origin': GIT_CONFLICT_ORIGIN,
   'git-reset-modes': GIT_RESET_MODES,
   'git-rebase-replay': GIT_REBASE_REPLAY,
+  'html-landmarks': HTML_LANDMARKS,
+  'html-formdata': HTML_FORMDATA,
+  'a11y-name-priority': A11Y_NAME_PRIORITY,
+  'a11y-hidden-vs-inert': A11Y_HIDDEN_VS_INERT,
 };

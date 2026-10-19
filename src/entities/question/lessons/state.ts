@@ -982,7 +982,7 @@ export const STATE_LESSONS: Lesson[] = [
             type: 'code',
             code: {
               lang: 'js',
-              source: "const raw = Number(params.get('page') ?? 1);\nconst page = Number.isInteger(raw) && raw > 0\n  ? raw\n  : 1;",
+              source: "const raw =\n  Number(params.get('page') ?? 1);\nconst page =\n  Number.isInteger(raw) && raw > 0\n    ? raw\n    : 1;",
             },
             caption: { ru: 'Номер страницы из URL с проверкой', en: 'A validated page number from the URL' },
           },

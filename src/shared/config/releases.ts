@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.62.0',
+    date: '2026-10-19',
+    changes: [
+      {
+        ru: 'Курс «HTML и доступность»: все 6 уроков стали пошаговыми — семантика и ориентиры, как браузер разбирает разметку, формы, доступное имя, роли и ARIA, клавиатура и фокус. Схемы, анимации, «Проверь себя», тест по каждому уроку и итоговый тест курса.',
+        en: 'The HTML & accessibility course: all 6 lessons are now step by step — semantics and landmarks, how browsers parse markup, forms, accessible names, roles and ARIA, keyboard and focus. Diagrams, animations, “Check yourself”, a test per lesson and a final course test.',
+      },
+    ],
+  },
+  {
     version: '1.61.0',
     date: '2026-10-19',
     changes: [
