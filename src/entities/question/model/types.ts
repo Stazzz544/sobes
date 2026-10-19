@@ -77,7 +77,10 @@ export type DiagramId =
   | 'express-middleware-chain'
   | 'next-client-boundary'
   | 'next-data-waterfall'
-  | 'next-action-flow';
+  | 'next-action-flow'
+  | 'arch-middleware-onion'
+  | 'arch-data-boundary'
+  | 'arch-strangler';
 
 export type DiagramText = string | LocalizedText;
 
@@ -138,7 +141,15 @@ export type IllustrationId =
   | 'node-stream-memory'
   | 'next-file-nesting'
   | 'next-static-shell'
-  | 'next-image-cls';
+  | 'next-image-cls'
+  | 'arch-srp-reasons'
+  | 'arch-observer'
+  | 'arch-fsd-layers'
+  | 'arch-upload-machine'
+  | 'arch-dependency-inversion'
+  | 'arch-backoff'
+  | 'arch-offset-cursor'
+  | 'arch-affected-graph';
 
 export type Illustration = {
   id: IllustrationId;

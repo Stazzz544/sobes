@@ -1737,6 +1737,161 @@ const NEXT_ACTION_FLOW: Diagram = {
   ),
 };
 
+const ARCH_MIDDLEWARE_ONION: Diagram = {
+  id: 'arch-middleware-onion',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'request', title: { ru: 'Запрос', en: 'Request' }, tone: 'accent', items: [] },
+      { id: 'logger', title: 'logger', tone: 'warning', items: [code('logger-next', 'next()')] },
+      { id: 'auth', title: 'auth', tone: 'warning', items: [code('auth-next', 'next()')] },
+      { id: 'handler', title: 'handler', tone: 'success', items: [] },
+    ],
+    [
+      {
+        activeId: 'request',
+        caption: {
+          ru: 'Слои подключены в порядке `[logger, auth, handler]`: `logger` — внешний слой луковицы.',
+          en: 'Layers are registered as `[logger, auth, handler]`: `logger` is the outer layer of the onion.',
+        },
+      },
+      {
+        activeId: 'logger',
+        caption: {
+          ru: '`logger` запоминает время начала и вызывает `next()` — управление уходит внутрь.',
+          en: '`logger` records the start time and calls `next()` — control moves inward.',
+        },
+      },
+      {
+        activeId: 'auth',
+        caption: {
+          ru: '`auth` проверяет токен и тоже вызывает `next()`.',
+          en: '`auth` checks the token and calls `next()` too.',
+        },
+      },
+      {
+        activeId: 'handler',
+        caption: {
+          ru: 'Самый внутренний слой формирует ответ и не вызывает `next()` — цепочка разворачивается обратно.',
+          en: 'The innermost layer builds the response and doesn’t call `next()` — the chain unwinds.',
+        },
+      },
+      {
+        activeId: 'auth',
+        caption: {
+          ru: '`next()` в `auth` вернул управление: выполняется код после него.',
+          en: '`next()` in `auth` returned: the code after it runs.',
+        },
+      },
+      {
+        activeId: 'logger',
+        caption: {
+          ru: 'Последним завершается внешний слой: `logger` пишет длительность всего запроса. Вход — по порядку, выход — в обратном.',
+          en: 'The outer layer finishes last: `logger` writes the whole request’s duration. In — in order, out — in reverse.',
+        },
+      },
+    ],
+  ),
+};
+
+const ARCH_DATA_BOUNDARY: Diagram = {
+  id: 'arch-data-boundary',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'api', title: 'API', tone: 'neutral', items: [code('dto', '{ user_name, created_at }')] },
+      { id: 'schema', title: 'zod', tone: 'warning', items: [code('parse', 'schema.parse(json)')] },
+      { id: 'adapter', title: { ru: 'Адаптер', en: 'Adapter' }, tone: 'accent', items: [code('to-user', 'toUser(dto)')] },
+      { id: 'model', title: { ru: 'Модель интерфейса', en: 'UI model' }, tone: 'success', items: [code('user', '{ userName, createdAt }')] },
+      { id: 'component', title: { ru: 'Компонент', en: 'Component' }, tone: 'success', items: [code('render', '<Profile user={user} />')] },
+    ],
+    [
+      {
+        activeId: 'api',
+        caption: {
+          ru: 'Бэкенд присылает JSON в своём формате: `snake_case`, даты строками.',
+          en: 'The backend sends JSON in its own format: `snake_case`, dates as strings.',
+        },
+      },
+      {
+        activeId: 'schema',
+        caption: {
+          ru: 'Схема проверяет ответ сразу при получении. Пропало поле или пришёл `null` — понятная ошибка здесь, а не `undefined` в рендере.',
+          en: 'The schema checks the response on arrival. A missing field or a `null` gives a clear error here, not `undefined` in rendering.',
+        },
+      },
+      {
+        activeId: 'adapter',
+        caption: {
+          ru: 'Адаптер переводит формат бэкенда в модель интерфейса: `camelCase`, строки дат — в `Date`.',
+          en: 'The adapter converts the backend format into the UI model: `camelCase`, date strings into `Date`.',
+        },
+      },
+      {
+        activeId: 'model',
+        caption: {
+          ru: 'Дальше по приложению ходит только эта модель. Бэкенд переименует поле — правка будет одна, в адаптере.',
+          en: 'From here only this model travels through the app. If the backend renames a field, there’s one fix — in the adapter.',
+        },
+      },
+      {
+        activeId: 'component',
+        caption: {
+          ru: 'Компонент не знает, как устроен ответ API: он получает готовую модель.',
+          en: 'The component doesn’t know the API response format: it gets a ready model.',
+        },
+      },
+    ],
+  ),
+};
+
+const ARCH_STRANGLER: Diagram = {
+  id: 'arch-strangler',
+  layout: 'columns',
+  steps: [
+    {
+      caption: {
+        ru: 'Старое приложение обслуживает все маршруты. Перед ним ставят прокси, который решает, куда отправить каждый запрос.',
+        en: 'The legacy app serves every route. A proxy goes in front of it and decides where each request goes.',
+      },
+      lanes: [
+        { id: 'legacy', title: { ru: 'Старое приложение', en: 'Legacy app' }, tone: 'neutral', items: [code('catalog', '/catalog'), code('cart', '/cart'), code('profile', '/profile'), code('orders', '/orders')], isActive: true },
+        { id: 'next', title: { ru: 'Новое приложение', en: 'New app' }, tone: 'success', items: [] },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Корзину сделали на новом стеке, и прокси отправляет `/cart` в новое приложение. Остальное работает как раньше — фичи не заморожены.',
+        en: 'The cart was rebuilt on the new stack, and the proxy sends `/cart` to the new app. Everything else works as before — features aren’t frozen.',
+      },
+      lanes: [
+        { id: 'legacy', title: { ru: 'Старое приложение', en: 'Legacy app' }, tone: 'neutral', items: [code('catalog', '/catalog'), code('profile', '/profile'), code('orders', '/orders')] },
+        { id: 'next', title: { ru: 'Новое приложение', en: 'New app' }, tone: 'success', items: [code('cart', '/cart')], isActive: true },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Экран за экраном маршруты переезжают. Каждый шаг выкатывается отдельно и сразу приносит пользу.',
+        en: 'Screen by screen the routes move over. Each step ships separately and pays off right away.',
+      },
+      lanes: [
+        { id: 'legacy', title: { ru: 'Старое приложение', en: 'Legacy app' }, tone: 'neutral', items: [code('orders', '/orders')] },
+        { id: 'next', title: { ru: 'Новое приложение', en: 'New app' }, tone: 'success', items: [code('cart', '/cart'), code('catalog', '/catalog'), code('profile', '/profile')], isActive: true },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Старое приложение опустело, и его выключают. Переписывать всё с нуля с заморозкой фич не понадобилось.',
+        en: 'The legacy app is empty, so it’s switched off. No from-scratch rewrite with a feature freeze was needed.',
+      },
+      lanes: [
+        { id: 'legacy', title: { ru: 'Старое приложение', en: 'Legacy app' }, tone: 'neutral', items: [] },
+        { id: 'next', title: { ru: 'Новое приложение', en: 'New app' }, tone: 'success', items: [code('cart', '/cart'), code('catalog', '/catalog'), code('profile', '/profile'), code('orders', '/orders')], isActive: true },
+      ],
+    },
+  ],
+};
+
 export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'event-loop-basic': EVENT_LOOP_BASIC,
   'event-loop-async': EVENT_LOOP_ASYNC,
@@ -1774,4 +1929,7 @@ export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'next-client-boundary': NEXT_CLIENT_BOUNDARY,
   'next-data-waterfall': NEXT_DATA_WATERFALL,
   'next-action-flow': NEXT_ACTION_FLOW,
+  'arch-middleware-onion': ARCH_MIDDLEWARE_ONION,
+  'arch-data-boundary': ARCH_DATA_BOUNDARY,
+  'arch-strangler': ARCH_STRANGLER,
 };

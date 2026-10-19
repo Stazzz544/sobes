@@ -935,6 +935,333 @@ const NEXT_IMAGE_CLS: Illustration = {
   },
 };
 
+const ARCH_SRP_REASONS: Illustration = {
+  id: 'arch-srp-reasons',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 170">
+<text x="76" y="13" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.danger}}">{{label.before}}</text>
+<rect x="0" y="24" width="48" height="22" rx="6" fill="{{color.accentSoft}}"/>
+<text x="24" y="39" font-size="11" text-anchor="middle" fill="{{color.accentText}}">{{label.prices}}</text>
+<rect x="52" y="24" width="48" height="22" rx="6" fill="{{color.accentSoft}}"/>
+<text x="76" y="39" font-size="11" text-anchor="middle" fill="{{color.accentText}}">{{label.events}}</text>
+<rect x="104" y="24" width="48" height="22" rx="6" fill="{{color.accentSoft}}"/>
+<text x="128" y="39" font-size="11" text-anchor="middle" fill="{{color.accentText}}">{{label.layout}}</text>
+<line x1="24" y1="46" x2="24" y2="76" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="19,74 29,74 24,82" fill="{{color.textMuted}}"/>
+<line x1="76" y1="46" x2="76" y2="76" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="71,74 81,74 76,82" fill="{{color.textMuted}}"/>
+<line x1="128" y1="46" x2="128" y2="76" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="123,74 133,74 128,82" fill="{{color.textMuted}}"/>
+<rect x="0" y="82" width="152" height="56" rx="8" fill="{{color.dangerSoft}}"/>
+<text x="76" y="106" font-size="13" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.danger}}">Cart</text>
+<text x="76" y="125" font-size="11" text-anchor="middle" fill="{{color.danger}}">{{label.reasons}}</text>
+<text x="76" y="162" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.ripple}}</text>
+<text x="244" y="13" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.success}}">{{label.after}}</text>
+<rect x="168" y="24" width="48" height="22" rx="6" fill="{{color.accentSoft}}"/>
+<text x="192" y="39" font-size="11" text-anchor="middle" fill="{{color.accentText}}">{{label.prices}}</text>
+<rect x="220" y="24" width="48" height="22" rx="6" fill="{{color.accentSoft}}"/>
+<text x="244" y="39" font-size="11" text-anchor="middle" fill="{{color.accentText}}">{{label.events}}</text>
+<rect x="272" y="24" width="48" height="22" rx="6" fill="{{color.accentSoft}}"/>
+<text x="296" y="39" font-size="11" text-anchor="middle" fill="{{color.accentText}}">{{label.layout}}</text>
+<line x1="192" y1="46" x2="192" y2="76" stroke="{{color.success}}" stroke-width="2"/>
+<polygon points="187,74 197,74 192,82" fill="{{color.success}}"/>
+<line x1="244" y1="46" x2="244" y2="76" stroke="{{color.success}}" stroke-width="2"/>
+<polygon points="239,74 249,74 244,82" fill="{{color.success}}"/>
+<line x1="296" y1="46" x2="296" y2="76" stroke="{{color.success}}" stroke-width="2"/>
+<polygon points="291,74 301,74 296,82" fill="{{color.success}}"/>
+<rect x="168" y="82" width="48" height="56" rx="8" fill="{{color.successSoft}}"/>
+<text x="192" y="114" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.success}}">price</text>
+<rect x="220" y="82" width="48" height="56" rx="8" fill="{{color.successSoft}}"/>
+<text x="244" y="114" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.success}}">track</text>
+<rect x="272" y="82" width="48" height="56" rx="8" fill="{{color.successSoft}}"/>
+<text x="296" y="114" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.success}}">View</text>
+<text x="244" y="162" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.isolated}}</text>
+</svg>`,
+  labels: {
+    before: { ru: 'Один компонент', en: 'One component' },
+    after: { ru: 'Три модуля', en: 'Three modules' },
+    prices: { ru: 'скидки', en: 'prices' },
+    events: { ru: 'события', en: 'events' },
+    layout: { ru: 'вёрстка', en: 'layout' },
+    reasons: { ru: '3 причины меняться', en: '3 reasons to change' },
+    ripple: { ru: 'правка задевает всё', en: 'a change hits it all' },
+    isolated: { ru: 'у каждого одна', en: 'one reason each' },
+  },
+  alt: {
+    ru: 'Слева компонент Cart меняется по трём причинам — скидки, события аналитики и вёрстка, — и любая правка задевает его целиком. Справа те же три причины ведут в три отдельных модуля: price, track и View, у каждого одна причина для изменения.',
+    en: 'Left: the Cart component changes for three reasons — prices, analytics events and layout — and every change hits all of it. Right: the same three reasons lead to three separate modules — price, track and View — each with one reason to change.',
+  },
+};
+
+const ARCH_OBSERVER: Illustration = {
+  id: 'arch-observer',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 176">
+<rect x="0" y="4" width="100" height="168" rx="10" fill="{{color.accentSoft}}"/>
+<text x="50" y="82" font-size="13" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">store</text>
+<text x="50" y="100" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">set(5)</text>
+<line x1="100" y1="24" x2="206" y2="24" stroke="{{color.success}}" stroke-width="2"/>
+<polygon points="204,19 204,29 212,24" fill="{{color.success}}"/>
+<text x="156" y="17" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.success}}">5</text>
+<line x1="100" y1="88" x2="206" y2="88" stroke="{{color.success}}" stroke-width="2"/>
+<polygon points="204,83 204,93 212,88" fill="{{color.success}}"/>
+<text x="156" y="81" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.success}}">5</text>
+<line x1="100" y1="152" x2="210" y2="152" stroke="{{color.textMuted}}" stroke-width="2" stroke-dasharray="4 4"/>
+<rect x="212" y="4" width="108" height="40" rx="8" fill="{{color.successSoft}}"/>
+<text x="266" y="20" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.success}}">Header</text>
+<text x="266" y="36" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.received}}</text>
+<rect x="212" y="68" width="108" height="40" rx="8" fill="{{color.successSoft}}"/>
+<text x="266" y="84" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.success}}">Chart</text>
+<text x="266" y="100" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.received}}</text>
+<rect x="213" y="133" width="106" height="38" rx="8" fill="{{color.bgSecondary}}" stroke="{{color.textMuted}}" stroke-width="2" stroke-dasharray="4 4"/>
+<text x="266" y="148" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textMuted}}">Modal</text>
+<text x="266" y="164" font-size="11" text-anchor="middle" fill="{{color.textMuted}}">{{label.unsubscribed}}</text>
+</svg>`,
+  labels: {
+    received: { ru: 'получил 5', en: 'got 5' },
+    unsubscribed: { ru: 'отписан', en: 'unsubscribed' },
+  },
+  alt: {
+    ru: 'Стор после set(5) рассылает новое значение подписчикам: Header и Chart получили 5. Modal отписался — до него уведомление не дошло.',
+    en: 'After set(5) the store sends the new value to its subscribers: Header and Chart got 5. Modal unsubscribed, so the notification didn’t reach it.',
+  },
+};
+
+const ARCH_FSD_LAYERS: Illustration = {
+  id: 'arch-fsd-layers',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 206">
+<rect x="60" y="4" width="180" height="28" rx="6" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="150" y="23" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">app</text>
+<rect x="60" y="38" width="180" height="28" rx="6" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="150" y="57" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">pages</text>
+<rect x="60" y="72" width="180" height="28" rx="6" fill="{{color.accentSoft}}"/>
+<text x="150" y="91" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">widgets</text>
+<rect x="60" y="106" width="180" height="28" rx="6" fill="{{color.dangerSoft}}"/>
+<text x="150" y="125" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.danger}}">features</text>
+<rect x="60" y="140" width="180" height="28" rx="6" fill="{{color.successSoft}}"/>
+<text x="150" y="159" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.success}}">entities</text>
+<rect x="60" y="174" width="180" height="28" rx="6" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="150" y="193" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">shared</text>
+<polyline points="58,86 44,86 44,154 52,154" fill="none" stroke="{{color.success}}" stroke-width="2"/>
+<polygon points="52,149 52,159 60,154" fill="{{color.success}}"/>
+<text x="38" y="124" font-size="11" font-weight="bold" text-anchor="end" fill="{{color.success}}">{{label.allowed}}</text>
+<polyline points="242,154 268,154 268,120 248,120" fill="none" stroke="{{color.danger}}" stroke-width="2"/>
+<polygon points="248,115 248,125 240,120" fill="{{color.danger}}"/>
+<text x="274" y="141" font-size="11" font-weight="bold" fill="{{color.danger}}">{{label.forbidden}}</text>
+</svg>`,
+  labels: {
+    allowed: { ru: 'можно', en: 'OK' },
+    forbidden: { ru: 'нельзя', en: 'never' },
+  },
+  alt: {
+    ru: 'Слои FSD сверху вниз: app, pages, widgets, features, entities, shared. Стрелка из widgets вниз в entities — можно. Стрелка из entities вверх в features — нельзя: импортировать можно только из слоёв ниже.',
+    en: 'FSD layers top to bottom: app, pages, widgets, features, entities, shared. An arrow from widgets down to entities is OK. An arrow from entities up to features is never allowed: you may import only from lower layers.',
+  },
+};
+
+const ARCH_UPLOAD_MACHINE: Illustration = {
+  id: 'arch-upload-machine',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 168">
+<rect x="0" y="20" width="70" height="34" rx="8" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="35" y="41" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">idle</text>
+<rect x="110" y="20" width="100" height="34" rx="8" fill="{{color.accentSoft}}"/>
+<text x="160" y="41" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">uploading</text>
+<rect x="250" y="20" width="70" height="34" rx="8" fill="{{color.successSoft}}"/>
+<text x="285" y="41" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.success}}">done</text>
+<rect x="110" y="130" width="100" height="34" rx="8" fill="{{color.dangerSoft}}"/>
+<text x="160" y="151" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.danger}}">failed</text>
+<line x1="70" y1="37" x2="103" y2="37" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="102,32 102,42 110,37" fill="{{color.textMuted}}"/>
+<text x="90" y="14" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">START</text>
+<line x1="210" y1="37" x2="243" y2="37" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="242,32 242,42 250,37" fill="{{color.textMuted}}"/>
+<text x="230" y="14" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">OK</text>
+<line x1="140" y1="54" x2="140" y2="123" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="135,122 145,122 140,130" fill="{{color.textMuted}}"/>
+<text x="132" y="96" font-size="11" font-family="monospace" text-anchor="end" fill="{{color.textSecondary}}">FAIL</text>
+<line x1="180" y1="130" x2="180" y2="61" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="175,62 185,62 180,54" fill="{{color.textMuted}}"/>
+<text x="188" y="96" font-size="11" font-family="monospace" fill="{{color.textSecondary}}">RETRY</text>
+</svg>`,
+  labels: {},
+  alt: {
+    ru: 'Конечный автомат загрузки: из idle по START в uploading, из uploading по OK в done, по FAIL в failed, из failed по RETRY снова в uploading.',
+    en: 'An upload state machine: idle goes to uploading on START, uploading goes to done on OK or to failed on FAIL, and failed goes back to uploading on RETRY.',
+  },
+};
+
+const ARCH_DEPENDENCY_INVERSION: Illustration = {
+  id: 'arch-dependency-inversion',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 182">
+<text x="76" y="13" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.danger}}">{{label.direct}}</text>
+<rect x="0" y="24" width="48" height="22" rx="6" fill="{{color.accentSoft}}"/>
+<text x="24" y="39" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">cart</text>
+<rect x="52" y="24" width="48" height="22" rx="6" fill="{{color.accentSoft}}"/>
+<text x="76" y="39" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">user</text>
+<rect x="104" y="24" width="48" height="22" rx="6" fill="{{color.accentSoft}}"/>
+<text x="128" y="39" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">feed</text>
+<line x1="24" y1="46" x2="24" y2="63" stroke="{{color.danger}}" stroke-width="2"/>
+<polygon points="19,62 29,62 24,70" fill="{{color.danger}}"/>
+<line x1="76" y1="46" x2="76" y2="63" stroke="{{color.danger}}" stroke-width="2"/>
+<polygon points="71,62 81,62 76,70" fill="{{color.danger}}"/>
+<line x1="128" y1="46" x2="128" y2="63" stroke="{{color.danger}}" stroke-width="2"/>
+<polygon points="123,62 133,62 128,70" fill="{{color.danger}}"/>
+<rect x="0" y="70" width="152" height="28" rx="8" fill="{{color.dangerSoft}}"/>
+<text x="76" y="88" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.danger}}">localStorage</text>
+<text x="76" y="132" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.everywhere}}</text>
+<text x="244" y="13" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.success}}">{{label.inverted}}</text>
+<rect x="168" y="24" width="48" height="22" rx="6" fill="{{color.accentSoft}}"/>
+<text x="192" y="39" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">cart</text>
+<rect x="220" y="24" width="48" height="22" rx="6" fill="{{color.accentSoft}}"/>
+<text x="244" y="39" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">user</text>
+<rect x="272" y="24" width="48" height="22" rx="6" fill="{{color.accentSoft}}"/>
+<text x="296" y="39" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">feed</text>
+<line x1="192" y1="46" x2="192" y2="63" stroke="{{color.success}}" stroke-width="2"/>
+<polygon points="187,62 197,62 192,70" fill="{{color.success}}"/>
+<line x1="244" y1="46" x2="244" y2="63" stroke="{{color.success}}" stroke-width="2"/>
+<polygon points="239,62 249,62 244,70" fill="{{color.success}}"/>
+<line x1="296" y1="46" x2="296" y2="63" stroke="{{color.success}}" stroke-width="2"/>
+<polygon points="291,62 301,62 296,70" fill="{{color.success}}"/>
+<rect x="168" y="70" width="152" height="28" rx="8" fill="{{color.successSoft}}"/>
+<text x="244" y="88" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.success}}">Storage</text>
+<rect x="168" y="128" width="152" height="28" rx="8" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="244" y="146" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">webStorage</text>
+<line x1="244" y1="128" x2="244" y2="105" stroke="{{color.textMuted}}" stroke-width="2" stroke-dasharray="4 3"/>
+<polygon points="239,106 249,106 244,98" fill="{{color.textMuted}}"/>
+<text x="244" y="176" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.root}}</text>
+</svg>`,
+  labels: {
+    direct: { ru: 'Напрямую', en: 'Directly' },
+    inverted: { ru: 'Через интерфейс', en: 'Via an interface' },
+    everywhere: { ru: 'замена — правка всех', en: 'swap = edit them all' },
+    root: { ru: 'создан в main.ts', en: 'created in main.ts' },
+  },
+  alt: {
+    ru: 'Слева модули cart, user и feed напрямую обращаются к localStorage — замена хранилища требует правки каждого. Справа модули зависят от своего интерфейса Storage, а реализацию webStorage создают в main.ts и передают им.',
+    en: 'Left: the cart, user and feed modules call localStorage directly — swapping storage means editing each one. Right: the modules depend on their own Storage interface, and the webStorage implementation is created in main.ts and passed to them.',
+  },
+};
+
+const ARCH_BACKOFF: Illustration = {
+  id: 'arch-backoff',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 176">
+<line x1="0" y1="20" x2="320" y2="20" stroke="{{color.danger}}" stroke-width="1.5" stroke-dasharray="5 4"/>
+<text x="2" y="14" font-size="11" font-weight="bold" fill="{{color.danger}}">{{label.cap}}</text>
+<rect x="24" y="125" width="40" height="15" rx="3" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="1.5"/>
+<text x="44" y="119" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">0.5s</text>
+<rect x="84" y="110" width="40" height="30" rx="3" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="1.5"/>
+<text x="104" y="104" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">1s</text>
+<rect x="144" y="80" width="40" height="60" rx="3" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="1.5"/>
+<text x="164" y="74" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">2s</text>
+<rect x="204" y="20" width="40" height="120" rx="3" fill="{{color.warningSoft}}" stroke="{{color.warning}}" stroke-width="1.5"/>
+<text x="224" y="34" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">4s</text>
+<rect x="264" y="20" width="40" height="120" rx="3" fill="{{color.warningSoft}}" stroke="{{color.warning}}" stroke-width="1.5"/>
+<text x="284" y="34" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">4s</text>
+<line x1="0" y1="140" x2="320" y2="140" stroke="{{color.border}}" stroke-width="1.5"/>
+<text x="44" y="155" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">n=0</text>
+<text x="104" y="155" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">n=1</text>
+<text x="164" y="155" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">n=2</text>
+<text x="224" y="155" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">n=3</text>
+<text x="284" y="155" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">n=4</text>
+<text x="160" y="172" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">min(500 * 2 ** n, 4000)</text>
+</svg>`,
+  labels: {
+    cap: { ru: 'потолок', en: 'ceiling' },
+  },
+  alt: {
+    ru: 'Задержки перед повторами растут вдвое: 0,5, 1 и 2 секунды, а дальше упираются в потолок 4 секунды. Формула — min(500 * 2 ** n, 4000) миллисекунд.',
+    en: 'Retry delays double: 0.5, 1 and 2 seconds, then hit the 4-second ceiling. The formula is min(500 * 2 ** n, 4000) milliseconds.',
+  },
+};
+
+const ARCH_OFFSET_CURSOR: Illustration = {
+  id: 'arch-offset-cursor',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 186">
+<text x="0" y="13" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.danger}}">offset=3</text>
+<rect x="0" y="24" width="90" height="18" rx="4" fill="{{color.accentSoft}}"/>
+<text x="8" y="37" font-size="11" font-family="monospace" fill="{{color.accentText}}">post 11</text>
+<rect x="0" y="44" width="90" height="18" rx="4" fill="{{color.accentSoft}}"/>
+<text x="8" y="57" font-size="11" font-family="monospace" fill="{{color.accentText}}">post 10</text>
+<text x="96" y="47" font-size="11" fill="{{color.accentText}}">{{label.fresh}}</text>
+<rect x="0" y="64" width="90" height="18" rx="4" fill="{{color.bgSecondary}}"/>
+<text x="8" y="77" font-size="11" font-family="monospace" fill="{{color.textMuted}}">post 9</text>
+<rect x="0" y="84" width="90" height="18" rx="4" fill="{{color.dangerSoft}}"/>
+<text x="8" y="97" font-size="11" font-family="monospace" fill="{{color.danger}}">post 8</text>
+<rect x="0" y="104" width="90" height="18" rx="4" fill="{{color.dangerSoft}}"/>
+<text x="8" y="117" font-size="11" font-family="monospace" fill="{{color.danger}}">post 7</text>
+<text x="96" y="107" font-size="11" fill="{{color.danger}}">{{label.repeat}}</text>
+<rect x="0" y="124" width="90" height="18" rx="4" fill="{{color.successSoft}}"/>
+<text x="8" y="137" font-size="11" font-family="monospace" fill="{{color.success}}">post 6</text>
+<rect x="0" y="144" width="90" height="18" rx="4" fill="{{color.bgSecondary}}"/>
+<text x="8" y="157" font-size="11" font-family="monospace" fill="{{color.textMuted}}">post 5</text>
+<rect x="0" y="164" width="90" height="18" rx="4" fill="{{color.bgSecondary}}"/>
+<text x="8" y="177" font-size="11" font-family="monospace" fill="{{color.textMuted}}">post 4</text>
+<text x="168" y="13" font-size="12" font-weight="bold" font-family="monospace" fill="{{color.success}}">after=7</text>
+<rect x="168" y="24" width="90" height="18" rx="4" fill="{{color.accentSoft}}"/>
+<text x="176" y="37" font-size="11" font-family="monospace" fill="{{color.accentText}}">post 11</text>
+<rect x="168" y="44" width="90" height="18" rx="4" fill="{{color.accentSoft}}"/>
+<text x="176" y="57" font-size="11" font-family="monospace" fill="{{color.accentText}}">post 10</text>
+<text x="264" y="47" font-size="11" fill="{{color.accentText}}">{{label.fresh}}</text>
+<rect x="168" y="64" width="90" height="18" rx="4" fill="{{color.bgSecondary}}"/>
+<text x="176" y="77" font-size="11" font-family="monospace" fill="{{color.textMuted}}">post 9</text>
+<rect x="168" y="84" width="90" height="18" rx="4" fill="{{color.bgSecondary}}"/>
+<text x="176" y="97" font-size="11" font-family="monospace" fill="{{color.textMuted}}">post 8</text>
+<rect x="168" y="104" width="90" height="18" rx="4" fill="{{color.bgSecondary}}"/>
+<text x="176" y="117" font-size="11" font-family="monospace" fill="{{color.textMuted}}">post 7</text>
+<rect x="168" y="124" width="90" height="18" rx="4" fill="{{color.successSoft}}"/>
+<text x="176" y="137" font-size="11" font-family="monospace" fill="{{color.success}}">post 6</text>
+<rect x="168" y="144" width="90" height="18" rx="4" fill="{{color.successSoft}}"/>
+<text x="176" y="157" font-size="11" font-family="monospace" fill="{{color.success}}">post 5</text>
+<rect x="168" y="164" width="90" height="18" rx="4" fill="{{color.successSoft}}"/>
+<text x="176" y="177" font-size="11" font-family="monospace" fill="{{color.success}}">post 4</text>
+<text x="264" y="157" font-size="11" fill="{{color.success}}">{{label.page}}</text>
+</svg>`,
+  labels: {
+    fresh: { ru: 'новые', en: 'new' },
+    repeat: { ru: 'повтор', en: 'repeat' },
+    page: { ru: 'стр. 2', en: 'page 2' },
+  },
+  alt: {
+    ru: 'Первая страница — посты 9, 8, 7. Пока читали, сверху появились посты 11 и 10. Слева offset=3 сдвинулся: вторая страница — 8, 7, 6, и два поста повторились. Справа курсор «после 7» вернул ровно 6, 5, 4.',
+    en: 'Page one was posts 9, 8, 7. Meanwhile posts 11 and 10 appeared on top. Left: offset=3 has shifted, so page two is 8, 7, 6, and two posts repeat. Right: the cursor “after 7” returns exactly 6, 5, 4.',
+  },
+};
+
+const ARCH_AFFECTED_GRAPH: Illustration = {
+  id: 'arch-affected-graph',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 170">
+<rect x="20" y="20" width="88" height="30" rx="8" fill="{{color.warningSoft}}" stroke="{{color.warning}}" stroke-width="2"/>
+<text x="64" y="39" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">ui-kit</text>
+<rect x="233" y="21" width="86" height="28" rx="8" fill="{{color.bgSecondary}}" stroke="{{color.textMuted}}" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="276" y="39" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.textMuted}}">utils</text>
+<polyline points="64,50 64,72" fill="none" stroke="{{color.accentText}}" stroke-width="2"/>
+<polyline points="44,89 44,72 160,72 160,89" fill="none" stroke="{{color.accentText}}" stroke-width="2"/>
+<polygon points="39,88 49,88 44,96" fill="{{color.accentText}}"/>
+<polygon points="155,88 165,88 160,96" fill="{{color.accentText}}"/>
+<line x1="276" y1="49" x2="276" y2="89" stroke="{{color.textMuted}}" stroke-width="1.5" stroke-dasharray="4 3"/>
+<polygon points="271,88 281,88 276,96" fill="{{color.textMuted}}"/>
+<rect x="0" y="96" width="88" height="30" rx="8" fill="{{color.accentSoft}}"/>
+<text x="44" y="115" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">shop</text>
+<rect x="116" y="96" width="88" height="30" rx="8" fill="{{color.accentSoft}}"/>
+<text x="160" y="115" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">admin</text>
+<rect x="233" y="97" width="86" height="28" rx="8" fill="{{color.bgSecondary}}" stroke="{{color.textMuted}}" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="276" y="115" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.textMuted}}">docs</text>
+<rect x="0" y="150" width="12" height="12" rx="3" fill="{{color.warningSoft}}" stroke="{{color.warning}}" stroke-width="1.5"/>
+<text x="18" y="161" font-size="11" fill="{{color.textSecondary}}">{{label.changed}}</text>
+<rect x="110" y="150" width="12" height="12" rx="3" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="1.5"/>
+<text x="128" y="161" font-size="11" fill="{{color.textSecondary}}">{{label.affected}}</text>
+<rect x="220" y="150" width="12" height="12" rx="3" fill="{{color.bgSecondary}}" stroke="{{color.textMuted}}" stroke-width="1.5" stroke-dasharray="3 2"/>
+<text x="238" y="161" font-size="11" fill="{{color.textSecondary}}">{{label.skipped}}</text>
+</svg>`,
+  labels: {
+    changed: { ru: 'изменено', en: 'changed' },
+    affected: { ru: 'затронуто', en: 'affected' },
+    skipped: { ru: 'пропущено', en: 'skipped' },
+  },
+  alt: {
+    ru: 'Граф монорепозитория: изменили библиотеку ui-kit — проверяются она и зависящие от неё приложения shop и admin. Библиотека utils и сайт docs не затронуты, их задачи пропускаются.',
+    en: 'A monorepo graph: the ui-kit library changed, so it and the apps that depend on it, shop and admin, are checked. The utils library and the docs site aren’t affected, so their tasks are skipped.',
+  },
+};
+
 export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'state-kinds': STATE_KINDS,
   'state-id-vs-copy': STATE_ID_VS_COPY,
@@ -963,4 +1290,12 @@ export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'next-file-nesting': NEXT_FILE_NESTING,
   'next-static-shell': NEXT_STATIC_SHELL,
   'next-image-cls': NEXT_IMAGE_CLS,
+  'arch-srp-reasons': ARCH_SRP_REASONS,
+  'arch-observer': ARCH_OBSERVER,
+  'arch-fsd-layers': ARCH_FSD_LAYERS,
+  'arch-upload-machine': ARCH_UPLOAD_MACHINE,
+  'arch-dependency-inversion': ARCH_DEPENDENCY_INVERSION,
+  'arch-backoff': ARCH_BACKOFF,
+  'arch-offset-cursor': ARCH_OFFSET_CURSOR,
+  'arch-affected-graph': ARCH_AFFECTED_GRAPH,
 };

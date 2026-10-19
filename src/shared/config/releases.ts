@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.66.0',
+    date: '2026-10-19',
+    changes: [
+      {
+        ru: 'Курс «Архитектура»: все 6 уроков стали пошаговыми — SOLID и принципы, паттерны, архитектура фронтенда, зависимости и DI, слой данных, масштабирование. Схемы слоёв FSD, инверсии зависимостей, луковицы middleware, пути данных от API до компонента и миграции маршрут за маршрутом, «Проверь себя», тест по каждому уроку и итоговый тест курса.',
+        en: 'The Architecture course: all 6 lessons are now step by step — SOLID and principles, patterns, frontend architecture, dependencies and DI, the data layer, scaling. Diagrams of FSD layers, dependency inversion, the middleware onion, data flow from API to component and route-by-route migration, “Check yourself”, a test per lesson and a final course test.',
+      },
+    ],
+  },
+  {
     version: '1.65.0',
     date: '2026-10-19',
     changes: [

@@ -102,6 +102,24 @@ const NEXT_COURSE: Course = {
   ],
 };
 
+const ARCHITECTURE_COURSE: Course = {
+  topic: 'architecture',
+  final: [
+    { question: 'arch-principles-rule-of-three-001', tag: 'arch-principles', step: 'dry-yagni' },
+    { question: 'arch-principles-boolean-trap-001', tag: 'arch-principles', step: 'honest-functions' },
+    { question: 'arch-patterns-builder-001', tag: 'arch-patterns', step: 'creational' },
+    { question: 'arch-patterns-proxy-001', tag: 'arch-patterns', step: 'wrappers' },
+    { question: 'arch-frontend-headless-001', tag: 'arch-frontend', step: 'logic-view' },
+    { question: 'arch-frontend-state-machine-001', tag: 'arch-frontend', step: 'states' },
+    { question: 'arch-principles-demeter-001', tag: 'arch-dependencies', step: 'coupling' },
+    { question: 'arch-principles-functional-core-001', tag: 'arch-dependencies', step: 'injection' },
+    { question: 'arch-data-openapi-001', tag: 'arch-data', step: 'contract' },
+    { question: 'arch-data-result-001', tag: 'arch-data', step: 'errors' },
+    { question: 'arch-scale-affected-001', tag: 'arch-scale', step: 'monorepo' },
+    { question: 'arch-scale-performance-budget-001', tag: 'arch-scale', step: 'delivery' },
+  ],
+};
+
 export const COURSES: Partial<Record<TopicId, Course>> = {
   state: STATE_COURSE,
   git: GIT_COURSE,
@@ -109,4 +127,5 @@ export const COURSES: Partial<Record<TopicId, Course>> = {
   testing: TESTING_COURSE,
   node: NODE_COURSE,
   next: NEXT_COURSE,
+  architecture: ARCHITECTURE_COURSE,
 };
