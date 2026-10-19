@@ -732,4 +732,11 @@
 - Новые схемы `web-url-to-page`, `web-cors-preflight`, `web-atomic-deploy` и иллюстрация `web-debounce-throttle`; переиспользованы `critical-rendering-path`, `http-revalidation`, `css-cascade-order`, `css-box-layers`, `html-landmarks`, `git-remote-sync`, `git-rebase-replay`.
 - `COURSES.web`: 12 вопросов, по одному на урок. Курсами стали все темы, кроме скрытой HR.
 
+## Отчёт по качеству вопросов (19.10.2026, без версии)
+
+- `scripts/question-quality.ts`, `npm run report:questions -- <events.json|events.csv> [--min 30] [--out report.md]`: выгрузка событий AppMetrica Logs API (JSON с `data` или CSV) → markdown-отчёт по вопросам с выборкой от `--min` ответов.
+- Учитывается только первый ответ устройства на вопрос, неизвестные id (удалённые вопросы) перечисляются отдельно.
+- Разделы: аномально трудные, любимый дистрактор (вариант набирает от 60% ошибок при 20+ ошибках), часто «Не знаю», слишком лёгкие для middle/senior, мёртвые варианты.
+- Проверено на синтетической выгрузке: JSON и CSV дают одинаковый отчёт. Реальных данных нет до ключа AppMetrica (R1-1).
+
 Дальше — `docs/roadmap.md`.

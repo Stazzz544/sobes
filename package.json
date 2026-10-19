@@ -10,6 +10,7 @@
     "build:apk": "node scripts/build-apk.js",
     "mark:glossary": "tsx scripts/mark-glossary.ts",
     "build:packs": "tsx scripts/build-packs.ts",
+    "report:questions": "tsx scripts/question-quality.ts",
     "ios": "expo run:ios"
   },
   "dependencies": {
