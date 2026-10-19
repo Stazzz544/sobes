@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.63.0',
+    date: '2026-10-19',
+    changes: [
+      {
+        ru: 'Курс «Тестирование»: все 6 уроков стали пошаговыми — виды тестов, юнит-тесты и матчеры, моки и таймеры, тесты компонентов, E2E, TDD и покрытие. Схемы, анимации, «Проверь себя», тест по каждому уроку и итоговый тест курса.',
+        en: 'The Testing course: all 6 lessons are now step by step — kinds of tests, unit tests and matchers, mocks and timers, component tests, E2E, TDD and coverage. Diagrams, animations, “Check yourself”, a test per lesson and a final course test.',
+      },
+    ],
+  },
+  {
     version: '1.62.0',
     date: '2026-10-19',
     changes: [

@@ -700,6 +700,80 @@ const A11Y_HIDDEN_VS_INERT: Illustration = {
   },
 };
 
+const TESTING_PYRAMID_TROPHY: Illustration = {
+  id: 'testing-pyramid-trophy',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200">
+<text x="76" y="14" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.textPrimary}}">{{label.pyramid}}</text>
+<polygon points="76,26 106,70 46,70" fill="{{color.dangerSoft}}"/>
+<text x="76" y="62" font-size="11" font-weight="bold" text-anchor="middle" fill="{{color.danger}}">E2E</text>
+<polygon points="44,74 108,74 128,118 24,118" fill="{{color.warningSoft}}"/>
+<text x="76" y="101" font-size="11" font-weight="bold" text-anchor="middle" fill="{{color.textPrimary}}">{{label.integration}}</text>
+<polygon points="22,122 130,122 150,170 2,170" fill="{{color.successSoft}}"/>
+<text x="76" y="151" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.success}}">{{label.unit}}</text>
+<text x="244" y="14" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.textPrimary}}">{{label.trophy}}</text>
+<rect x="222" y="24" width="44" height="22" rx="6" fill="{{color.dangerSoft}}"/>
+<text x="244" y="39" font-size="11" font-weight="bold" text-anchor="middle" fill="{{color.danger}}">E2E</text>
+<rect x="184" y="50" width="120" height="58" rx="10" fill="{{color.warningSoft}}"/>
+<text x="244" y="83" font-size="11" font-weight="bold" text-anchor="middle" fill="{{color.textPrimary}}">{{label.integration}}</text>
+<rect x="206" y="112" width="76" height="26" rx="6" fill="{{color.successSoft}}"/>
+<text x="244" y="129" font-size="11" font-weight="bold" text-anchor="middle" fill="{{color.success}}">{{label.unit}}</text>
+<rect x="190" y="142" width="108" height="28" rx="6" fill="{{color.accentSoft}}"/>
+<text x="244" y="160" font-size="11" font-weight="bold" text-anchor="middle" fill="{{color.accentText}}">{{label.static}}</text>
+<text x="76" y="192" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.pyramidNote}}</text>
+<text x="244" y="192" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.trophyNote}}</text>
+</svg>`,
+  labels: {
+    pyramid: { ru: 'Пирамида', en: 'Pyramid' },
+    trophy: { ru: 'Трофей', en: 'Trophy' },
+    integration: { ru: 'Интеграционные', en: 'Integration' },
+    unit: { ru: 'Юнит', en: 'Unit' },
+    static: { ru: 'TS, ESLint', en: 'TS, ESLint' },
+    pyramidNote: { ru: 'больше всего юнитов', en: 'mostly unit tests' },
+    trophyNote: { ru: 'упор на интеграцию', en: 'focus on integration' },
+  },
+  alt: {
+    ru: 'Слева пирамида тестов: широкое основание из юнит-тестов, середина — интеграционные, вершина — E2E. Справа трофей: основание — статический анализ TypeScript и ESLint, затем юнит-тесты, самая широкая часть — интеграционные, сверху немного E2E.',
+    en: 'Left, the test pyramid: a wide base of unit tests, integration tests in the middle, E2E at the top. Right, the trophy: static analysis with TypeScript and ESLint at the base, then unit tests, integration tests as the widest part, a little E2E on top.',
+  },
+};
+
+const TESTING_QUERY_VARIANTS: Illustration = {
+  id: 'testing-query-variants',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 170">
+<text x="148" y="14" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.textPrimary}}">{{label.missing}}</text>
+<text x="264" y="14" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.textPrimary}}">{{label.waits}}</text>
+<text x="0" y="48" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">getBy</text>
+<rect x="88" y="28" width="120" height="30" rx="8" fill="{{color.dangerSoft}}"/>
+<text x="148" y="48" font-size="12" text-anchor="middle" fill="{{color.danger}}">{{label.throws}}</text>
+<rect x="216" y="28" width="96" height="30" rx="8" fill="{{color.bgSecondary}}"/>
+<text x="264" y="48" font-size="12" text-anchor="middle" fill="{{color.textSecondary}}">{{label.no}}</text>
+<text x="0" y="88" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">queryBy</text>
+<rect x="88" y="68" width="120" height="30" rx="8" fill="{{color.successSoft}}"/>
+<text x="148" y="88" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.success}}">null</text>
+<rect x="216" y="68" width="96" height="30" rx="8" fill="{{color.bgSecondary}}"/>
+<text x="264" y="88" font-size="12" text-anchor="middle" fill="{{color.textSecondary}}">{{label.no}}</text>
+<text x="0" y="128" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.textPrimary}}">findBy</text>
+<rect x="88" y="108" width="120" height="30" rx="8" fill="{{color.dangerSoft}}"/>
+<text x="148" y="128" font-size="12" text-anchor="middle" fill="{{color.danger}}">{{label.timeout}}</text>
+<rect x="216" y="108" width="96" height="30" rx="8" fill="{{color.successSoft}}"/>
+<text x="264" y="128" font-size="12" text-anchor="middle" fill="{{color.success}}">{{label.yes}}</text>
+<text x="0" y="162" font-size="11" fill="{{color.textSecondary}}">{{label.note}}</text>
+</svg>`,
+  labels: {
+    missing: { ru: 'Если не найден', en: 'If not found' },
+    waits: { ru: 'Ждёт?', en: 'Waits?' },
+    throws: { ru: 'ошибка сразу', en: 'throws at once' },
+    timeout: { ru: 'ошибка по таймауту', en: 'rejects on timeout' },
+    no: { ru: 'нет', en: 'no' },
+    yes: { ru: 'да, до 1 с', en: 'yes, up to 1 s' },
+    note: { ru: 'отсутствие — queryBy', en: 'absence — queryBy' },
+  },
+  alt: {
+    ru: 'Таблица запросов Testing Library. getBy: если элемента нет — сразу ошибка, не ждёт. queryBy: возвращает null, не ждёт — им проверяют отсутствие. findBy: ждёт до секунды, по таймауту — ошибка.',
+    en: 'A table of Testing Library queries. getBy: throws at once if nothing is found, doesn’t wait. queryBy: returns null, doesn’t wait — used to check absence. findBy: waits up to a second and rejects on timeout.',
+  },
+};
+
 export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'state-kinds': STATE_KINDS,
   'state-id-vs-copy': STATE_ID_VS_COPY,
@@ -721,4 +795,6 @@ export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'html-formdata': HTML_FORMDATA,
   'a11y-name-priority': A11Y_NAME_PRIORITY,
   'a11y-hidden-vs-inert': A11Y_HIDDEN_VS_INERT,
+  'testing-pyramid-trophy': TESTING_PYRAMID_TROPHY,
+  'testing-query-variants': TESTING_QUERY_VARIANTS,
 };

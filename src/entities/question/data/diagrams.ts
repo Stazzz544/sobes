@@ -1349,6 +1349,132 @@ const A11Y_TAB_ORDER: Diagram = {
   ),
 };
 
+const fakeTimerLanes = (clock: string, timer: string[], calls: string[]): DiagramLane[] => [
+  { id: 'clock', title: { ru: 'Фейковое время', en: 'Fake time' }, tone: 'accent', items: [code('now', clock)] },
+  { id: 'timer', title: { ru: 'Таймер', en: 'Timer' }, tone: 'warning', items: timer.map((label) => code(`timer-${label}`, label)) },
+  { id: 'calls', title: { ru: 'Вызовы search', en: 'search calls' }, tone: 'success', items: calls.map((label) => code(`call-${label}`, label)) },
+];
+
+const MOCKS_FAKE_TIMERS: Diagram = {
+  id: 'mocks-fake-timers',
+  layout: 'columns',
+  steps: [
+    {
+      caption: {
+        ru: '`jest.useFakeTimers()`: время стоит, пока тест сам его не сдвинет. Ввели «r» — debounce завёл таймер на 300 мс.',
+        en: '`jest.useFakeTimers()`: time stands still until the test moves it. Typed “r” — the debounce set a 300 ms timer.',
+      },
+      lanes: fakeTimerLanes('0 ms', ['300 ms'], []),
+    },
+    {
+      caption: {
+        ru: '`advanceTimersByTime(100)`, ввели «re» — старый таймер отменён, новый снова на 300 мс.',
+        en: '`advanceTimersByTime(100)`, typed “re” — the old timer is cleared, a new one set for 300 ms again.',
+      },
+      lanes: fakeTimerLanes('100 ms', ['300 ms'], []),
+    },
+    {
+      caption: {
+        ru: '`advanceTimersByTime(299)` — до срабатывания 1 мс, поиск ещё не вызван.',
+        en: '`advanceTimersByTime(299)` — 1 ms to go, search not called yet.',
+      },
+      lanes: fakeTimerLanes('399 ms', ['1 ms'], []),
+    },
+    {
+      caption: {
+        ru: '`advanceTimersByTime(1)` — таймер сработал: один вызов `search(\'re\')`. Тест прошёл мгновенно, без настоящих пауз.',
+        en: '`advanceTimersByTime(1)` — the timer fired: one `search(\'re\')` call. The test ran instantly, with no real waiting.',
+      },
+      lanes: fakeTimerLanes('400 ms', [], ["'re'"]),
+    },
+  ],
+};
+
+const E2E_ACTIONABILITY: Diagram = {
+  id: 'e2e-actionability',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'attached', title: { ru: 'Есть в DOM', en: 'Attached' }, tone: 'neutral', items: [] },
+      { id: 'visible', title: { ru: 'Виден', en: 'Visible' }, tone: 'accent', items: [] },
+      { id: 'stable', title: { ru: 'Не анимируется', en: 'Stable' }, tone: 'accent', items: [] },
+      { id: 'receives', title: { ru: 'Ничем не перекрыт', en: 'Receives events' }, tone: 'warning', items: [{ id: 'overlay', label: { ru: 'оверлей ушёл', en: 'overlay gone' } }] },
+      { id: 'enabled', title: { ru: 'Доступен', en: 'Enabled' }, tone: 'accent', items: [] },
+      { id: 'click', title: 'click()', tone: 'success', items: [] },
+    ],
+    [
+      {
+        activeId: 'attached',
+        caption: {
+          ru: '`locator.click()` сначала ждёт, пока элемент появится в DOM. Фиксированная пауза не нужна.',
+          en: '`locator.click()` first waits for the element to appear in the DOM. No fixed pause needed.',
+        },
+      },
+      {
+        activeId: 'visible',
+        caption: { ru: 'Затем — пока он станет видимым.', en: 'Then until it becomes visible.' },
+      },
+      {
+        activeId: 'stable',
+        caption: { ru: 'Потом — пока закончится анимация и он перестанет двигаться.', en: 'Then until its animation ends and it stops moving.' },
+      },
+      {
+        activeId: 'receives',
+        caption: {
+          ru: 'Проверяет, что в точке клика нет другого элемента — например, оверлея со спиннером.',
+          en: 'It checks that no other element, like a spinner overlay, sits at the click point.',
+        },
+      },
+      {
+        activeId: 'enabled',
+        caption: { ru: 'И что кнопка не `disabled`.', en: 'And that the button isn’t `disabled`.' },
+      },
+      {
+        activeId: 'click',
+        caption: {
+          ru: 'Только теперь клик. Если проверки не прошли до таймаута — тест падает с понятной причиной.',
+          en: 'Only now the click. If the checks don’t pass before the timeout, the test fails with a clear reason.',
+        },
+      },
+    ],
+  ),
+};
+
+const TDD_CYCLE: Diagram = {
+  id: 'tdd-cycle',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'red', title: { ru: 'Красный', en: 'Red' }, tone: 'warning', items: [{ id: 'red-text', label: { ru: 'тест падает', en: 'the test fails' } }] },
+      { id: 'green', title: { ru: 'Зелёный', en: 'Green' }, tone: 'success', items: [{ id: 'green-text', label: { ru: 'минимальный код', en: 'minimal code' } }] },
+      { id: 'refactor', title: { ru: 'Рефакторинг', en: 'Refactor' }, tone: 'accent', items: [{ id: 'refactor-text', label: { ru: 'тесты зелёные', en: 'tests stay green' } }] },
+    ],
+    [
+      {
+        activeId: 'red',
+        caption: {
+          ru: 'Пишем тест на новое поведение и видим, что он **падает**. Это доказывает, что тест вообще что-то проверяет.',
+          en: 'Write a test for the new behavior and watch it **fail**. That proves the test checks something at all.',
+        },
+      },
+      {
+        activeId: 'green',
+        caption: {
+          ru: 'Пишем минимальный код, чтобы тест прошёл. Ничего «на будущее» — только то, чего требует тест.',
+          en: 'Write the minimal code to make the test pass. Nothing “for the future” — only what the test demands.',
+        },
+      },
+      {
+        activeId: 'refactor',
+        caption: {
+          ru: 'Улучшаем код, не меняя поведения: убираем дубли, проясняем имена. Тесты остаются зелёными — и цикл повторяется.',
+          en: 'Improve the code without changing behavior: remove duplication, clarify names. Tests stay green — and the cycle repeats.',
+        },
+      },
+    ],
+  ),
+};
+
 export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'event-loop-basic': EVENT_LOOP_BASIC,
   'event-loop-async': EVENT_LOOP_ASYNC,
@@ -1377,4 +1503,7 @@ export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'git-remote-sync': GIT_REMOTE_SYNC,
   'html-parse-p-div': HTML_PARSE_P_DIV,
   'a11y-tab-order': A11Y_TAB_ORDER,
+  'mocks-fake-timers': MOCKS_FAKE_TIMERS,
+  'e2e-actionability': E2E_ACTIONABILITY,
+  'tdd-cycle': TDD_CYCLE,
 };

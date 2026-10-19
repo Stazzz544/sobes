@@ -53,8 +53,25 @@ const HTML_COURSE: Course = {
   ],
 };
 
+const TESTING_COURSE: Course = {
+  topic: 'testing',
+  final: [
+    { question: 'test-basics-007', tag: 'testing-basics', step: 'quality' },
+    { question: 'test-unit-011', tag: 'testing-unit', step: 'equality' },
+    { question: 'test-unit-005', tag: 'testing-unit', step: 'async' },
+    { question: 'test-mocks-006', tag: 'testing-mocks', step: 'spies-reset' },
+    { question: 'test-mocks-009', tag: 'testing-mocks', step: 'timers' },
+    { question: 'test-components-006', tag: 'testing-components', step: 'helpers' },
+    { question: 'test-components-010', tag: 'testing-components', step: 'helpers' },
+    { question: 'test-e2e-010', tag: 'testing-e2e', step: 'locators' },
+    { question: 'test-e2e-007', tag: 'testing-e2e', step: 'ci-debug' },
+    { question: 'test-tdd-005', tag: 'testing-tdd', step: 'doubles' },
+  ],
+};
+
 export const COURSES: Partial<Record<TopicId, Course>> = {
   state: STATE_COURSE,
   git: GIT_COURSE,
   html: HTML_COURSE,
+  testing: TESTING_COURSE,
 };

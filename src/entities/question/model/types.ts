@@ -68,7 +68,10 @@ export type DiagramId =
   | 'url-push-replace'
   | 'git-remote-sync'
   | 'html-parse-p-div'
-  | 'a11y-tab-order';
+  | 'a11y-tab-order'
+  | 'mocks-fake-timers'
+  | 'e2e-actionability'
+  | 'tdd-cycle';
 
 export type DiagramText = string | LocalizedText;
 
@@ -122,7 +125,9 @@ export type IllustrationId =
   | 'html-landmarks'
   | 'html-formdata'
   | 'a11y-name-priority'
-  | 'a11y-hidden-vs-inert';
+  | 'a11y-hidden-vs-inert'
+  | 'testing-pyramid-trophy'
+  | 'testing-query-variants';
 
 export type Illustration = {
   id: IllustrationId;
