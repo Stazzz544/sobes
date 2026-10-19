@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.71.0',
+    date: '2026-10-19',
+    changes: [
+      {
+        ru: 'Курс «JavaScript»: все 14 уроков стали пошаговыми — от типов и сравнений до промисов, модулей и лайвкодинга. Анимированные схемы очередей цикла событий и поиска по цепочке областей видимости, «Проверь себя», тест по каждому уроку и итоговый тест курса. 25 новых вопросов: сравнения, области видимости, `this`, прототипы, коллекции, итераторы, модули и задачи для лайвкодинга.',
+        en: 'The JavaScript course: all 14 lessons are now step by step — from types and comparisons to promises, modules and live coding. Animated diagrams of event loop queues and the scope-chain lookup, “Check yourself”, a test per lesson and a final course test. 25 new questions: comparisons, scope, `this`, prototypes, collections, iterators, modules and live-coding tasks.',
+      },
+    ],
+  },
+  {
     version: '1.70.0',
     date: '2026-10-19',
     changes: [

@@ -185,6 +185,26 @@ const ALGORITHMS_COURSE: Course = {
   ],
 };
 
+const JAVASCRIPT_COURSE: Course = {
+  topic: 'javascript',
+  final: [
+    { question: 'js-types-003', tag: 'types-coercion', step: 'numbers' },
+    { question: 'js-equality-004', tag: 'equality', step: 'references' },
+    { question: 'js-scope-005', tag: 'scope', step: 'lexical' },
+    { question: 'js-live-curry-001', tag: 'closures', step: 'utilities' },
+    { question: 'js-objects-002', tag: 'objects', step: 'copies' },
+    { question: 'js-live-group-by-001', tag: 'arrays', step: 'boundaries' },
+    { question: 'js-this-004', tag: 'this', step: 'arrows' },
+    { question: 'js-proto-001', tag: 'prototypes', step: 'chain' },
+    { question: 'js-live-memoize-001', tag: 'collections', step: 'patterns' },
+    { question: 'js-iterators-004', tag: 'iterators', step: 'generators' },
+    { question: 'js-async-001', tag: 'event-loop', step: 'async-await' },
+    { question: 'js-live-timeout-001', tag: 'promises', step: 'combinators' },
+    { question: 'js-modules-004', tag: 'modules', step: 'exports' },
+    { question: 'js-live-chunk-001', tag: 'live-coding', step: 'clarify' },
+  ],
+};
+
 export const COURSES: Partial<Record<TopicId, Course>> = {
   state: STATE_COURSE,
   git: GIT_COURSE,
@@ -197,4 +217,5 @@ export const COURSES: Partial<Record<TopicId, Course>> = {
   css: CSS_COURSE,
   ai: AI_COURSE,
   algorithms: ALGORITHMS_COURSE,
+  javascript: JAVASCRIPT_COURSE,
 };

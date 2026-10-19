@@ -2307,6 +2307,95 @@ const ALGO_FIB_MEMO: Diagram = {
   ],
 };
 
+const loopQueueLanes = (stack: DiagramItem[], micro: DiagramItem[], macro: DiagramItem[], output: string[]): DiagramLane[] => [
+  { id: 'stack', title: { ru: 'Стек вызовов', en: 'Call stack' }, tone: 'accent', items: stack },
+  { id: 'micro', title: { ru: 'Микрозадачи', en: 'Microtasks' }, tone: 'success', items: micro },
+  { id: 'macro', title: { ru: 'Макрозадачи', en: 'Macrotasks' }, tone: 'warning', items: macro },
+  { id: 'console', title: { ru: 'Консоль', en: 'Console' }, tone: 'neutral', items: output.map((value, index) => code(`log-${index}`, value)) },
+];
+
+const JS_LOOP_QUEUES: Diagram = {
+  id: 'js-loop-queues',
+  layout: 'columns',
+  steps: [
+    {
+      caption: {
+        ru: '`setTimeout(() => log(\'T\'), 0)` регистрирует таймер: его колбэк встаёт в очередь макрозадач.',
+        en: '`setTimeout(() => log(\'T\'), 0)` registers a timer: its callback joins the macrotask queue.',
+      },
+      lanes: loopQueueLanes([code('set-timeout', 'setTimeout(…)')], [], [code('timer-cb', "log('T')")], []),
+    },
+    {
+      caption: {
+        ru: '`Promise.resolve().then(() => log(\'P\'))` ставит колбэк в очередь микрозадач.',
+        en: '`Promise.resolve().then(() => log(\'P\'))` queues its callback as a microtask.',
+      },
+      lanes: loopQueueLanes([code('then', '.then(…)')], [code('then-cb', "log('P')")], [code('timer-cb', "log('T')")], []),
+    },
+    {
+      caption: {
+        ru: '`log(\'S\')` — синхронный код: выполняется сразу, пока стек не опустеет.',
+        en: '`log(\'S\')` is synchronous code: it runs right away until the stack is empty.',
+      },
+      lanes: loopQueueLanes([code('log-s', "log('S')")], [code('then-cb', "log('P')")], [code('timer-cb', "log('T')")], ['S']),
+    },
+    {
+      caption: {
+        ru: 'Стек пуст — цикл событий сначала выполняет **все** микрозадачи: выводится P.',
+        en: 'The stack is empty — the event loop first runs **all** microtasks: P is printed.',
+      },
+      lanes: loopQueueLanes([code('then-cb', "log('P')")], [], [code('timer-cb', "log('T')")], ['S', 'P']),
+    },
+    {
+      caption: {
+        ru: 'Только потом берётся одна макрозадача — колбэк таймера. Итог: S, P, T, хотя таймер поставили первым.',
+        en: 'Only then is one macrotask taken — the timer callback. Result: S, P, T, even though the timer was set first.',
+      },
+      lanes: loopQueueLanes([code('timer-cb', "log('T')")], [], [], ['S', 'P', 'T']),
+    },
+  ],
+};
+
+const JS_SCOPE_CHAIN: Diagram = {
+  id: 'js-scope-chain',
+  layout: 'tree',
+  steps: [
+    {
+      caption: {
+        ru: '`inner` читает переменную `level`. Поиск начинается с собственной области функции — там её нет.',
+        en: '`inner` reads the variable `level`. The lookup starts in the function’s own scope — it isn’t there.',
+      },
+      lanes: [
+        { id: 'global', title: { ru: 'Глобальная область', en: 'Global scope' }, tone: 'neutral', items: [code('global-level', 'level = 1')] },
+        { id: 'outer', title: 'outer()', tone: 'neutral', items: [code('outer-level', 'level = 2')], parent: 'global' },
+        { id: 'inner', title: 'inner()', tone: 'accent', items: [code('inner-read', 'return level')], parent: 'outer', isActive: true },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Дальше — область, где `inner` **объявлена**: внутри `outer`. Там `level = 2`, поиск останавливается.',
+        en: 'Next is the scope where `inner` was **declared**: inside `outer`. There `level = 2`, and the lookup stops.',
+      },
+      lanes: [
+        { id: 'global', title: { ru: 'Глобальная область', en: 'Global scope' }, tone: 'neutral', items: [code('global-level', 'level = 1')] },
+        { id: 'outer', title: 'outer()', tone: 'success', items: [code('outer-level', 'level = 2')], parent: 'global', isActive: true },
+        { id: 'inner', title: 'inner()', tone: 'accent', items: [code('inner-read', 'return level')], parent: 'outer' },
+      ],
+    },
+    {
+      caption: {
+        ru: 'Внешняя `level = 1` затенена и не видна. Цепочка областей задаётся местом объявления, а не местом вызова — это лексическая область видимости.',
+        en: 'The outer `level = 1` is shadowed and invisible. The scope chain is set by where code is declared, not where it’s called — that’s lexical scope.',
+      },
+      lanes: [
+        { id: 'global', title: { ru: 'Глобальная область', en: 'Global scope' }, tone: 'neutral', items: [code('global-level', 'level = 1')], isActive: true },
+        { id: 'outer', title: 'outer()', tone: 'success', items: [code('outer-level', 'level = 2')], parent: 'global' },
+        { id: 'inner', title: 'inner()', tone: 'accent', items: [code('inner-read', 'return level')], parent: 'outer' },
+      ],
+    },
+  ],
+};
+
 export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'event-loop-basic': EVENT_LOOP_BASIC,
   'event-loop-async': EVENT_LOOP_ASYNC,
@@ -2356,4 +2445,6 @@ export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'algo-binary-search': ALGO_BINARY_SEARCH,
   'algo-dom-traversal': ALGO_DOM_TRAVERSAL,
   'algo-fib-memo': ALGO_FIB_MEMO,
+  'js-loop-queues': JS_LOOP_QUEUES,
+  'js-scope-chain': JS_SCOPE_CHAIN,
 };

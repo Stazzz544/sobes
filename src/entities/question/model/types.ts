@@ -89,7 +89,9 @@ export type DiagramId =
   | 'ai-agent-loop'
   | 'algo-binary-search'
   | 'algo-dom-traversal'
-  | 'algo-fib-memo';
+  | 'algo-fib-memo'
+  | 'js-loop-queues'
+  | 'js-scope-chain';
 
 export type DiagramText = string | LocalizedText;
 

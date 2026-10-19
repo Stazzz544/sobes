@@ -710,4 +710,12 @@
 - `COURSES.algorithms`: 10 вопросов, все уроки покрыты.
 - Фрагменты кода из уроков прогнаны в Node.
 
+## Курсы: «JavaScript» (19.10.2026, версия 1.71.0)
+
+- Все 14 уроков пошаговые (по 4 шага, тесты по 5 вопросов): `types-coercion`, `equality`, `scope`, `closures`, `objects`, `arrays`, `this`, `prototypes`, `collections`, `iterators`, `event-loop`, `promises`, `modules`, `live-coding`. Уроки собраны заново в `lessons/javascript.ts` и `javascript-2.ts`.
+- 25 новых вопросов (`data/javascript-7.ts`): вывод кода проверяется запуском (`js-output`), задачи лайвкодинга — тестами (`js-tests`). Без них урокам `equality`, `scope`, `this`, `prototypes`, `collections`, `iterators`, `modules` и `live-coding` не хватало вопросов на тест и итоговый тест. Всего 956 вопросов.
+- Новые схемы `js-loop-queues` (колонки), `js-scope-chain` (дерево); переиспользованы `prototype-chain` и `imm-shared-reference`. Старые схемы `event-loop-basic`, `event-loop-async`, `closure-counters` в уроках больше не используются: они повторяли ответы вопросов теста.
+- `COURSES.javascript`: 14 вопросов, по одному на урок.
+- Фрагменты кода из уроков прогнаны в Node.
+
 Дальше — `docs/roadmap.md`.
