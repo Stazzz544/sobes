@@ -84,7 +84,9 @@ export type DiagramId =
   | 'ts-narrowing-flow'
   | 'ts-distribution'
   | 'css-cascade-order'
-  | 'css-render-pipeline';
+  | 'css-render-pipeline'
+  | 'ai-rag-pipeline'
+  | 'ai-agent-loop';
 
 export type DiagramText = string | LocalizedText;
 
@@ -158,7 +160,9 @@ export type IllustrationId =
   | 'ts-utility-fields'
   | 'css-box-layers'
   | 'css-flex-axes'
-  | 'css-grid-fr';
+  | 'css-grid-fr'
+  | 'ai-tokens'
+  | 'ai-temperature';
 
 export type Illustration = {
   id: IllustrationId;

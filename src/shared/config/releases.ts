@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.69.0',
+    date: '2026-10-19',
+    changes: [
+      {
+        ru: 'Курс «ИИ»: все 7 уроков стали пошаговыми — основы LLM, промптинг, ИИ-ассистенты, RAG, агенты, ИИ во фронтенде и безопасность. Картинки токенов и температуры, схемы конвейера RAG и цикла агента, «Проверь себя», тест по каждому уроку и итоговый тест курса. Два новых вопроса: как ставить ассистенту крупную задачу и как защитить бюджет на LLM.',
+        en: 'The AI course: all 7 lessons are now step by step — LLM basics, prompting, AI assistants, RAG, agents, AI on the frontend and security. Pictures of tokens and temperature, diagrams of the RAG pipeline and the agent loop, “Check yourself”, a test per lesson and a final course test. Two new questions: how to give an assistant a big task and how to protect an LLM budget.',
+      },
+    ],
+  },
+  {
     version: '1.68.0',
     date: '2026-10-19',
     changes: [

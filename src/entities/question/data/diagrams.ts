@@ -2080,6 +2080,107 @@ const CSS_RENDER_PIPELINE: Diagram = {
   ),
 };
 
+const AI_RAG_PIPELINE: Diagram = {
+  id: 'ai-rag-pipeline',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'chunks', title: { ru: 'Чанки', en: 'Chunks' }, tone: 'neutral', items: [{ id: 'split', label: { ru: 'документы режут на фрагменты', en: 'documents are split into pieces' } }] },
+      { id: 'index', title: { ru: 'Индекс', en: 'Index' }, tone: 'neutral', items: [code('embed-chunk', 'embed(chunk)'), { id: 'vector-db', label: { ru: 'векторная БД', en: 'vector DB' } }] },
+      { id: 'question', title: { ru: 'Вопрос', en: 'Question' }, tone: 'accent', items: [code('embed-question', 'embed(question)')] },
+      { id: 'search', title: { ru: 'Поиск', en: 'Search' }, tone: 'warning', items: [{ id: 'nearest', label: { ru: 'ближайшие по смыслу чанки', en: 'semantically nearest chunks' } }] },
+      { id: 'answer', title: { ru: 'Ответ', en: 'Answer' }, tone: 'success', items: [{ id: 'prompt', label: { ru: 'промпт + найденное', en: 'prompt + what was found' } }] },
+    ],
+    [
+      {
+        activeId: 'chunks',
+        caption: {
+          ru: 'Индексация делается заранее: документы режут на небольшие фрагменты — чанки, часто с перекрытием.',
+          en: 'Indexing happens in advance: documents are cut into small pieces — chunks, often with overlap.',
+        },
+      },
+      {
+        activeId: 'index',
+        caption: {
+          ru: 'Для каждого чанка считают эмбеддинг и сохраняют его в векторную базу вместе с текстом.',
+          en: 'An embedding is computed for each chunk and stored in a vector database along with its text.',
+        },
+      },
+      {
+        activeId: 'question',
+        caption: {
+          ru: 'Пришёл вопрос — его тоже превращают в эмбеддинг той же моделью.',
+          en: 'A question arrives — it’s turned into an embedding by the same model.',
+        },
+      },
+      {
+        activeId: 'search',
+        caption: {
+          ru: 'В базе ищут чанки, ближайшие к вопросу по смыслу, например по косинусной близости.',
+          en: 'The database is searched for chunks semantically nearest to the question, for example by cosine similarity.',
+        },
+      },
+      {
+        activeId: 'answer',
+        caption: {
+          ru: 'Найденное добавляют в промпт, и модель отвечает по этим фрагментам — со ссылками на источники.',
+          en: 'What was found goes into the prompt, and the model answers from those pieces — with links to sources.',
+        },
+      },
+    ],
+  ),
+};
+
+const AI_AGENT_LOOP: Diagram = {
+  id: 'ai-agent-loop',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'task', title: { ru: 'Задача', en: 'Task' }, tone: 'neutral', items: [{ id: 'request', label: { ru: '«Где мой последний заказ?»', en: '“Where is my last order?”' } }] },
+      { id: 'model', title: { ru: 'Модель', en: 'Model' }, tone: 'accent', items: [code('tool-call', 'tool_use')] },
+      { id: 'tool', title: { ru: 'Ваш код', en: 'Your code' }, tone: 'warning', items: [code('search-orders', 'searchOrders()')] },
+      { id: 'answer', title: { ru: 'Ответ', en: 'Answer' }, tone: 'success', items: [{ id: 'reply', label: { ru: 'текст пользователю', en: 'text for the user' } }] },
+    ],
+    [
+      {
+        activeId: 'task',
+        caption: {
+          ru: 'Пользователь ставит задачу. Вместе с ней модель получает описания доступных инструментов.',
+          en: 'The user sets a task. Along with it the model receives descriptions of the available tools.',
+        },
+      },
+      {
+        activeId: 'model',
+        caption: {
+          ru: 'Модель решает, что нужен инструмент, и возвращает не текст, а запрос на вызов с аргументами.',
+          en: 'The model decides a tool is needed and returns not text but a call request with arguments.',
+        },
+      },
+      {
+        activeId: 'tool',
+        caption: {
+          ru: 'Вызов выполняет ваш код: проверяет права, ходит в базу и отправляет результат обратно модели.',
+          en: 'Your code performs the call: checks permissions, queries the database and sends the result back to the model.',
+        },
+      },
+      {
+        activeId: 'model',
+        caption: {
+          ru: 'Модель смотрит на результат и решает, что дальше: ещё один вызов или ответ. Число шагов ограничивают.',
+          en: 'The model looks at the result and decides what’s next: another call or an answer. The number of steps is capped.',
+        },
+      },
+      {
+        activeId: 'answer',
+        caption: {
+          ru: 'Задача решена — модель отвечает пользователю текстом.',
+          en: 'The task is done — the model answers the user in text.',
+        },
+      },
+    ],
+  ),
+};
+
 export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'event-loop-basic': EVENT_LOOP_BASIC,
   'event-loop-async': EVENT_LOOP_ASYNC,
@@ -2124,4 +2225,6 @@ export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'ts-distribution': TS_DISTRIBUTION,
   'css-cascade-order': CSS_CASCADE_ORDER,
   'css-render-pipeline': CSS_RENDER_PIPELINE,
+  'ai-rag-pipeline': AI_RAG_PIPELINE,
+  'ai-agent-loop': AI_AGENT_LOOP,
 };

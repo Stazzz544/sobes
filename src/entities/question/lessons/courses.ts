@@ -153,6 +153,22 @@ const CSS_COURSE: Course = {
   ],
 };
 
+const AI_COURSE: Course = {
+  topic: 'ai',
+  final: [
+    { question: 'ai-llm-009', tag: 'llm-basics', step: 'tokens' },
+    { question: 'ai-llm-010', tag: 'llm-basics', step: 'tokens' },
+    { question: 'ai-llm-008', tag: 'llm-basics', step: 'limits' },
+    { question: 'ai-prompt-006', tag: 'prompting', step: 'structured-output' },
+    { question: 'ai-tools-005', tag: 'ai-tools', step: 'context-files' },
+    { question: 'ai-rag-009', tag: 'rag', step: 'quality' },
+    { question: 'ai-rag-008', tag: 'rag', step: 'quality' },
+    { question: 'ai-agents-004', tag: 'agents', step: 'agent-loop' },
+    { question: 'ai-front-003', tag: 'ai-frontend', step: 'errors-ux' },
+    { question: 'ai-sec-007', tag: 'ai-security', step: 'keys' },
+  ],
+};
+
 export const COURSES: Partial<Record<TopicId, Course>> = {
   state: STATE_COURSE,
   git: GIT_COURSE,
@@ -163,4 +179,5 @@ export const COURSES: Partial<Record<TopicId, Course>> = {
   architecture: ARCHITECTURE_COURSE,
   typescript: TYPESCRIPT_COURSE,
   css: CSS_COURSE,
+  ai: AI_COURSE,
 };

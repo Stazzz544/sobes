@@ -1446,6 +1446,81 @@ const CSS_GRID_FR: Illustration = {
   },
 };
 
+const AI_TOKENS: Illustration = {
+  id: 'ai-tokens',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 136">
+<text x="0" y="29" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">strawberry</text>
+<line x1="96" y1="25" x2="112" y2="25" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="111,20 111,30 119,25" fill="{{color.textMuted}}"/>
+<rect x="126" y="12" width="56" height="26" rx="6" fill="{{color.accentSoft}}"/>
+<text x="154" y="29" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">straw</text>
+<rect x="188" y="12" width="56" height="26" rx="6" fill="{{color.accentSoft}}"/>
+<text x="216" y="29" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">berry</text>
+<text x="0" y="73" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">unbelievable</text>
+<line x1="96" y1="69" x2="112" y2="69" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="111,64 111,74 119,69" fill="{{color.textMuted}}"/>
+<rect x="126" y="56" width="36" height="26" rx="6" fill="{{color.accentSoft}}"/>
+<text x="144" y="73" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">un</text>
+<rect x="168" y="56" width="64" height="26" rx="6" fill="{{color.accentSoft}}"/>
+<text x="200" y="73" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">believ</text>
+<rect x="238" y="56" width="48" height="26" rx="6" fill="{{color.accentSoft}}"/>
+<text x="262" y="73" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">able</text>
+<text x="0" y="117" font-size="12" font-family="monospace" fill="{{color.textPrimary}}">1234567</text>
+<line x1="96" y1="113" x2="112" y2="113" stroke="{{color.textMuted}}" stroke-width="2"/>
+<polygon points="111,108 111,118 119,113" fill="{{color.textMuted}}"/>
+<rect x="126" y="100" width="44" height="26" rx="6" fill="{{color.successSoft}}"/>
+<text x="148" y="117" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.success}}">123</text>
+<rect x="176" y="100" width="44" height="26" rx="6" fill="{{color.successSoft}}"/>
+<text x="198" y="117" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.success}}">456</text>
+<rect x="226" y="100" width="28" height="26" rx="6" fill="{{color.successSoft}}"/>
+<text x="240" y="117" font-size="12" font-family="monospace" text-anchor="middle" fill="{{color.success}}">7</text>
+</svg>`,
+  labels: {},
+  alt: {
+    ru: 'Пример разбиения на токены: strawberry — straw и berry, unbelievable — un, believ и able, число 1234567 — 123, 456 и 7. Модель видит эти куски, а не отдельные буквы.',
+    en: 'A tokenization example: strawberry becomes straw and berry, unbelievable becomes un, believ and able, and the number 1234567 becomes 123, 456 and 7. The model sees these pieces, not individual letters.',
+  },
+};
+
+const AI_TEMPERATURE: Illustration = {
+  id: 'ai-temperature',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 172">
+<text x="160" y="14" font-size="12" font-weight="bold" text-anchor="middle" fill="{{color.textPrimary}}">{{label.prompt}}</text>
+<text x="75" y="36" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">t = 1</text>
+<text x="245" y="36" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">t = 0.5</text>
+<rect x="10" y="87" width="40" height="63" rx="3" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="1.5"/>
+<text x="30" y="82" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">63%</text>
+<rect x="55" y="127" width="40" height="23" rx="3" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="1.5"/>
+<text x="75" y="122" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">23%</text>
+<rect x="100" y="136" width="40" height="14" rx="3" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="1.5"/>
+<text x="120" y="131" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">14%</text>
+<rect x="180" y="66" width="40" height="84" rx="3" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="1.5"/>
+<text x="200" y="61" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">84%</text>
+<rect x="225" y="139" width="40" height="11" rx="3" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="1.5"/>
+<text x="245" y="134" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">11%</text>
+<rect x="270" y="145" width="40" height="5" rx="2" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="1.5"/>
+<text x="290" y="140" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">4%</text>
+<line x1="0" y1="150" x2="150" y2="150" stroke="{{color.border}}" stroke-width="1.5"/>
+<line x1="170" y1="150" x2="320" y2="150" stroke="{{color.border}}" stroke-width="1.5"/>
+<text x="30" y="166" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.window}}</text>
+<text x="75" y="166" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.roof}}</text>
+<text x="120" y="166" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.sofa}}</text>
+<text x="200" y="166" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.window}}</text>
+<text x="245" y="166" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.roof}}</text>
+<text x="290" y="166" font-size="11" text-anchor="middle" fill="{{color.textSecondary}}">{{label.sofa}}</text>
+</svg>`,
+  labels: {
+    prompt: { ru: 'Кот сидит на…', en: 'The cat sits on the…' },
+    window: { ru: 'окне', en: 'sill' },
+    roof: { ru: 'крыше', en: 'roof' },
+    sofa: { ru: 'диване', en: 'sofa' },
+  },
+  alt: {
+    ru: 'Вероятности следующего токена после «Кот сидит на…». При температуре 1: окне 63%, крыше 23%, диване 14%. При температуре 0.5 распределение острее: окне 84%, крыше 11%, диване 4%.',
+    en: 'Next-token probabilities after “The cat sits on the…”. At temperature 1: sill 63%, roof 23%, sofa 14%. At temperature 0.5 the distribution is sharper: sill 84%, roof 11%, sofa 4%.',
+  },
+};
+
 export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'state-kinds': STATE_KINDS,
   'state-id-vs-copy': STATE_ID_VS_COPY,
@@ -1487,4 +1562,6 @@ export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'css-box-layers': CSS_BOX_LAYERS,
   'css-flex-axes': CSS_FLEX_AXES,
   'css-grid-fr': CSS_GRID_FR,
+  'ai-tokens': AI_TOKENS,
+  'ai-temperature': AI_TEMPERATURE,
 };
