@@ -8,6 +8,16 @@ export type Release = {
 
 export const RELEASES: readonly Release[] = [
   {
+    version: '1.67.0',
+    date: '2026-10-19',
+    changes: [
+      {
+        ru: 'Курс «TypeScript»: все 10 уроков стали пошаговыми — от `any`, `unknown` и `never` до условных типов. Схемы сужения типа и распределения условного типа по объединению, картинки «множества типов» и «Pick, Omit, Partial», «Проверь себя», тест по каждому уроку и итоговый тест курса. Пять новых вопросов: `satisfies`, `keyof typeof` и явный аргумент типа.',
+        en: 'The TypeScript course: all 10 lessons are now step by step — from `any`, `unknown` and `never` to conditional types. Diagrams of type narrowing and a conditional type distributing over a union, pictures of “type sets” and “Pick, Omit, Partial”, “Check yourself”, a test per lesson and a final course test. Five new questions: `satisfies`, `keyof typeof` and an explicit type argument.',
+      },
+    ],
+  },
+  {
     version: '1.66.0',
     date: '2026-10-19',
     changes: [

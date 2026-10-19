@@ -120,6 +120,23 @@ const ARCHITECTURE_COURSE: Course = {
   ],
 };
 
+const TYPESCRIPT_COURSE: Course = {
+  topic: 'typescript',
+  final: [
+    { question: 'ts-never-001', tag: 'any-unknown-never', step: 'never' },
+    { question: 'ts-narrowing-004', tag: 'narrowing', step: 'type-guards' },
+    { question: 'ts-narrowing-006', tag: 'narrowing', step: 'in-discriminated' },
+    { question: 'ts-structural-004', tag: 'structural-typing', step: 'shape' },
+    { question: 'ts-literal-002', tag: 'keyof-typeof', step: 'typeof-type' },
+    { question: 'ts-generics-004', tag: 'generics', step: 'const-params' },
+    { question: 'ts-utility-009', tag: 'utility-types', step: 'from-functions' },
+    { question: 'ts-enums-output-001', tag: 'enums', step: 'numeric-enums' },
+    { question: 'ts-satisfies-005', tag: 'satisfies', step: 'contextual' },
+    { question: 'ts-mapped-005', tag: 'mapped-types', step: 'key-remapping' },
+    { question: 'ts-conditional-005', tag: 'conditional-types', step: 'distributive' },
+  ],
+};
+
 export const COURSES: Partial<Record<TopicId, Course>> = {
   state: STATE_COURSE,
   git: GIT_COURSE,
@@ -128,4 +145,5 @@ export const COURSES: Partial<Record<TopicId, Course>> = {
   node: NODE_COURSE,
   next: NEXT_COURSE,
   architecture: ARCHITECTURE_COURSE,
+  typescript: TYPESCRIPT_COURSE,
 };

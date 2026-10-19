@@ -80,7 +80,9 @@ export type DiagramId =
   | 'next-action-flow'
   | 'arch-middleware-onion'
   | 'arch-data-boundary'
-  | 'arch-strangler';
+  | 'arch-strangler'
+  | 'ts-narrowing-flow'
+  | 'ts-distribution';
 
 export type DiagramText = string | LocalizedText;
 
@@ -149,7 +151,9 @@ export type IllustrationId =
   | 'arch-dependency-inversion'
   | 'arch-backoff'
   | 'arch-offset-cursor'
-  | 'arch-affected-graph';
+  | 'arch-affected-graph'
+  | 'ts-type-sets'
+  | 'ts-utility-fields';
 
 export type Illustration = {
   id: IllustrationId;

@@ -1892,6 +1892,100 @@ const ARCH_STRANGLER: Diagram = {
   ],
 };
 
+const TS_NARROWING_FLOW: Diagram = {
+  id: 'ts-narrowing-flow',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'param', title: { ru: 'Параметр', en: 'Parameter' }, tone: 'neutral', items: [code('param-type', 'string | number | null')] },
+      { id: 'early', title: { ru: 'Ранний выход', en: 'Early return' }, tone: 'warning', items: [code('null-check', 'if (value === null) return;')] },
+      { id: 'rest', title: { ru: 'Дальше по функции', en: 'Rest of the function' }, tone: 'accent', items: [code('rest-type', 'string | number')] },
+      { id: 'typeof', title: { ru: 'Проверка typeof', en: 'typeof check' }, tone: 'warning', items: [code('typeof-check', "typeof value === 'string'")] },
+      { id: 'inside', title: { ru: 'Внутри if', en: 'Inside the if' }, tone: 'success', items: [code('inside-type', 'string')] },
+    ],
+    [
+      {
+        activeId: 'param',
+        caption: {
+          ru: 'На входе `value` может быть строкой, числом или `null`.',
+          en: 'On entry `value` may be a string, a number or `null`.',
+        },
+      },
+      {
+        activeId: 'early',
+        caption: {
+          ru: 'Ранний `return` для `null`: дальше функция выполняется, только если значение не `null`.',
+          en: 'An early `return` for `null`: the rest of the function runs only if the value isn’t `null`.',
+        },
+      },
+      {
+        activeId: 'rest',
+        caption: {
+          ru: 'Компилятор это знает: ниже проверки тип — `string | number`.',
+          en: 'The compiler knows it: below the check the type is `string | number`.',
+        },
+      },
+      {
+        activeId: 'typeof',
+        caption: {
+          ru: '`typeof` отсекает ещё один вариант…',
+          en: '`typeof` removes one more member…',
+        },
+      },
+      {
+        activeId: 'inside',
+        caption: {
+          ru: '…и внутри `if` остаётся только `string` — доступны строковые методы без `as`.',
+          en: '…and inside the `if` only `string` remains — string methods are available without `as`.',
+        },
+      },
+    ],
+  ),
+};
+
+const TS_DISTRIBUTION: Diagram = {
+  id: 'ts-distribution',
+  layout: 'chain',
+  steps: chainSteps(
+    [
+      { id: 'call', title: { ru: 'Вызов', en: 'The call' }, tone: 'neutral', items: [code('call', "Box<'a' | 1>")] },
+      { id: 'split', title: { ru: 'Раздаём по членам', en: 'Split by member' }, tone: 'warning', items: [code('box-a', "Box<'a'>"), code('box-1', 'Box<1>')] },
+      { id: 'each', title: { ru: 'Каждый отдельно', en: 'Each on its own' }, tone: 'accent', items: [code('v-a', "{ v: 'a' }"), code('v-1', '{ v: 1 }')] },
+      { id: 'join', title: { ru: 'Склеиваем', en: 'Join back' }, tone: 'success', items: [code('joined', "{ v: 'a' } | { v: 1 }")] },
+    ],
+    [
+      {
+        activeId: 'call',
+        caption: {
+          ru: '`type Box<T> = T extends unknown ? { v: T } : never` — проверяется «голый» `T`, и в него передают объединение.',
+          en: '`type Box<T> = T extends unknown ? { v: T } : never` — a naked `T` is checked, and a union is passed in.',
+        },
+      },
+      {
+        activeId: 'split',
+        caption: {
+          ru: 'Условный тип распределяется: применяется к каждому члену объединения отдельно.',
+          en: 'The conditional type distributes: it’s applied to each member of the union separately.',
+        },
+      },
+      {
+        activeId: 'each',
+        caption: {
+          ru: 'Каждый член проходит проверку сам по себе и получает свою обёртку.',
+          en: 'Each member goes through the check on its own and gets its own wrapper.',
+        },
+      },
+      {
+        activeId: 'join',
+        caption: {
+          ru: 'Результаты склеиваются в объединение — а не `{ v: \'a\' | 1 }`. Для `never` распределять нечего: `Box<never>` — тоже `never`.',
+          en: 'The results join into a union — not `{ v: \'a\' | 1 }`. With `never` there’s nothing to distribute: `Box<never>` is `never` too.',
+        },
+      },
+    ],
+  ),
+};
+
 export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'event-loop-basic': EVENT_LOOP_BASIC,
   'event-loop-async': EVENT_LOOP_ASYNC,
@@ -1932,4 +2026,6 @@ export const DIAGRAMS: Record<DiagramId, Diagram> = {
   'arch-middleware-onion': ARCH_MIDDLEWARE_ONION,
   'arch-data-boundary': ARCH_DATA_BOUNDARY,
   'arch-strangler': ARCH_STRANGLER,
+  'ts-narrowing-flow': TS_NARROWING_FLOW,
+  'ts-distribution': TS_DISTRIBUTION,
 };

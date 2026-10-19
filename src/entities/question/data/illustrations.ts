@@ -1262,6 +1262,101 @@ const ARCH_AFFECTED_GRAPH: Illustration = {
   },
 };
 
+const TS_TYPE_SETS: Illustration = {
+  id: 'ts-type-sets',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+<rect x="0" y="0" width="222" height="180" rx="12" fill="{{color.accentSoft}}"/>
+<text x="14" y="24" font-size="13" font-weight="bold" font-family="monospace" fill="{{color.accentText}}">unknown</text>
+<text x="14" y="41" font-size="11" fill="{{color.textSecondary}}">{{label.all}}</text>
+<rect x="14" y="54" width="60" height="24" rx="6" fill="{{color.bgCard}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="44" y="70" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">string</text>
+<rect x="82" y="54" width="60" height="24" rx="6" fill="{{color.bgCard}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="112" y="70" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">number</text>
+<rect x="150" y="54" width="60" height="24" rx="6" fill="{{color.bgCard}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="180" y="70" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">boolean</text>
+<rect x="14" y="86" width="44" height="24" rx="6" fill="{{color.bgCard}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="36" y="102" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">null</text>
+<rect x="66" y="86" width="60" height="24" rx="6" fill="{{color.bgCard}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="96" y="102" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">object</text>
+<rect x="134" y="86" width="76" height="24" rx="6" fill="{{color.bgCard}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="172" y="102" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">undefined</text>
+<circle cx="40" cy="146" r="21" fill="none" stroke="{{color.textMuted}}" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text x="40" y="150" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">never</text>
+<text x="70" y="150" font-size="11" fill="{{color.textSecondary}}">{{label.empty}}</text>
+<rect x="236" y="56" width="84" height="64" rx="10" fill="{{color.dangerSoft}}"/>
+<text x="278" y="84" font-size="13" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.danger}}">any</text>
+<text x="278" y="104" font-size="11" text-anchor="middle" fill="{{color.danger}}">{{label.off}}</text>
+</svg>`,
+  labels: {
+    all: { ru: 'любое значение', en: 'any value' },
+    empty: { ru: 'ни одного значения', en: 'no values at all' },
+    off: { ru: 'проверки нет', en: 'no checks' },
+  },
+  alt: {
+    ru: 'unknown — множество всех значений: string, number, boolean, null, object, undefined. never — пустое множество внутри него, без единого значения. any стоит в стороне: это не множество значений, а отключённая проверка.',
+    en: 'unknown is the set of all values: string, number, boolean, null, object, undefined. never is the empty set inside it, with no values at all. any stands apart: it’s not a set of values but checking turned off.',
+  },
+};
+
+const TS_UTILITY_FIELDS: Illustration = {
+  id: 'ts-utility-fields',
+  svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 168">
+<text x="37" y="13" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">User</text>
+<text x="119" y="13" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">Pick</text>
+<text x="119" y="29" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">id | name</text>
+<text x="201" y="13" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">Omit</text>
+<text x="201" y="29" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textSecondary}}">password</text>
+<text x="283" y="13" font-size="12" font-weight="bold" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">Partial</text>
+<rect x="0" y="38" width="74" height="22" rx="6" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="37" y="53" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">id</text>
+<rect x="0" y="64" width="74" height="22" rx="6" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="37" y="79" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">name</text>
+<rect x="0" y="90" width="74" height="22" rx="6" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="37" y="105" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">email</text>
+<rect x="0" y="116" width="74" height="22" rx="6" fill="{{color.bgSecondary}}" stroke="{{color.border}}" stroke-width="1"/>
+<text x="37" y="131" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textPrimary}}">password</text>
+<rect x="82" y="38" width="74" height="22" rx="6" fill="{{color.successSoft}}" stroke="{{color.success}}" stroke-width="1"/>
+<text x="119" y="53" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.success}}">id</text>
+<rect x="82" y="64" width="74" height="22" rx="6" fill="{{color.successSoft}}" stroke="{{color.success}}" stroke-width="1"/>
+<text x="119" y="79" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.success}}">name</text>
+<rect x="82.5" y="90.5" width="73" height="21" rx="6" fill="none" stroke="{{color.textMuted}}" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="119" y="105" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textMuted}}">email</text>
+<rect x="82.5" y="116.5" width="73" height="21" rx="6" fill="none" stroke="{{color.textMuted}}" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="119" y="131" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textMuted}}">password</text>
+<rect x="164" y="38" width="74" height="22" rx="6" fill="{{color.successSoft}}" stroke="{{color.success}}" stroke-width="1"/>
+<text x="201" y="53" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.success}}">id</text>
+<rect x="164" y="64" width="74" height="22" rx="6" fill="{{color.successSoft}}" stroke="{{color.success}}" stroke-width="1"/>
+<text x="201" y="79" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.success}}">name</text>
+<rect x="164" y="90" width="74" height="22" rx="6" fill="{{color.successSoft}}" stroke="{{color.success}}" stroke-width="1"/>
+<text x="201" y="105" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.success}}">email</text>
+<rect x="164.5" y="116.5" width="73" height="21" rx="6" fill="none" stroke="{{color.textMuted}}" stroke-width="1" stroke-dasharray="3 3"/>
+<text x="201" y="131" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.textMuted}}">password</text>
+<rect x="246" y="38" width="74" height="22" rx="6" fill="{{color.accentSoft}}"/>
+<text x="283" y="53" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">id?</text>
+<rect x="246" y="64" width="74" height="22" rx="6" fill="{{color.accentSoft}}"/>
+<text x="283" y="79" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">name?</text>
+<rect x="246" y="90" width="74" height="22" rx="6" fill="{{color.accentSoft}}"/>
+<text x="283" y="105" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">email?</text>
+<rect x="246" y="116" width="74" height="22" rx="6" fill="{{color.accentSoft}}"/>
+<text x="283" y="131" font-size="11" font-family="monospace" text-anchor="middle" fill="{{color.accentText}}">password?</text>
+<rect x="0" y="152" width="12" height="12" rx="3" fill="{{color.successSoft}}" stroke="{{color.success}}" stroke-width="1"/>
+<text x="18" y="163" font-size="11" fill="{{color.textSecondary}}">{{label.kept}}</text>
+<rect x="110.5" y="152.5" width="11" height="11" rx="3" fill="none" stroke="{{color.textMuted}}" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="128" y="163" font-size="11" fill="{{color.textSecondary}}">{{label.dropped}}</text>
+<rect x="220" y="152" width="12" height="12" rx="3" fill="{{color.accentSoft}}" stroke="{{color.accentText}}" stroke-width="1"/>
+<text x="238" y="163" font-size="11" fill="{{color.textSecondary}}">{{label.optional}}</text>
+</svg>`,
+  labels: {
+    kept: { ru: 'осталось', en: 'kept' },
+    dropped: { ru: 'убрано', en: 'dropped' },
+    optional: { ru: 'опционально', en: 'optional' },
+  },
+  alt: {
+    ru: 'Тип User с полями id, name, email, password. Pick по id и name оставляет только их. Omit по password оставляет id, name и email. Partial оставляет все четыре поля, но каждое становится необязательным.',
+    en: 'A User type with fields id, name, email, password. Pick of id and name keeps only those two. Omit of password keeps id, name and email. Partial keeps all four fields but makes each one optional.',
+  },
+};
+
 export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'state-kinds': STATE_KINDS,
   'state-id-vs-copy': STATE_ID_VS_COPY,
@@ -1298,4 +1393,6 @@ export const ILLUSTRATIONS: Record<IllustrationId, Illustration> = {
   'arch-backoff': ARCH_BACKOFF,
   'arch-offset-cursor': ARCH_OFFSET_CURSOR,
   'arch-affected-graph': ARCH_AFFECTED_GRAPH,
+  'ts-type-sets': TS_TYPE_SETS,
+  'ts-utility-fields': TS_UTILITY_FIELDS,
 };

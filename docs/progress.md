@@ -679,4 +679,12 @@
 - `COURSES.architecture`: 12 вопросов, по два на урок.
 - Фрагменты кода из уроков прогнаны в Node; примеры в уроках не повторяют код и ответы вопросов теста.
 
+## Курсы: «TypeScript» (19.10.2026, версия 1.67.0)
+
+- Все 10 уроков пошаговые (4–5 шагов, тесты по 5–8 вопросов): `any-unknown-never`, `narrowing`, `structural-typing`, `keyof-typeof`, `generics`, `utility-types`, `enums`, `satisfies`, `mapped-types`, `conditional-types`.
+- Новые вопросы (`data/typescript-8.ts`, проверены компилятором через `verify`): `ts-satisfies-004…006`, `ts-keyof-005`, `ts-generics-008` — без них в уроках `satisfies`, `keyof-typeof` и `generics` не хватало вопросов на тест и итоговый тест. Всего 927 вопросов.
+- Иллюстрации `ts-type-sets`, `ts-utility-fields`; схемы `ts-narrowing-flow`, `ts-distribution`.
+- `COURSES.typescript`: 11 вопросов, все уроки покрыты.
+- Все фрагменты кода из уроков проверены `tsc --strict`: ожидаемые типы — через `Equal`, ожидаемые ошибки — через `@ts-expect-error`.
+
 Дальше — `docs/roadmap.md`.
